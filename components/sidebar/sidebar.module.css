@@ -60,6 +60,22 @@
   border: none;
   border-bottom: 1px solid #bbbbbb;
 }
+.button2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 10px;
+  width: 52px;
+  height: 45px;
+  background: #bbbbbb;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  border: none;
+  border-bottom: 1px solid #bbbbbb;
+}
 
 .button1 img {
   z-index: 1;

@@ -2,16 +2,93 @@ import React, { useState } from "react";
 import styles from "./sidebar.module.css";
 import { number } from "prop-types";
 import Link from "next/link";
+import RecruitmentManager from "./subMenu/recruitmentManager/recruitmentManager";
+import SalaryAndBenefits from "./subMenu/salaryAndBenefits/salaryAndBenefits";
+
 
 export interface SideBarProp { }
 
 export default function Sidebar(props: SideBarProp) {
   const [activeButton, setActiveButton] = useState(null);
+  const [showSubMenu, setShowSubMenu] = useState(false);
+  const [subMenuShown, setSubMenuShown] = useState(null);
+  console.log({ activeButton });
 
   const handleClick = (buttonIndex: number) => {
+    if (subMenuShown === buttonIndex) {
+      setShowSubMenu(!showSubMenu);
+    } else {
+      setShowSubMenu(true);
+    }
     // @ts-ignore
     setActiveButton(buttonIndex);
+    // @ts-ignore
+    setSubMenuShown(buttonIndex);
   };
+  const sidebarItems = [
+    {
+      label: "Trang chủ",
+      icon: "https://phanmemnhansu.timviec365.vn//assets/images/l_images/home.svg",
+      href: '/',
+      submenu: null
+    },
+    {
+      label: "Quản lý tuyển dụng",
+      icon: "https://phanmemnhansu.timviec365.vn//assets/images/l_images/tuyendung.svg",
+      href: '',
+      submenu: <RecruitmentManager />
+    },
+    {
+      label: "Lương thưởng và phúc lợi",
+      icon: "https://phanmemnhansu.timviec365.vn//assets/images/l_images/thanhtich_vipham.svg",
+      href: '',
+      submenu: <SalaryAndBenefits />
+    },
+    {
+      label: "Quản lý hành chính",
+      icon: "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn-hanhchinh.svg",
+      href: '',
+      submenu: <SalaryAndBenefits />
+    },
+    {
+      label: "Đào tạo phát triển",
+      icon: "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_daotao.svg",
+      href: '',
+      submenu: <SalaryAndBenefits />
+    },
+    {
+      label: "Sơ đồ tổ chức",
+      icon: "https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_sodotochuc.svg",
+      href: '',
+      submenu: <SalaryAndBenefits />
+    },
+    {
+      label: "Báo cáo nhân sự",
+      icon: "		https://phanmemnhansu.timviec365.vn//assets/images/l_images/baocao_ns.svg",
+      href: '',
+      submenu: <SalaryAndBenefits />
+    },
+    {
+      label: "Cài đặt",
+      icon: "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_icon_setting.svg",
+      href: '',
+      submenu: <SalaryAndBenefits />
+    },
+    {
+      label: "Dữ liệu gần đây đã xóa",
+      icon: "		https://phanmemnhansu.timviec365.vn//assets/images/l_images/daxoa.svg",
+      href: '',
+      submenu: <SalaryAndBenefits />
+    },
+    {
+      label: "Chuyển đổi số",
+      icon: "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_chuyendoiso.svg",
+      href: '',
+      submenu: <SalaryAndBenefits />
+    },
+
+
+  ];
 
   return (
     <>
@@ -24,186 +101,25 @@ export default function Sidebar(props: SideBarProp) {
             />
           </a>
         </div>
-        <Link
-          className={`  ${activeButton === 0 ? styles.clicked : ""}`}
-          onClick={() => handleClick(0)}
-          href="/"
-        >
-          <div className={`${styles.sidebar_home}`}>
-            <div className={`${styles.button1}`}>
-              <img
-                src={
-                  "	https://phanmemnhansu.timviec365.vn//assets/images/l_images/home.svg"
-                }
-                className={`${styles.img_1}`}
-                alt="Index"
-              />
-            </div>
-            <div className={`${styles.sidebar_text}`}>Trang chủ</div>
+        {sidebarItems.map((item, index) => (
+          <div key={index}>
+            <Link
+              key={index}
+              className={`${activeButton === index ? styles.clicked : ""}`}
+              onClick={() => handleClick(index)}
+              href={item.href}
+            >
+              <div className={`${styles.sidebar_home}`}>
+                <div className={`${styles.button1}`}>
+                  <img src={item.icon} className={`${styles.img_1}`} alt="Index" />
+                </div>
+                <div className={`${styles.sidebar_text}`}>{item.label}</div>
+              </div>
+            </Link>
+            {showSubMenu && activeButton === index && item.submenu}
           </div>
-        </Link>
-        <Link
-          className={`  ${activeButton === 1 ? styles.clicked : ""}`}
-          onClick={() => handleClick(0)}
-          href="/"
-        >
-          <div className={`${styles.sidebar_home}`}>
-            <div className={`${styles.button1}`}>
-              <img
-                src={
-                  "		https://phanmemnhansu.timviec365.vn//assets/images/l_images/tuyendung.svg"
-                }
-                className={`${styles.img_1}`}
-                alt="Index"
-              />
-            </div>
-            <div className={`${styles.sidebar_text}`}>Quản lý tuyển dụng</div>
-          </div>
-        </Link>
-        <Link
-          className={`  ${activeButton === 2 ? styles.clicked : ""}`}
-          onClick={() => handleClick(0)}
-          href="/"
-        >
-          <div className={`${styles.sidebar_home}`}>
-            <div className={`${styles.button1}`}>
-              <img
-                src={
-                  "		https://phanmemnhansu.timviec365.vn//assets/images/l_images/thanhtich_vipham.svg"
-                }
-                className={`${styles.img_1}`}
-                alt="Index"
-              />
-            </div>
-            <div className={`${styles.sidebar_text}`}>Lương thưởng và phúc lợi</div>
-          </div>
-        </Link>
-        <Link
-          className={`  ${activeButton === 3 ? styles.clicked : ""}`}
-          onClick={() => handleClick(0)}
-          href="/"
-        >
-          <div className={`${styles.sidebar_home}`}>
-            <div className={`${styles.button1}`}>
-              <img
-                src={
-                  "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn-hanhchinh.svg"
-                }
-                className={`${styles.img_1}`}
-                alt="Index"
-              />
-            </div>
-            <div className={`${styles.sidebar_text}`}>Quản lý hành chính</div>
-          </div>
-        </Link>
-        <Link
-          className={`  ${activeButton === 4 ? styles.clicked : ""}`}
-          onClick={() => handleClick(0)}
-          href="/"
-        >
-          <div className={`${styles.sidebar_home}`}>
-            <div className={`${styles.button1}`}>
-              <img
-                src={
-                  "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_daotao.svg"
-                }
-                className={`${styles.img_1}`}
-                alt="Index"
-              />
-            </div>
-            <div className={`${styles.sidebar_text}`}>Đào tạo phát triển</div>
-          </div>
-        </Link>
-        <Link
-          className={`  ${activeButton === 5 ? styles.clicked : ""}`}
-          onClick={() => handleClick(0)}
-          href="/"
-        >
-          <div className={`${styles.sidebar_home}`}>
-            <div className={`${styles.button1}`}>
-              <img
-                src={
-                  "https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_sodotochuc.svg"
-                }
-                className={`${styles.img_1}`}
-                alt="Index"
-              />
-            </div>
-            <div className={`${styles.sidebar_text}`}>Sơ đồ tổ chức</div>
-          </div>
-        </Link>
-        <Link
-          className={`  ${activeButton === 6 ? styles.clicked : ""}`}
-          onClick={() => handleClick(0)}
-          href="/"
-        >
-          <div className={`${styles.sidebar_home}`}>
-            <div className={`${styles.button1}`}>
-              <img
-                src={
-                  "		https://phanmemnhansu.timviec365.vn//assets/images/l_images/baocao_ns.svg"
-                }
-                className={`${styles.img_1}`}
-                alt="Index"
-              />
-            </div>
-            <div className={`${styles.sidebar_text}`}>Báo cáo nhân sự</div>
-          </div>
-        </Link>
-        <Link
-          className={`  ${activeButton === 7 ? styles.clicked : ""}`}
-          onClick={() => handleClick(0)}
-          href="/"
-        >
-          <div className={`${styles.sidebar_home}`}>
-            <div className={`${styles.button1}`}>
-              <img
-                src={
-                  "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_icon_setting.svg"
-                }
-                className={`${styles.img_1}`}
-                alt="Index"
-              />
-            </div>
-            <div className={`${styles.sidebar_text}`}>Cài đặt</div>
-          </div>
-        </Link>
-        <Link
-          className={`  ${activeButton === 8 ? styles.clicked : ""}`}
-          onClick={() => handleClick(0)}
-          href="/"
-        >
-          <div className={`${styles.sidebar_home}`}>
-            <div className={`${styles.button1}`}>
-              <img
-                src={
-                  "		https://phanmemnhansu.timviec365.vn//assets/images/l_images/daxoa.svg"
-                }
-                className={`${styles.img_1}`}
-                alt="Index"
-              />
-            </div>
-            <div className={`${styles.sidebar_text}`}>Dữ liệu xóa gần đây</div>
-          </div>
-        </Link>
-        <Link
-          className={`  ${activeButton === 9 ? styles.clicked : ""}`}
-          onClick={() => handleClick(0)}
-          href="/"
-        >
-          <div className={`${styles.sidebar_home}`}>
-            <div className={`${styles.button1}`}>
-              <img
-                src={
-                  "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_chuyendoiso.svg"
-                }
-                className={`${styles.img_1}`}
-                alt="Index"
-              />
-            </div>
-            <div className={`${styles.sidebar_text}`}>Chuyển đổi số</div>
-          </div>
-        </Link>
+
+        ))}
 
       </div>
     </>
