@@ -18,8 +18,6 @@ export default function Bodyframe({ children }: any) {
                 <BodyFrameSection2>{children}</BodyFrameSection2>
                 <BodyFrameSection3>{children}</BodyFrameSection3>
                 <BodyFrameFooter>{children}</BodyFrameFooter>
-
-
             </div>
 
         </>

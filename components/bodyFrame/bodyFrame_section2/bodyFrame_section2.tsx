@@ -42,16 +42,16 @@ export default function BodyFrameSection2({ children }: any) {
                 <div className={`${styles.item_right}`}>
                     <div className={`${styles.month}`}>June</div>
                     <div className={`${styles.time_image}`}>
-                        <img src="	https://phanmemnhansu.timviec365.vn//assets/images/l_images/img_time.svg" alt="thoitiet" />
+                        <img className={`${styles.image}`} src="	https://phanmemnhansu.timviec365.vn//assets/images/l_images/img_time.svg" alt="thoitiet" />
                     </div>
                     <div className={`${styles.flex}`}>
                         <div className={`${styles.time}`}>
                             16:17:56 PM
                         </div>
-                        <div className={`${styles.days}`}>
+                    </div>
+                    <div className={`${styles.days}`}>
                             saturday 17/06/2023
                         </div>
-                    </div>
                 </div>
             </div>
         </>

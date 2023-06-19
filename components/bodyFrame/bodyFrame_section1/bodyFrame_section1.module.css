@@ -1,6 +1,7 @@
 .wrapper {
   display: flex;
 }
+
 .item_left {
   height: 109px;
   background: #ffffff;
@@ -9,11 +10,14 @@
   display: flex;
   width: 75%;
   margin: 50px 20px 15px 10px;
+  position: relative;
 }
+
 .item_left_text {
   width: 50%;
   padding: 24px 0px 24px 41px;
 }
+
 .item_left_text1 {
   color: #9ed16f;
   margin-right: 5px;
@@ -22,6 +26,7 @@
   font-size: 27px;
   line-height: 35px;
 }
+
 .item_left_text2 {
   font-style: normal;
   font-weight: normal;
@@ -32,11 +37,15 @@
   color: #666666;
   margin-top: 8px;
 }
+
 .item_left_img {
   width: 50%;
-  position: relative;
-  height: 100%;
+  position: absolute;
   bottom: 0%;
+  right: 10px;
+  right: 10px;
+  display: grid;
+  justify-items: flex-end;
 }
 
 .item_right {
@@ -48,26 +57,32 @@
   width: 25%;
   margin: 50px 10px 20px 0;
 }
+
 .right_top {
   padding: 17px 17px 6px;
 }
+
 .city_home {
   font-size: 12px;
   line-height: 14px;
   color: #474747;
   font-weight: 600;
 }
+
 .weather_image {
   width: 71px;
   height: 56px;
 }
+
 .weather {
   display: flex;
   justify-content: space-evenly;
 }
+
 .weather_flex {
   display: flex;
 }
+
 .temperature {
   padding: 0;
   font-style: normal;
@@ -75,6 +90,7 @@
   font-size: 44px;
   color: #474747;
 }
+
 .weather_sign {
   padding: 11px 0;
 }

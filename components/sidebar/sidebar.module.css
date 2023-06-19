@@ -6,12 +6,17 @@
   background: #4c5bd4;
   padding-left: 0px;
 }
+
+.sidebar_wrapper{
+  
+}
 .sidebar_home {
   display: flex;
 }
 .sidebar_img {
 }
 .sidebar_text {
+  width: 100%;
   background: white;
   font-style: normal;
   font-weight: 500;
@@ -21,7 +26,7 @@
   align-items: center;
   color: #474747;
   padding: 14.5px;
-  width: 100%;
+
 }
 .sidebar_text:hover {
   border-right: 4px solid #4c5bd4;
@@ -32,6 +37,7 @@
   text-decoration: none !important;
 } */
 .logo {
+  height: 27.2px;
   padding: 24px;
   text-align: center;
   border-bottom: 1px solid #ececec;
