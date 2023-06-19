@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import styles from '../../sidebar.module.css'
+import React, { useState } from "react";
+import styles from "../../sidebar.module.css";
 import Link from "next/link";
 
-export interface RecruitmentManager {
-
-}
+export interface RecruitmentManager { }
 
 export default function RecruitmentManager({ children }: any) {
     const [activeButton, setActiveButton] = useState(null);
@@ -16,15 +14,18 @@ export default function RecruitmentManager({ children }: any) {
     const submenu = [
         {
             img: "https://phanmemnhansu.timviec365.vn//assets/images/l_images/quytrinh_td.svg",
-            title: 'Quy trình tuyển dụng'
+            title: 'Quy trình tuyển dụng',
+            href: 'recruitmentProcess',
         },
         {
             img: "	https://phanmemnhansu.timviec365.vn//assets/images/l_images/thuchien_td.svg",
-            title: 'Thực hiện tuyển dụng'
+            title: 'Thực hiện tuyển dụng',
+            href: ''
         },
         {
             img: "https://phanmemnhansu.timviec365.vn//assets/images/l_images/ds_ungvien.svg",
-            title: 'Danh sách ứng viên'
+            title: 'Danh sách ứng viên',
+            href: ''
         },
     ]
 
@@ -36,7 +37,7 @@ export default function RecruitmentManager({ children }: any) {
                         <Link
                             className={` ${activeButton === 1 ? styles.clicked : ""}`}
                             onClick={() => handleClick(1)}
-                            href="/"
+                            href={item.href}
                         >
                             <div className={`${styles.sidebar_home}`}>
                                 <div className={`${styles.button2}`}>
