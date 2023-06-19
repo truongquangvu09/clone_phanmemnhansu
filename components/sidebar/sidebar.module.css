@@ -7,8 +7,7 @@
   padding-left: 0px;
 }
 
-.sidebar_wrapper{
-  
+.sidebar_wrapper {
 }
 .sidebar_home {
   display: flex;
@@ -26,7 +25,6 @@
   align-items: center;
   color: #474747;
   padding: 14.5px;
-
 }
 .sidebar_text1:hover {
   border-right: 4px solid #4c5bd4;
@@ -36,10 +34,6 @@
   border-right: 4px solid #fc9797;
   background: #fff6e5;
 }
-/* a {
-  color: #337ab7;
-  text-decoration: none !important;
-} */
 .logo {
   height: 27.2px;
   padding: 24px;
@@ -95,7 +89,12 @@
 }
 
 .clicked {
-  background: rgba(255, 255, 255, 0.4);
+  border-right: 4px solid #4c5bd4;
+  background-color: rgb(241, 249, 252);
+}
+.subMenu {
+  overflow: hidden;
+  transition: max-height 2s ease-out;
 }
 
 /* Responsive Styling */
