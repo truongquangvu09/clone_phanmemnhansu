@@ -86,8 +86,6 @@ export default function Sidebar(props: SideBarProp) {
       href: '',
       submenu: <SalaryAndBenefits />
     },
-
-
   ];
 
   return (
