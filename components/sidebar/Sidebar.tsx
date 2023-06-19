@@ -103,6 +103,7 @@ export default function Sidebar(props: SideBarProp) {
             />
           </a>
         </div>
+        <div className={`${styles.sidebar_item}`}>
         {sidebarItems.map((item, index) => (
           <div key={index} >
             <Link
@@ -120,9 +121,8 @@ export default function Sidebar(props: SideBarProp) {
             </Link>
             {showSubMenu && activeButton === index && item.submenu}
           </div>
-
         ))}
-
+        </div>
       </div>
     </>
   );
