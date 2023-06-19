@@ -23,9 +23,13 @@
   padding: 14.5px;
   width: 100%;
 }
-.sidebar_text:hover {
+.sidebar_text1:hover {
   border-right: 4px solid #4c5bd4;
   background: #f1f9fc;
+}
+.sidebar_text2:hover {
+  border-right: 4px solid #fc9797;
+  background: #fff6e5;
 }
 /* a {
   color: #337ab7;
@@ -69,12 +73,11 @@
   gap: 10px;
   width: 52px;
   height: 45px;
-  background: #bbbbbb;
+  background: none;
   flex: none;
   order: 0;
   flex-grow: 0;
   border: none;
-  border-bottom: 1px solid #bbbbbb;
 }
 
 .button1 img {

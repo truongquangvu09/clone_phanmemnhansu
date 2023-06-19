@@ -13,45 +13,49 @@ export default function RecruitmentManager({ children }: any) {
         setActiveButton(buttonIndex);
     };
 
+    const submenu = [
+        {
+            img: "https://phanmemnhansu.timviec365.vn//assets/images/l_images/quytrinh_td.svg",
+            title: 'Quy trình tuyển dụng'
+        },
+        {
+            img: "	https://phanmemnhansu.timviec365.vn//assets/images/l_images/thuchien_td.svg",
+            title: 'Thực hiện tuyển dụng'
+        },
+        {
+            img: "https://phanmemnhansu.timviec365.vn//assets/images/l_images/ds_ungvien.svg",
+            title: 'Danh sách ứng viên'
+        },
+    ]
+
     return (
-        <div className={`${styles.subMenu}`}>
-            <Link
-                className={` ${activeButton === 1 ? styles.clicked : ""}`}
-                onClick={() => handleClick(1)}
-                href="/"
-            >
-                <div className={`${styles.sidebar_home}`}>
-                    <div className={`${styles.button2}`}>
-                        <img
-                            src={
-                                "https://phanmemnhansu.timviec365.vn/assets/images/l_images/tuyendung.svg"
-                            }
-                            className={`${styles.img_1}`}
-                            alt="Index"
-                        />
+        <>
+            {submenu.map((item, index) => (
+                <div key={index}>
+                    <div className={`${styles.subMenu}`}>
+                        <Link
+                            className={` ${activeButton === 1 ? styles.clicked : ""}`}
+                            onClick={() => handleClick(1)}
+                            href="/"
+                        >
+                            <div className={`${styles.sidebar_home}`}>
+                                <div className={`${styles.button2}`}>
+                                    <img
+                                        src={
+                                            item.img
+                                        }
+                                        className={`${styles.img_1}`}
+                                        alt="Index"
+                                    />
+                                </div>
+                                <div className={`${styles.sidebar_text} ${styles.sidebar_text2}`}>{item.title}</div>
+                            </div>
+                        </Link>
                     </div>
-                    <div className={`${styles.sidebar_text}`}>Hỗ trợ tuyển dụng</div>
                 </div>
-            </Link>
-            <Link
-                className={` ${activeButton === 2 ? styles.clicked : ""}`}
-                onClick={() => handleClick(2)}
-                href="/"
-            >
-                <div className={`${styles.sidebar_home}`}>
-                    <div className={`${styles.button2}`}>
-                        <img
-                            src={
-                                "https://phanmemnhansu.timviec365.vn/assets/images/l_images/thanhtich_vipham.svg"
-                            }
-                            className={`${styles.img_1}`}
-                            alt="Index"
-                        />
-                    </div>
-                    <div className={`${styles.sidebar_text}`}>Đã tuyển dụng</div>
-                </div>
-            </Link>
-            {/* Thêm các link menu con khác vào đây */}
-        </div>
+            ))}
+        </>
+
+
     )
 }

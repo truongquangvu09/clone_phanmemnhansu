@@ -4,6 +4,8 @@ import { number } from "prop-types";
 import Link from "next/link";
 import RecruitmentManager from "./subMenu/recruitmentManager/recruitmentManager";
 import SalaryAndBenefits from "./subMenu/salaryAndBenefits/salaryAndBenefits";
+import Administration from "./subMenu/administration/administration";
+import DevelopmentTraining from "./subMenu/developmentTraining/developmenttraining";
 
 
 export interface SideBarProp { }
@@ -48,13 +50,13 @@ export default function Sidebar(props: SideBarProp) {
       label: "Quản lý hành chính",
       icon: "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn-hanhchinh.svg",
       href: '',
-      submenu: <SalaryAndBenefits />
+      submenu: <Administration />
     },
     {
       label: "Đào tạo phát triển",
       icon: "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_daotao.svg",
       href: '',
-      submenu: <SalaryAndBenefits />
+      submenu: < DevelopmentTraining />
     },
     {
       label: "Sơ đồ tổ chức",
@@ -102,7 +104,7 @@ export default function Sidebar(props: SideBarProp) {
           </a>
         </div>
         {sidebarItems.map((item, index) => (
-          <div key={index}>
+          <div key={index} >
             <Link
               key={index}
               className={`${activeButton === index ? styles.clicked : ""}`}
@@ -113,7 +115,7 @@ export default function Sidebar(props: SideBarProp) {
                 <div className={`${styles.button1}`}>
                   <img src={item.icon} className={`${styles.img_1}`} alt="Index" />
                 </div>
-                <div className={`${styles.sidebar_text}`}>{item.label}</div>
+                <div className={`${styles.sidebar_text} ${styles.sidebar_text1}`}>{item.label}</div>
               </div>
             </Link>
             {showSubMenu && activeButton === index && item.submenu}

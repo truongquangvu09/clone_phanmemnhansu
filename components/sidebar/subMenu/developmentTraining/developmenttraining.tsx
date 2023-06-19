@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import styles from '../../sidebar.module.css'
 import Link from "next/link";
 
-export interface SalaryAndBenefits {
+export interface DevelopmentTraining {
 
 }
 
-export default function SalaryAndBenefits({ children }: any) {
+export default function DevelopmentTraining({ children }: any) {
     const [activeButton, setActiveButton] = useState(null);
     const handleClick = (buttonIndex: number) => {
         // @ts-ignore
@@ -15,34 +15,19 @@ export default function SalaryAndBenefits({ children }: any) {
 
     const submenu = [
         {
-            img: "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_chamcong.svg",
-            title: 'Chấm công',
-            href: '',
+            img: "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_vitricongviec.svg",
+            title: 'Vị trí công việc',
+            href: ''
         },
         {
-            img: "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_tinhluong.svg",
-            title: 'Tính lương',
-            href: '',
+            img: "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_quytrinhdaotao.svg",
+            title: 'Quy trình đào tạo',
+            href: ''
         },
         {
-            img: "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_kpi.svg",
-            title: 'KPI',
-            href: '',
-        },
-        {
-            img: "		https://phanmemnhansu.timviec365.vn//assets/images/l_images/thanhtich.svg",
-            title: 'Khen thưởng',
-            href: '',
-        },
-        {
-            img: "	https://phanmemnhansu.timviec365.vn//assets/images/l_images/vipham.svg",
-            title: 'Kỷ luật( Vi phạm )',
-            href: '',
-        },
-        {
-            img: "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_phucloi.svg",
-            title: 'Phúc lợi',
-            href: '',
+            img: "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_danhgianangluc.svg",
+            title: 'Đánh giá năng lực nhân viên',
+            href: ''
         },
     ]
 
@@ -54,7 +39,7 @@ export default function SalaryAndBenefits({ children }: any) {
                         <Link
                             className={` ${activeButton === 1 ? styles.clicked : ""}`}
                             onClick={() => handleClick(1)}
-                            href={item.href}
+                            href="/"
                         >
                             <div className={`${styles.sidebar_home}`}>
                                 <div className={`${styles.button2}`}>
