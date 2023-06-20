@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import styles from "../../sidebar.module.css";
+import React, { useState } from 'react';
+import styles from '../../sidebar.module.css'
 import Link from "next/link";
 
-export interface RecruitmentManager { }
+export interface DevelopmentTraining {
 
-export default function RecruitmentManager({ children }: any) {
+}
+
+export default function DevelopmentTraining({ children }: any) {
     const [activeButton, setActiveButton] = useState(null);
     const handleClick = (buttonIndex: number) => {
         // @ts-ignore
@@ -13,19 +15,19 @@ export default function RecruitmentManager({ children }: any) {
 
     const submenu = [
         {
-            img: "https://phanmemnhansu.timviec365.vn//assets/images/l_images/quytrinh_td.svg",
-            title: 'Quy trình tuyển dụng',
-            href: 'recruitmentProcess',
+            img: "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_vitricongviec.svg",
+            title: 'Vị trí công việc',
+            href: ''
         },
         {
-            img: "	https://phanmemnhansu.timviec365.vn//assets/images/l_images/thuchien_td.svg",
-            title: 'Thực hiện tuyển dụng',
-            href: 'performRecruitment'
+            img: "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_quytrinhdaotao.svg",
+            title: 'Quy trình đào tạo',
+            href: ''
         },
         {
-            img: "https://phanmemnhansu.timviec365.vn//assets/images/l_images/ds_ungvien.svg",
-            title: 'Danh sách ứng viên',
-            href: 'candidateList'
+            img: "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_danhgianangluc.svg",
+            title: 'Đánh giá năng lực nhân viên',
+            href: ''
         },
     ]
 
@@ -37,7 +39,7 @@ export default function RecruitmentManager({ children }: any) {
                         <Link
                             className={` ${activeButton === 1 ? styles.clicked : ""}`}
                             onClick={() => handleClick(1)}
-                            href={item.href}
+                            href="/"
                         >
                             <div className={`${styles.sidebar_home}`}>
                                 <div className={`${styles.button2}`}>

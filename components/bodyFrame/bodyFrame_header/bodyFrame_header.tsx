@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
 import styles from './bodyFrame_header.module.css'
+import DropDownMenu from './drop_down_menu/dropDownMenu';
+import Notify from './notify/notify';
 export interface BodyFrameHeader {
 
 }
 
 export default function BodyFrameHeader({ children }: any) {
+    const [menuClick, setMenuClick] = useState(false)
+    const [noti, setNoti] = useState(false)
+
+    const toggleMenu = () => {
+        setMenuClick(prevState => !prevState);
+    };
+    const handleNotify = () => {
+        setNoti(PrevState => !PrevState)
+    }
     return (
         <>
             <div className={`${styles.wrapper}`}>
@@ -16,26 +27,31 @@ export default function BodyFrameHeader({ children }: any) {
                     <div className={`${styles.header_right}`} >
                         <div className={`${styles.header_right_item1}`} >
                             <div className={`${styles.menu_top_icon}`}>
-                                <img src="	https://phanmemnhansu.timviec365.vn//assets/images/l_images/chat.svg" alt="icon" />
+                                <img className={`${styles.drop_down}`} src="	https://phanmemnhansu.timviec365.vn//assets/images/l_images/chat.svg" alt="icon" />
+                            </div>
+                            <div className={`${styles.menu_top_icon}`} onClick={handleNotify}>
+                                <img className={`${styles.drop_down}`} src="	https://phanmemnhansu.timviec365.vn//assets/images/l_images/nhacnho.svg" alt="icon" />
                             </div>
                             <div className={`${styles.menu_top_icon}`}>
-                                <img src="	https://phanmemnhansu.timviec365.vn//assets/images/l_images/nhacnho.svg" alt="icon" />
-                            </div>
-                            <div className={`${styles.menu_top_icon}`}>
-                                <img src="	https://phanmemnhansu.timviec365.vn//assets/images/l_images/thongbao.svg" alt="icon" />
+                                <img className={`${styles.drop_down}`} src="	https://phanmemnhansu.timviec365.vn//assets/images/l_images/thongbao.svg" alt="icon" />
                             </div>
                         </div>
                         <div className={`${styles.header_right_item2}`} >
                             <div className={`${styles.header_avatar}`}>
-                                <img src="" alt="" />
+                                <img className={`${styles.image_avatar}`} src="https://chamcong.24hpay.vn/upload/employee/ep555955/app_1686633773283.jpg" alt="" />
                             </div>
                             <div className={`${styles.name}`}>Trương Quang Vũ</div>
-                            <div className={`${styles.drop_down}`}>
+                            <div className={`${styles.drop_down}`} onClick={toggleMenu}>
                                 <img src="https://phanmemnhansu.timviec365.vn//assets/images/l_images/menu.svg" alt="icon" />
                             </div>
                         </div>
                     </div>
+
                 </div>
+                {menuClick && <DropDownMenu></DropDownMenu>}
+                {noti && <Notify></Notify>}
+                { }
+
             </div>
         </>
     )

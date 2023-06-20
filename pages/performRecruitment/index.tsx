@@ -1,98 +1,48 @@
+/* eslint-disable react/jsx-key */
 import React, { useState } from "react";
-
-import styles from "./performRecruitment.module.css";
-import { log } from "console";
 import Link from "next/link";
+import styles from './headerForm.module.css'
+import { useRouter } from "next/router";
+import PerformRecruitment from "./Tabs/Overview/Overview";
+import Recruitment from "./Tabs/Recruitment/recruitment";
 
-export interface PerformRecruitment {}
+export interface HeaderForm {}
 
-export default function PerformRecruitment({ children }: any) {
-  const [active, setActive] = useState(true);
-
-  const handleActive = () => {};
-  const directional = [
+export default function HeaderForm({ children }: any) {
+  const [active, setActive] = useState(1);
+  const listTab = [
     {
-      id: 1,
-      name: "TỔNG QUAN",
+      key: 1,
+      header: "TỔNG QUAN",
+      compoment: <PerformRecruitment></PerformRecruitment>
     },
     {
-      id: 2,
-      name: "TIN TUYỂN DỤNG",
+      key: 2,
+      header: "TIN TUYỂN DỤNG",
+      compoment: <Recruitment></Recruitment>
     },
-  ];
+
+  ]
 
   return (
     <>
-      <div className={`${styles.l_body}`}>
-        <ul className={`${styles.nav} ${styles.nav_tabs}`}>
-          <li className={`${styles.li_tabs}`}>
-            <span
-              className={`${active === true ? styles.active : " "} `}
-              onChange={handleActive}
-            >
-              TỔNG QUAN
-            </span>
-          </li>
-          <li className={`${styles.li_tabs}`}>
-            <span
-              className={`${active === false ? styles.active : " "} `}
-              onChange={handleActive}
-            >
-              TIN TUYỂN DỤNG
-            </span>
-          </li>
-        </ul>
-      </div>
-
-      <div className={`${styles.tab_content}`}>
-        <div id="tongquan" className={`${styles.fade} ${styles.in} ${styles.active}`}>
-          <div className={`${styles.tindangmo}`} id="tindangmo_left">
-            {/* title */}
-            <div className={`${styles.tin_title}`}>
-              <h5>Tin đang mở</h5>
-            </div>
-
-            {/* body */}
-
-            <div className={`${styles.tin_all} ${styles.tin_all_t_left}`}>
-              <hr></hr>
-              <div className={`${styles.tin_item}`}>
-                <div className={`${styles.tin_item1}`}>
-                  <span>1</span>
-                  <p>ứng viên</p>
-                </div>
-
-                <div className={`${styles.tin_item2}`}>
-                  <h4>
-                    <Link
-                      href={{
-                        pathname: "",
-                        query: "",
-                      }}
-                    >
-                      (TD189) it
-                    </Link>
-                  </h4>
-                </div>
-
-                <div className={`${styles.tin_item3}`}>
-                  <li className={`${styles.tin_item33}`}>
-                    <picture>
-                      <img src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/calendar.png"></img>
-                      17/06/2023 - 19/06/2023
-                    </picture>
-                  </li>
-
-                  <li>
-                    Est consequatur of
-                    <span>.</span>5 - 7 triệu
-                  </li>
-                </div>
-              </div>
-            </div>
+       <div className={`${styles.l_body}`}>
+       <ul className={`${styles.nav} ${styles.nav_tabs}`}>
+        {listTab.map((item)=>(
+          <div key={item.key}>
+             <li  className={`${styles.li_tabs}`}>
+           <span
+             className={`${active === item?.key ? styles.active : styles.hover} `}
+             onClick={() => setActive(item.key)}
+           >
+             {item.header}
+           </span>
+         </li>
           </div>
-        </div>
-      </div>
+        ))}
+       </ul>
+       </div>
+       {listTab.find(item => item.key === active)?.compoment}
     </>
   );
 }

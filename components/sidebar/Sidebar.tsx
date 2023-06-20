@@ -4,12 +4,14 @@ import { number } from "prop-types";
 import Link from "next/link";
 import RecruitmentManager from "./subMenu/recruitmentManager/recruitmentManager";
 import SalaryAndBenefits from "./subMenu/salaryAndBenefits/salaryAndBenefits";
+import Administration from "./subMenu/administration/administration";
+import DevelopmentTraining from "./subMenu/developmentTraining/developmenttraining";
 
 
 export interface SideBarProp { }
 
 export default function Sidebar(props: SideBarProp) {
-  const [activeButton, setActiveButton] = useState(null);
+  const [activeButton, setActiveButton] = useState(0);
   const [showSubMenu, setShowSubMenu] = useState(false);
   const [subMenuShown, setSubMenuShown] = useState(null);
   console.log({ activeButton });
@@ -48,43 +50,43 @@ export default function Sidebar(props: SideBarProp) {
       label: "Quản lý hành chính",
       icon: "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn-hanhchinh.svg",
       href: '',
-      submenu: <SalaryAndBenefits />
+      submenu: <Administration />
     },
     {
       label: "Đào tạo phát triển",
       icon: "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_daotao.svg",
       href: '',
-      submenu: <SalaryAndBenefits />
+      submenu: < DevelopmentTraining />
     },
     {
       label: "Sơ đồ tổ chức",
       icon: "https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_sodotochuc.svg",
       href: '',
-      submenu: <SalaryAndBenefits />
+      submenu: ''
     },
     {
       label: "Báo cáo nhân sự",
       icon: "		https://phanmemnhansu.timviec365.vn//assets/images/l_images/baocao_ns.svg",
       href: '',
-      submenu: <SalaryAndBenefits />
+      submenu: ''
     },
     {
       label: "Cài đặt",
       icon: "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_icon_setting.svg",
       href: '',
-      submenu: <SalaryAndBenefits />
+      submenu: ''
     },
     {
       label: "Dữ liệu gần đây đã xóa",
       icon: "		https://phanmemnhansu.timviec365.vn//assets/images/l_images/daxoa.svg",
       href: '',
-      submenu: <SalaryAndBenefits />
+      submenu: ''
     },
     {
       label: "Chuyển đổi số",
       icon: "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_chuyendoiso.svg",
       href: '',
-      submenu: <SalaryAndBenefits />
+      submenu: ''
     },
   ];
 
@@ -100,24 +102,23 @@ export default function Sidebar(props: SideBarProp) {
           </a>
         </div>
         <div className={`${styles.sidebar_item}`}>
-        {sidebarItems.map((item, index) => (
-          <div key={index}>
-            <Link
-              key={index}
-              className={`${activeButton === index ? styles.clicked : ""}`}
-              onClick={() => handleClick(index)}
-              href={item.href}
-            >
-              <div className={`${styles.sidebar_home}`}>
-                <div className={`${styles.button1}`}>
-                  <img src={item.icon} className={`${styles.img_1}`} alt="Index" />
+          {sidebarItems.map((item, index) => (
+            <div key={index} >
+              <Link
+                key={index}
+                onClick={() => handleClick(index)}
+                href={item.href}
+              >
+                <div className={`${styles.sidebar_home} `}>
+                  <div className={`${styles.button1}`}>
+                    <img src={item.icon} className={`${styles.img_1}`} alt="Index" />
+                  </div>
+                  <div className={`${styles.sidebar_text} ${styles.sidebar_text1} ${activeButton === index ? styles.clicked : ""}`}>{item.label}</div>
                 </div>
-                <div className={`${styles.sidebar_text}`}>{item.label}</div>
-              </div>
-            </Link>
-            {showSubMenu && activeButton === index && item.submenu}
-          </div>
-        ))}
+              </Link>
+              {showSubMenu && activeButton === index && item.submenu}
+            </div>
+          ))}
         </div>
       </div>
     </>
