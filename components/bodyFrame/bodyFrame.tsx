@@ -12,9 +12,7 @@ export default function Bodyframe({ children }: any) {
             <div className={`${styles.wrapper}`}>
                 <BodyFrameHeader></BodyFrameHeader>
                 {children}
-                
             </div>
-
         </>
     )
 }

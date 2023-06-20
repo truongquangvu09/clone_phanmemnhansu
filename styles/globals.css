@@ -64,6 +64,7 @@ li,
 input,
 select {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  list-style: none;
 }
 
 input,
@@ -74,6 +75,10 @@ textarea {
 table {
   color: #474747;
   font-weight: 500;
+}
+button {
+  -webkit-appearance: button;
+  cursor: pointer;
 }
 
 @media (prefers-color-scheme: dark) {
