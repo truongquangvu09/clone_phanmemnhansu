@@ -1,0 +1,126 @@
+
+.l_body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.l_body {
+    display: inline-block;
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    max-width: 1120px;
+    height: auto;
+}
+
+.nav {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    margin-top: 0;
+    border-bottom: 1px solid #ddd;
+    
+}
+.nav li {
+    cursor: default;
+    background: none;
+    border: none;
+    font-size: 14px;
+    margin: 0 2px 0 0;
+    color: #474747 !important;
+}
+
+.active {
+    border-bottom: 3.5px solid #4C5BD4;
+    color: #4C5BD4 !important;
+}
+.nav-tabs {
+    display: block;
+    overflow-y: hidden;
+    
+}
+.li_tabs {
+    
+    line-height: 44px;
+    cursor: default;
+}
+.li_tabs span {
+    font-weight: 700;
+    font-size: 14px;
+    margin-right: 56px;
+    padding: 12px 21.5px;
+}
+
+/* tin dang mo */
+
+.tab_content {
+    width: 1120px;
+    height: auto;
+}
+
+.tab_content > .active {
+    display: block;
+}
+#tongquan {
+    margin-top: 50px;
+}
+.fade .in {
+    opacity: 1;
+}
+.fade {
+    transition: opacity 0.15s linear;
+}
+.tindangmo {
+    background: #FFFFFF;
+    float: left;
+    padding: 20px;
+    border-radius: 8px;
+    width: 45%;
+    margin-right: 3%;
+    max-width: 505px;
+}
+
+.tin_title {
+    width: 464px;
+    height: 15px;
+}
+.tin_title h5 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 0;
+    color: #333333;
+}
+
+.tin_all .tin_item {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.tin_all_t_left {
+    min-height: 610px;
+}
+.tin_all hr {
+    height: 0 ;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+.tin_item1 {
+    font-size: 14px;
+    float: left;
+    text-align: center;
+    border: 1px solid #4C5BD4;
+    border-radius: 8px;
+    padding: 14px 10px;
+}
+.tin_item1 p {
+    margin: 0;
+    padding: 0;
+    color: #333333; 
+}

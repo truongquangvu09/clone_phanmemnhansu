@@ -31,7 +31,7 @@ export default function RecruitmentManager({ children }: any) {
               />
             </picture>
           </div>
-          <div className={`${styles.sidebar_text}`}>Hỗ trợ tuyển dụng</div>
+          <div className={`${styles.sidebar_text}`}>Quy trình tuyển dụng</div>
         </div>
       </Link>
 
@@ -39,7 +39,7 @@ export default function RecruitmentManager({ children }: any) {
       <Link
         className={` ${activeButton === 2 ? styles.clicked : ""}`}
         onClick={() => handleClick(2)}
-        href="/"
+        href="/performRecruitment"
       >
         <div className={`${styles.sidebar_home}`}>
           <div className={`${styles.button2}`}>
@@ -53,7 +53,7 @@ export default function RecruitmentManager({ children }: any) {
               />
             </picture>
           </div>
-          <div className={`${styles.sidebar_text}`}>Đã tuyển dụng</div>
+          <div className={`${styles.sidebar_text}`}>Thực hiện tuyển dụng</div>
         </div>
       </Link>
 
@@ -75,7 +75,7 @@ export default function RecruitmentManager({ children }: any) {
               />
             </picture>
           </div>
-          <div className={`${styles.sidebar_text}`}>Đã tuyển dụng</div>
+          <div className={`${styles.sidebar_text}`}>Danh sách ứng viên</div>
         </div>
       </Link>
       {/* Thêm các link menu con khác vào đây */}
