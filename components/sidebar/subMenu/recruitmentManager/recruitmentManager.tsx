@@ -25,7 +25,7 @@ export default function RecruitmentManager({ children }: any) {
         {
             img: "https://phanmemnhansu.timviec365.vn//assets/images/l_images/ds_ungvien.svg",
             title: 'Danh sách ứng viên',
-            href: ''
+            href: 'candidateList'
         },
     ]
 

@@ -1,5 +1,5 @@
 :root {
-  font-family: "Roboto", sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -12,6 +12,7 @@ html,
 body {
   margin: 0px;
   background-color: #fafafa;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 body {
@@ -22,6 +23,57 @@ a {
 }
 a:hover {
   background: #f1f9fc;
+}
+
+@font-face {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  src: url("/assets/font/t-font/roboto-v16-vietnamese_latin-ext-regular.woff2");
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  src: url("/assets/font/t-font/roboto-v16-vietnamese_latin-ext-500.woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  src: url("/assets/font/t-font/roboto-v16-vietnamese_latin-ext-700.woff2");
+  font-display: swap;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+a,
+p,
+span,
+textarea,
+li,
+input,
+select {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+input,
+select,
+textarea {
+  outline: none !important;
+}
+table {
+  color: #474747;
+  font-weight: 500;
 }
 
 @media (prefers-color-scheme: dark) {
