@@ -1,0 +1,123 @@
+.body {
+  display: inline-block;
+  width: 92%;
+  margin-top: 20px;
+}
+.row_search_new_t {
+  margin-top: 0px;
+  padding-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+}
+.div_no_pad {
+}
+.form_control {
+  display: block;
+  width: 100%;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+.input_process {
+  background-color: white;
+  border: 1px solid rgba(71, 71, 71, 0.48);
+  width: 115%;
+  height: 35px;
+  line-height: 45px;
+  font-weight: 600;
+}
+.icon_t_search_top {
+  display: inline-block;
+  background: #4c5bd4;
+  border-radius: 5px;
+  padding: 5px 25px;
+  width: 100%;
+  text-align: center;
+  height: 23px;
+}
+.member_list {
+  width: 105%;
+}
+.navigate_next {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  position: absolute;
+  top: 55%;
+}
+.turn {
+  z-index: 1;
+  background: #fff;
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.12));
+  opacity: 0.7;
+  position: absolute;
+  top: 50%;
+}
+.turn_left {
+  left: 20px;
+}
+.turn_right {
+  right: 29%;
+}
+.table_content {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 10px !important;
+  height: auto;
+  overflow-x: scroll;
+  padding-bottom: 0px !important;
+  box-shadow: 0px 0px 10px rgb(0 0 0 / 10%);
+}
+.table {
+  color: #474747;
+  font-weight: 500;
+  background-color: transparent;
+}
+.table_list {
+  width: 350%;
+  max-width: unset;
+  border-collapse: collapse;
+  border-radius: 8px;
+  border: 1px solid rgba(102, 102, 102, 0.24);
+}
+.table thead {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: #4c5bd4;
+  color: white;
+}
+.table tr {
+  text-align: center;
+}
+.table thead tr th {
+  padding: 8px;
+  line-height: 1.42857143;
+  border: 1px solid white;
+  font-weight: 500;
+  text-align: center;
+}
+.table tbody tr {
+  background: white;
+}
+.table tbody tr td {
+  padding: 8px;
+  line-height: 1.42857143;
+  vertical-align: middle;
+  border-top: 1px solid #ddd;
+}
+.table td {
+  border: 1px solid rgba(102, 102, 102, 0.24);
+}
+/* scrollbar-color: red blue; */

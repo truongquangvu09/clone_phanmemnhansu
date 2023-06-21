@@ -1,20 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from './candidateListDetail.module.css'
+import CandidateAddModal from "../candidateAddModal";
+import StageAddModal from "../stageAddModal";
 
 export default function CandidateListDetail() {
+    const [openModal, setOpenModal] = useState(0)
     return (
         <>
             <div className={`${styles.tab_content}`}>
                 <div className={`${styles.tab_pane}`}>
                     <div className={`${styles.body}`}>
                         <div className={`${styles.recruitment}`}>
-                            <button className={`${styles.add}`}>
+                            <button className={`${styles.add}`} onClick={() => setOpenModal(1)}>
                                 <img src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm ứng viên
                             </button>
-                            <button className={`${styles.add}`}>
+                            <button className={`${styles.add}`} onClick={() => setOpenModal(2)}>
                                 <img src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm giai đoạn
                             </button>
                         </div>
+                        {openModal === 1 ? <CandidateAddModal></CandidateAddModal> : ''}
+                        {openModal === 2 ? <StageAddModal></StageAddModal> : ''}
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_top}`}>
                                 <div className={`${styles.div_no_pad}`}>
@@ -65,7 +70,6 @@ export default function CandidateListDetail() {
                                     <a href="" className={`${styles.icon_search_top}`}>
                                         <img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search-n.svg" alt="" />
                                     </a>
-
                                 </div>
                             </div>
                         </div>
@@ -80,25 +84,46 @@ export default function CandidateListDetail() {
                                 <div className={`${styles.hs_t}`}>
                                     <div className={`${styles.hs_header}`}>
                                         <p>Nhận hồ sơ ứng viên</p>
-                                        <p>(<span style={{ color: '#33ab7' }}>0</span>ứng viên)</p>
+                                        <p>(<span style={{ color: '#337ab7' }}> 0</span> ứng viên )</p>
                                     </div>
                                     <div className={`${styles.hs_body}`}></div>
                                 </div>
                                 <div className={`${styles.hs_t}`}>
                                     <div className={`${styles.hs_header}`}>
                                         <p>Chờ xét duyệt (
-                                            <a href="">Sửa</a>
+                                            <a href=""> Sửa </a>
                                             /
-                                            <a href="">Xóa</a>
+                                            <a href=""> Xóa </a>
                                             )</p>
-                                        <p>(<span style={{ color: '#33ab7' }}>0</span>ứng viên)</p>
+                                        <p>(<span style={{ color: '#337ab7' }}> 0 </span> ứng viên )</p>
                                     </div>
                                     <div className={`${styles.hs_body}`}></div>
                                 </div>
                                 <div className={`${styles.hs_t}`}>
-                                    <div className={`${styles.hs_header}`}>
-                                        <p>Nhận hồ sơ ứng viên</p>
-                                        <p>(<span style={{ color: '#33ab7' }}>0</span>ứng viên)</p>
+                                    <div className={`${styles.hs_header} ${styles.hs_status_job_1}`}>
+                                        <p>Nhận việc</p>
+                                        <p>(<span style={{ color: '#33ab7' }}> 0 </span> ứng viên )</p>
+                                    </div>
+                                    <div className={`${styles.hs_body}`}></div>
+                                </div>
+                                <div className={`${styles.hs_t}`}>
+                                    <div className={`${styles.hs_header} ${styles.hs_status_job_2}`}>
+                                        <p>Trượt</p>
+                                        <p>(<span style={{ color: '#33ab7' }}> 0 </span> ứng viên )</p>
+                                    </div>
+                                    <div className={`${styles.hs_body}`}></div>
+                                </div>
+                                <div className={`${styles.hs_t}`}>
+                                    <div className={`${styles.hs_header} ${styles.hs_status_job_3}`}>
+                                        <p>Hủy</p>
+                                        <p>(<span style={{ color: '#33ab7' }}> 0 </span> ứng viên )</p>
+                                    </div>
+                                    <div className={`${styles.hs_body}`}></div>
+                                </div>
+                                <div className={`${styles.hs_t}`}>
+                                    <div className={`${styles.hs_header} ${styles.hs_status_job_4}`}>
+                                        <p>Ký hợp đồng</p>
+                                        <p>(<span style={{ color: '#33ab7' }}> 0 </span> ứng viên )</p>
                                     </div>
                                     <div className={`${styles.hs_body}`}></div>
                                 </div>

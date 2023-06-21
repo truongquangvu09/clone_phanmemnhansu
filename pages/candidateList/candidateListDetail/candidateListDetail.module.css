@@ -120,7 +120,6 @@
 .hs_header {
   position: sticky;
   top: 0;
-  z-index: 1000;
   background: #fff6e5;
   text-align: center;
   color: #474747;
@@ -128,4 +127,28 @@
   font-size: 15px;
   padding: 11px 0px;
   border-radius: 4px;
+}
+.hs_header a {
+  color: #337ab7;
+}
+.hs_status_job_1 {
+  background: #27ae60;
+  color: #ffffff;
+}
+.hs_status_job_2 {
+  background: #eb5757;
+  color: #ffffff;
+}
+.hs_status_job_3 {
+  background: #ffa800;
+  color: #ffffff;
+}
+.hs_status_job_4 {
+  background: #4c5bd4;
+  color: #ffffff;
+}
+.search_can_new option {
+  cursor: pointer;
+  padding: 6px;
+  margin: 6px;
 }
