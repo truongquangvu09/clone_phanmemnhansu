@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import styles from "./recruitment.module.css";
-import Link from "next/link";
 import DataRecruitment from "../DataRecruitment/DataRecruitment";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 
@@ -58,16 +57,6 @@ export default function Recruitment({ children }: any) {
       matuyendung: "QTTD0",
     },
   ];
-
-  const dataSetting = [
-    {
-      key : 1,
-      detail: 'Chi tiết',
-      edit: 'Chỉnh sửa',
-      delete: 'Gỡ tin tuyển dụng',
-      Sample: "Thiết lập làm tin mẫu"
-    }
-  ]
 
   return (
     <>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "../Recruitment/recruitment.module.css"
 import Link from "next/link";
+import RecruitmentSetting from "./RecruitmentSetting/RecruitmentSetting";
 
 export interface DataRecruitment {}
 
@@ -64,23 +65,7 @@ export default function DataRecruitment({ data }: any) {
                         </picture>
 
                         {visible &&  (
-                          <>
-                            <div className={`${styles.settings}`}>
-                              <li className={`${styles.detail_new}`}>
-                                Chi tiết
-                              </li>
-                              <li className={`${styles.edit_new}`}>
-                                Chỉnh sửa tin
-                              </li>
-                              <hr
-                                style={{ marginTop: "0", marginBottom: "0" }}
-                              ></hr>
-                              <li onClick={handleDelete}>Gỡ tin tuyển dụng</li>
-                              <li onClick={handleEstablish}>
-                                Thiết lập làm tin mẫu
-                              </li>
-                            </div>
-                          </>
+                          <RecruitmentSetting></RecruitmentSetting>
                         )}
                       </button>
                     </div>
