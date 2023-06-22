@@ -20,7 +20,7 @@ export default function RecruitmentManager({ children }: any) {
         {
             img: "	https://phanmemnhansu.timviec365.vn//assets/images/l_images/thuchien_td.svg",
             title: 'Thực hiện tuyển dụng',
-            href: ''
+            href: 'performRecruitment'
         },
         {
             img: "https://phanmemnhansu.timviec365.vn//assets/images/l_images/ds_ungvien.svg",

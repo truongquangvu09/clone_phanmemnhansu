@@ -7,7 +7,6 @@ export interface RecruitmentProcess {}
 export default function RecruitmentProcess({ children }: any) {
 
     const handleSearch = () => {
-       
         alert('hdhdhdh')
     }
   return (

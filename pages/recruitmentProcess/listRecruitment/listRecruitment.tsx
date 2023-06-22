@@ -4,6 +4,11 @@ import Link from "next/link";
 export interface ListRecruitment {}
 
 export default function ListRecruitment({ children }: any) {
+
+  const handleDelete = () => {
+    alert('delete')
+  }
+
   const listRecruitment = [
     {
       _id: 1,
@@ -109,7 +114,7 @@ export default function ListRecruitment({ children }: any) {
                         alt=""
                       ></img>
                     </picture>
-                    <span className={`${styles.span_a}`}>Xóa</span>
+                    <span className={`${styles.span_a}`} onClick={handleDelete}>Xóa</span>
                   </button>
                 </div>
               </div>
