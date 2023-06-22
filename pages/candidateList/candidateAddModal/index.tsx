@@ -181,11 +181,11 @@ export default function CandidateAddModal() {
                                         <label htmlFor="">Đánh giá hồ sơ <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <ul className={`${styles.rating} ${styles.rating_add}`}>
-                                                <li className={`${styles.star}`}></li>
-                                                <li className={`${styles.star}`}></li>
-                                                <li className={`${styles.star}`}></li>
-                                                <li className={`${styles.star}`}></li>
-                                                <li className={`${styles.star}`}></li>
+                                                <li id="rate_1" className={`${styles.star}`}></li>
+                                                <li id="rate_2" className={`${styles.star}`}></li>
+                                                <li id="rate_3" className={`${styles.star}`}></li>
+                                                <li id="rate_4" className={`${styles.star}`}></li>
+                                                <li id="rate_5" className={`${styles.star}`}></li>
                                             </ul>
                                             <div className={`${styles.another_skill}`}>
                                                 <div className={`${styles.skill_input}`}>

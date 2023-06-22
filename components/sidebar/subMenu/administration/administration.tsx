@@ -17,7 +17,7 @@ export default function Administration({ children }: any) {
         {
             img: "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_quanlynhanvien.svg",
             title: 'Quản lý nhân viên',
-            href: '',
+            href: 'administration',
         },
         {
             img: "			https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_quydinhchinhsach.svg",

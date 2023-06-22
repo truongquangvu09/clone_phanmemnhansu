@@ -100,7 +100,11 @@
   content: "\2605";
   font-size: 30px;
 }
-.star:hover {
+.rating > li::before {
+  color: #c7c5c5;
+}
+.rating > li:hover:before,
+.rating li:hover ~ li::before {
   transition: color 0.8s ease;
   color: #fdbe1e;
 }
