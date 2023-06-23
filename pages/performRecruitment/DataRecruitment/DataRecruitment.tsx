@@ -7,7 +7,6 @@ export interface DataRecruitment {}
 
 export default function DataRecruitment({ data }: any) {
     
-
     const [visible, setVisible] = useState(false);
     const handleDelete = () => {
 
@@ -61,11 +60,11 @@ export default function DataRecruitment({ data }: any) {
                         className={`${styles.pull_right} ${styles.hover_t}`}
                       >
                         <picture className={`${styles.pull_right_img}`}>
-                          <img src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/3cham.png"></img>
+                          <img src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/3cham.png" alt=""></img>
                         </picture>
 
                         {visible &&  (
-                          <RecruitmentSetting></RecruitmentSetting>
+                          <RecruitmentSetting dataId = {data.id} item = {data}></RecruitmentSetting>
                         )}
                       </button>
                     </div>

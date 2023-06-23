@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-key */
+
 
 import React, { useState } from "react";
 import styles from "./recruitment.module.css";
@@ -9,15 +9,6 @@ export interface Recruitment {}
 
 export default function Recruitment({ children }: any) {
 
-  
-
-  const handleDelete =  () => {
-    // 
-  }
-
-  const handleEstablish = () => {
-    // 
-  }
 
   const data = [
     {
@@ -117,7 +108,10 @@ export default function Recruitment({ children }: any) {
           style={{ display: "inline-block" }}
         >
           {data.map((item) => (
-            <DataRecruitment data = {item}></DataRecruitment>
+            <div key={item.id}>
+             <DataRecruitment data = {item}></DataRecruitment>
+            </div>
+           
           ))}
         </div>
       </div>

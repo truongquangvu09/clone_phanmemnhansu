@@ -2,14 +2,19 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import styles from './Overview.module.css'
+import styles from "./PerformRecruitment.module.css";
 import Link from "next/link";
-
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 
 export interface PerformRecruitment {}
 
 export default function PerformRecruitment({ children }: any) {
+  const [selectedButton, setSelectedButton] = useState('homnay');
+
+  const handleClickColor = (buttonId: any) => {
+    setSelectedButton(buttonId);
+  };
+
   const tindangmodata = [
     {
       id: 1,
@@ -48,10 +53,23 @@ export default function PerformRecruitment({ children }: any) {
       thuviec: "7",
     },
   ];
+  const totalApplicants = [
+    {
+      key: 1,
+      active: "active_homnay",
+    },
+    {
+      key: 2,
+      active: "active_tuannay",
+    },
+    {
+      key: 3,
+      active: "active_thangnay",
+    },
+  ];
 
   return (
     <>
-      
       <div className={`${styles.tab_content}`}>
         <div
           id="tongquan"
@@ -65,7 +83,10 @@ export default function PerformRecruitment({ children }: any) {
             <hr></hr>
             {/* body map ở đây */}
             {tindangmodata.map((item, index) => (
-              <div key={index} className={`${styles.tin_all} ${styles.tin_all_t_left}`}>
+              <div
+                key={index}
+                className={`${styles.tin_all} ${styles.tin_all_t_left}`}
+              >
                 <div className={`${styles.tin_item}`}>
                   <div className={`${styles.tin_item1}`}>
                     <span>{item.hoso}</span>
@@ -143,19 +164,28 @@ export default function PerformRecruitment({ children }: any) {
             </div>
             <hr></hr>
             <div className={`${styles.h_today}`}>
-              <li className={`${styles.active_homnay}`}>
+              <li
+                className={`${selectedButton === 'homnay' ? styles.active_homnay : ''}`}
+                onClick={() => handleClickColor("homnay")}
+              >
                 <span className={`${styles.green} ${styles.candidate_today}`}>
                   0
                 </span>
                 <p>Hôm nay</p>
               </li>
-              <li className={`${styles.active_tuannay}`}>
+              <li
+                className={`${selectedButton === 'tuannay' ? styles.active_tuannay : ''}`}
+                onClick={() => handleClickColor("tuannay")}
+              >
                 <span className={`${styles.blue} ${styles.candidate_week}`}>
                   0
                 </span>
                 <p>Tuần này</p>
               </li>
-              <li className={`${styles.active_thangnay}`}>
+              <li
+                className={`${selectedButton === 'thangnay' ? styles.active_thangnay : ''}`}
+                onClick={() => handleClickColor("thangnay")}
+              >
                 <span className={`${styles.yellow} ${styles.candidate_month}`}>
                   0
                 </span>
