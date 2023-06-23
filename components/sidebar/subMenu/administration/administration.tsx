@@ -17,12 +17,12 @@ export default function Administration({ children }: any) {
         {
             img: "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_quanlynhanvien.svg",
             title: 'Quản lý nhân viên',
-            href: 'administration',
+            href: '/quan-ly-hanh-chinh/thong-tin-nhan-su',
         },
         {
             img: "			https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_quydinhchinhsach.svg",
             title: 'Quy định - chính sách',
-            href: '',
+            href: '/quan-ly-hanh-chinh/quy-dinh-chinh-sach',
         },
         {
             img: "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_hopdong.svg",

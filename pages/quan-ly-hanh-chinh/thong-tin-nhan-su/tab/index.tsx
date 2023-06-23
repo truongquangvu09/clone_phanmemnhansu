@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from './employeeManagement.module.css'
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 
-export interface EmployeeManagement {
+export interface TabEmployeeManagement {
 
 }
 export interface Employee {
@@ -20,7 +20,15 @@ export interface Employee {
     ngayvaocongty: string;
 }
 
-export default function EmployeeManagement({ children }: any) {
+export default function TabEmployeeManagement({ children }: any) {
+
+    const [activeButton, setActiveButton] = useState(0)
+    const [employeeCount, setEmployeeCount] = useState(10)
+
+    useEffect(() => {
+        setCurrentList(listCandidates.slice(0, employeeCount));
+    }, [employeeCount]);
+
 
     function createArray(n: number): Employee[] {
         const obj: Employee = {
@@ -39,8 +47,7 @@ export default function EmployeeManagement({ children }: any) {
         };
         return Array(n).fill(obj);
     }
-    const [activeButton, setActiveButton] = useState(0)
-    const [employeeCount, setEmployeeCount] = useState(10)
+    const listCandidates: Employee[] = createArray(50);
 
     const handleChoose = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const value = parseInt(event.target.value);
@@ -49,49 +56,13 @@ export default function EmployeeManagement({ children }: any) {
         window.scrollTo(0, 0);
     }
 
-    const listCandidates: Employee[] = createArray(5);
-
-    const totalPages = Math.floor(listCandidates.length / employeeCount) + ((listCandidates.length % employeeCount !== 0) ? 1 : 0);
-    console.log({ totalPages });
+    const totalPages = Math.ceil(listCandidates.length / employeeCount);
 
     const [currentList, setCurrentList] = useState<Employee[] | null>(null);
-
-    useEffect(() => {
-        if (!currentList || currentList.length === 0 || listCandidates) {
-            setCurrentList(listCandidates.slice(0, employeeCount));
-        }
-    }, [listCandidates, employeeCount, currentList]);
 
     const handleClick = (buttonIndex: number) => {
         setActiveButton(buttonIndex)
     }
-
-    // const tableContent = document.querySelector(`.${styles.table_content}`) as HTMLElement;
-    // let currentPosition = 0;
-
-    // // Xử lý sự kiện khi click vào nút "turn_left"
-    // document.querySelector(`.${styles.turn_left}`)?.addEventListener('click', () => {
-    //     // Tính toán vị trí mới của thanh scroll
-    //     const newPosition = currentPosition - 100; // Di chuyển 100px sang trái
-
-    //     // Gán vị trí mới cho thuộc tính scrollLeft và cập nhật biến currentPosition
-    //     if (newPosition >= 0) {
-    //         tableContent.scrollLeft = newPosition;
-    //         currentPosition = newPosition;
-    //     }
-    // });
-
-    // // Xử lý sự kiện khi click vào nút "turn_right"
-    // document.querySelector(`.${styles.turn_right}`)?.addEventListener('click', () => {
-    //     // Tính toán vị trí mới của thanh scroll
-    //     const newPosition = currentPosition + 100; // Di chuyển 100px sang phải
-
-    //     // Gán vị trí mới cho thuộc tính scrollLeft và cập nhật biến currentPosition
-    //     if (newPosition <= tableContent.scrollWidth - tableContent.clientWidth) {
-    //         tableContent.scrollLeft = newPosition;
-    //         currentPosition = newPosition;
-    //     }
-    // });
     const tableContentRef = useRef<HTMLDivElement>(null);
     const currentPositionRef = useRef(0);
 
@@ -159,7 +130,7 @@ export default function EmployeeManagement({ children }: any) {
                             </a>
                         </div>
                         <div className={`${styles.member_list}`}>
-                            <div className={`${styles.navigate_next}`} ref={tableContentRef}>
+                            <div className={`${styles.navigate_next}`} >
                                 <div className={`${styles.turn} ${styles.turn_left}`} onClick={handleLeftClick}>
                                     <img src="	https://phanmemnhansu.timviec365.vn/assets/images/arrow_left.png" alt="" />
                                 </div>
@@ -167,8 +138,8 @@ export default function EmployeeManagement({ children }: any) {
                                     <img src="	https://phanmemnhansu.timviec365.vn/assets/images/arrow_right.png" alt="" />
                                 </div>
                             </div>
-                            <div className={`${styles.table_content}`}>
-                                <table className={`${styles.table} ${styles.table_list}`}>
+                            <div className={`${styles.table_content}`} ref={tableContentRef}>
+                                <table className={`${styles.table} ${styles.table_list}`} >
                                     <thead>
                                         <tr>
                                             <th>ID nhân viên</th>

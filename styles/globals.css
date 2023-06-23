@@ -26,9 +26,6 @@ a:hover {
   /* background: #f1f9fc; */
 }
 
-
-
-
 @font-face {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   src: url("/assets/font/t-font/roboto-v16-vietnamese_latin-ext-regular.woff2");
@@ -84,6 +81,35 @@ table {
 button {
   -webkit-appearance: button;
   cursor: pointer;
+}
+html *::-webkit-scrollbar {
+  border-radius: 0;
+  width: 8px;
+}
+
+html *::-webkit-scrollbar {
+  border-radius: 0;
+  width: 8px;
+}
+
+html *::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+html *::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+html *::-webkit-scrollbar-track {
+  border-radius: 0;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+html *::-webkit-scrollbar-track {
+  border-radius: 0;
+  background-color: rgba(0, 0, 0, 0);
 }
 @media (prefers-color-scheme: dark) {
 }

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import styles from './administration.module.css'
 import Link from 'next/link';
-import EmployeeManagement from './employeeManagement';
+import TabEmployeeManagement from './tab';
 
-export interface Administration {
+export interface EmployeeManagement {
 
 }
 
-export default function Administration({ children }: any) {
+export default function EmployeeManagement({ children }: any) {
     const [active, setActive] = useState(1)
 
 
@@ -22,7 +22,7 @@ export default function Administration({ children }: any) {
                         <Link target='blank' href='https://chamcong.timviec365.vn/quan-ly-cong-ty/nhan-vien.html'>Kho ứng viên</Link>
                     </li>
                 </ul>
-                {active === 1 && <EmployeeManagement></EmployeeManagement>}
+                {active === 1 && <TabEmployeeManagement></TabEmployeeManagement>}
             </div>
 
 
