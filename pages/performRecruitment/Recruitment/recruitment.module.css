@@ -274,6 +274,7 @@
     border-left: 3px solid #ffffff;
     cursor: pointer;
 }
+
 .settings li:hover {
     color: #4C5BD4;
     border-left: 3px solid #4C5BD4;

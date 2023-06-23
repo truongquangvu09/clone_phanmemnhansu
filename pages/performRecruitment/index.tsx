@@ -1,10 +1,11 @@
-/* eslint-disable react/jsx-key */
+
 import React, { useState } from "react";
 import Link from "next/link";
 import styles from './headerForm.module.css'
 import { useRouter } from "next/router";
-import PerformRecruitment from "./Tabs/Overview/Overview";
-import Recruitment from "./Tabs/Recruitment/recruitment";
+import PerformRecruitment from "./PerformRecruitment/PerformRecruitment";
+import Recruitment from "./Recruitment/recruitment";
+import IdRecruitment from "./DataRecruitment/RecruitmentSetting/[idRecruitment]";
 
 export interface HeaderForm {}
 
@@ -14,16 +15,17 @@ export default function HeaderForm({ children }: any) {
     {
       key: 1,
       header: "TỔNG QUAN",
-      compoment: <PerformRecruitment></PerformRecruitment>
+      component: <PerformRecruitment></PerformRecruitment>,
+
     },
     {
       key: 2,
       header: "TIN TUYỂN DỤNG",
-      compoment: <Recruitment></Recruitment>
+      component: <Recruitment></Recruitment>,
+      
     },
-
+    
   ]
-
   return (
     <>
        <div className={`${styles.l_body}`}>
@@ -42,7 +44,7 @@ export default function HeaderForm({ children }: any) {
         ))}
        </ul>
        </div>
-       {listTab.find(item => item.key === active)?.compoment}
+       {listTab.find(item => item.key === active)?.component } 
     </>
   );
 }
