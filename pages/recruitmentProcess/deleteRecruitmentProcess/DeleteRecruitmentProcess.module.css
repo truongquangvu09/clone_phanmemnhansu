@@ -1,0 +1,124 @@
+
+
+.overlay {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+} 
+.modal_setting {
+    display: block;
+    padding-right: 2px;
+    opacity: 1;
+
+}
+.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
+}
+
+.contentquytrinh {
+    width: 736px;
+    height: auto;
+    border-radius: 8px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.modal_content {
+    position: relative;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    outline: 0;
+}
+.contentdel {
+    height: 240px
+}
+.modal_header {
+    border: none;
+    padding: 15px;
+}
+.headquytrinh {
+    text-align: center;
+    background: #4C5BD4;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    height: 28px;
+}
+
+.headquytrinh h5 {
+    color: white;
+    Font-size: 14px;
+}
+
+.modal_title {
+    font-weight: 600;
+    line-height: 28px;
+}
+
+/* body quy trình */
+
+.bodyquytrinh {
+    text-align: left;
+    padding-bottom: 0;
+    padding-top: 3%;
+    padding-left: 7%;
+    padding-right: 7%;
+    height: 68px;
+}
+.modal_body {
+    position: relative;
+}
+.xoaquytrinh {
+    height: 24px;
+    font-size: 14px;
+    color: #333333;
+    font-weight: 600;
+
+}
+.t_recruitment_name {
+    color: #474747;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 24px;
+    letter-spacing: 0em;
+}
+
+.footerquytrinh {
+    margin-top: 2%;
+    padding-right: 13%;
+    text-align: right;
+}
+.modal_footer {
+    border: none;
+    padding: 15px;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 95px;
+}
+.modal_footer button {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: 0em;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 4px;
+    margin-right: 16px;
+}
+.delete {
+    color: #fff;
+    background-color: #d9534f;
+}

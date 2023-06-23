@@ -3,9 +3,7 @@ import styles from './administration.module.css'
 import Link from 'next/link';
 import EmployeeManagement from './employeeManagement';
 
-export interface Administration {
-
-}
+export interface Administration {}
 
 export default function Administration({ children }: any) {
     const [active, setActive] = useState(1)
@@ -24,8 +22,6 @@ export default function Administration({ children }: any) {
                 </ul>
                 {active === 1 && <EmployeeManagement></EmployeeManagement>}
             </div>
-
-
         </>
     )
 }
