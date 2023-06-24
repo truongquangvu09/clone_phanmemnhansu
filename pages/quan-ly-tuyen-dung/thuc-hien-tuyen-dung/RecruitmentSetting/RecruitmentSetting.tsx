@@ -1,5 +1,5 @@
-import React, { useReducer, useState } from "react";
-import styles from "../../Recruitment/recruitment.module.css";
+import React from "react";
+import styles from '../Recruitment/recruitment.module.css'
 import { useRouter } from "next/router";
 
 export interface RecruitmentSetting {}
@@ -7,7 +7,7 @@ export interface RecruitmentSetting {}
 export default function RecruitmentSetting({ dataId, item }: any) {
   const router = useRouter();
   const handleClick = () => {
-    router.push('/performRecruitment/DataRecruitment/RecruitmentSetting/[idRecruitment]', `/performRecruitment/DataRecruitment/RecruitmentSetting/${dataId}`);
+    router.push('/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/[idRecruitment]', `/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/${dataId}`);
   };
   return (
     <>

@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
 import styles from './administration.module.css'
 import Link from 'next/link';
-import EmployeeManagement from './employeeManagement';
+import TabEmployeeManagement from './tab';
 
+<<<<<<< HEAD:pages/administration/index.tsx
 export interface Administration {}
+=======
+export interface EmployeeManagement {
 
-export default function Administration({ children }: any) {
+}
+>>>>>>> 8c1a39eb6789197c755b77c8ac9e7b0e6648ea8a:pages/quan-ly-hanh-chinh/thong-tin-nhan-su/index.tsx
+
+export default function EmployeeManagement({ children }: any) {
     const [active, setActive] = useState(1)
 
 
@@ -20,7 +26,7 @@ export default function Administration({ children }: any) {
                         <Link target='blank' href='https://chamcong.timviec365.vn/quan-ly-cong-ty/nhan-vien.html'>Kho ứng viên</Link>
                     </li>
                 </ul>
-                {active === 1 && <EmployeeManagement></EmployeeManagement>}
+                {active === 1 && <TabEmployeeManagement></TabEmployeeManagement>}
             </div>
         </>
     )

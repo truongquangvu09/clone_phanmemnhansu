@@ -1,11 +1,12 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from "react";
-import styles from "./listRecruitment.module.css";
+import styles from "./listRecruitmentProcess.module.css";
 import Link from "next/link";
 import DeleteRecruitmentProcess from "../deleteRecruitmentProcess/DeleteRecruitmentProcess";
-export interface ListRecruitment {}
+export interface listRecruitmentProcess {}
 
-export default function ListRecruitment({ children }: any) {
-  const [active, setActive] = useState(0);
+export default function listRecruitmentProcess({ children }: any) {
+  const [active, setActive] = useState(0)
 
   const handleModalDelete = () => {
     setActive(3);
