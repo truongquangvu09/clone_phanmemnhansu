@@ -1,91 +1,91 @@
 .all_quytrinh {
-    width: 1119.600px;
-    border: 0.5px solid rgba(71, 71, 71, 0.24);
-    box-sizing: border-box;
-    border-radius: 8px;
-    margin-top: 25px;
-    /*padding-top: 20px;*/
+  width: 1119.6px;
+  border: 0.5px solid rgba(71, 71, 71, 0.24);
+  box-sizing: border-box;
+  border-radius: 8px;
+  margin-top: 25px;
+  /*padding-top: 20px;*/
 }
 
 .add_quytrinh,
 .quytrinh_item {
-    display: inline-block;
-    width: 100%;
+  display: inline-block;
+  width: 100%;
 }
 .quytrinh_item {
-    padding: 13px;
-    border-left: 4px solid #4C5BD4;
+  padding: 13px;
+  border-left: 4px solid #4c5bd4;
 }
 
 .quytrinh_item11_link {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 17px;
-    line-height: 16px;
-    color: #474747;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 16px;
+  color: #474747;
 }
 
 .quytrinh_item12 {
-    margin-top: 13px;
-    display: flex;
-    width: 100%;
-    justify-content: start;
-    align-items: revert;
+  margin-top: 13px;
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: revert;
 }
 
 .quytrinh_item12 span {
-    float: left;
-    margin-right: 20px;
-    border-radius: 8px;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 14px;
-    color: #666666;
+  float: left;
+  margin-right: 20px;
+  border-radius: 8px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 14px;
+  color: #666666;
 }
 .span_a {
-    width: 45px;
-    height: 16.8px;
-    font-size: 14px;
-    color: #337ab7;
-    position: relative;
-    top: -4px;
-    left: 2px;
-    font-weight: 700;
+  width: 45px;
+  height: 16.8px;
+  font-size: 14px;
+  color: #337ab7;
+  position: relative;
+  top: -4px;
+  left: 2px;
+  font-weight: 700;
 }
 
 .qtrspan1 {
-    background: #F1F9FC;
-    padding: 3px 10px;
+  background: #f1f9fc;
+  padding: 3px 10px;
 }
 
 .all_quytrinh .quytrinh_item:nth-child(1) {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 .quytrinh_item {
-    width: 1088.600px;
-    height: 57.800px;
-    padding: 13px;
-    border-left: 4px solid #4C5BD4;
+  width: 1088.6px;
+  height: 57.8px;
+  padding: 13px;
+  border-left: 4px solid #4c5bd4;
 }
 
 .quytrinh_item1 {
-    float: left;
-    width: 80%;
+  float: left;
+  width: 80%;
 }
 
 .quytrinh_item2 {
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 .button_option {
-    border: none;
-    background-color: transparent;
+  border: none;
+  background-color: transparent;
 }
 .shr {
-    margin-top: 5px;
-    border: 0.5px solid rgba(71, 71, 71, 0.24);
-    margin-bottom: 20px;
-    height: 0;
+  margin-top: 5px;
+  border: 0.5px solid rgba(71, 71, 71, 0.24);
+  margin-bottom: 20px;
+  height: 0;
 }

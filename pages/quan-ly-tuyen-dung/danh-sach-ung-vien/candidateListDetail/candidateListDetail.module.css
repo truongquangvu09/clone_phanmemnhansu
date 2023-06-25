@@ -43,6 +43,7 @@
 }
 .div_no_pad {
   width: 25%;
+  height: 35.6px;
 }
 .form_control {
   width: 85%;
@@ -55,12 +56,7 @@
   background-image: none;
   border: 1px solid #ccc;
   border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -webkit-transition: border-color ease-in-out 0.15s,
-    -webkit-box-shadow ease-in-out 0.15s;
-  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 .form_control:focus {
   border-color: #66afe9;
@@ -69,7 +65,7 @@
 }
 .search_can_new {
   width: 95%;
-  height: 95%;
+  height: 100%;
 }
 .icon_search_top {
   display: inline-block;
@@ -78,6 +74,10 @@
   padding: 1px 25px;
   width: 77%;
   text-align: center;
+  height: 32.6px;
+}
+.icon_search_top img {
+  padding-top: 5px;
 }
 .t_excel {
   display: block;
@@ -151,4 +151,7 @@
   cursor: pointer;
   padding: 6px;
   margin: 6px;
+}
+.tab_pane {
+  width: 1123.5px;
 }

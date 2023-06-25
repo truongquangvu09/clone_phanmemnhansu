@@ -38,7 +38,7 @@ export default function DevelopmentTraining({ children }: any) {
                     <div className={`${styles.subMenu}`}>
                         <Link
                             className={` ${activeButton === 1 ? styles.clicked : ""}`}
-                            onClick={() => handleClick(1)}
+                            onClick={() => handleClick(index)}
                             href="/"
                         >
                             <div className={`${styles.sidebar_home}`}>
@@ -51,7 +51,7 @@ export default function DevelopmentTraining({ children }: any) {
                                         alt="Index"
                                     />
                                 </div>
-                                <div className={`${styles.sidebar_text} ${styles.sidebar_text2}`}>{item.title}</div>
+                                <div className={`${styles.sidebar_text} ${styles.sidebar_text2} ${activeButton === index ? styles.clicked2 : ""}`}>{item.title}</div>
                             </div>
                         </Link>
                     </div>

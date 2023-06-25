@@ -71,7 +71,7 @@
 
 .body_process label {
   color: #595959;
-  font-size: 13.5px;
+  font-size: 14.5px;
   font-weight: 600;
   line-height: 23px;
   letter-spacing: 0em;
@@ -179,4 +179,10 @@
 }
 .btn_add:hover {
   background-color: #449d44;
+}
+.cke {
+  display: inline-block !important;
+}
+.ckeditor {
+  width: 615px;
 }

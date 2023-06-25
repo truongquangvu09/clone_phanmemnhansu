@@ -51,10 +51,11 @@
 }
 .item_right {
   margin-top: 20px;
+  margin-right: 13px;
   padding: 11px 20px;
   background: linear-gradient(90deg, #437aff 0%, #67a4fe 100%);
   border-radius: 8px;
-  width: 20%;
+  width: 19%;
 }
 .month {
   font-size: 14px;

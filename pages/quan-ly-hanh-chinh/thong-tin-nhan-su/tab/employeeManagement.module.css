@@ -48,12 +48,6 @@
   background-image: none;
   border: 1px solid #ccc;
   border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -webkit-transition: border-color ease-in-out 0.15s,
-    -webkit-box-shadow ease-in-out 0.15s;
-  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 .form_control:focus {
   border-color: #66afe9;
@@ -88,7 +82,6 @@
   width: 99%;
   margin-top: 10%;
 }
-
 .navigate_next {
   display: flex;
   justify-content: space-between;
@@ -212,4 +205,33 @@
   background-color: #fff;
   border: 1px solid #ddd;
   cursor: pointer;
+}
+/* -- salary --  */
+.member_list_salary {
+  margin-top: -15px !important;
+}
+.choose_can {
+  height: 100% !important;
+  width: 92% !important;
+}
+.search_date {
+  width: 75% !important;
+}
+.div_no_pad_salary {
+  width: 25% !important;
+}
+.div_search_salary {
+  width: 40% !important;
+}
+.navigate_next_salary {
+  top: 58% !important;
+}
+
+/* -- planing_appointment -- */
+.body_planning {
+  margin-top: 25px !important;
+}
+.add_planning {
+  color: #333333 !important;
+  font-weight: 600 !important;
 }

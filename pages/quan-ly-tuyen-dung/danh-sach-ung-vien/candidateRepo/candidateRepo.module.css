@@ -1,3 +1,6 @@
+.wrapper {
+  width: 1123.5px;
+}
 .body {
   display: inline-block;
   width: 92%;
@@ -44,6 +47,7 @@
 }
 .member_list {
   width: 105%;
+  overflow-y: scroll;
 }
 .navigate_next {
   display: flex;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from './quy-dinh-lam-viec.module.css'
 import BodyFrameFooter from '@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer';
 import AddRegulationsModal from './addRegulationsModal';
+import AddRegulationsModal2 from './addRegulationsModal/addRegulationsModal2';
 
 export default function RegulationsWork() {
     const [click, setClick] = useState(false)
@@ -26,7 +27,8 @@ export default function RegulationsWork() {
                                 <hr style={{ marginTop: 0, marginBottom: 0 }} />
                                 <li onClick={() => setOpenModal(2)}>Thêm quy định</li>
                             </div>)}
-                            {openModal === 1 ? <AddRegulationsModal></AddRegulationsModal> : ''}
+                            {openModal === 1 && <AddRegulationsModal></AddRegulationsModal>}
+                            {openModal === 2 && <AddRegulationsModal2></AddRegulationsModal2>}
                         </div>
                         <div className={`${styles.recruitment2_2}`}>
                             <form action="" className={`${styles.t_form_search}`}>

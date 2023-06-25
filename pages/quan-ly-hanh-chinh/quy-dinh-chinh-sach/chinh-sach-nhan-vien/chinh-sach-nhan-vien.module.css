@@ -58,3 +58,24 @@
   color: #333;
   font-weight: 600;
 }
+.lefftset {
+  display: block;
+  left: 26%;
+}
+.settings {
+  z-index: 1;
+  text-align: left;
+  border-radius: 8px;
+  position: absolute;
+  background: white;
+  box-shadow: 0 4px 10px rgb(0 0 0 / 5%);
+}
+.settings li {
+  cursor: pointer;
+  padding: 16px 40px 14px 13px;
+  border-left: 3px solid #ffffff;
+}
+.settings li:hover {
+  color: #4c5bd4;
+  border-left: 3px solid #4c5bd4;
+}

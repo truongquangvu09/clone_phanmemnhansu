@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from './addRegulationsModal.module.css'
 import Editor from "./CKEditor";
 
-export default function AddRegulationsModal() {
+export default function AddRegulationsModal2() {
     function handleUploadClick(event: React.MouseEvent<HTMLAnchorElement>) {
         event.preventDefault();
         const uploadInput = document.getElementById('upload_cv') as HTMLInputElement;
@@ -22,7 +22,7 @@ export default function AddRegulationsModal() {
                     <div className={` ${styles.modal_dialog} ${styles.content_process}`}>
                         <div className={`${styles.modal_content}`}>
                             <div className={`${styles.modal_header} ${styles.header_process}`}>
-                                <h5 className={`${styles.modal_tittle}`}>THÊM NHÓM QUY ĐỊNH</h5>
+                                <h5 className={`${styles.modal_tittle}`}>THÊM QUY ĐỊNH</h5>
                             </div>
                             <form action="">
                                 <div className={`${styles.modal_body} ${styles.body_process}`}>
@@ -30,6 +30,18 @@ export default function AddRegulationsModal() {
                                         <label htmlFor="">Tên nhóm <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="text" id="names" placeholder="Nhập tên ứng viên" className={`${styles.input_process}`} />
+                                        </div>
+                                    </div>
+                                    <div className={`${styles.form_groups}`}>
+                                        <label htmlFor="">Chọn nhóm quy định <span style={{ color: 'red' }}> * </span></label>
+                                        <div className={`${styles.input_right}`}>
+                                            <select name="" id="" className={`${styles.input_process}`}>
+                                                <option value="">-- Vui lòng chọn --</option>
+                                                <option value="">Nam</option>
+                                                <option value="">Nữ</option>
+                                                <option value="">Giới tính khác</option>
+
+                                            </select>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -44,8 +56,14 @@ export default function AddRegulationsModal() {
                                             <input type="text" id="names" placeholder="Người giám sát" className={`${styles.input_process}`} />
                                         </div>
                                     </div>
+                                    <div className={`${styles.form_groups}`}>
+                                        <label htmlFor="">Đối tượng thi hành <span style={{ color: 'red' }}> * </span></label>
+                                        <div className={`${styles.input_right}`}>
+                                            <input type="text" id="names" placeholder="Đối tượng thi hành" className={`${styles.input_process}`} />
+                                        </div>
+                                    </div>
                                     <div className={`${styles.form_groups} ${styles.cke}`}>
-                                        <label htmlFor="">Mô tả ngắn <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Nội dung quy định <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.ckeditor}`}>
                                             {/* <Editor content={content} onChange={handleContentChange} /> */}
                                         </div>

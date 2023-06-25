@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import styles from './addRegulationsModal.module.css'
-import Editor from "./CKEditor";
+import styles from '../../quy-dinh-lam-viec/addRegulationsModal/addRegulationsModal.module.css'
+import Editor from "../../quy-dinh-lam-viec/addRegulationsModal/CKEditor";
 
-export default function AddRegulationsModal() {
+export default function AddEmployeePolicyModal() {
     function handleUploadClick(event: React.MouseEvent<HTMLAnchorElement>) {
         event.preventDefault();
         const uploadInput = document.getElementById('upload_cv') as HTMLInputElement;
@@ -22,7 +22,7 @@ export default function AddRegulationsModal() {
                     <div className={` ${styles.modal_dialog} ${styles.content_process}`}>
                         <div className={`${styles.modal_content}`}>
                             <div className={`${styles.modal_header} ${styles.header_process}`}>
-                                <h5 className={`${styles.modal_tittle}`}>THÊM NHÓM QUY ĐỊNH</h5>
+                                <h5 className={`${styles.modal_tittle}`}>THÊM NHÓM CHÍNH SÁCH</h5>
                             </div>
                             <form action="">
                                 <div className={`${styles.modal_body} ${styles.body_process}`}>

@@ -57,16 +57,19 @@
   border: none;
   padding: 15px;
 }
+.modal_body {
+  position: relative;
+  padding: 15px;
+}
+.form_groups {
+  margin-bottom: 15px;
+}
 .body_process {
   text-align: left;
   padding-bottom: 0;
   padding-top: 3%;
   padding-left: 7%;
   padding-right: 7%;
-}
-.body_process .form_groups {
-  margin-top: 30px;
-  display: flex;
 }
 
 .body_process label {
@@ -75,10 +78,12 @@
   font-weight: 600;
   line-height: 23px;
   letter-spacing: 0em;
-  width: 33%;
+  width: 100%;
+  margin-bottom: 5px;
+  display: block;
 }
 .input_right {
-  width: 70%;
+  width: 100%;
 }
 .input_process {
   background-color: white;
@@ -88,71 +93,6 @@
   border-radius: 8px;
   line-height: 45px;
   font-weight: 600;
-}
-.star {
-  position: relative;
-  line-height: 25px;
-  display: inline-block;
-  transition: color 0.2s ease;
-  color: #ebebeb;
-}
-.star:before {
-  content: "\2605";
-  font-size: 30px;
-}
-.rating > li::before {
-  color: #c7c5c5;
-}
-.rating > li:hover:before,
-.rating li:hover ~ li::before {
-  transition: color 0.8s ease;
-  color: #fdbe1e;
-}
-.another_skill {
-  display: flex;
-  align-items: baseline;
-  margin-top: 10px;
-  height: 35px;
-}
-.skill_input {
-  width: 33%;
-}
-.another_rating {
-  width: 50%;
-}
-.rating_add {
-  padding: 0;
-}
-.form_control {
-  display: block;
-  width: 100%;
-  padding: 6px 12px;
-  font-size: 14px;
-  line-height: 1.42857143;
-  color: #555;
-  background-color: #fff;
-  background-image: none;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-}
-.add_another_skill {
-  display: inline-block;
-  margin-top: 35px;
-  margin-bottom: 20px;
-  color: #337ab7;
-}
-.upload_cv {
-  display: inline-block;
-  position: absolute;
-  z-index: 1;
-  width: 100%;
-  height: 50px;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  cursor: pointer;
 }
 .footer_process {
   margin-top: 2%;
@@ -179,4 +119,10 @@
 }
 .btn_add:hover {
   background-color: #449d44;
+}
+.cke {
+  display: inline-block !important;
+}
+.ckeditor {
+  width: 615px;
 }
