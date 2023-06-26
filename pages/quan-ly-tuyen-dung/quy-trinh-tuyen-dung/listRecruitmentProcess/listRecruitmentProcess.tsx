@@ -2,11 +2,23 @@
 import React, { useState } from "react";
 import styles from "./listRecruitmentProcess.module.css";
 import Link from "next/link";
+import EditRecruitmentProcess from "../editRecruitmentProcess/EditRecruitmentProcess";
 import DeleteRecruitmentProcess from "../deleteRecruitmentProcess/DeleteRecruitmentProcess";
+import { useRouter } from "next/router";
 export interface listRecruitmentProcess {}
 
 export default function listRecruitmentProcess({ children }: any) {
+  const router = useRouter()
   const [active, setActive] = useState(0)
+
+  const handleClickDetail = (item: number) => {
+    router.push('/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/chi-tiet-quy-trinh/[idRecruitmentProcess]',
+    `/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/chi-tiet-quy-trinh/${item}`)
+  }
+
+  const handleModalEdit = () => {
+    setActive(2)
+  }
 
   const handleModalDelete = () => {
     setActive(3);
@@ -68,24 +80,20 @@ export default function listRecruitmentProcess({ children }: any) {
                     <span>Đối tượng áp dụng: {item.relative}</span>
                   </div>
                 </div>
-
+{/* chi tiết */}
                 <div className={`${styles.quytrinh_item2}`}>
-                  <Link
-                    href={{
-                      pathname: "/",
-                      query: {},
-                    }}
-                  >
+                  <div onClick={() => handleClickDetail(item._id)}>
                     <picture>
                       <img
                         src="https://phanmemnhansu.timviec365.vn/assets/images/icon-new/t-icon-quy-trinh.svg"
                         alt=""
                       ></img>
                     </picture>
-                    <span className={`${styles.span_a}`}>Chi tiết</span>
-                  </Link>
-
-                  <button className={`${styles.button_option}`}>
+                    <span className={`${styles.span_a} ${styles.span_a_detail}`}>Chi tiết</span>
+                    </div>
+{/* edit */}
+                  <button className={`${styles.button_option}`}
+                   onClick={() => handleModalEdit()}>
                     <picture>
                       <img
                         src="https://phanmemnhansu.timviec365.vn/assets/images/icon-new/icon-edit.svg"
@@ -94,7 +102,7 @@ export default function listRecruitmentProcess({ children }: any) {
                     </picture>
                     <span className={`${styles.span_a}`}>Sửa</span>
                   </button>
-                  {/* xóa */}
+{/* xóa */}
                   <button
                     className={`${styles.button_option}`}
                     onClick={() => handleModalDelete()}
@@ -114,6 +122,7 @@ export default function listRecruitmentProcess({ children }: any) {
           );
         })}
       </div>
+      {active === 2 && <EditRecruitmentProcess onClose={closeModal}/>}
       {active === 3 && <DeleteRecruitmentProcess onClose={closeModal}/>}
     </>
   );

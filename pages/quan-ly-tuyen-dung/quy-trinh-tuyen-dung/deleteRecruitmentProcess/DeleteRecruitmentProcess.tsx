@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
 import styles from "./DeleteRecruitmentProcess.module.css";
-export interface Administration {}
+export interface DeleteRecruitmentProcess {}
 
-export default function Administration({onClose }: any) {
+export default function DeleteRecruitmentProcess({onClose }: any) {
   
   const handleCancel = () => {
     onClose();
@@ -41,8 +41,8 @@ export default function Administration({onClose }: any) {
             </div>
 
             <div className={`${styles.modal_footer} ${styles.footerquytrinh}`}>
-              <button type="button" onClick={handleCancel}>
-                Hủy
+              <button type="button" className={`${styles.btn_huy}`} onClick={handleCancel}>
+                <span>Hủy</span>
               </button>
               <button type="button" className={`${styles.delete}`}>
                 Xóa

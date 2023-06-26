@@ -4,7 +4,7 @@
     box-sizing: border-box;
     border-radius: 8px;
     margin-top: 25px;
-    /*padding-top: 20px;*/
+
 }
 
 .add_quytrinh,
@@ -29,7 +29,7 @@
     margin-top: 13px;
     display: flex;
     width: 100%;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: revert;
 }
 
@@ -52,6 +52,10 @@
     top: -4px;
     left: 2px;
     font-weight: 700;
+}
+.span_a_detail {
+    width: 52px;
+    line-height: 35px;
 }
 
 .qtrspan1 {
@@ -76,8 +80,8 @@
 
 .quytrinh_item2 {
     display: flex;
-    justify-content: space-between;
-    align-items: start;
+    justify-content: space-evenly;
+    align-items: flex-start;
 }
 .button_option {
     border: none;

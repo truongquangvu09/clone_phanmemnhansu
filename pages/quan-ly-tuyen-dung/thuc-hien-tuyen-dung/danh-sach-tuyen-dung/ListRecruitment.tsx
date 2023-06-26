@@ -64,7 +64,7 @@ export default function ListRecruitment({ data }: any) {
                         </picture>
 
                         {visible &&  (
-                          <RecruitmentSetting dataId = {data.id} item = {data}></RecruitmentSetting>
+                          <RecruitmentSetting dataId = {data.id}></RecruitmentSetting>
                         )}
                       </button>
                     </div>

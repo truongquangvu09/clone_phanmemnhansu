@@ -1,5 +1,3 @@
-
-
 .overlay {
     position: fixed;
     z-index: 9998;
@@ -9,11 +7,12 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
 } 
+
 .modal_setting {
     display: block;
     padding-right: 2px;
     opacity: 1;
-
+    
 }
 .modal {
     position: fixed;
@@ -24,49 +23,68 @@
     z-index: 9999;
 }
 
+.modal_dialog {
+    transform: translate(0, 0);
+    position: relative;
+    width: auto;
+    margin: 10px
+}
+
 .contentquytrinh {
     width: 736px;
     height: auto;
     border-radius: 8px;
+    margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 30px;
-    margin-bottom: 30px;
 }
+
 .modal_content {
     position: relative;
     background-color: #fff;
+    -webkit-background-clip: padding-box;
     background-clip: padding-box;
+    border: 1px solid #999;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 6px;
     outline: 0;
-}
-.contentdel {
-    height: 240px
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+
+    height: auto;
 }
 .modal_header {
     border: none;
     padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
 }
+
 .headquytrinh {
     text-align: center;
     background: #4C5BD4;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    height: 28px;
 }
-
 .headquytrinh h5 {
     color: white;
-    Font-size: 14px;
+    font-size: 14px;
 }
-
 .modal_title {
-    font-weight: 600;
+    margin: 0;
     line-height: 28px;
+    font-weight: 600;
+    font-style: normal;
 }
 
-/* body quy trình */
+.modal_form {
+    display: block;
+    margin-top: 0em;
+}
+
+.modal_body {
+    position: relative;
+    padding: 15px;
+}
 
 .bodyquytrinh {
     text-align: left;
@@ -74,25 +92,60 @@
     padding-top: 3%;
     padding-left: 7%;
     padding-right: 7%;
-    height: 68px;
 }
-.modal_body {
-    position: relative;
+.bodyquytrinh .form_groups {
+    margin-top: 30px;
 }
-.xoaquytrinh {
-    height: 24px;
-    font-size: 14px;
+.form_groups label {
     color: #333333;
-    font-weight: 600;
-
-}
-.t_recruitment_name {
-    color: #474747;
     font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 23px;
+    letter-spacing: 0em;
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+}
+.bodyquytrinh span {
+    font-size: 16px;
     font-style: normal;
     font-weight: bold;
     line-height: 24px;
     letter-spacing: 0em;
+}
+.red {
+    color: #EB5757;
+}
+.inputright {
+    width: 66%;
+    float: right;
+}
+.inputright input {
+    outline: none;
+    margin: 0;
+}
+.inputquytrinh {
+    line-height: 23px;
+    background-color: white;
+    border: 1px solid rgba(71, 71, 71, 0.48);
+    width: 94%;
+    height: 30px;
+    border-radius: 8px;
+}
+.inputright input::placeholder {
+    background-color: #FFFFFF;
+    color: #333333;
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0.7;
+}
+
+.textarea {
+    font-size: 14px;
+    color: #333333;
+    font-weight: 600;
+    
 }
 
 .footerquytrinh {
@@ -117,8 +170,11 @@
     border: none;
     border-radius: 4px;
     margin-right: 16px;
+    
+} 
+.footerquytrinh + button {
+   color: #EB5757;
 }
-
 .btn_huy span {
     opacity: 0.8;
 }
@@ -127,18 +183,18 @@
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
 
-.delete {
+.success {
     color: #fff;
-    background-color: #d9534f;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
 }
-
-.delete:hover {
-    background-color: #c9302c;
-    border-color: #ac2925;
-}
-.delete:active {
+.success:hover {
     color: #fff;
-    background-color: #c9302c;
+    background-color: #449d44;
+}
+.success:active {
+    color: #fff;
+    background-color: #449d44;
     background-image: none;
-    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.3);
 }
