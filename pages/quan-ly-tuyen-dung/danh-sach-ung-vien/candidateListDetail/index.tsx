@@ -1,10 +1,42 @@
 import React, { useState } from "react";
+import Select from 'react-select';
 import styles from './candidateListDetail.module.css'
 import CandidateAddModal from "../candidateAddModal";
 import StageAddModal from "../stageAddModal";
 
+type SelectOptionType = { label: string, value: string }
+
 export default function CandidateListDetail() {
     const [openModal, setOpenModal] = useState(0)
+    const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
+
+    const options = {
+        vitrituyendung: [
+            { value: 'IT', label: 'IT' },
+            { value: 'Hành chính- tổng hợp', label: 'Hành chính- tổng hợp' },
+        ],
+        chonnhanvien: [
+            { value: 'Trần Văn Hưng', label: 'Trần Văn Hưng (KINH DOANH)' },
+            { value: 'Trần Văn Đức', label: 'Trần Văn Đức (BIÊN TẬP)' },
+        ],
+        chongioitinh: [
+            { value: 'Nam', label: 'Nam' },
+            { value: 'Nữ', label: 'Nữ' },
+            { value: 'Giới tính khác', label: 'Giới tính khác' },
+        ],
+        chontrangthai: [
+            { value: 'Trượt vòng loại phỏng vấn', label: 'Trượt vòng loại phỏng vấn' },
+            { value: 'Trượt học việc', label: 'Trượt học việc' },
+            { value: 'Trượt vòng loại hồ sơ', label: 'Trượt vòng loại hồ sơ' },
+        ]
+    };
+
+    const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
+        if (option) {
+            setSelectedOption(option)
+        }
+    };
+
     return (
         <>
             <div className={`${styles.tab_content}`}>
@@ -32,39 +64,74 @@ export default function CandidateListDetail() {
                                     <input type="text" className={`${styles.search_can_name} ${styles.form_control}`} placeholder='Nhập tên ứng viên' />
                                 </div>
                                 <div className={`${styles.div_no_pad} `}>
-                                    <select className={`${styles.search_can_new} ${styles.form_control}`} name="" id="" >
-                                        <option value="">Vị trị tuyển dụng</option>
-                                        <option value="">it</option>
-                                        <option value="">Voluptatem Sint et</option>
-                                    </select>
+                                    <Select
+                                        defaultValue={selectedOption}
+                                        onChange={(option) => handleSelectionChange(option, options.vitrituyendung)}
+                                        options={options.vitrituyendung}
+                                        placeholder="Vị trí tuyển dụng"
+                                        styles={{
+                                            control: (baseStyles, state) => ({
+                                                ...baseStyles,
+                                                fontSize: state.isFocused ? 14 : 14,
+                                                minHeight: state.isFocused ? 20 : 20,
+                                                width: state.isFocused ? 257.16 : 257.16,
+                                                fontWeight: state.isFocused ? 600 : 600
+                                            }),
+                                        }}
+                                    />
                                 </div>
                             </div>
                             <div className={`${styles.search_new_t}`}>
                                 <div className={`${styles.div_no_pad} `}>
-                                    <select className={`${styles.search_can_new} ${styles.form_control}`} name="" id="" >
-                                        <option value="">Chọn nhân viên</option>
-                                        <option value="">Trần Văn Hưng (KINH DOANH)</option>
-                                        <option value="">Trần Văn Đức (BIÊN TẬP)</option>
-                                    </select>
+                                    <Select
+                                        defaultValue={selectedOption}
+                                        onChange={(option) => handleSelectionChange(option, options.chonnhanvien)}
+                                        options={options.chonnhanvien}
+                                        placeholder="Chọn nhân viên"
+                                        styles={{
+                                            control: (baseStyles, state) => ({
+                                                ...baseStyles,
+                                                fontSize: state.isFocused ? 15 : 15,
+                                                minHeight: state.isFocused ? 20 : 20,
+                                                width: state.isFocused ? 257.16 : 257.16,
+                                                fontWeight: state.isFocused ? 600 : 600
+                                            }),
+                                        }}
+                                    />
                                 </div>
                                 <div className={`${styles.div_no_pad} `}>
-                                    <select className={`${styles.search_can_new} ${styles.form_control}`} name="" id="" >
-                                        <option value="">Chọn giới tính</option>
-                                        <option value="">Nam</option>
-                                        <option value="">Nữ</option>
-                                        <option value="">Giới tính khác</option>
-                                    </select>
+                                    <Select
+                                        defaultValue={selectedOption}
+                                        onChange={(option) => handleSelectionChange(option, options.chongioitinh)}
+                                        options={options.chongioitinh}
+                                        placeholder="Chọn giới tính"
+                                        styles={{
+                                            control: (baseStyles, state) => ({
+                                                ...baseStyles,
+                                                fontSize: state.isFocused ? 15 : 15,
+                                                minHeight: state.isFocused ? 20 : 20,
+                                                width: state.isFocused ? 257.16 : 257.16,
+                                                fontWeight: state.isFocused ? 600 : 600
+                                            }),
+                                        }}
+                                    />
                                 </div>
                                 <div className={`${styles.div_no_pad} `}>
-                                    <select className={`${styles.search_can_new} ${styles.form_control}`} name="" id="" >
-                                        <option value="">Trạng thái</option>
-                                        <option value="">Trượt vòng loại phỏng vấn</option>
-                                        <option value="">Trượt học việc</option>
-                                        <option value="">Trượt vòng loại hồ sơ</option>
-                                        <option value="">Hủy phỏng vấn</option>
-                                        <option value="">Hủy nhận việc</option>
-                                        <option value="">Hủy học việc</option>
-                                    </select>
+                                    <Select
+                                        defaultValue={selectedOption}
+                                        onChange={(option) => handleSelectionChange(option, options.chontrangthai)}
+                                        options={options.chontrangthai}
+                                        placeholder="Chọn trạng thái"
+                                        styles={{
+                                            control: (baseStyles, state) => ({
+                                                ...baseStyles,
+                                                fontSize: state.isFocused ? 15 : 15,
+                                                minHeight: state.isFocused ? 20 : 20,
+                                                width: state.isFocused ? 257.16 : 257.16,
+                                                fontWeight: state.isFocused ? 600 : 600
+                                            }),
+                                        }}
+                                    />
                                 </div>
                                 <div className={`${styles.div_no_pad} `}>
                                     <a href="" className={`${styles.icon_search_top}`}>

@@ -1,29 +1,31 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, MouseEventHandler } from "react";
 import Select from 'react-select'
 import styles from '../../thong-tin-nhan-su/tab/employeeManagement.module.css'
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
-import AddPlanningModal from "./addPlanningModal";
+import AddPayrollModal from "./addPayrollModal";
+import EditPayroll from "./editPayroll";
 
 type SelectOptionType = { label: string, value: string }
-export interface TabPlaningAppointment {
+export interface TabPayrollDown {
 
 }
 export interface Employee {
     id: number;
     name: string;
-    phongbancu: string;
-    chucvucu: string;
-    chucvuquyhoachbonhiem: string;
-    phongbanmoi: string;
-    thoigianquyhoachbonhiem: Date;
-    tuychinh: string;
+    canghi: string;
+    phongban: string;
+    chucvu: string;
+    giambienchenghiviec: string;
+    ngaybatdaunghi: Date;
 }
 
-export default function TabPlaningAppointment({ children }: any) {
+export default function TabPayrollDown({ children }: any) {
 
     const [activeButton, setActiveButton] = useState(0)
     const [employeeCount, setEmployeeCount] = useState(10)
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
+    const [openModal, setOpenModal] = useState(0)
+    const [openEditModal, setOpenEditModal] = useState(false)
 
     const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
         if (option) {
@@ -50,12 +52,11 @@ export default function TabPlaningAppointment({ children }: any) {
         const obj: Employee = {
             id: 1,
             name: 'nguyen van a',
-            phongbancu: '201',
-            chucvucu: "PGĐ",
-            chucvuquyhoachbonhiem: 'GĐ',
-            phongbanmoi: '305',
-            thoigianquyhoachbonhiem: new Date(),
-            tuychinh: "no"
+            canghi: 'sang',
+            phongban: '201',
+            chucvu: 'PGD',
+            giambienchenghiviec: 'giambienche',
+            ngaybatdaunghi: new Date(),
         };
         return Array(n).fill(obj);
     }
@@ -99,7 +100,12 @@ export default function TabPlaningAppointment({ children }: any) {
             }
         }
     };
-    const [openModal, setOpenModal] = useState(0)
+
+
+    const handleOpenEdit: MouseEventHandler<HTMLAnchorElement> = (event) => {
+        event.preventDefault();
+        setOpenEditModal(true);
+    }
     return (
         <>
             <div className={`${styles.tab_content}`}>
@@ -107,10 +113,17 @@ export default function TabPlaningAppointment({ children }: any) {
                     <div className={`${styles.body} ${styles.body_planning}`}>
                         <div className={`${styles.recruitment}`}>
                             <button className={`${styles.add} ${styles.add_planning}`} onClick={() => setOpenModal(1)}>
-                                <img src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm mới bổ nhiệm, quy hoạch
+                                <img src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm mới giảm biên chế
                             </button>
+                            <div className={`${styles.export_excel}`} style={{ paddingRight: 20, right: 0, position: 'absolute' }}>
+                                <a href="" className={`${styles.t_excel} ${styles.t_excel_payroll}`} >
+                                    <img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-excel.svg" alt="" />
+                                    Xuất file Excel
+                                </a>
+                            </div>
                         </div>
-                        {openModal === 1 && <AddPlanningModal></AddPlanningModal>}
+                        {openModal === 1 && <AddPayrollModal></AddPayrollModal>}
+                        {openEditModal === true ? <EditPayroll></EditPayroll> : ''}
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_new_t}`}>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning} `}>
@@ -177,11 +190,11 @@ export default function TabPlaningAppointment({ children }: any) {
                                         <tr>
                                             <th>ID nhân viên</th>
                                             <th>Họ và tên</th>
-                                            <th>Phòng ban cũ</th>
-                                            <th>Chức vụ cũ</th>
-                                            <th>Chức vụ quy hoạch bổ nhiệm</th>
-                                            <th>Phòng ban mới</th>
-                                            <th>Thời gian quy hoạch bổ nhiệm</th>
+                                            <th>Ca nghỉ</th>
+                                            <th>Phòng ban</th>
+                                            <th>Chức vụ</th>
+                                            <th>Giảm biên chế/nghỉ việc</th>
+                                            <th>Ngày bắt đầu nghỉ</th>
                                             <th>Tùy chỉnh</th>
                                         </tr>
                                     </thead>
@@ -190,12 +203,15 @@ export default function TabPlaningAppointment({ children }: any) {
                                             <tr key={index}>
                                                 <td>{item.id}</td>
                                                 <td>{item.name}</td>
-                                                <td>{item.phongbancu}</td>
-                                                <td>{item.chucvucu}</td>
-                                                <td>{item.chucvuquyhoachbonhiem}</td>
-                                                <td>{item.phongbanmoi}</td>
-                                                <td>{item.thoigianquyhoachbonhiem.toString().slice(0, 16)}</td>
-                                                <td>{item.tuychinh}</td>
+                                                <td>{item.canghi}</td>
+                                                <td>{item.phongban}</td>
+                                                <td>{item.chucvu}</td>
+                                                <td>{item.giambienchenghiviec}</td>
+                                                <td>{item.ngaybatdaunghi.toString().slice(0, 16)}</td>
+                                                <td>
+                                                    <a onClick={handleOpenEdit} href="" className={`${styles.btn_edit}`}><img src="https://phanmemnhansu.timviec365.vn/assets/images/icon-menu-vn/icon_edit.svg" alt="" /></a>
+                                                    <a href="" className={`${styles.btn_delete}`}><img src="https://phanmemnhansu.timviec365.vn/assets/images/icon-menu-vn/icon_delete.svg" alt="" /></a>
+                                                </td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -270,7 +286,7 @@ export default function TabPlaningAppointment({ children }: any) {
                             </div>
                         </div>
                     </div>
-                    <BodyFrameFooter src="https://www.youtube.com/embed/KcajsnqbFPQ"></BodyFrameFooter>
+                    <BodyFrameFooter src="https://www.youtube.com/embed/e29o-TSnbeE"></BodyFrameFooter>
                 </div>
             </div>
         </>

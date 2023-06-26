@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
+import Select from 'react-select';
 import styles from './employeeManagement.module.css'
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 
+type SelectOptionType = { label: string, value: string }
 export interface TabEmployeeManagement {
 
 }
@@ -28,6 +30,26 @@ export default function TabEmployeeManagement({ children }: any) {
     useEffect(() => {
         setCurrentList(listCandidates.slice(0, employeeCount));
     }, [employeeCount]);
+
+    const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
+
+    const options = {
+        chonnhanvien: [
+            { value: 'Trần Văn Hưng', label: 'Trần Văn Hưng (KINH DOANH)' },
+            { value: 'Trần Văn Đức', label: 'Trần Văn Đức (BIÊN TẬP)' },
+        ],
+        chonphongban: [
+            { value: 'Ban giám đốc', label: 'BAN GIÁM ĐỐC' },
+            { value: 'Kỹ thuật', label: 'KỸ THUẬT' },
+            { value: 'Biên tập', label: 'BIÊN TẬP' },
+        ],
+    };
+
+    const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
+        if (option) {
+            setSelectedOption(option)
+        }
+    };
 
 
     function createArray(n: number): Employee[] {
@@ -95,26 +117,45 @@ export default function TabEmployeeManagement({ children }: any) {
                 <div className={`${styles.tab_pane}`}>
                     <div className={`${styles.body}`}>
                         <div className={`${styles.recruitment}`}>
-                            <button className={`${styles.add}`} >
+                            <a target="blank" href="https://chamcong.timviec365.vn/quan-ly-cong-ty/nhan-vien.html" className={`${styles.add}`} >
                                 <img src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm ứng viên
-                            </button>
+                            </a>
                         </div>
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_new_t}`}>
                                 <div className={`${styles.div_no_pad} `}>
-                                    <select className={`${styles.search_can_new} ${styles.form_control}`} name="" id="" >
-                                        <option value="">Chọn nhân viên</option>
-                                        <option value="">Trần Văn Hưng (KINH DOANH)</option>
-                                        <option value="">Trần Văn Đức (BIÊN TẬP)</option>
-                                    </select>
+                                    <Select
+                                        defaultValue={selectedOption}
+                                        onChange={(option) => handleSelectionChange(option, options.chonnhanvien)}
+                                        options={options.chonnhanvien}
+                                        placeholder="Chọn nhân viên"
+                                        styles={{
+                                            control: (baseStyles, state) => ({
+                                                ...baseStyles,
+                                                fontSize: state.isFocused ? 14 : 14,
+                                                minHeight: state.isFocused ? 20 : 20,
+                                                width: state.isFocused ? 300 : 300,
+                                                fontWeight: state.isFocused ? 600 : 600
+                                            }),
+                                        }}
+                                    />
                                 </div>
                                 <div className={`${styles.div_no_pad} `}>
-                                    <select className={`${styles.search_can_new} ${styles.form_control}`} name="" id="" >
-                                        <option value="">Chọn phòng ban</option>
-                                        <option value="">Ban giám đốc</option>
-                                        <option value="">Kỹ thuật</option>
-                                        <option value="">Khác</option>
-                                    </select>
+                                    <Select
+                                        defaultValue={selectedOption}
+                                        onChange={(option) => handleSelectionChange(option, options.chonphongban)}
+                                        options={options.chonphongban}
+                                        placeholder="Chọn phòng ban"
+                                        styles={{
+                                            control: (baseStyles, state) => ({
+                                                ...baseStyles,
+                                                fontSize: state.isFocused ? 14 : 14,
+                                                minHeight: state.isFocused ? 20 : 20,
+                                                width: state.isFocused ? 300 : 300,
+                                                fontWeight: state.isFocused ? 600 : 600
+                                            }),
+                                        }}
+                                    />
                                 </div>
                                 <div className={`${styles.div_no_pad_search} `}>
                                     <a href="" className={`${styles.icon_search_top}`}>

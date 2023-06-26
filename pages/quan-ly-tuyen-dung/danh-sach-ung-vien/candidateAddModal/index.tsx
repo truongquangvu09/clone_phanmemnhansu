@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import Select from 'react-select';
 import styles from './candidateAddModal.module.css'
+
+
+type SelectOptionType = { label: string, value: string }
 
 export default function CandidateAddModal() {
     function handleUploadClick(event: React.MouseEvent<HTMLAnchorElement>) {
@@ -9,6 +13,74 @@ export default function CandidateAddModal() {
             uploadInput.click();
         }
     }
+
+    const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
+
+    const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
+        if (option) {
+            setSelectedOption(option)
+        }
+    };
+
+    const options = {
+        chongioitinh: [
+            { value: 'Nam', label: 'Nam' },
+            { value: 'Nữ', label: 'Nữ' },
+            { value: 'Giới tính khác', label: 'Giới tính khác' },
+        ],
+        trinhdohocvan: [
+            { value: 'Đại học trở lên', label: 'Đại học trở lên' },
+            { value: 'Cao đẳng trở lên', label: 'Cao đẳng trở lên' },
+            { value: 'THPT trở lên', label: 'THPT trở lên' },
+            { value: 'Trung học trở lên', label: 'Trung học trở lên' },
+            { value: 'Chứng chỉ', label: 'Chứng chỉ' },
+            { value: 'Trung cấp trở lên', label: 'Trung cấp trở lên' },
+            { value: 'Cử nhân trở lên', label: 'Cử nhân trở lên' },
+            { value: 'Thạc sỹ', label: 'Thạc sỹ' },
+            { value: 'Thạc sỹ Nghệ thuật', label: 'Thạc sỹ Nghệ thuật' },
+            { value: 'Thạc sỹ Thương mại', label: 'Thạc sỹ Thương mại' },
+            { value: 'Thạc sỹ Khoa học', label: 'Thạc sỹ Khoa học' },
+            { value: 'Thạc sỹ Kiến trúc', label: 'Thạc sỹ Kiến trúc' },
+            { value: 'Thạc sỹ QTKD', label: 'Thạc sỹ QTKD' },
+            { value: 'Thạc sỹ Kỹ thuật ứng dụng', label: 'Thạc sỹ Kỹ thuật ứng dụng' },
+            { value: 'Thạc sỹ Luật', label: 'Thạc sỹ Luật' },
+            { value: 'Thạc sỹ Y học', label: 'Thạc sỹ Y học' },
+            { value: 'Thạc sỹ Dược phẩm', label: 'Thạc sỹ Dược phẩm' },
+            { value: 'Tiến sỹ', label: 'Tiến sỹ' },
+            { value: 'Khác', label: 'Khác' },
+
+        ],
+        kinhnghiemlamviec: [
+            { value: 'Chưa có kinh nghiệm', label: 'Chưa có kinh nghiệm' },
+            { value: '0 - 1 năm kinh nghiệm', label: '0 - 1 năm kinh nghiệm' },
+            { value: '1 - 2 năm kinh nghiệm', label: '1 - 2 năm kinh nghiệm' },
+            { value: '2 - 5 năm kinh nghiệm', label: '2 - 5 năm kinh nghiệm' },
+            { value: '5 - 10 năm kinh nghiệm', label: '5 - 10 năm kinh nghiệm' },
+            { value: 'Hơn 10 năm kinh nghiệm', label: 'Hơn 10 năm kinh nghiệm' },
+        ],
+
+        tinhtranghonnhan: [
+            { value: 'Độc thân ', label: 'Độc thân' },
+            { value: 'Đã kết hôn', label: 'Đã kết hôn' },
+            { value: 'Khác', label: 'Khác' },
+        ],
+
+        tennhanvientuyendung: [
+            { value: 'Lê Hồng Anh (KỸ THUẬT)', label: 'Lê Hồng Anh (KỸ THUẬT)' },
+            { value: 'Phan Mạnh Hùng (PHÒNG SÁNG TẠO)', label: 'Phan Mạnh Hùng (PHÒNG SÁNG TẠO)' },
+        ],
+
+        tennhanviengioithieu: [
+            { value: 'Lê Hồng Anh (KỸ THUẬT)', label: 'Lê Hồng Anh (KỸ THUẬT)' },
+            { value: 'Phan Mạnh Hùng (PHÒNG SÁNG TẠO)', label: 'Phan Mạnh Hùng (PHÒNG SÁNG TẠO)' },
+        ],
+        vitrituyendung: [
+            { value: 'IT', label: 'IT' },
+            { value: 'Hành chính- tổng hợp', label: 'Hành chính- tổng hợp' },
+        ],
+
+    };
+
     return (
         <>
             <div className={`${styles.modal_open}`}>
@@ -41,13 +113,24 @@ export default function CandidateAddModal() {
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Giới tính <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <select name="" id="" className={`${styles.input_process}`}>
-                                                <option value="">-- Vui lòng chọn --</option>
-                                                <option value="">Nam</option>
-                                                <option value="">Nữ</option>
-                                                <option value="">Giới tính khác</option>
-
-                                            </select>
+                                            <div className={`${styles.div_no_pad} `}>
+                                                <Select
+                                                    defaultValue={selectedOption}
+                                                    onChange={(option) => handleSelectionChange(option, options.chongioitinh)}
+                                                    options={options.chongioitinh}
+                                                    placeholder="-- Vui lòng chọn --"
+                                                    styles={{
+                                                        control: (baseStyles, state) => ({
+                                                            ...baseStyles,
+                                                            borderRadius: 8,
+                                                            fontSize: state.isFocused ? 15 : 15,
+                                                            minHeight: state.isFocused ? 20 : 20,
+                                                            width: state.isFocused ? 413.38 : 413.38,
+                                                            fontWeight: state.isFocused ? 600 : 600
+                                                        }),
+                                                    }}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -71,28 +154,24 @@ export default function CandidateAddModal() {
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Trình độ học vấn <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <select name="" id="" className={`${styles.input_process}`}>
-                                                <option value="">-- Vui lòng chọn --</option>
-                                                <option value="">Đại học trở lên </option>
-                                                <option value="">Cao đẳng trở lên</option>
-                                                <option value="">THPT trở lên</option>
-                                                <option value="">Trung học trở lên</option>
-                                                <option value="">Chứng chỉ</option>
-                                                <option value="">Trung cấp trở lên</option>
-                                                <option value="">Cử nhân trở lên</option>
-                                                <option value="">Thạc sỹ trở lên</option>
-                                                <option value="">Nhạc sỹ nghệ thuật</option>
-                                                <option value="">Thạc sỹ thương mại</option>
-                                                <option value="">Thạc sỹ khoa học</option>
-                                                <option value="">Thạc sỹ kiến trúc</option>
-                                                <option value="">Thạc sỹ QTKD</option>
-                                                <option value="">Thạc sỹ kĩ thuật ứng dụng</option>
-                                                <option value="">Thạc sỹ Luật</option>
-                                                <option value="">Thạc sỹ y học</option>
-                                                <option value="">Thạc sỹ Dược phẩm</option>
-                                                <option value="">Tiến sỹ</option>
-                                                <option value="">Khác</option>
-                                            </select>
+                                            <div className={`${styles.div_no_pad} `}>
+                                                <Select
+                                                    defaultValue={selectedOption}
+                                                    onChange={(option) => handleSelectionChange(option, options.trinhdohocvan)}
+                                                    options={options.trinhdohocvan}
+                                                    placeholder="-- Vui lòng chọn --"
+                                                    styles={{
+                                                        control: (baseStyles, state) => ({
+                                                            ...baseStyles,
+                                                            borderRadius: 8,
+                                                            fontSize: state.isFocused ? 15 : 15,
+                                                            minHeight: state.isFocused ? 20 : 20,
+                                                            width: state.isFocused ? 413.38 : 413.38,
+                                                            fontWeight: state.isFocused ? 600 : 600
+                                                        }),
+                                                    }}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -104,27 +183,47 @@ export default function CandidateAddModal() {
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Kinh nghiệm làm việc <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <select name="" id="" className={`${styles.input_process}`}>
-                                                <option value="">-- Vui lòng chọn --</option>
-                                                <option value="">Chưa có kinh nghiệm </option>
-                                                <option value="">0 - 1 năm kình nghiệm</option>
-                                                <option value="">1 - 2 năm kinh nghiệm</option>
-                                                <option value="">2 - 5 năm kinh nghiệm</option>
-                                                <option value="">5 - 10 năm kinh nghiệm</option>
-                                                <option value="">Hơn 10 năm kinh nghiệm</option>
-                                            </select>
+                                            <div className={`${styles.div_no_pad} `}>
+                                                <Select
+                                                    defaultValue={selectedOption}
+                                                    onChange={(option) => handleSelectionChange(option, options.kinhnghiemlamviec)}
+                                                    options={options.kinhnghiemlamviec}
+                                                    placeholder="-- Vui lòng chọn --"
+                                                    styles={{
+                                                        control: (baseStyles, state) => ({
+                                                            ...baseStyles,
+                                                            borderRadius: 8,
+                                                            fontSize: state.isFocused ? 15 : 15,
+                                                            minHeight: state.isFocused ? 20 : 20,
+                                                            width: state.isFocused ? 413.38 : 413.38,
+                                                            fontWeight: state.isFocused ? 600 : 600
+                                                        }),
+                                                    }}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Tình trạng hôn nhân <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <select name="" id="" className={`${styles.input_process}`}>
-                                                <option value="">-- Vui lòng chọn --</option>
-                                                <option value="">Độc thân </option>
-                                                <option value="">Đã kết hôn</option>
-                                                <option value="">Khác</option>
-
-                                            </select>
+                                            <div className={`${styles.div_no_pad} `}>
+                                                <Select
+                                                    defaultValue={selectedOption}
+                                                    onChange={(option) => handleSelectionChange(option, options.tinhtranghonnhan)}
+                                                    options={options.tinhtranghonnhan}
+                                                    placeholder="-- Vui lòng chọn --"
+                                                    styles={{
+                                                        control: (baseStyles, state) => ({
+                                                            ...baseStyles,
+                                                            borderRadius: 8,
+                                                            fontSize: state.isFocused ? 15 : 15,
+                                                            minHeight: state.isFocused ? 20 : 20,
+                                                            width: state.isFocused ? 413.38 : 413.38,
+                                                            fontWeight: state.isFocused ? 600 : 600
+                                                        }),
+                                                    }}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -142,33 +241,70 @@ export default function CandidateAddModal() {
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Tên nhận viên tuyển dụng <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <select name="" id="" className={`${styles.input_process}`}>
-                                                <option value="">Chọn nhân viên</option>
-                                                <option value="">Hồ Hùng Anh (BIÊN TẬP) </option>
-                                                <option value="">Lê Hồng Anh (Kỹ thuật) </option>
-                                                <option value="">Phan Mạnh Hùng (PHÒNG SÁNG TẠO) </option>
-                                            </select>
+                                            <div className={`${styles.div_no_pad} `}>
+                                                <Select
+                                                    defaultValue={selectedOption}
+                                                    onChange={(option) => handleSelectionChange(option, options.tennhanvientuyendung)}
+                                                    options={options.tennhanvientuyendung}
+                                                    placeholder="Chọn nhân viên"
+                                                    styles={{
+                                                        control: (baseStyles, state) => ({
+                                                            ...baseStyles,
+                                                            borderRadius: 8,
+                                                            fontSize: state.isFocused ? 15 : 15,
+                                                            minHeight: state.isFocused ? 20 : 20,
+                                                            width: state.isFocused ? 413.38 : 413.38,
+                                                            fontWeight: state.isFocused ? 600 : 600
+                                                        }),
+                                                    }}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Tên nhận viêN giới thiệu <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <select name="" id="" className={`${styles.input_process}`}>
-                                                <option value="">Chọn nhân viên</option>
-                                                <option value="">Hồ Hùng Anh (BIÊN TẬP) </option>
-                                                <option value="">Lê Hồng Anh (Kỹ thuật) </option>
-                                                <option value="">Phan Mạnh Hùng (PHÒNG SÁNG TẠO) </option>
-                                            </select>
+                                            <div className={`${styles.div_no_pad} `}>
+                                                <Select
+                                                    defaultValue={selectedOption}
+                                                    onChange={(option) => handleSelectionChange(option, options.tennhanviengioithieu)}
+                                                    options={options.tennhanviengioithieu}
+                                                    placeholder="Chọn nhân viên"
+                                                    styles={{
+                                                        control: (baseStyles, state) => ({
+                                                            ...baseStyles,
+                                                            borderRadius: 8,
+                                                            fontSize: state.isFocused ? 15 : 15,
+                                                            minHeight: state.isFocused ? 20 : 20,
+                                                            width: state.isFocused ? 413.38 : 413.38,
+                                                            fontWeight: state.isFocused ? 600 : 600
+                                                        }),
+                                                    }}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Vị trí tuyển dụng <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <select name="" id="" className={`${styles.input_process}`}>
-                                                <option value="">-- Vui lòng chọn --</option>
-                                                <option value="">abc </option>
-                                                <option value="">def</option>
-                                            </select>
+                                            <div className={`${styles.div_no_pad} `}>
+                                                <Select
+                                                    defaultValue={selectedOption}
+                                                    onChange={(option) => handleSelectionChange(option, options.vitrituyendung)}
+                                                    options={options.vitrituyendung}
+                                                    placeholder="-- Vui lòng chọn --"
+                                                    styles={{
+                                                        control: (baseStyles, state) => ({
+                                                            ...baseStyles,
+                                                            borderRadius: 8,
+                                                            fontSize: state.isFocused ? 15 : 15,
+                                                            minHeight: state.isFocused ? 20 : 20,
+                                                            width: state.isFocused ? 413.38 : 413.38,
+                                                            fontWeight: state.isFocused ? 600 : 600
+                                                        }),
+                                                    }}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>

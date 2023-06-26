@@ -3,6 +3,8 @@ import styles from '../thong-tin-nhan-su/administration.module.css'
 import Link from 'next/link';
 import TabSalary from './salary';
 import TabPlaningAppointment from './planningAppointment';
+import TabWorkingRotation from './workingRotation';
+import TabPayrollDown from './payrollDown';
 
 export default function PersonnalChange({ children }: any) {
     const [active, setActive] = useState(1)
@@ -33,6 +35,8 @@ export default function PersonnalChange({ children }: any) {
                 </ul>
                 {active === 1 && <TabSalary></TabSalary>}
                 {active === 2 && <TabPlaningAppointment></TabPlaningAppointment>}
+                {active === 3 && <TabWorkingRotation></TabWorkingRotation>}
+                {active === 4 && <TabPayrollDown></TabPayrollDown>}
             </div>
 
 

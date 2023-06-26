@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
+import Select from 'react-select'
 import styles from '../../thong-tin-nhan-su/tab/employeeManagement.module.css'
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 
+type SelectOptionType = { value: string, label: string }
 export interface TabSalary {
 
 }
@@ -21,6 +23,20 @@ export default function TabSalary({ children }: any) {
 
     const [activeButton, setActiveButton] = useState(0)
     const [employeeCount, setEmployeeCount] = useState(10)
+    const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null)
+
+    const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
+        if (option) {
+            setSelectedOption(option)
+        }
+    };
+
+    const options = {
+        chonnhanvien: [
+            { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
+            { value: 'Phan Mạnh Hùng', label: 'Phan Mạnh Hùng (SÁNG TẠO - ID:153846)' },
+        ],
+    };
 
     useEffect(() => {
         setCurrentList(listCandidates.slice(0, employeeCount));
@@ -89,11 +105,22 @@ export default function TabSalary({ children }: any) {
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_new_t}`}>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_salary} `}>
-                                    <select className={`${styles.search_can_new} ${styles.form_control} ${styles.choose_can}`} name="" id="" >
-                                        <option value="">Chọn nhân viên</option>
-                                        <option value="">Trần Văn Hưng (KINH DOANH)</option>
-                                        <option value="">Trần Văn Đức (BIÊN TẬP)</option>
-                                    </select>
+                                    <Select
+                                        defaultValue={selectedOption}
+                                        onChange={(option) => handleSelectionChange(option, options.chonnhanvien)}
+                                        options={options.chonnhanvien}
+                                        placeholder="Chọn nhân viên"
+                                        styles={{
+                                            control: (baseStyles, state) => ({
+                                                ...baseStyles,
+                                                borderRadius: 8,
+                                                fontSize: state.isFocused ? 15 : 15,
+                                                minHeight: state.isFocused ? 20 : 20,
+                                                width: state.isFocused ? 250 : 250,
+                                                fontWeight: state.isFocused ? 600 : 600
+                                            }),
+                                        }}
+                                    />
                                 </div>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_salary} `}>
                                     <input type="date" className={`${styles.search_date} ${styles.form_control}`} placeholder='Từ dd/mm/yyyy' />

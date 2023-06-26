@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from './candidateRepo.module.css'
+import Select from 'react-select';
+
+type SelectOptionType = { label: string, value: string }
 
 export default function CandidateRepo({ children }: any) {
+
+    const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
+
 
     const listCandidates = [
         {
@@ -54,6 +60,26 @@ export default function CandidateRepo({ children }: any) {
         }
 
     ]
+    const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
+        if (option) {
+            setSelectedOption(option)
+        }
+    };
+
+    const options = {
+        vitrituyendung: [
+            { value: 'IT', label: 'IT' },
+            { value: 'Hành chính- tổng hợp', label: 'Hành chính- tổng hợp' },
+        ],
+        chongioitinh: [
+            { value: 'Nam', label: 'Nam' },
+            { value: 'Nữ', label: 'Nữ' },
+            { value: 'Giới tính khác', label: 'Giới tính khác' },
+        ],
+    };
+
+
+
 
     return (
         <>
@@ -66,15 +92,39 @@ export default function CandidateRepo({ children }: any) {
                         <div className={`${styles.div_no_pad}`}>
                             <input type="date" className={`${styles.form_control} ${styles.search_date_to}`} placeholder="dd/mm/yyyy" />
                         </div>
-                        <div className={`${styles.div_no_pad}`}>
-                            <select name="" id="" className={`${styles.form_control} ${styles.input_process}`}>
-                                <option value="">Chọn giới tính</option>
-                            </select>
+                        <div className={`${styles.div_no_pad} `}>
+                            <Select
+                                defaultValue={selectedOption}
+                                onChange={(option) => handleSelectionChange(option, options.chongioitinh)}
+                                options={options.chongioitinh}
+                                placeholder="Chọn giới tính"
+                                styles={{
+                                    control: (baseStyles, state) => ({
+                                        ...baseStyles,
+                                        fontSize: state.isFocused ? 15 : 15,
+                                        minHeight: state.isFocused ? 20 : 20,
+                                        width: state.isFocused ? 177.5 : 177.5,
+                                        fontWeight: state.isFocused ? 600 : 600
+                                    }),
+                                }}
+                            />
                         </div>
-                        <div className={`${styles.div_no_pad}`}>
-                            <select name="" id="" className={`${styles.form_control} ${styles.input_process}`}>
-                                <option value="">Vị trí tuyển dụng</option>
-                            </select>
+                        <div className={`${styles.div_no_pad} `}>
+                            <Select
+                                defaultValue={selectedOption}
+                                onChange={(option) => handleSelectionChange(option, options.vitrituyendung)}
+                                options={options.vitrituyendung}
+                                placeholder="Vị trí tuyển dụng"
+                                styles={{
+                                    control: (baseStyles, state) => ({
+                                        ...baseStyles,
+                                        fontSize: state.isFocused ? 15 : 15,
+                                        minHeight: state.isFocused ? 20 : 20,
+                                        width: state.isFocused ? 177.5 : 177.5,
+                                        fontWeight: state.isFocused ? 600 : 600
+                                    }),
+                                }}
+                            />
                         </div>
                         <div className={`${styles.div_no_pad}`}>
                             <input className={` ${styles.form_control}`} type="text" placeholder="Nhập tên ứng viên" />

@@ -1,7 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Select from 'react-select';
 import styles from '../candidateAddModal/candidateAddModal.module.css'
+type SelectOptionType = { label: string, value: string }
 
 export default function StageAddModal() {
+    const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
+
+    const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
+        if (option) {
+            setSelectedOption(option)
+        }
+    };
+
+    const options = {
+        chongiaidoandungtruoc: [
+            { value: 'Nhận hồ sơ ứng viên', label: 'Nhận hồ sơ ứng viên' },
+            { value: 'Chờ xét duyệt', label: 'Chờ xét duyệt' },
+            { value: 'Nhận việc', label: 'Nhận việc' },
+            { value: 'Trượt', label: 'Trượt' },
+            { value: 'Hủy', label: 'Hủy' },
+        ],
+    };
     return (
         <>
             <div className={`${styles.modal_open}`}>
@@ -22,12 +41,24 @@ export default function StageAddModal() {
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Chọn giai đoạn đứng trước <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <select name="" id="" className={`${styles.input_process}`}>
-                                                <option value="">-- Vui lòng chọn --</option>
-                                                <option value="">Nhận hồ sơ ứng viên</option>
-                                                <option value="">Chờ xét duyệt</option>
-                                                <option value="">Nhận việc</option>
-                                            </select>
+                                            <div className={`${styles.div_no_pad} `}>
+                                                <Select
+                                                    defaultValue={selectedOption}
+                                                    onChange={(option) => handleSelectionChange(option, options.chongiaidoandungtruoc)}
+                                                    options={options.chongiaidoandungtruoc}
+                                                    placeholder="-- Vui lòng chọn --"
+                                                    styles={{
+                                                        control: (baseStyles, state) => ({
+                                                            ...baseStyles,
+                                                            borderRadius: 8,
+                                                            fontSize: state.isFocused ? 15 : 15,
+                                                            minHeight: state.isFocused ? 20 : 20,
+                                                            width: state.isFocused ? 413.38 : 413.38,
+                                                            fontWeight: state.isFocused ? 600 : 600
+                                                        }),
+                                                    }}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -155,3 +155,6 @@
 .tab_pane {
   width: 1123.5px;
 }
+.my_select {
+  border: 10px solid #ccc;
+}

@@ -4,12 +4,24 @@
   margin-top: 50px;
   margin-bottom: 50px;
 }
+.recruitment a {
+  background: none;
+  color: #4c5bd4;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 16px;
+  outline: none !important;
+  border: none !important;
+  padding-right: 10px;
+  margin-right: 50px;
+}
 .recruitment button {
   background: none;
   color: #4c5bd4;
   font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
+  font-weight: 600;
+  font-size: 15px;
   line-height: 16px;
   outline: none !important;
   border: none !important;
@@ -76,6 +88,14 @@
 }
 .t_excel img {
   vertical-align: middle;
+}
+.export_excel {
+  float: right;
+  top: 26%;
+}
+.export_excel .t_excel_payroll {
+  border: 1px solid #20744a !important;
+  margin-right: 5px !important;
 }
 .member_list {
   border-radius: 8px;
@@ -234,4 +254,9 @@
 .add_planning {
   color: #333333 !important;
   font-weight: 600 !important;
+}
+
+/* -- payrollDown -- */
+.btn_edit {
+  margin-right: 10px;
 }
