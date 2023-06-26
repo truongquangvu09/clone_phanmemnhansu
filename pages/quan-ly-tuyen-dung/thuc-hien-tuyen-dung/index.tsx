@@ -5,7 +5,7 @@ import styles from './headerForm.module.css'
 import { useRouter } from "next/router";
 import PerformRecruitment from "./PerformRecruitment/PerformRecruitment";
 import Recruitment from "./Recruitment/recruitment";
-import IdRecruitment from "./DataRecruitment/RecruitmentSetting/[idRecruitment]";
+import IdRecruitment from "./ListRecruitment/RecruitmentSetting/[idRecruitment]";
 
 export interface HeaderForm {}
 

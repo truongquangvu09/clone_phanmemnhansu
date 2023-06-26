@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import styles from "../Recruitment/recruitment.module.css"
 import Link from "next/link";
-import RecruitmentSetting from "./RecruitmentSetting/RecruitmentSetting";
+import RecruitmentSetting from "../RecruitmentSetting/RecruitmentSetting";
 
-export interface DataRecruitment {}
+export interface ListRecruitment {}
 
-export default function DataRecruitment({ data }: any) {
+export default function ListRecruitment({ data }: any) {
     
     const [visible, setVisible] = useState(false);
     const handleDelete = () => {
@@ -64,7 +64,7 @@ export default function DataRecruitment({ data }: any) {
                         </picture>
 
                         {visible &&  (
-                          <RecruitmentSetting dataId = {data.id} item = {data}></RecruitmentSetting>
+                          <RecruitmentSetting dataId = {data.id}></RecruitmentSetting>
                         )}
                       </button>
                     </div>

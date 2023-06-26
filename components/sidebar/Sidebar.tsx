@@ -14,7 +14,6 @@ export default function Sidebar(props: SideBarProp) {
   const [activeButton, setActiveButton] = useState(0);
   const [showSubMenu, setShowSubMenu] = useState(false);
   const [subMenuShown, setSubMenuShown] = useState(null);
-  console.log({ activeButton });
 
   const handleClick = (buttonIndex: number) => {
     if (subMenuShown === buttonIndex) {

@@ -1,14 +1,31 @@
-import React from "react";
-import styles from "./listRecruitment.module.css";
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, { useState } from "react";
+import styles from "./listRecruitmentProcess.module.css";
 import Link from "next/link";
-export interface ListRecruitment {}
+import EditRecruitmentProcess from "../editRecruitmentProcess/EditRecruitmentProcess";
+import DeleteRecruitmentProcess from "../deleteRecruitmentProcess/DeleteRecruitmentProcess";
+import { useRouter } from "next/router";
+export interface listRecruitmentProcess {}
 
-export default function ListRecruitment({ children }: any) {
+export default function listRecruitmentProcess({ children }: any) {
+  const router = useRouter()
+  const [active, setActive] = useState(0)
 
-  const handleDelete = () => {
-    alert('delete')
+  const handleClickDetail = (item: number) => {
+    router.push('/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/chi-tiet-quy-trinh/[idRecruitmentProcess]',
+    `/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/chi-tiet-quy-trinh/${item}`)
   }
 
+  const handleModalEdit = () => {
+    setActive(2)
+  }
+
+  const handleModalDelete = () => {
+    setActive(3);
+  };
+  const closeModal = () => {
+    setActive(0)
+  };
   const listRecruitment = [
     {
       _id: 1,
@@ -37,24 +54,6 @@ export default function ListRecruitment({ children }: any) {
       detail: "",
       href: "/recruitment_stage/:_id",
     },
-    {
-      _id: 4,
-      title: "(QTTD195) Tuyển thực tập sinh IT4",
-      date: "17/06/2023",
-      company: "Công ty cổ phần thanh toán Hưng Hà4",
-      relative: "Thực tập sinh IT4",
-      detail: "",
-      href: "/recruitment_stage/:_id",
-    },
-    {
-      _id: 5,
-      title: "(QTTD195) Tuyển thực tập sinh IT5",
-      date: "17/06/2023",
-      company: "Công ty cổ phần thanh toán Hưng Hà5",
-      relative: "Thực tập sinh IT5",
-      detail: "",
-      href: "/recruitment_stage/:_id",
-    },
   ];
   return (
     <>
@@ -71,7 +70,9 @@ export default function ListRecruitment({ children }: any) {
                         pathname: "/",
                         query: {},
                       }}
-                    >{item.title}</Link>
+                    >
+                      {item.title}
+                    </Link>
                   </div>
                   <div className={`${styles.quytrinh_item12}`}>
                     <span className={`${styles.qtrspan1}`}>{item.date}</span>
@@ -79,25 +80,20 @@ export default function ListRecruitment({ children }: any) {
                     <span>Đối tượng áp dụng: {item.relative}</span>
                   </div>
                 </div>
-
-                
+{/* chi tiết */}
                 <div className={`${styles.quytrinh_item2}`}>
-                  <Link
-                    href={{
-                      pathname: "/",
-                      query: {},
-                    }}
-                  >
+                  <div onClick={() => handleClickDetail(item._id)}>
                     <picture>
                       <img
                         src="https://phanmemnhansu.timviec365.vn/assets/images/icon-new/t-icon-quy-trinh.svg"
                         alt=""
                       ></img>
                     </picture>
-                    <span className={`${styles.span_a}`}>Chi tiết</span>
-                  </Link>
-
-                  <button className={`${styles.button_option}`}>
+                    <span className={`${styles.span_a} ${styles.span_a_detail}`}>Chi tiết</span>
+                    </div>
+{/* edit */}
+                  <button className={`${styles.button_option}`}
+                   onClick={() => handleModalEdit()}>
                     <picture>
                       <img
                         src="https://phanmemnhansu.timviec365.vn/assets/images/icon-new/icon-edit.svg"
@@ -106,15 +102,18 @@ export default function ListRecruitment({ children }: any) {
                     </picture>
                     <span className={`${styles.span_a}`}>Sửa</span>
                   </button>
-
-                  <button className={`${styles.button_option}`}>
+{/* xóa */}
+                  <button
+                    className={`${styles.button_option}`}
+                    onClick={() => handleModalDelete()}
+                  >
                     <picture>
                       <img
                         src="https://phanmemnhansu.timviec365.vn/assets/images/icon-new/icon-remove.svg"
                         alt=""
                       ></img>
                     </picture>
-                    <span className={`${styles.span_a}`} onClick={handleDelete}>Xóa</span>
+                    <span className={`${styles.span_a}`}>Xóa</span>
                   </button>
                 </div>
               </div>
@@ -123,6 +122,8 @@ export default function ListRecruitment({ children }: any) {
           );
         })}
       </div>
+      {active === 2 && <EditRecruitmentProcess onClose={closeModal}/>}
+      {active === 3 && <DeleteRecruitmentProcess onClose={closeModal}/>}
     </>
   );
 }

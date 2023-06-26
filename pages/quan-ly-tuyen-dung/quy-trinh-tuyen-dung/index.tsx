@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./recruitmentProcess.module.css";
-import ListRecruitment from "./listRecruitment/listRecruitment";
+import ListRecruitment from "./listRecruitmentProcess/listRecruitmentProcess";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 export interface RecruitmentProcess {}
 

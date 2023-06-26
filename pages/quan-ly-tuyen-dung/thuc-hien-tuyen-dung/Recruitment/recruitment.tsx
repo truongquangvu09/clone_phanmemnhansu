@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import styles from "./recruitment.module.css";
-import DataRecruitment from "../DataRecruitment/DataRecruitment";
+import ListRecruitment from "../danh-sach-tuyen-dung/ListRecruitment";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 
 export interface Recruitment {}
@@ -109,7 +109,7 @@ export default function Recruitment({ children }: any) {
         >
           {data.map((item) => (
             <div key={item.id}>
-             <DataRecruitment data = {item}></DataRecruitment>
+             <ListRecruitment data = {item}></ListRecruitment>
             </div>
            
           ))}
