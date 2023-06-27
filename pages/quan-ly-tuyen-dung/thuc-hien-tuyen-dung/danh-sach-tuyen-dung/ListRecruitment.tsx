@@ -8,12 +8,7 @@ export interface ListRecruitment {}
 export default function ListRecruitment({ data }: any) {
     
     const [visible, setVisible] = useState(false);
-    const handleDelete = () => {
-
-    }
-    const handleEstablish = () => {
-
-    }
+    
     return (
         <div>
               <div className={`${styles.new_r_t}`}>
@@ -62,7 +57,6 @@ export default function ListRecruitment({ data }: any) {
                         <picture className={`${styles.pull_right_img}`}>
                           <img src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/3cham.png" alt=""></img>
                         </picture>
-
                         {visible &&  (
                           <RecruitmentSetting dataId = {data.id}></RecruitmentSetting>
                         )}
