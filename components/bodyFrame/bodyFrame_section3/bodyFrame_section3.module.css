@@ -46,10 +46,22 @@
   line-height: 20px;
   text-align: justify;
   color: #666666;
-  height: 140px;
+  height: 150px;
+  max-height: 160px;
 }
 .item_detail {
   color: #337ab7;
   text-decoration: none !important;
   text-align: center;
+}
+
+@media only screen and (min-width: 1200px) {
+  .item_text {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: justify;
+    color: #666666;
+    height: 200px;
+  }
 }

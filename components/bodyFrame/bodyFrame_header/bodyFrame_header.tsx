@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from './bodyFrame_header.module.css'
 import DropDownMenu from './drop_down_menu/dropDownMenu';
 import Notify from './notify/notify';
+import Remind from './remind';
 export interface BodyFrameHeader {
 
 }
@@ -9,12 +10,16 @@ export interface BodyFrameHeader {
 export default function BodyFrameHeader({ children }: any) {
     const [menuClick, setMenuClick] = useState(false)
     const [noti, setNoti] = useState(false)
+    const [remind, setRemind] = useState(false)
 
     const toggleMenu = () => {
         setMenuClick(prevState => !prevState);
     };
     const handleNotify = () => {
         setNoti(PrevState => !PrevState)
+    }
+    const handleRemind = () => {
+        setRemind(PrevState => !PrevState)
     }
     return (
         <>
@@ -32,7 +37,7 @@ export default function BodyFrameHeader({ children }: any) {
                             <div className={`${styles.menu_top_icon}`} onClick={handleNotify}>
                                 <img className={`${styles.drop_down}`} src="	https://phanmemnhansu.timviec365.vn//assets/images/l_images/nhacnho.svg" alt="icon" />
                             </div>
-                            <div className={`${styles.menu_top_icon}`}>
+                            <div className={`${styles.menu_top_icon}`} onClick={handleRemind}>
                                 <img className={`${styles.drop_down}`} src="	https://phanmemnhansu.timviec365.vn//assets/images/l_images/thongbao.svg" alt="icon" />
                             </div>
                         </div>
@@ -50,7 +55,7 @@ export default function BodyFrameHeader({ children }: any) {
                 </div>
                 {menuClick && <DropDownMenu></DropDownMenu>}
                 {noti && <Notify></Notify>}
-                { }
+                {remind && <Remind></Remind>}
 
             </div>
         </>

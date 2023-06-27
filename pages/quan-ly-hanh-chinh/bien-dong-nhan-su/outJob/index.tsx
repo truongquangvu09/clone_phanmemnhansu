@@ -1,31 +1,26 @@
-import React, { useState, useEffect, useRef, MouseEventHandler } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Select from 'react-select'
 import styles from '../../thong-tin-nhan-su/tab/employeeManagement.module.css'
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
-import AddPayrollModal from "./addPayrollModal";
-import EditPayroll from "./editPayroll";
+import AddOutJobModal from "./addOutJobModal";
 
 type SelectOptionType = { label: string, value: string }
-export interface TabPayrollDown {
+export interface TabOutJob {
 
 }
 export interface Employee {
     id: number;
     name: string;
-    canghi: string;
     phongban: string;
     chucvu: string;
-    giambienchenghiviec: string;
     ngaybatdaunghi: Date;
 }
 
-export default function TabPayrollDown({ children }: any) {
+export default function TabOutJob({ children }: any) {
 
     const [activeButton, setActiveButton] = useState(0)
     const [employeeCount, setEmployeeCount] = useState(10)
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
-    const [openModal, setOpenModal] = useState(0)
-    const [openEditModal, setOpenEditModal] = useState(false)
 
     const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
         if (option) {
@@ -41,7 +36,14 @@ export default function TabPayrollDown({ children }: any) {
         chonphongban: [
             { value: '  BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
             { value: 'KỸ THUẬT', label: 'KỸ THUẬT' },
-        ]
+            { value: 'Biên tập', label: 'Biên tập' },
+            { value: 'Kinh Doanh', label: 'Kinh Doanh' },
+            { value: 'Đề án', label: 'Đề án' },
+            { value: 'Phòng SEO', label: 'Phòng SEO' },
+            { value: 'Phòng Đào tạo', label: 'Phòng Đào tạo' },
+            { value: 'Phòng sáng tạo', label: 'phòng sáng tạo' },
+            { value: 'Phòng tài vụ', label: 'Phòng tài vụ' },
+        ],
     };
     useEffect(() => {
         setCurrentList(listCandidates.slice(0, employeeCount));
@@ -52,10 +54,8 @@ export default function TabPayrollDown({ children }: any) {
         const obj: Employee = {
             id: 1,
             name: 'nguyen van a',
-            canghi: 'sang',
             phongban: '201',
-            chucvu: 'PGD',
-            giambienchenghiviec: 'giambienche',
+            chucvu: 'GĐ',
             ngaybatdaunghi: new Date(),
         };
         return Array(n).fill(obj);
@@ -100,12 +100,7 @@ export default function TabPayrollDown({ children }: any) {
             }
         }
     };
-
-
-    const handleOpenEdit: MouseEventHandler<HTMLAnchorElement> = (event) => {
-        event.preventDefault();
-        setOpenEditModal(true);
-    }
+    const [openModal, setOpenModal] = useState(0)
     return (
         <>
             <div className={`${styles.tab_content}`}>
@@ -113,17 +108,10 @@ export default function TabPayrollDown({ children }: any) {
                     <div className={`${styles.body} ${styles.body_planning}`}>
                         <div className={`${styles.recruitment}`}>
                             <button className={`${styles.add} ${styles.add_planning}`} onClick={() => setOpenModal(1)}>
-                                <img src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm mới giảm biên chế
+                                <img src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm mới nghỉ việc sai quy định
                             </button>
-                            <div className={`${styles.export_excel}`} style={{ paddingRight: 20, right: 0, position: 'absolute' }}>
-                                <a href="" className={`${styles.t_excel} ${styles.t_excel_payroll}`} >
-                                    <img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-excel.svg" alt="" />
-                                    Xuất file Excel
-                                </a>
-                            </div>
                         </div>
-                        {openModal === 1 && <AddPayrollModal></AddPayrollModal>}
-                        {openEditModal === true ? <EditPayroll></EditPayroll> : ''}
+                        {openModal === 1 && <AddOutJobModal></AddOutJobModal>}
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_new_t}`}>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning} `}>
@@ -190,10 +178,8 @@ export default function TabPayrollDown({ children }: any) {
                                         <tr>
                                             <th>ID nhân viên</th>
                                             <th>Họ và tên</th>
-                                            <th>Ca nghỉ</th>
                                             <th>Phòng ban</th>
                                             <th>Chức vụ</th>
-                                            <th>Giảm biên chế/nghỉ việc</th>
                                             <th>Ngày bắt đầu nghỉ</th>
                                             <th>Tùy chỉnh</th>
                                         </tr>
@@ -203,15 +189,10 @@ export default function TabPayrollDown({ children }: any) {
                                             <tr key={index}>
                                                 <td>{item.id}</td>
                                                 <td>{item.name}</td>
-                                                <td>{item.canghi}</td>
                                                 <td>{item.phongban}</td>
                                                 <td>{item.chucvu}</td>
-                                                <td>{item.giambienchenghiviec}</td>
                                                 <td>{item.ngaybatdaunghi.toString().slice(0, 16)}</td>
-                                                <td>
-                                                    <a onClick={handleOpenEdit} href="" className={`${styles.btn_edit}`}><img src="https://phanmemnhansu.timviec365.vn/assets/images/icon-menu-vn/icon_edit.svg" alt="" /></a>
-                                                    <a href="" className={`${styles.btn_delete}`}><img src="https://phanmemnhansu.timviec365.vn/assets/images/icon-menu-vn/icon_delete.svg" alt="" /></a>
-                                                </td>
+                                                <td></td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -286,7 +267,7 @@ export default function TabPayrollDown({ children }: any) {
                             </div>
                         </div>
                     </div>
-                    <BodyFrameFooter src="https://www.youtube.com/embed/2uVrd-EFEXs"></BodyFrameFooter>
+                    <BodyFrameFooter src="https://www.youtube.com/embed/e29o-TSnbeE"></BodyFrameFooter>
                 </div>
             </div>
         </>

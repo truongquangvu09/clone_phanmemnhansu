@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
-import styles from './notify.module.css'
+import styles from './remind.module.css'
 import Link from "next/link";
 
-export interface Notify {
+export interface Remind {
 
 }
 
-export default function Notify() {
+export default function Remind() {
     const listNoti = [
         {
             userName_noti: 'Nguyễn Hồng Lịchh',

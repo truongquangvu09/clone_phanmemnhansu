@@ -5,6 +5,8 @@ import TabSalary from './salary';
 import TabPlaningAppointment from './planningAppointment';
 import TabWorkingRotation from './workingRotation';
 import TabPayrollDown from './payrollDown';
+import TabOutJob from './outJob';
+import TabChart from './chart';
 
 export default function PersonnalChange({ children }: any) {
     const [active, setActive] = useState(1)
@@ -37,6 +39,8 @@ export default function PersonnalChange({ children }: any) {
                 {active === 2 && <TabPlaningAppointment></TabPlaningAppointment>}
                 {active === 3 && <TabWorkingRotation></TabWorkingRotation>}
                 {active === 4 && <TabPayrollDown></TabPayrollDown>}
+                {active === 5 && <TabOutJob></TabOutJob>}
+                {active === 6 && <TabChart></TabChart>}
             </div>
 
 
