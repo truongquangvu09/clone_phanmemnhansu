@@ -136,7 +136,7 @@
 .settings_hover li{
     height: 20px;
     list-style: none;
-    margin-top: 5px;
+    
     border-left: 3px solid #ffffff;
     cursor: pointer;
     padding: 16px 40px 14px 13px;
@@ -159,7 +159,6 @@
     font-size: 14px;
     font-weight: 600;
     color: #333333;
-    margin: 5px 0 0;
     height: 24px;
 }
 .giaidoans_item_2 span {

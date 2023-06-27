@@ -12,7 +12,7 @@ export default function listRecruitmentProcess({ children }: any) {
   const [active, setActive] = useState(0)
 
   const handleClickDetail = (item: number) => {
-    router.push('/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/chi-tiet-quy-trinh/[idRecruitmentProcess]',
+    router.push('/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/chi-tiet-quy-trinh/[idRecruitmentStage]',
     `/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/chi-tiet-quy-trinh/${item}`)
   }
 

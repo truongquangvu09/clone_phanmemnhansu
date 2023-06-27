@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 export interface RecruitmentSetting {}
 
-export default function RecruitmentSetting({ dataId, item }: any) {
+export default function RecruitmentSetting({ dataId }: any) {
   const router = useRouter();
   const handleClick = () => {
     router.push('/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/[idRecruitment]', `/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/${dataId}`);

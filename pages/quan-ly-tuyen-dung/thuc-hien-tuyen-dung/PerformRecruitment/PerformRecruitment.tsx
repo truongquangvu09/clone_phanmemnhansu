@@ -53,20 +53,6 @@ export default function PerformRecruitment({ children }: any) {
       thuviec: "7",
     },
   ];
-  const totalApplicants = [
-    {
-      key: 1,
-      active: "active_homnay",
-    },
-    {
-      key: 2,
-      active: "active_tuannay",
-    },
-    {
-      key: 3,
-      active: "active_thangnay",
-    },
-  ];
 
   return (
     <>

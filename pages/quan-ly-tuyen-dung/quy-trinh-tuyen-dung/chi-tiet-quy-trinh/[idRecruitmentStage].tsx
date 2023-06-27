@@ -1,22 +1,26 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from "react";
-import styles from "./detailRecruitmentProcess.module.css";
+import styles from "./detailRecruitmentStage.module.css";
 import { useRouter } from "next/router";
-import AddRecruitmentStage from "../addRecruitmentProcess/them-quy-trinh";
+import AddRecruitmentStage from "./addRecruitmentStage/them-quy-trinh";
+import ListRecruitmentStage from "./listRecruitmentStage/listRecruitmentStage";
+import RecruitmentStageSetting from "./RecruitmentStageSetting/RecruitmentStageSetting";
 export interface listRecruitmentProcess {}
 
 export default function listRecruitmentProcess({ children }: any) {
   const router =  useRouter()
-  const [visible, setVisible] = useState(false);
-  const [openModal, setOpenModal] = useState(0)
 
   
+
+  const [isModalOpen, setIsModalOpen] = useState(0);
+
   const handleBack = () => {
       router.back()
   }
-  const closeModal = () => {
-    setOpenModal(0)
-  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(0);
+  };
 
   const data = [
     {
@@ -64,7 +68,7 @@ export default function listRecruitmentProcess({ children }: any) {
           </div>
           <div className={`${styles.add_quytrinh1}`}>
             <button className={`${styles.adds}`}
-            onClick={() => setOpenModal(1)}
+            onClick={() => setIsModalOpen(1)}
             >
               <picture>
                 <img
@@ -76,102 +80,13 @@ export default function listRecruitmentProcess({ children }: any) {
             </button>
           </div>
         </div>
-
-        {openModal === 1 && <AddRecruitmentStage closeModal={closeModal}></AddRecruitmentStage>}
-
+          {isModalOpen === 1 && <AddRecruitmentStage onCloseModal={handleCloseModal}></AddRecruitmentStage>}
+      
         <div className={`${styles.giaidoans}`}>
           {data?.map((item) => (
-            <div key={item.id}>
-              <div className={`${styles.title_giaidoans}`}>
-                <h5>({item.magiaidoan}) {item.title}</h5>
-              </div>
-              <div className={`${styles.all_giaidoans}`}>
-                <div className={`${styles.giaidoans_item}`}>
-                  <div className={`${styles.giaidoans_item_1}`}>
-                    <div className={`${styles.circle_blue}`}>{item.id}</div>
-                    <div className={`${styles.giaidoans_item_2}`}>
-                      <div className={`${styles.row} ${styles.r_t_top}`}>
-                        <div className={`${styles.row_top_right}`}>
-                          <p>Cillum numquam adipi</p>
-                        </div>
-                        <div
-                          className={`${styles.setting}`}
-                          onMouseEnter={() => setVisible(true)}
-                          onMouseLeave={() => setVisible(false)}
-                        >
-                          {visible && (
-                            <div className={`${styles.settings_hover}`}>
-                              <li>Chỉnh sửa </li>
-                              <hr
-                                style={{ marginTop: "0", marginBottom: "0" }}
-                              ></hr>
-                              <li>Xóa </li>
-                            </div>
-                          )}
-                          <picture>
-                            <img
-                              src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/3cham.png"
-                              alt="setting"
-                            ></img>
-                          </picture>
-                        </div>
-                      </div>
-                      <ul>
-                        <li>
-                          <picture>
-                            <img
-                              src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/right_blue.png"
-                              alt=""
-                            ></img>
-                          </picture>
-                          Thành viên thực hiện: {item.thanhvien}
-                          <span> {"Numquam pariatur Au"} </span>
-                        </li>
-
-                        <li>
-                          <picture>
-                            <img
-                              src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/right_blue.png"
-                              alt=""
-                            ></img>
-                          </picture>
-                          Mục tiêu: {item.muctieu}
-                          <span> </span>
-                        </li>
-
-                        <li>
-                          <picture>
-                            <img
-                              src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/right_blue.png"
-                              alt=""
-                            ></img>
-                          </picture>
-                          Thời gian định lượng: {item.thoigian}
-                          <span> {"Laboriosam eum natu"} </span>
-                        </li>
-
-                        <li>
-                          <picture>
-                            <img
-                              src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/right_blue.png"
-                              alt=""
-                            ></img>
-                          </picture>
-                          Mô tả công việc: 
-                          <span className={`${styles.view_detail_desc}`}>
-                            (Xem chi tiết)
-                          </span>
-                          <div className={`${styles.motacv}`} style={{maxHeight: "200px"}}>
-                            <p>{item.mota}</p>
-                          </div>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <hr></hr>
-              </div>
-            </div>
+            <>
+              <ListRecruitmentStage item = {item}></ListRecruitmentStage>
+            </>
           ))}
         </div>
       </div>

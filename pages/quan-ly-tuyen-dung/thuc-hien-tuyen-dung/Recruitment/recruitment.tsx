@@ -109,9 +109,8 @@ export default function Recruitment({ children }: any) {
         >
           {data.map((item) => (
             <div key={item.id}>
-             <ListRecruitment data = {item}></ListRecruitment>
+             <ListRecruitment data = {item} ></ListRecruitment>
             </div>
-           
           ))}
         </div>
       </div>
