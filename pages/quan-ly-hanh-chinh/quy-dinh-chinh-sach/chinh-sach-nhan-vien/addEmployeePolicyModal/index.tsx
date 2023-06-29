@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import styles from '../../quy-dinh-lam-viec/addRegulationsModal/addRegulationsModal.module.css'
-import Editor from "../../quy-dinh-lam-viec/addRegulationsModal/CKEditor";
-
-export default function AddEmployeePolicyModal() {
+import dynamic from "next/dynamic";
+const Editor = dynamic(() => import("../../quy-dinh-lam-viec/addRegulationsModal/CKEditor"), {
+    ssr: false
+})
+export default function AddEmployeePolicyModal({ onCancel }: any) {
     function handleUploadClick(event: React.MouseEvent<HTMLAnchorElement>) {
         event.preventDefault();
         const uploadInput = document.getElementById('upload_cv') as HTMLInputElement;
@@ -47,7 +49,7 @@ export default function AddEmployeePolicyModal() {
                                     <div className={`${styles.form_groups} ${styles.cke}`}>
                                         <label htmlFor="">Mô tả ngắn <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.ckeditor}`}>
-                                            {/* <Editor content={content} onChange={handleContentChange} /> */}
+                                            <Editor content={content} onChange={handleContentChange} />
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -61,7 +63,7 @@ export default function AddEmployeePolicyModal() {
                                     </div>
                                 </div>
                                 <div className={`${styles.modal_footer} ${styles.footer_process}`}>
-                                    <button className={`${styles.btn_cancel}`}>Hủy</button>
+                                    <button className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
                                     <button className={`${styles.btn_add}`}>Thêm</button>
                                 </div>
                             </form>

@@ -59,13 +59,18 @@
 }
 .modal_body {
   position: relative;
-  padding: 15px;
+  text-align: left;
+  padding-bottom: 0;
+  padding-top: 3%;
+  padding-left: 7%;
+  padding-right: 7%;
 }
 .form_groups {
   margin-bottom: 15px;
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
+  margin-top: 30px;
 }
 .edit_room {
   display: flex !important;
@@ -111,7 +116,7 @@
   margin-top: 2%;
   padding-right: 13%;
   text-align: right;
-  padding: 15px;
+  padding: 15px 40px 15px 40px;
   border: none;
 }
 .modal_footer button {
@@ -138,4 +143,14 @@
 }
 .ckeditor {
   width: 615px;
+}
+.textareapolicy {
+  height: 80px;
+}
+.inputquytrinh {
+  background-color: white;
+  border: 1px solid rgba(71, 71, 71, 0.48);
+  width: 95%;
+  border-radius: 8px;
+  line-height: 45px;
 }

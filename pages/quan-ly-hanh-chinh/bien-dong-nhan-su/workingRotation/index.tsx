@@ -104,6 +104,9 @@ export default function TabWorkingRotation({ children }: any) {
         }
     };
     const [openModal, setOpenModal] = useState(0)
+    const handleCloseModal = () => {
+        setOpenModal(0);
+    }
     return (
         <>
             <div className={`${styles.tab_content}`}>
@@ -114,7 +117,7 @@ export default function TabWorkingRotation({ children }: any) {
                                 <img src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm mới luân chuyển công tác
                             </button>
                         </div>
-                        {openModal === 1 && <AddWorkingModal></AddWorkingModal>}
+                        {openModal === 1 && <AddWorkingModal onCancel={handleCloseModal}></AddWorkingModal>}
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_new_t}`}>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning} `}>

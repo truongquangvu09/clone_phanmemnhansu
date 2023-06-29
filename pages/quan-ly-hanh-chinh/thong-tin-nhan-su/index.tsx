@@ -3,13 +3,9 @@ import styles from './administration.module.css'
 import Link from 'next/link';
 import TabEmployeeManagement from './tab';
 
-<<<<<<< HEAD:pages/administration/index.tsx
-export interface Administration {}
-=======
 export interface EmployeeManagement {
 
 }
->>>>>>> 8c1a39eb6789197c755b77c8ac9e7b0e6648ea8a:pages/quan-ly-hanh-chinh/thong-tin-nhan-su/index.tsx
 
 export default function EmployeeManagement({ children }: any) {
     const [active, setActive] = useState(1)

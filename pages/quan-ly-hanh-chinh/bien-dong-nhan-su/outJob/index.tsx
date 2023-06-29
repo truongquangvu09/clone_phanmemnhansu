@@ -60,7 +60,7 @@ export default function TabOutJob({ children }: any) {
         };
         return Array(n).fill(obj);
     }
-    const listCandidates: Employee[] = createArray(4);
+    const listCandidates: Employee[] = createArray(40);
 
     const handleChoose = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const value = parseInt(event.target.value);
@@ -101,6 +101,9 @@ export default function TabOutJob({ children }: any) {
         }
     };
     const [openModal, setOpenModal] = useState(0)
+    const handleCloseModal = () => {
+        setOpenModal(0)
+    }
     return (
         <>
             <div className={`${styles.tab_content}`}>
@@ -111,7 +114,7 @@ export default function TabOutJob({ children }: any) {
                                 <img src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm mới nghỉ việc sai quy định
                             </button>
                         </div>
-                        {openModal === 1 && <AddOutJobModal></AddOutJobModal>}
+                        {openModal === 1 && <AddOutJobModal onCancel={handleCloseModal}></AddOutJobModal>}
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_new_t}`}>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning} `}>

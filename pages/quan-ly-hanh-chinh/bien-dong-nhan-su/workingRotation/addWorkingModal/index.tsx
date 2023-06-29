@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import styles from '../../planningAppointment/addPlanningModal/addPlanningModal.module.css'
-import Editor from "../../../quy-dinh-chinh-sach/quy-dinh-lam-viec/addRegulationsModal/CKEditor";
 import Select from 'react-select';
-
+import dynamic from "next/dynamic";
+const Editor = dynamic(() => import("../../../quy-dinh-chinh-sach/quy-dinh-lam-viec/addRegulationsModal/CKEditor"), {
+    ssr: false
+})
 type SelectOptionType = { label: string, value: string }
 
-export default function AddWorkingModal() {
+export default function AddWorkingModal({ onCancel }: any) {
     function handleUploadClick(event: React.MouseEvent<HTMLAnchorElement>) {
         event.preventDefault();
         const uploadInput = document.getElementById('upload_cv') as HTMLInputElement;
@@ -355,17 +357,17 @@ export default function AddWorkingModal() {
                                     <div className={`${styles.form_groups} ${styles.cke}`}>
                                         <label htmlFor="">Nhiệm vụ công việc mới <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.ckeditor}`}>
-                                            {/* <Editor content={content} onChange={handleContentChange} /> */}
+                                            <Editor content={content} onChange={handleContentChange} />
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups} ${styles.cke}`}>
                                         <label htmlFor="">Ghi chú</label>
                                         <div className={`${styles.ckeditor}`}>
-                                            {/* <Editor content={content} onChange={handleContentChange} /> */}
+                                            <Editor content={content} onChange={handleContentChange} />
                                         </div>
                                     </div>
                                     <div className={`${styles.modal_footer} ${styles.footer_process}`}>
-                                        <button className={`${styles.btn_cancel}`}>Hủy</button>
+                                        <button className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
                                         <button className={`${styles.btn_add}`}>Thêm</button>
                                     </div>
                                 </form>

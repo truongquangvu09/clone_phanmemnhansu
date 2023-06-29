@@ -3,7 +3,7 @@ import Select from 'react-select';
 import styles from '../candidateAddModal/candidateAddModal.module.css'
 type SelectOptionType = { label: string, value: string }
 
-export default function StageAddModal() {
+export default function StageAddModal({ onCancel }: any) {
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
 
     const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
@@ -63,7 +63,7 @@ export default function StageAddModal() {
                                     </div>
                                 </div>
                                 <div className={`${styles.modal_footer} ${styles.footer_process}`}>
-                                    <button className={`${styles.btn_cancel}`}>Hủy</button>
+                                    <button className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
                                     <button className={`${styles.btn_add}`}>Thêm</button>
                                 </div>
                             </form>

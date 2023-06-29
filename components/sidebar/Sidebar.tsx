@@ -60,7 +60,7 @@ export default function Sidebar(props: SideBarProp) {
     {
       label: "Sơ đồ tổ chức",
       icon: "https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_sodotochuc.svg",
-      href: '',
+      href: '/co-cau-to-chuc',
       submenu: ''
     },
     {

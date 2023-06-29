@@ -10,6 +10,9 @@ export default function RegulationsWork() {
     const handleClick = () => {
         setClick(prevState => !prevState)
     }
+    const handleCloseModal = () => {
+        setOpenModal(0)
+    }
     return (
         <>
             <div className={`${styles.wrapper}`}>
@@ -27,8 +30,8 @@ export default function RegulationsWork() {
                                 <hr style={{ marginTop: 0, marginBottom: 0 }} />
                                 <li onClick={() => setOpenModal(2)}>Thêm quy định</li>
                             </div>)}
-                            {openModal === 1 && <AddRegulationsModal></AddRegulationsModal>}
-                            {openModal === 2 && <AddRegulationsModal2></AddRegulationsModal2>}
+                            {openModal === 1 && <AddRegulationsModal onCancel={handleCloseModal}></AddRegulationsModal>}
+                            {openModal === 2 && <AddRegulationsModal2 onCancel={handleCloseModal}></AddRegulationsModal2>}
                         </div>
                         <div className={`${styles.recruitment2_2}`}>
                             <form action="" className={`${styles.t_form_search}`}>

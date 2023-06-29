@@ -100,6 +100,9 @@ export default function TabPlaningAppointment({ children }: any) {
         }
     };
     const [openModal, setOpenModal] = useState(0)
+    const handleCloseModal = () => {
+        setOpenModal(0)
+    }
     return (
         <>
             <div className={`${styles.tab_content}`}>
@@ -110,7 +113,7 @@ export default function TabPlaningAppointment({ children }: any) {
                                 <img src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm mới bổ nhiệm, quy hoạch
                             </button>
                         </div>
-                        {openModal === 1 && <AddPlanningModal></AddPlanningModal>}
+                        {openModal === 1 && <AddPlanningModal onCancel={handleCloseModal}></AddPlanningModal>}
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_new_t}`}>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning} `}>

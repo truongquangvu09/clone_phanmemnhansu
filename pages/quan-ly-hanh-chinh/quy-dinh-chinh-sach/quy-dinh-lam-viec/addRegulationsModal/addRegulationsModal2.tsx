@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import styles from './addRegulationsModal.module.css'
-import Editor from "./CKEditor";
+import dynamic from "next/dynamic";
+const Editor = dynamic(() => import("./CKEditor/index"), {
+    ssr: false
+})
 
-export default function AddRegulationsModal2() {
+export default function AddRegulationsModal2({ onCancel }: any) {
     function handleUploadClick(event: React.MouseEvent<HTMLAnchorElement>) {
         event.preventDefault();
         const uploadInput = document.getElementById('upload_cv') as HTMLInputElement;
@@ -65,7 +68,7 @@ export default function AddRegulationsModal2() {
                                     <div className={`${styles.form_groups} ${styles.cke}`}>
                                         <label htmlFor="">Nội dung quy định <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.ckeditor}`}>
-                                            {/* <Editor content={content} onChange={handleContentChange} /> */}
+                                            <Editor content={content} onChange={handleContentChange} />
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -79,7 +82,7 @@ export default function AddRegulationsModal2() {
                                     </div>
                                 </div>
                                 <div className={`${styles.modal_footer} ${styles.footer_process}`}>
-                                    <button className={`${styles.btn_cancel}`}>Hủy</button>
+                                    <button className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
                                     <button className={`${styles.btn_add}`}>Thêm</button>
                                 </div>
                             </form>

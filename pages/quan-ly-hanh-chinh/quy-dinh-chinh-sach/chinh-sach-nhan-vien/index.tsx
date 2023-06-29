@@ -10,6 +10,9 @@ export default function EmployeePolicy() {
     const handleClick = () => {
         setClick(prevState => !prevState)
     }
+    const handleCloseModal = () => {
+        setOpenModal(0)
+    }
     return (
         <>
             <>
@@ -28,8 +31,8 @@ export default function EmployeePolicy() {
                                     <hr style={{ marginTop: 0, marginBottom: 0 }} />
                                     <li onClick={() => setOpenModal(2)}>Thêm chính sách</li>
                                 </div>)}
-                                {openModal === 1 && <AddEmployeePolicyModal></AddEmployeePolicyModal>}
-                                {openModal === 2 && <AddEmployeePolicyModal2></AddEmployeePolicyModal2>}
+                                {openModal === 1 && <AddEmployeePolicyModal onCancel={handleCloseModal}></AddEmployeePolicyModal>}
+                                {openModal === 2 && <AddEmployeePolicyModal2 onCancel={handleCloseModal}></AddEmployeePolicyModal2>}
                             </div>
                             <div className={`${styles.recruitment2_2}`}>
                                 <form action="" className={`${styles.t_form_search}`}>

@@ -1,6 +1,7 @@
 import React from "react";
 import styles from './chart.module.css'
 import Chart from "./hightchart";
+import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 
 export default function TabChart() {
     return (
@@ -30,6 +31,7 @@ export default function TabChart() {
                 </div>
                 <div className={`${styles.chart_background}`}>
                     <Chart ></Chart>
+                    <BodyFrameFooter src="https://www.youtube.com/embed/Xp_AOH7bEic"></BodyFrameFooter>
                 </div>
             </div>
         </>

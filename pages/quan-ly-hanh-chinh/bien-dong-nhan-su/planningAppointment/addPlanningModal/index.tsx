@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import styles from './addPlanningModal.module.css'
-import Editor from "../../../quy-dinh-chinh-sach/quy-dinh-lam-viec/addRegulationsModal/CKEditor";
+import dynamic from "next/dynamic";
+const Editor = dynamic(() => import("../../../quy-dinh-chinh-sach/quy-dinh-lam-viec/addRegulationsModal/CKEditor"), {
+    ssr: false
+})
 import Select from 'react-select';
 
 type SelectOptionType = { label: string, value: string }
 
-export default function AddPlanningModal() {
+export default function AddPlanningModal({ onCancel }: any) {
     function handleUploadClick(event: React.MouseEvent<HTMLAnchorElement>) {
         event.preventDefault();
         const uploadInput = document.getElementById('upload_cv') as HTMLInputElement;
@@ -200,12 +203,12 @@ export default function AddPlanningModal() {
                                     <div className={`${styles.form_groups} ${styles.cke}`}>
                                         <label htmlFor="">Lý do <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.ckeditor}`}>
-                                            {/* <Editor content={content} onChange={handleContentChange} /> */}
+                                            <Editor content={content} onChange={handleContentChange} />
                                         </div>
                                     </div>
 
                                     <div className={`${styles.modal_footer} ${styles.footer_process}`}>
-                                        <button className={`${styles.btn_cancel}`}>Hủy</button>
+                                        <button className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
                                         <button className={`${styles.btn_add}`}>Thêm</button>
                                     </div>
                                 </form>

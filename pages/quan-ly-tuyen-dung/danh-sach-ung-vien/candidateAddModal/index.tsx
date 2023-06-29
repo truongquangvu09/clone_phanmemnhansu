@@ -5,7 +5,7 @@ import styles from './candidateAddModal.module.css'
 
 type SelectOptionType = { label: string, value: string }
 
-export default function CandidateAddModal() {
+export default function CandidateAddModal({ onCancel }: any) {
     function handleUploadClick(event: React.MouseEvent<HTMLAnchorElement>) {
         event.preventDefault();
         const uploadInput = document.getElementById('upload_cv') as HTMLInputElement;
@@ -395,7 +395,7 @@ export default function CandidateAddModal() {
                                     </div>
                                 </div>
                                 <div className={`${styles.modal_footer} ${styles.footer_process}`}>
-                                    <button className={`${styles.btn_cancel}`}>Hủy</button>
+                                    <button className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
                                     <button className={`${styles.btn_add}`}>Thêm</button>
                                 </div>
                             </form>

@@ -10,6 +10,10 @@ export default function CandidateListDetail() {
     const [openModal, setOpenModal] = useState(0)
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
 
+    const handleCloseModal = () => {
+        setOpenModal(0)
+    }
+
     const options = {
         vitrituyendung: [
             { value: 'IT', label: 'IT' },
@@ -50,8 +54,8 @@ export default function CandidateListDetail() {
                                 <img src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm giai đoạn
                             </button>
                         </div>
-                        {openModal === 1 ? <CandidateAddModal></CandidateAddModal> : ''}
-                        {openModal === 2 ? <StageAddModal></StageAddModal> : ''}
+                        {openModal === 1 ? <CandidateAddModal onCancel={handleCloseModal}></CandidateAddModal> : ''}
+                        {openModal === 2 ? <StageAddModal onCancel={handleCloseModal}></StageAddModal> : ''}
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_top}`}>
                                 <div className={`${styles.div_no_pad}`}>

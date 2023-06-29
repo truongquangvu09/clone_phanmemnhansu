@@ -1,74 +1,89 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import * as Highcharts from 'highcharts';
-import styles from './chart.module.css'
+import HighchartsReact from 'highcharts-react-official';
+import styles from './hightChart.module.css'
 
 const Chart: React.FC = () => {
+    // const chartRef = useRef<HighchartsReact>(null);
     useEffect(() => {
         const table = document.getElementById('datatable') as HTMLTableElement;
-        if (table) {
-            Highcharts.chart('container', {
-                data: {
-                    table: 'datatable'
-                },
-                chart: {
-                    type: 'column'
-                },
+        if (!table) return;
+
+        const options: Highcharts.Options = {
+            data: {
+                table: 'datatable'
+            },
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Biểu đồ biến động nhân sự'
+            },
+            subtitle: {
+                text:
+                    ''
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {
+                allowDecimals: false,
                 title: {
-                    text: 'Biểu đồ biến động nhân sự'
-                },
-                subtitle: {
-                    text:
-                        'Nguồn: <a href="https://www.ssb.no/en/statbank/table/04231" target="_blank">SSB</a>'
-                },
-                xAxis: {
-                    type: 'category'
-                },
-                yAxis: {
-                    allowDecimals: false,
-                    title: {
-                        text: 'Biểu đồ thống kê số lượng nhân viên'
-                    }
+                    text: 'Biểu đồ thống kê số lượng nhân viên'
                 }
-            });
-        }
+            }
+        };
+
+        // if (chartRef.current) {
+        //     chartRef.current.chart!.update(options);
+        // }
     }, []);
 
     return (
-        <figure className={`${styles.highcharts_figure}`}>
-            <div id="container"></div>
+        <figure className={styles.highcharts_figure}>
+            <HighchartsReact
+                highcharts={Highcharts}
+                options={{ chart: { height: 500, width: 800 } }}
+            // ref={chartRef}
+            />
             <table id="datatable">
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Mốc thời gian 1: (01/06/2023 - 09/06/2023)</th>
-                        <th>Mốc thời gian 2: (01/06/2023 - 09/06/2023)</th>
+                        <th>Boys</th>
+                        <th>Girls</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th>Tăng/giảm lương</th>
-                        <td>5</td>
-                        <td>5</td>
+                        <th>2016</th>
+                        <td>30 386</td>
+                        <td>28 504</td>
                     </tr>
                     <tr>
-                        <th>Bổ nhiệm quy hoạch</th>
-                        <td></td>
-                        <td></td>
+                        <th>2017</th>
+                        <td>29 173</td>
+                        <td>27 460</td>
                     </tr>
                     <tr>
-                        <th>Luân chuyển công tác</th>
-                        <td></td>
-                        <td></td>
+                        <th>2018</th>
+                        <td>28 430</td>
+                        <td>26 690</td>
                     </tr>
                     <tr>
-                        <th>Giảm biên chế</th>
-                        <td></td>
-                        <td></td>
+                        <th>2019</th>
+                        <td>28 042</td>
+                        <td>26 453</td>
                     </tr>
                     <tr>
-                        <th>Nghỉ việc</th>
-                        <td></td>
-                        <td></td>
+                        <th>2020</th>
+                        <td>27 063</td>
+                        <td>25 916</td>
+                    </tr>
+                    <tr>
+                        <th>2021</th>
+                        <td>28 684</td>
+                        <td>27 376</td>
                     </tr>
                 </tbody>
             </table>

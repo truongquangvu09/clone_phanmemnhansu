@@ -33,6 +33,11 @@ export default function TabPayrollDown({ children }: any) {
         }
     };
 
+    const handleCloseModal = () => {
+        setOpenModal(0)
+        setOpenEditModal(false)
+    }
+
     const options = {
         chonnhanvien: [
             { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
@@ -122,8 +127,8 @@ export default function TabPayrollDown({ children }: any) {
                                 </a>
                             </div>
                         </div>
-                        {openModal === 1 && <AddPayrollModal></AddPayrollModal>}
-                        {openEditModal === true ? <EditPayroll></EditPayroll> : ''}
+                        {openModal === 1 && <AddPayrollModal onCancel={handleCloseModal}></AddPayrollModal>}
+                        {openEditModal === true ? <EditPayroll onCancel={handleCloseModal}></EditPayroll> : ''}
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_new_t}`}>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning} `}>
