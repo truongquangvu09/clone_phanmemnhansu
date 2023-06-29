@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from "react";
-import { useRouter } from "next/router";
+
 import styles from "./PerformRecruitment.module.css";
 import Link from "next/link";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";

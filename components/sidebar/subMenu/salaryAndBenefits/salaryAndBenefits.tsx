@@ -30,12 +30,12 @@ export default function SalaryAndBenefits({ children }: any) {
     {
       img: "		https://phanmemnhansu.timviec365.vn//assets/images/l_images/thanhtich.svg",
       title: 'Khen thưởng',
-      href: '',
+      href: '/luong-thuong-phuc-loi/khen-thuong',
     },
     {
       img: "	https://phanmemnhansu.timviec365.vn//assets/images/l_images/vipham.svg",
       title: 'Kỷ luật( Vi phạm )',
-      href: '',
+      href: '/luong-thuong-phuc-loi/ky-luat',
     },
     {
       img: "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_phucloi.svg",

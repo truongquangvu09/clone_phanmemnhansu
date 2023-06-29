@@ -1,3 +1,5 @@
+
+
 .overlay {
     position: fixed;
     z-index: 9998;
@@ -24,13 +26,14 @@
     bottom: 0;
     left: 0;
     z-index: 9999;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
+
 .modal_dialog {
-    transform: translate(0, 0);
     position: relative;
-    width: auto;
-    margin: 10px
+    margin: 10px auto;
 }
 
 .contentquytrinh {
@@ -71,6 +74,7 @@
     color: white;
     font-size: 14px;
 }
+
 .modal_title {
     margin: 0;
     line-height: 28px;
@@ -115,7 +119,7 @@
     line-height: 24px;
     letter-spacing: 0em;
 }
-.red {
+.form_groups .red {
     color: #EB5757;
 }
 .inputright {
@@ -144,6 +148,11 @@
     font-weight: 600;
     opacity: 0.7;
 }
+.pull_right {
+    margin: 0;
+    float: right !important;
+    position: relative;
+}
 .errors {
     background: #FFFFFF;
     box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.12);
@@ -157,9 +166,6 @@
     padding: 5px;
     right: 15%;
 }
-
-
-
 
 .footerquytrinh {
     margin-top: 2%;
@@ -190,6 +196,7 @@
 }
 .btn_huy span {
     opacity: 0.8;
+    font-weight: 600;
 }
 .btn_huy:active {
     background-image: none;

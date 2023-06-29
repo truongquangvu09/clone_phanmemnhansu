@@ -1,7 +1,4 @@
-.scrollableModal {
-    overflow-y: auto;
-    max-height: 80vh; 
-}
+
 .overlay {
     position: fixed;
     z-index: 9998;
@@ -28,12 +25,14 @@
     bottom: 0;
     left: 0;
     z-index: 9999;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
-.scrollableModalDialog {
-    overflow-y: auto;
-    max-height: 80vh; /* Có thể điều chỉnh giá trị này tùy theo nhu cầu */
-  }
+.modal_dialog {
+    position: relative;
+    margin: 30px auto;
+}
 
 .contentquytrinh {
     width: 736px;
@@ -124,6 +123,9 @@
     width: 66%;
     float: right;
 }
+.input_full {
+    width: 100%;
+}
 .inputright input {
     outline: none;
     margin: 0;
@@ -163,7 +165,9 @@
     width: 631.600px;
     height: 641.600px;
 }
-
+.dom_gd {
+    height: auto;
+}
 
 
 
@@ -198,6 +202,7 @@
 .pull_right {
     margin: 0;
     float: right !important;
+    position: relative;
 }
 .add_gd {
     margin-top: 10px;
@@ -235,4 +240,19 @@
     background-color: #449d44;
     background-image: none;
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.3);
+}
+.ckeditor_label{
+    width: 100%;
+}
+.ckeditor {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;;
+    
+}
+.remove_div {
+    margin-top: -20px;
+    margin-bottom: -15px;
 }

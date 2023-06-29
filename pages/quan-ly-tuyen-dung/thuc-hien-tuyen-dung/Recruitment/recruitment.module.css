@@ -64,6 +64,27 @@
     border-radius: 8px;
     padding: 5px;
 }
+.tuyendung2_1 input:active {
+    color: #ffffff;
+}
+
+.tuyendung2_1 input[type="date"]::-webkit-datetime-edit-text,
+.tuyendung2_1 input[type="date"]::-webkit-datetime-edit-year-field,
+.tuyendung2_1 input[type="date"]::-webkit-datetime-edit-month-field,
+.tuyendung2_1 input[type="date"]::-webkit-datetime-edit-day-field {
+  /* Các thuộc tính CSS để tuỳ chỉnh kiểu hiển thị */
+  text-align: center;
+  font-size: 16px;
+  color: #333333;
+  padding: 2px;
+  font-weight: 600;
+}
+
+.tuyendung2_1 input[type="date"]::-webkit-datetime-edit-day-field:focus,
+.tuyendung2_1 input[type="date"]::-webkit-datetime-edit-month-field:focus,
+.tuyendung2_1 input[type="date"]::-webkit-datetime-edit-year-field:focus {
+  color: white;
+}
 .search_from_date {
     margin-right: 22px;
 }
@@ -151,9 +172,6 @@
 .row {
     margin: 0;
 }
-
-
-
 
 .t_ita {
     width: 157px;

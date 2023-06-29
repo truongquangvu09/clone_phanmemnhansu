@@ -4,7 +4,7 @@
 .l_body {
     display: inline-block;
     width: 100%;
-    margin-top: 50px;
+    margin-top: 25px;
     margin-bottom: 0px
 }
 
@@ -81,23 +81,23 @@
     background-color: transparent;
 }
 
-.t_div_searchinput[type="search"]::-webkit-search-cancel-button,
-.t_div_searchinput[type="search"]::-webkit-search-decoration,
-.t_div_searchinput[type="search"]::-webkit-search-results-button,
-.t_div_searchinput[type="search"]::-webkit-search-results-decoration {
+.t_div_search input[type="search"]::-webkit-search-cancel-button,
+.t_div_search input[type="search"]::-webkit-search-decoration,
+.t_div_search input[type="search"]::-webkit-search-results-button,
+.t_div_search input[type="search"]::-webkit-search-results-decoration {
   display: none;
 }
 
-.t_div_searchinput[type="search"]::-moz-search-cancel-button {
+.t_div_search input[type="search"]::-moz-search-cancel-button {
   display: none;
 }
 
-.t_div_searchinput[type="search"]::-ms-clear {
+.t_div_search input[type="search"]::-ms-clear {
   display: none;
 }
 
-.t_div_searchinput[type="search"]::ms-reveal,
-.t_div_searchinput[type="search"]::-ms-clear {
+.t_div_search input[type="search"]::ms-reveal,
+.t_div_search input[type="search"]::-ms-clear {
   display: none;
 }
 

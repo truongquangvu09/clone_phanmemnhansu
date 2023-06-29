@@ -2,13 +2,18 @@
 
 import React, { useState } from "react";
 import styles from "./recruitment.module.css";
+import AddPerformRecruitment from "../AddPerformRecruitment/AddPerformRecruitment";
 import ListRecruitment from "../danh-sach-tuyen-dung/ListRecruitment";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 
 export interface Recruitment {}
 
 export default function Recruitment({ children }: any) {
-
+  
+  const [openModalAdd, setOpenModalAdd] = useState(false)
+  const handleCloseModalAdd = () => {
+    setOpenModalAdd(false)
+  }
 
   const data = [
     {
@@ -53,7 +58,9 @@ export default function Recruitment({ children }: any) {
     <>
       <div className={`${styles.tintuyendung}`}>
         <div className={`${styles.tuyendung1}`}>
-          <button className={`${styles.adds}`}>
+          <button className={`${styles.adds}`} 
+          onClick={() => setOpenModalAdd(true)}
+          >
             <picture>
               <img
                 src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png"
@@ -63,19 +70,22 @@ export default function Recruitment({ children }: any) {
             </picture>
           </button>
         </div>
-
+        {openModalAdd && <AddPerformRecruitment handleCloseModalAdd = {handleCloseModalAdd}></AddPerformRecruitment>}
         <div className={`${styles.tuyendung2}`}>
           <div className={`${styles.tuyendung2_1}`}>
             <li>
               <span>Xem từ ngày</span>
               <input
                 type="date"
-                className={`${styles.search_from_date}`}
+                className={`${styles.search_from_date}`} 
+                style={{fontWeight: '600'}}
               ></input>
             </li>
             <li>
               <span>Đến ngày</span>
-              <input type="date" className={`${styles.search_to_date}`}></input>
+              <input type="date" className={`${styles.search_to_date}`}
+              style={{fontWeight: '600'}}
+              ></input>
             </li>
           </div>
 

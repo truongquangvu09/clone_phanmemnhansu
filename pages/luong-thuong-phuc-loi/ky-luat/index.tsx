@@ -1,0 +1,52 @@
+import React, { useState } from "react";
+import styles from "./styles.module.css";
+import PersonalDiscipline from "./personalDiscipline/PersonalDiscipline";
+import DisciplineList from "./disciplineList/DisciplineList";
+import CollectiveDiscipline from "./collectiveDiscipline/CollectiveDiscipline";
+
+
+export default function NavBar({ children }: any) {
+  const [active, setActive] = useState(1);
+
+  const NavBarList = [
+    {
+      key: 1,
+      header: "CÁ NHÂN",
+      component: <PersonalDiscipline></PersonalDiscipline>,
+    },
+    {
+      key: 2,
+      header: "TẬP THỂ",
+      component: <DisciplineList></DisciplineList>,
+    },
+    {
+      key: 3,
+      header: "DANH SÁCH VI PHẠM",
+      component: <CollectiveDiscipline></CollectiveDiscipline>,
+    },
+  ];
+
+  return (
+    <>
+      <div className={`${styles.l_body}`}>
+        <ul className={`${styles.nav} ${styles.nav_tabs}`}>
+          {NavBarList.map((item) => (
+            <div key={item.key}>
+              <li className={`${styles.li_tabs}`}>
+                <span
+                  className={`${
+                    active === item?.key ? styles.active : styles.hover
+                  } `}
+                  onClick={() => setActive(item.key)}
+                >
+                  {item.header}
+                </span>
+              </li>
+            </div>
+          ))}
+        </ul>
+      </div>
+      {NavBarList.find(item => item.key === active)?.component } 
+    </>
+  );
+}
