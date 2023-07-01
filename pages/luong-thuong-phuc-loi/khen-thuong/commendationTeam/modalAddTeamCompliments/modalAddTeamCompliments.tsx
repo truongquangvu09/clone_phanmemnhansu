@@ -99,7 +99,7 @@ function ModalAddTeamCompliments({ children,onClose }: any) {
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                    Vị trí tuyển dụng
+                  Tên phòng ban 
                     <span className={`${styles.red}`}> *</span>
                     <div
                       className={`${styles.red} ${styles.float_right}`}

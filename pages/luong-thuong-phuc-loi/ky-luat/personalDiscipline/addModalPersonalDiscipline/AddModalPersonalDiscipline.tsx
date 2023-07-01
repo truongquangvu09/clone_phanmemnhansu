@@ -75,7 +75,7 @@ function AddModalPersonalDiscipline({ children,onClose }: any) {
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                    Nội dung khen thưởng
+                  Căn cứ quy định
                     <span className={`${styles.red}`}> *</span>
                   </label>
                   <div className={`${styles.inputright}`}>
