@@ -1,8 +1,15 @@
+.tab_content {
+  padding: 25px 25px;
+}
 .body {
   display: inline-block;
   width: 100%;
   margin-top: 50px;
   margin-bottom: 50px;
+}
+.recruitment {
+  display: flex;
+  justify-content: space-between;
 }
 .recruitment a {
   background: none;
@@ -44,10 +51,10 @@
   padding-bottom: 24px;
 }
 .div_no_pad {
-  width: 33%;
+  width: 40%;
 }
 .div_no_pad_search {
-  width: 20%;
+  width: 30%;
 }
 .form_control {
   width: 115%;
@@ -147,7 +154,7 @@
   background-color: #fafafa;
 }
 .table_list {
-  width: 300%;
+  width: 100%;
   max-width: unset;
   border-collapse: collapse;
   border-radius: 8px;
@@ -241,7 +248,7 @@
   width: 25% !important;
 }
 .div_search_salary {
-  width: 40% !important;
+  width: 55% !important;
 }
 .navigate_next_salary {
   top: 58% !important;
@@ -259,4 +266,18 @@
 /* -- payrollDown -- */
 .btn_edit {
   margin-right: 10px;
+}
+.upload_file {
+  display: inline-block;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 50px;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.custom_file_upload a {
+  color: #4c5bd4;
 }

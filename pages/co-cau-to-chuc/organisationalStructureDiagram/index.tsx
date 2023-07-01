@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from './organisationalStructureDiagram.module.css'
+import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 import dynamic from "next/dynamic";
 const StyledTreeExample = dynamic(() => import("../organisationalStructureDiagram/tree/index"), {
     ssr: false
@@ -38,6 +39,7 @@ export default function OrganisationalStructureDiagram() {
                         <StyledTreeExample></StyledTreeExample>
                     </div>
                 </div>
+                <BodyFrameFooter src="https://www.youtube.com/embed/38OeJOTrTAE"></BodyFrameFooter>
             </div>
         </>
     )

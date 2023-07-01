@@ -66,7 +66,7 @@ export default function Sidebar(props: SideBarProp) {
     {
       label: "Báo cáo nhân sự",
       icon: "		https://phanmemnhansu.timviec365.vn//assets/images/l_images/baocao_ns.svg",
-      href: '',
+      href: '/bao-cao-nhan-su',
       submenu: ''
     },
     {

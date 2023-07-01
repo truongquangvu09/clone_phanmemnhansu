@@ -4,6 +4,9 @@ import styled from 'styled-components';
 import styles from '../organisationalStructureDiagram/tree/tree.module.css'
 import EditPositionCharModal from './editPositonCharModal';
 import DetailsPositionCharModal from './detailsPositionCharModal';
+import BodyFrameFooter from '@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer';
+
+
 const StyledNode = styled.div`
 `;
 const MemberViewBox1 = ({
@@ -230,6 +233,7 @@ const PostionCharTree = () => {
                 mission={missions} onCancel={handleModalClose} ></EditPositionCharModal>}
             {openModalDetails && <DetailsPositionCharModal
                 mission={missions} onCancel={handleModalClose} ></DetailsPositionCharModal>}
+            <BodyFrameFooter src="https://www.youtube.com/embed/_XzFBHXvNb8" />
         </>
     )
 }

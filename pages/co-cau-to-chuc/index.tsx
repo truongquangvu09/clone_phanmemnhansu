@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react';
 import styles from '../quan-ly-hanh-chinh/thong-tin-nhan-su/administration.module.css'
 import Link from 'next/link';
 import OrganisationalStructureDiagram from './organisationalStructureDiagram';
+import SealAndSignature from './sealAndSignature';
+import LeaderBiography from './leaderBiography';
 import dynamic from "next/dynamic";
 const PostionCharTree = dynamic(() => import("./postionChar"), {
     ssr: false
 })
+
+
 export default function OrganizationalStructure({ children }: any) {
     const [active, setActive] = useState(1)
 
@@ -31,6 +35,8 @@ export default function OrganizationalStructure({ children }: any) {
                 </ul>
                 {active === 1 && <OrganisationalStructureDiagram></OrganisationalStructureDiagram>}
                 {active === 2 && <PostionCharTree></PostionCharTree>}
+                {active === 3 && <SealAndSignature></SealAndSignature>}
+                {active === 4 && <LeaderBiography></LeaderBiography>}
             </div>
         </>
     )
