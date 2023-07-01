@@ -99,39 +99,25 @@ function AddModalPersonalDiscipline({ children,onClose }: any) {
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                    Vị trí tuyển dụng
+                  Số quy định xử lý vi phạm
                     <span className={`${styles.red}`}> *</span>
-                    <div
-                      className={`${styles.red} ${styles.float_right}`}
-                    ></div>
                   </label>
-                  <div style={{ marginRight: "3%" }}>
-                    <Select
-                      isMulti
-                      defaultValue={selectedOption}
-                      options={options.tendoituong}
-                      placeholder="Chọn đối tượng"
-                      styles={{
-                        control: (baseStyles, state) => ({
-                          ...baseStyles,
-                          borderRadius: 8,
-                          borderColor: "#4747477a",
-                          height: "auto",
-                          fontSize: state.isFocused ? 14 : 14,
-                          minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 397.44 : 397.44,
-                          fontWeight: state.isFocused ? 600 : 600,
-                        }),
-                        valueContainer: (baseStyles) => ({
-                          ...baseStyles,
-                          padding: "0",
-                        }),
-                        indicatorsContainer: (baseStyles) => ({
-                          ...baseStyles,
-                          height: 30,
-                        }),
-                      }}
-                    />
+                  <div className={`${styles.inputright}`}>
+                    <input
+                      type="text"
+                      className={`${styles.inputquytrinh}`}
+                      placeholder="Nhập tên giai đoạn"
+                    ></input>
+                    <picture style={{ display: "none" }}>
+                      <img
+                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                        alt="Lỗi"
+                      ></img>
+                    </picture>
+                    <div
+                      className={`${styles.errors}`}
+                      style={{ display: "none" }}
+                    ></div>
                   </div>
                 </div>
 
