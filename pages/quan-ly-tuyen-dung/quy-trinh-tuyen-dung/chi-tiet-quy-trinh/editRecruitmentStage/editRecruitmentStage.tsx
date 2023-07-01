@@ -1,17 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./editRecruitmentStage.module.css";
 import styles from "./editRecruitmentStage.module.css";
+import MyEditor from "../../components/Editor";
 export interface EditRecruitmentStage {}
 
 export default function EditRecruitmentStage({ onCloseModal }: any) {
+  
   const handleSubmit = () => {};
 
   const CloseModal = () => {
     onCloseModal()
   }
+
+  
   return (
     <>
-      <div className={`${styles.overlay}`}></div>
+      <div className={`${styles.overlay}`} ></div>
       <div className={`${styles.modal} ${styles.modal_setting}`}>
         <div className={`${styles.modal_dialog} ${styles.contentquytrinh}`}>
           <div className={`${styles.modal_content}`}>
@@ -105,8 +109,8 @@ export default function EditRecruitmentStage({ onCloseModal }: any) {
                   Mô tả công việc
                     <span className={`${styles.red}`}></span>
                   </label>
-                  <div className={`${styles.inputright}`}>
-                    
+                  <div className={`${styles.pull_right}`}>
+                         <Input_textarea />
                   </div>
                 </div>
               </div>
@@ -130,4 +134,25 @@ export default function EditRecruitmentStage({ onCloseModal }: any) {
       </div>
     </>
   );
+  function Input_textarea(){
+    const [editorLoaded, setEditorLoaded] = useState(false);
+    const [data, setData] = useState("");
+  
+    useEffect(() => {
+      setEditorLoaded(true);
+    }, []);
+    console.log(data)
+    return (
+      <div>
+        <MyEditor
+          name="Editor"
+          onChange={(data: React.SetStateAction<string>) => {
+            setData(data);
+          }}
+          editorLoaded={editorLoaded} value={data}     />
+  
+        {/* {JSON.stringify(data)} */}
+      </div>
+    );
+  }
 }

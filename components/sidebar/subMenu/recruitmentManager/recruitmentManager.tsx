@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import styles from "../../sidebar.module.css";
 import Link from "next/link";

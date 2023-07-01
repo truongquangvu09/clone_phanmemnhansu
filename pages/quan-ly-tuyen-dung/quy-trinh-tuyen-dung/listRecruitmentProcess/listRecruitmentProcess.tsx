@@ -89,7 +89,7 @@ export default function listRecruitmentProcess({ children }: any) {
                         alt=""
                       ></img>
                     </picture>
-                    <span className={`${styles.span_a} ${styles.span_a_detail}`}>Chi tiết</span>
+                    <span className={`${styles.span_a} ${styles.span_a_detail}`} style={{cursor:'default'}}>Chi tiết</span>
                     </div>
 {/* edit */}
                   <button className={`${styles.button_option}`}

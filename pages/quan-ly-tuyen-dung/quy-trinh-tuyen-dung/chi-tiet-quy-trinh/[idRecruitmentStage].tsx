@@ -83,10 +83,10 @@ export default function listRecruitmentProcess({ children }: any) {
           {isModalOpen === 1 && <AddRecruitmentStage onCloseModal={handleCloseModal}></AddRecruitmentStage>}
       
         <div className={`${styles.giaidoans}`}>
-          {data?.map((item) => (
-            <>
+          {data?.map((item,index) => (
+            <div key={index}>
               <ListRecruitmentStage item = {item}></ListRecruitmentStage>
-            </>
+            </div>
           ))}
         </div>
       </div>

@@ -122,6 +122,8 @@ export default function AddPayrollModal({ onCancel }: any) {
                                             />
                                         </div>
                                     </div>
+
+                                    
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Chức vụ hiện tại <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
