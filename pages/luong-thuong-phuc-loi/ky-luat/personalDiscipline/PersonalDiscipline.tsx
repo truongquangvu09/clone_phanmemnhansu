@@ -101,7 +101,7 @@ export default function PersonalDiscipline ({children}: any){
     ]
     return(
         <>
-            <PunishmentTable display = 'block' data = {data} violators = 'Cá nhân vi phạm'></PunishmentTable>
+            <PunishmentTable model = 'canhan' display = 'block' data = {data} violators = 'Cá nhân vi phạm'></PunishmentTable>
         </>
     )
 }

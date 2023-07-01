@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import styles from "./ModalAddReward.module.css";
+import styles from "./AddModalPersonalDiscipline.module.css";
 import Select from "react-select";
 
 type SelectOptionType = { label: string; value: string };
-function ModalAddReward({ children ,onClose }: any) {
+function AddModalPersonalDiscipline({ children,onClose }: any) {
   const options = {
     tendoituong: [
       { value: "Lê Hồng Anh", label: "Lê Hồng Anh" },
@@ -20,7 +20,6 @@ function ModalAddReward({ children ,onClose }: any) {
   };
 
   const [content, setContent] = useState("");
-
   const handleContentChange = (value: string) => {
     setContent(value);
   };
@@ -43,7 +42,7 @@ function ModalAddReward({ children ,onClose }: any) {
             <div className={`${styles.modal_header} ${styles.headquytrinh}`}>
               <h5 className={`${styles.modal_title}`}>
                 
-                THÊM THÀNH TÍCH
+              THÊM MỚI VI PHẠM
                 
               </h5>
             </div>
@@ -52,7 +51,7 @@ function ModalAddReward({ children ,onClose }: any) {
               <div className={`${styles.modal_body} ${styles.bodyquytrinh}`}>
                 <div className={`${styles.form_groups}`}>
                   <label>
-                    Số quyết định
+                  Tên lỗi vi phạm
                     <span className={`${styles.red}`}> *</span>
                   </label>
                   <div className={`${styles.inputright}`}>
@@ -294,4 +293,4 @@ function ModalAddReward({ children ,onClose }: any) {
   );
 }
 
-export default ModalAddReward;
+export default AddModalPersonalDiscipline;

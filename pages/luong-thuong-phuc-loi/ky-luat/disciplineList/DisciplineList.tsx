@@ -101,7 +101,7 @@ export default function DisciplineList ({children}: any){
     ]
     return(
         <>
-            <PunishmentTable display = 'block' data = {data} violators = 'Tập thể vi phạm'></PunishmentTable>
+            <PunishmentTable model = 'tapthe' display = 'block' data = {data} violators = 'Tập thể vi phạm'></PunishmentTable>
         </>
     )
 }

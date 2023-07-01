@@ -101,7 +101,7 @@ export default function CollectiveDiscipline ({children}: any){
     ]
     return(
         <>
-            <PunishmentTable display = 'none' data = {data} violators = 'Cá nhân / phòng ban vi phạm'></PunishmentTable>
+            <PunishmentTable model = 'list' display = 'none' data = {data} violators = 'Cá nhân / phòng ban vi phạm'></PunishmentTable>
         </>
     )
 }

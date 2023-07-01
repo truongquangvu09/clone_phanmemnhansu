@@ -1,26 +1,50 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Component.module.css";
 import MyPagination from "./Pagination";
+import AddModalPersonalDiscipline from "../personalDiscipline/addModalPersonalDiscipline/AddModalPersonalDiscipline";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 
-function PunishmentTable({ display, data , violators}: any) {
-  const [currentPage, setCurrentPage] = useState(1)
-  const [visible, setVisible] = useState(true)
-  const [open, setOpen] = useState(true)
-  const [openModel, setOpenModel] = useState(true)
+function PunishmentTable({ display, data, violators, model }: any) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [visible, setVisible] = useState(true);
+  const [typeModal, setTypeModal] = useState(model);
+  const [open, setOpen] = useState(false);
+  const [modalDetailType, setModalDetailType] = useState("");
 
-    
-  const handlePageChange = (page: any, pageSize: any) => {
-    setCurrentPage(page)
+  const handlePageChange = (page: any) => {
+    setCurrentPage(page);
   };
 
+  const handleCloseModal = () => {
+    setTypeModal(model);
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    const modalDetailTypes = () => {
+      if (typeModal === "canhan") {
+        setModalDetailType("canhan");
+      }
+      if (typeModal === "tapthe") {
+        setModalDetailType("tapthe");
+      }
+      if (typeModal === "list") {
+        setModalDetailType("list");
+      }
+    };
+    modalDetailTypes();
+  }, [modalDetailType]);
 
   return (
     <>
       <div className={`${styles.tuyendung2}`} style={{ display: "block" }}>
         <div className={`${styles.tuyendung2_3}`}>
-          <button className={`${styles.adds}`} style={{ display: display }}>
+          <button
+            className={`${styles.adds}`}
+            style={{ display: display }}
+            onClick={() => setOpen(true)}
+          >
             <picture>
               <img
                 src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png"
@@ -30,7 +54,20 @@ function PunishmentTable({ display, data , violators}: any) {
             Thêm mới
           </button>
         </div>
-
+        {typeModal === "canhan" && open && (
+          <AddModalPersonalDiscipline onClose={handleCloseModal}></AddModalPersonalDiscipline>
+        )}
+        {/* {typeModal === "tapthe" && open && (
+          <ModalAddTeamCompliments
+            onClose={handleCloseModal}
+          ></ModalAddTeamCompliments>
+        )}
+        {typeModal === "chitiet" && (
+          <ModalEditReward
+            type={modalDetailType}
+            onClose={handleCloseModal}
+          ></ModalEditReward>
+        )} */}
         <div className={`${styles.tuyendung2_2}`}>
           <form className={`${styles.t_form_search}`}>
             <div className={`${styles.t_div_search}`}>
@@ -88,14 +125,14 @@ function PunishmentTable({ display, data , violators}: any) {
                     className={`${styles.r_t_top_right}`}
                     style={{ position: "relative", width: "110px" }}
                     onMouseEnter={() => setVisible(true)}
-                    onMouseLeave={() => setVisible(false)} 
+                    onMouseLeave={() => setVisible(false)}
                   >
-                      <img
-                        src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/3cham.png"
-                        alt="Tùy chỉnh"
-                        style={{ paddingTop: "6px" }}
-                      />
-                    
+                    <img
+                      src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/3cham.png"
+                      alt="Tùy chỉnh"
+                      style={{ paddingTop: "6px" }}
+                    />
+
                     {visible && (
                       <div className={styles.settings}>
                         <li>Chỉnh sửa</li>
