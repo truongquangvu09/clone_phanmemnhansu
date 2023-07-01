@@ -1,21 +1,53 @@
-import React, { useState } from "react";
+/* eslint-disable @next/next/no-img-element */
+import React, { useEffect, useState } from "react";
 import styles from "./Component.module.css";
+import ModalAddReward from "../personalReward/modalAddPersonalCompliments/ModalAddReward";
+import ModalEditReward from "../personalReward/modalEditPersonalCompliments/ModalEditEditReward";
+
 import MyPagination from "./Pagination";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
+import ModalAddTeamCompliments from "../commendationTeam/modalAddTeamCompliments/modalAddTeamCompliments";
 
-function RewardTable({ display, data }: any) {
+function RewardTable({ display, data, model }: any) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(true);
+  const [typeModal, setTypeModal] = useState(model);
+  const [open, setOpen] = useState(false);
+  const [modalDetailType, setModalDetailType] = useState('')
 
-  const handlePageChange = (page: any, pageSize: any) => {
+  const handlePageChange = (page: any) => {
     setCurrentPage(page);
   };
+
+  const handleCloseModal = () => {
+    setTypeModal(model);
+    setOpen(false);
+  };
+  
+ useEffect(()=> {
+  const modalDetailTypes = () => {
+    if (typeModal === 'canhan'){
+      setModalDetailType('canhan')
+    }
+    if (typeModal === 'tapthe'){
+      setModalDetailType('tapthe')
+    }
+    if (typeModal === 'list'){
+      setModalDetailType('list')
+    }
+  }
+  modalDetailTypes()
+ },[modalDetailType])
 
   return (
     <>
       <div className={`${styles.tuyendung2}`} style={{ display: "block" }}>
         <div className={`${styles.tuyendung2_3}`}>
-          <button className={`${styles.adds}`} style={{ display: display }}>
+          <button
+            onClick={() => setOpen(true)}
+            className={`${styles.adds}`}
+            style={{ display: display }}
+          >
             <picture>
               <img
                 src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png"
@@ -25,7 +57,17 @@ function RewardTable({ display, data }: any) {
             Thêm mới
           </button>
         </div>
-
+        {typeModal === "canhan" && open && (
+          <ModalAddReward onClose={handleCloseModal}></ModalAddReward>
+        )}
+        {typeModal === "tapthe" && open && (
+          <ModalAddTeamCompliments
+            onClose={handleCloseModal}
+          ></ModalAddTeamCompliments>
+        )}
+        {typeModal === "chitiet" && (
+          <ModalEditReward type = {modalDetailType} onClose={handleCloseModal}></ModalEditReward>
+        )}
         <div className={`${styles.tuyendung2_2}`}>
           <form className={`${styles.t_form_search}`}>
             <div className={`${styles.t_div_search}`}>
@@ -79,21 +121,27 @@ function RewardTable({ display, data }: any) {
                   <td>{item.hinhthuckhenthuong}</td>
                   <td>{item.danhhieu}</td>
                   <td>{item.capkhen}</td>
-                  <td 
-                  className={`${styles.r_t_top_right}`}
-                  style={{ position: "relative", width: "110px" }}       
-                  onMouseEnter={() => setVisible(true)}
-                  onMouseLeave={() => setVisible(true)}
+                  <td
+                    className={`${styles.r_t_top_right}`}
+                    style={{
+                      position: "relative",
+                      width: "110px",
+                      opacity: "1",
+                    }}
+                    onMouseEnter={() => setVisible(true)}
+                    onMouseLeave={() => setVisible(false)}
                   >
-                    <picture>
-                      <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/3cham.png"
-                        alt="Tùy chỉnh"
-                        style={{ paddingTop: "6px" }}
-                      ></img>
-                    </picture>
-                    {true && (
-                      <div className={`${styles.settings}`}>
+                    <img
+                      src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/3cham.png"
+                      alt="Tùy chỉnh"
+                      style={{ paddingTop: "6px" }}
+                    />
+
+                    {visible && (
+                      <div
+                        className={styles.settings}
+                        onClick={() => setTypeModal("chitiet")}
+                      >
                         <li>Chỉnh sửa</li>
                       </div>
                     )}

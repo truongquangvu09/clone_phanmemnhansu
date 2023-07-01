@@ -99,7 +99,7 @@ export default function AchievementList ({children}: any){
     ]
     return(
         <>
-           <RewardTable display= 'block' data = {data}></RewardTable>
+           <RewardTable model='list' display= 'none' data = {data}></RewardTable>
         </>
     )
 }

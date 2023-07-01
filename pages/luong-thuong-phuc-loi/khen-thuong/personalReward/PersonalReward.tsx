@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import RewardTable from '../component/Component'
-
+import ModalReward from './modalAddPersonalCompliments/ModalAddReward';
 
 export interface PersonalReward{}
 export default function PersonalReward ({children}: any){
+
+
     const data = [
         {
             stt: '1',
@@ -100,7 +102,7 @@ export default function PersonalReward ({children}: any){
     ]
     return(
         <>
-            <RewardTable display= 'block' data = {data}></RewardTable>
+            <RewardTable model='canhan' display= 'block' data = {data} modal = {<ModalReward></ModalReward>}></RewardTable>
         </>
     )
 }

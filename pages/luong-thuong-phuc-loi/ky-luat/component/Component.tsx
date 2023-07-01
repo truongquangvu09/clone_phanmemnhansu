@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import styles from "./Component.module.css";
 import MyPagination from "./Pagination";
@@ -5,6 +6,8 @@ import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_f
 
 function PunishmentTable({ display, data , violators}: any) {
     const [currentPage, setCurrentPage] = useState(1)
+  const [visible, setVisible] = useState(true)
+
     
   const handlePageChange = (page: any, pageSize: any) => {
     setCurrentPage(page)
@@ -79,6 +82,25 @@ function PunishmentTable({ display, data , violators}: any) {
                   <td>{item.hinhthuckhenthuong}</td>
                   <td>{item.danhhieu}</td>
                   <td>{item.capkhen}</td>
+                  <td
+                    className={`${styles.r_t_top_right}`}
+                    style={{ position: "relative", width: "110px" }}
+                    onMouseEnter={() => setVisible(true)}
+                    onMouseLeave={() => setVisible(false)} 
+                  >
+                   
+                      <img
+                        src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/3cham.png"
+                        alt="Tùy chỉnh"
+                        style={{ paddingTop: "6px" }}
+                      />
+                    
+                    {visible && (
+                      <div className={styles.settings}>
+                        <li>Chỉnh sửa</li>
+                      </div>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>

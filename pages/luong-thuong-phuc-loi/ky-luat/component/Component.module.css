@@ -147,7 +147,7 @@
     color: #333333;
     font-size: 14px;
     font-weight: 600;
-    opacity: 0.9;
+
 }
 .tablelist th {
     border: 1px solid white;
@@ -164,6 +164,36 @@
 }
 .filter {
     width: 368px;
+}
+
+.r_t_top_right:hover {
+    cursor: pointer;
+}
+
+.r_t_top_right:hover .settings {
+    display: block;
+    
+}
+.settings {
+    z-index: 1;
+    width: 185px;
+    text-align: left;
+    border-radius: 8px;
+    display: none;
+    position: absolute;
+    background: rgb(246, 244, 244);
+    right: 54%;
+    top: 28px;
+    box-shadow: 0 4px 10px rgb(0 0 0 / 5%);
+}
+.settings li {
+    border-left: 3px solid #ffffff;
+    cursor: pointer;
+    padding: 16px 40px 14px 13px;
+}
+.settings li:hover {
+    color: #4C5BD4;
+    border-left: 3px solid #4C5BD4;
 }
 .pagination {
     float: right;
