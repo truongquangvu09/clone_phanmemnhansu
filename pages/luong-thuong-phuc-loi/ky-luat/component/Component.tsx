@@ -88,7 +88,6 @@ function PunishmentTable({ display, data , violators}: any) {
                     onMouseEnter={() => setVisible(true)}
                     onMouseLeave={() => setVisible(false)} 
                   >
-                   
                       <img
                         src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/3cham.png"
                         alt="Tùy chỉnh"
