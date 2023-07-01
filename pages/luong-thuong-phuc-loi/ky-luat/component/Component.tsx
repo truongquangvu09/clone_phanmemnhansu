@@ -5,8 +5,9 @@ import MyPagination from "./Pagination";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 
 function PunishmentTable({ display, data , violators}: any) {
-    const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1)
   const [visible, setVisible] = useState(true)
+  const [open, setOpen] = useState(true)
 
     
   const handlePageChange = (page: any, pageSize: any) => {
