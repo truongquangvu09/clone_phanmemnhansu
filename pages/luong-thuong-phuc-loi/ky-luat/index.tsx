@@ -17,12 +17,12 @@ export default function NavBar({ children }: any) {
     {
       key: 2,
       header: "TẬP THỂ",
-      component: <DisciplineList></DisciplineList>,
+      component: <CollectiveDiscipline></CollectiveDiscipline>,
     },
     {
       key: 3,
       header: "DANH SÁCH VI PHẠM",
-      component: <CollectiveDiscipline></CollectiveDiscipline>,
+      component: <DisciplineList></DisciplineList>,
     },
   ];
 

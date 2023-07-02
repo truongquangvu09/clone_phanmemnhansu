@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useState } from 'react';
 import styles from '../../sidebar.module.css'
 import Link from "next/link";
@@ -17,17 +18,20 @@ export default function DevelopmentTraining({ children }: any) {
         {
             img: "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_vitricongviec.svg",
             title: 'Vị trí công việc',
-            href: ''
+            href: '/dao-tao-phat-trien/vi-tri-cong-viec',
+            target: ''
         },
         {
             img: "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_quytrinhdaotao.svg",
             title: 'Quy trình đào tạo',
-            href: ''
+            href: '/dao-tao-phat-trien/quy-trinh-dao-tao',
+            target: ''
         },
         {
             img: "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_danhgianangluc.svg",
             title: 'Đánh giá năng lực nhân viên',
-            href: ''
+            href: 'https://phanmemdanhgiananglucnhanvien.timviec365.vn/trang_chu_sau_dang_nhap.html',
+            target: 'blank'
         },
     ]
 
@@ -39,7 +43,8 @@ export default function DevelopmentTraining({ children }: any) {
                         <Link
                             className={` ${activeButton === 1 ? styles.clicked : ""}`}
                             onClick={() => handleClick(index)}
-                            href="/"
+                            href={item.href}
+                            target= {item.target}
                         >
                             <div className={`${styles.sidebar_home}`}>
                                 <div className={`${styles.button2}`}>

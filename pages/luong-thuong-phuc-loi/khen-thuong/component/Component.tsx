@@ -2,7 +2,9 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Component.module.css";
 import ModalAddReward from "../personalReward/modalAddPersonalCompliments/ModalAddReward";
-import ModalEditReward from "../personalReward/modalEditPersonalCompliments/ModalEditEditReward";
+import ModalEditPersonalCompliments from "../personalReward/modalEditPersonalCompliments/ModalEditPersonalCompliments";
+import ModalEditCommendationTeam from "../commendationTeam/modalEditCommendationTeam/ModalEditCommendationTeam";
+import ModalEditAchievementList from "../achievementList/modalEditAchievementList/ModalEditAchievementList";
 
 import MyPagination from "./Pagination";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
@@ -13,7 +15,7 @@ function RewardTable({ display, data, model }: any) {
   const [visible, setVisible] = useState(true);
   const [typeModal, setTypeModal] = useState(model);
   const [open, setOpen] = useState(false);
-  const [modalDetailType, setModalDetailType] = useState('')
+  const [modalEditType, setModalEditType] = useState('')
 
   const handlePageChange = (page: any) => {
     setCurrentPage(page);
@@ -25,19 +27,19 @@ function RewardTable({ display, data, model }: any) {
   };
   
  useEffect(()=> {
-  const modalDetailTypes = () => {
+  const modalEditTypes = () => {
     if (typeModal === 'canhan'){
-      setModalDetailType('canhan')
+      setModalEditType('canhan')
     }
     if (typeModal === 'tapthe'){
-      setModalDetailType('tapthe')
+      setModalEditType('tapthe')
     }
     if (typeModal === 'list'){
-      setModalDetailType('list')
+      setModalEditType('list')
     }
   }
-  modalDetailTypes()
- },[modalDetailType])
+  modalEditTypes()
+ },[modalEditType])
 
   return (
     <>
@@ -65,9 +67,17 @@ function RewardTable({ display, data, model }: any) {
             onClose={handleCloseModal}
           ></ModalAddTeamCompliments>
         )}
-        {typeModal === "chitiet" && (
-          <ModalEditReward type = {modalDetailType} onClose={handleCloseModal}></ModalEditReward>
+        {typeModal === "chitiet" && modalEditType === 'canhan' && (
+          <ModalEditPersonalCompliments onClose={handleCloseModal}></ModalEditPersonalCompliments>
         )}
+        {typeModal === "chitiet" && modalEditType === 'tapthe' && (
+          <ModalEditCommendationTeam onClose={handleCloseModal}></ModalEditCommendationTeam>
+        )}
+
+        {typeModal === "chitiet" && modalEditType === 'list' && (
+          <ModalEditAchievementList onClose={handleCloseModal}></ModalEditAchievementList>
+        )}
+
         <div className={`${styles.tuyendung2_2}`}>
           <form className={`${styles.t_form_search}`}>
             <div className={`${styles.t_div_search}`}>
