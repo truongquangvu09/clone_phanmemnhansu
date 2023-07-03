@@ -1,13 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 import styles from "./Component.module.css";
-import MyPagination from "./Pagination";
+
 import AddModalPersonalDiscipline from "../personalDiscipline/addModalPersonalDiscipline/AddModalPersonalDiscipline";
 import AddModalCollectiveDiscipline from "../collectiveDiscipline/addModalCollectiveDiscipline/AddModalCollectiveDiscipline";
 import EditModalPersonalDiscipline from "../personalDiscipline/editModalPersonalDiscipline/EditModalPersonalDiscipline";
 import EditModalCollectiveDiscipline from "../collectiveDiscipline/editModalCollectiveDiscipline/EditModalCollectiveDiscipline";
 import EditModalListDiscipline from "../disciplineList/editModalListDiscipline/EditModalListDiscipline";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
+import MyPagination from "@/components/pagination/Pagination";
 
 function PunishmentTable({ display, data, violators, model }: any) {
   const [currentPage, setCurrentPage] = useState(1);
