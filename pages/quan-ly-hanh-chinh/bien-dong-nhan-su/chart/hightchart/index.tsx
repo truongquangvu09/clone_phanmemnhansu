@@ -1,89 +1,74 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import * as Highcharts from 'highcharts';
-import HighchartsReact from 'highcharts-react-official';
 import styles from './hightChart.module.css'
 
 const Chart: React.FC = () => {
-    // const chartRef = useRef<HighchartsReact>(null);
     useEffect(() => {
         const table = document.getElementById('datatable') as HTMLTableElement;
-        if (!table) return;
-
-        const options: Highcharts.Options = {
-            data: {
-                table: 'datatable'
-            },
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'Biểu đồ biến động nhân sự'
-            },
-            subtitle: {
-                text:
-                    ''
-            },
-            xAxis: {
-                type: 'category'
-            },
-            yAxis: {
-                allowDecimals: false,
+        if (table) {
+            Highcharts.chart('container', {
+                data: {
+                    table: 'datatable'
+                },
+                chart: {
+                    type: 'column'
+                },
                 title: {
-                    text: 'Biểu đồ thống kê số lượng nhân viên'
+                    text: 'Biểu đồ biến động nhân sự'
+                },
+                subtitle: {
+                    text:
+                        ''
+                },
+                xAxis: {
+                    type: 'category'
+                },
+                yAxis: {
+                    allowDecimals: false,
+                    title: {
+                        text: 'Biểu đồ thống kê số lượng nhân viên'
+                    }
                 }
-            }
-        };
-
-        // if (chartRef.current) {
-        //     chartRef.current.chart!.update(options);
-        // }
+            });
+        }
     }, []);
 
     return (
-        <figure className={styles.highcharts_figure}>
-            <HighchartsReact
-                highcharts={Highcharts}
-                options={{ chart: { height: 500, width: 800 } }}
-            // ref={chartRef}
-            />
-            <table id="datatable">
+        <figure className={`${styles.highcharts_figure}`}>
+            <div id="container"></div>
+            <table id="datatable" style={{ display: 'none' }} >
                 <thead>
                     <tr>
                         <th></th>
-                        <th>Boys</th>
-                        <th>Girls</th>
+                        <th>Mốc thời gian 1: (01/06/2023 - 09/06/2023)</th>
+                        <th>Mốc thời gian 2: (01/06/2023 - 09/06/2023)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <th>2016</th>
-                        <td>30 386</td>
-                        <td>28 504</td>
+                        <th>Tăng/giảm lương</th>
+                        <td>5</td>
+                        <td>5</td>
                     </tr>
                     <tr>
-                        <th>2017</th>
-                        <td>29 173</td>
-                        <td>27 460</td>
+                        <th>Bổ nhiệm quy hoạch</th>
+                        <td>2</td>
+                        <td>2</td>
                     </tr>
                     <tr>
-                        <th>2018</th>
-                        <td>28 430</td>
-                        <td>26 690</td>
+                        <th>Luân chuyển công tác</th>
+                        <td>2</td>
+                        <td>2</td>
                     </tr>
                     <tr>
-                        <th>2019</th>
-                        <td>28 042</td>
-                        <td>26 453</td>
+                        <th>Giảm biên chế</th>
+                        <td>2</td>
+                        <td>2</td>
                     </tr>
                     <tr>
-                        <th>2020</th>
-                        <td>27 063</td>
-                        <td>25 916</td>
-                    </tr>
-                    <tr>
-                        <th>2021</th>
-                        <td>28 684</td>
-                        <td>27 376</td>
+                        <th>Nghỉ việc</th>
+                        <td>2</td>
+                        <td>2</td>
                     </tr>
                 </tbody>
             </table>
