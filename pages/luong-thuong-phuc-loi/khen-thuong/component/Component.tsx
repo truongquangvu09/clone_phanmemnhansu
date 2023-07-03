@@ -6,9 +6,10 @@ import ModalEditPersonalCompliments from "../personalReward/modalEditPersonalCom
 import ModalEditCommendationTeam from "../commendationTeam/modalEditCommendationTeam/ModalEditCommendationTeam";
 import ModalEditAchievementList from "../achievementList/modalEditAchievementList/ModalEditAchievementList";
 
-import MyPagination from "./Pagination";
+
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 import ModalAddTeamCompliments from "../commendationTeam/modalAddTeamCompliments/modalAddTeamCompliments";
+import MyPagination from "@/components/pagination/Pagination";
 
 function RewardTable({ display, data, model }: any) {
   const [currentPage, setCurrentPage] = useState(1);

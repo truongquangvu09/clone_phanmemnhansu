@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from '../quan-ly-hanh-chinh/thong-tin-nhan-su/administration.module.css'
 import Link from 'next/link';
 import TabHRReport from './hrReport';
+import RecruitmentReport from './recruitmentReport';
 
 
 export default function HRReport({ children }: any) {
@@ -19,6 +20,7 @@ export default function HRReport({ children }: any) {
                     </li>
                 </ul>
                 {active === 1 && <TabHRReport />}
+                {active === 2 && <RecruitmentReport/>}
             </div>
         </>
     )
