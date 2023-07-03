@@ -72,7 +72,7 @@ export default function Sidebar(props: SideBarProp) {
     {
       label: "Cài đặt",
       icon: "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_icon_setting.svg",
-      href: '',
+      href: '/cai-dat-chung',
       submenu: ''
     },
     {
