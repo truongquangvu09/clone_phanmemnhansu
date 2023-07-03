@@ -58,7 +58,7 @@ function AddModalPersonalDiscipline({ children,onClose }: any) {
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -82,7 +82,7 @@ function AddModalPersonalDiscipline({ children,onClose }: any) {
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                     
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -106,7 +106,7 @@ function AddModalPersonalDiscipline({ children,onClose }: any) {
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                    
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -123,31 +123,7 @@ function AddModalPersonalDiscipline({ children,onClose }: any) {
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                    Người ký quyết định
-                    <span className={`${styles.red}`}> *</span>
-                  </label>
-                  <div className={`${styles.inputright}`}>
-                    <input
-                      type="text"
-                      className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
-                    ></input>
-                    <picture style={{ display: "none" }}>
-                      <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
-                        alt="Lỗi"
-                      ></img>
-                    </picture>
-                    <div
-                      className={`${styles.errors}`}
-                      style={{ display: "none" }}
-                    ></div>
-                  </div>
-                </div>
-
-                <div className={`${styles.form_groups}`}>
-                  <label>
-                    Thời điểm
+                  Thời gian vi phạm
                     <span className={`${styles.red}`}> *</span>
                   </label>
                   <div className={`${styles.inputright}`}>
@@ -155,7 +131,7 @@ function AddModalPersonalDiscipline({ children,onClose }: any) {
                       type="date"
                       className={`${styles.inputquytrinh}`}
                       style={{ width: "397.44px" }}
-                      placeholder="Nhập tên giai đoạn"
+              
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -172,7 +148,31 @@ function AddModalPersonalDiscipline({ children,onClose }: any) {
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                    Hình thức khen thưởng
+                  Hình thức xử lý sai phạm
+                    <span className={`${styles.red}`}> *</span>
+                  </label>
+                  <div className={`${styles.inputright}`}>
+                    <input
+                      type="text"
+                      className={`${styles.inputquytrinh}`}
+                  
+                    ></input>
+                    <picture style={{ display: "none" }}>
+                      <img
+                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                        alt="Lỗi"
+                      ></img>
+                    </picture>
+                    <div
+                      className={`${styles.errors}`}
+                      style={{ display: "none" }}
+                    ></div>
+                  </div>
+                </div>
+
+                <div className={`${styles.form_groups}`}>
+                  <label>
+                  Cá nhân vi phạm
                     <span className={`${styles.red}`}> *</span>
                     <div
                       className={`${styles.red} ${styles.float_right}`}
@@ -183,7 +183,7 @@ function AddModalPersonalDiscipline({ children,onClose }: any) {
                       isMulti={true}
                       defaultValue={selectedOption}
                       options={options.hinhthuckhenthuong}
-                      placeholder="-- Vui lòng chọn -- "
+                      placeholder = {' '}
                       styles={{
                         control: (baseStyles, state) => ({
                           ...baseStyles,
@@ -210,14 +210,15 @@ function AddModalPersonalDiscipline({ children,onClose }: any) {
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                    Danh hiệu
+                  Người ký quyết định
                     <span className={`${styles.red}`}> *</span>
                   </label>
                   <div className={`${styles.inputright}`}>
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      style={{ width: "397.44px" }}
+                    
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -234,14 +235,15 @@ function AddModalPersonalDiscipline({ children,onClose }: any) {
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                    Cấp khen
-                    <span className={`${styles.red}`}> *</span>
+                  Số tiền phạt
+                    <span className={`${styles.red}`}></span>
                   </label>
                   <div className={`${styles.inputright}`}>
                     <input
-                      type="text"
+                      type="number"
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      style={{ width: "397.44px" }}
+                     
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -255,6 +257,31 @@ function AddModalPersonalDiscipline({ children,onClose }: any) {
                     ></div>
                   </div>
                 </div>
+
+                <div className={`${styles.form_groups}`}>
+                  <label>
+                  Lý do phạt
+                    <span className={`${styles.red}`}></span>
+                  </label>
+                  <div className={`${styles.inputright}`}>
+                    <textarea
+                      className={`${styles.inputquytrinh}`}
+                      style={{ width: "397.44px" }}
+                      
+                    ></textarea>
+                    <picture style={{ display: "none" }}>
+                      <img
+                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                        alt="Lỗi"
+                      ></img>
+                    </picture>
+                    <div
+                      className={`${styles.errors}`}
+                      style={{ display: "none" }}
+                    ></div>
+                  </div>
+                </div>
+
               </div>
 
               <div

@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import styles from "../modalAddPersonalCompliments/ModalAddReward.module.css";
+import styles from "./EditModalCollectiveDiscipline.module.css";
 import Select from "react-select";
 
 type SelectOptionType = { label: string; value: string };
 
-function ModalEditReward({ onClose, type }: any) {
-  
+function EditModalListDiscipline({ onClose, type }: any) {
   const options = {
     tendoituong: [
       { value: "Lê Hồng Anh", label: "Lê Hồng Anh" },
@@ -43,21 +42,22 @@ function ModalEditReward({ onClose, type }: any) {
           <div className={`${styles.modal_content} `}>
             {/* header */}
             <div className={`${styles.modal_header} ${styles.headquytrinh}`}>
-              <h5 className={`${styles.modal_title}`}>CẬP NHẬT THÀNH TÍCH</h5>
+              <h5 className={`${styles.modal_title}`}>CẬP NHẬT VI PHẠM TẬP THỂ</h5>
             </div>
             {/* body */}
             <form onSubmit={handleSubmit} className={`${styles.modal_form}`}>
               <div className={`${styles.modal_body} ${styles.bodyquytrinh}`}>
+                
                 <div className={`${styles.form_groups}`}>
                   <label>
-                    Số quyết định
+                    Tên lỗi vi phạm
                     <span className={`${styles.red}`}> *</span>
                   </label>
                   <div className={`${styles.inputright}`}>
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                    
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -74,14 +74,14 @@ function ModalEditReward({ onClose, type }: any) {
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                    Nội dung khen thưởng
+                    Căn cứ quy định
                     <span className={`${styles.red}`}> *</span>
                   </label>
                   <div className={`${styles.inputright}`}>
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                     
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -98,7 +98,81 @@ function ModalEditReward({ onClose, type }: any) {
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                  Tên đối tượng
+                  Số quy định xử lý vi phạm
+                    <span className={`${styles.red}`}> *</span>
+                  </label>
+                  <div className={`${styles.inputright}`}>
+                    <input
+                      type="text"
+                      className={`${styles.inputquytrinh}`}
+                   
+                    ></input>
+                    <picture style={{ display: "none" }}>
+                      <img
+                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                        alt="Lỗi"
+                      ></img>
+                    </picture>
+                    <div
+                      className={`${styles.errors}`}
+                      style={{ display: "none" }}
+                    ></div>
+                  </div>
+                </div>
+
+                <div className={`${styles.form_groups}`}>
+                  <label>
+                    Thời gian vi phạm
+                    <span className={`${styles.red}`}> *</span>
+                  </label>
+                  <div className={`${styles.inputright}`}>
+                    <input
+                      type="date"
+                      className={`${styles.inputquytrinh}`}
+                      style={{ width: "397.44px" }}
+                    
+                    ></input>
+                    <picture style={{ display: "none" }}>
+                      <img
+                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                        alt="Lỗi"
+                      ></img>
+                    </picture>
+                    <div
+                      className={`${styles.errors}`}
+                      style={{ display: "none" }}
+                    ></div>
+                  </div>
+                </div>
+
+                <div className={`${styles.form_groups}`}>
+                  <label>
+                    Hình thức xử lý sai phạm
+                    <span className={`${styles.red}`}> *</span>
+                  </label>
+                  <div className={`${styles.inputright}`}>
+                    <input
+                      type="text"
+                      className={`${styles.inputquytrinh}`}
+                      style={{ width: "397.44px" }}
+                   
+                    ></input>
+                    <picture style={{ display: "none" }}>
+                      <img
+                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                        alt="Lỗi"
+                      ></img>
+                    </picture>
+                    <div
+                      className={`${styles.errors}`}
+                      style={{ display: "none" }}
+                    ></div>
+                  </div>
+                </div>
+
+                <div className={`${styles.form_groups}`}>
+                  <label>
+                    Cá nhân vi phạm
                     <span className={`${styles.red}`}> *</span>
                     <div
                       className={`${styles.red} ${styles.float_right}`}
@@ -106,10 +180,10 @@ function ModalEditReward({ onClose, type }: any) {
                   </label>
                   <div style={{ marginRight: "3%" }}>
                     <Select
-                      isMulti
+                      isMulti={true}
                       defaultValue={selectedOption}
-                      options={options.tendoituong}
-                      placeholder="Chọn đối tượng"
+                      options={options.hinhthuckhenthuong}
+                      placeholder = {' '}
                       styles={{
                         control: (baseStyles, state) => ({
                           ...baseStyles,
@@ -143,118 +217,7 @@ function ModalEditReward({ onClose, type }: any) {
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
-                    ></input>
-                    <picture style={{ display: "none" }}>
-                      <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
-                        alt="Lỗi"
-                      ></img>
-                    </picture>
-                    <div
-                      className={`${styles.errors}`}
-                      style={{ display: "none" }}
-                    ></div>
-                  </div>
-                </div>
-
-                <div className={`${styles.form_groups}`}>
-                  <label>
-                    Thời điểm
-                    <span className={`${styles.red}`}> *</span>
-                  </label>
-                  <div className={`${styles.inputright}`}>
-                    <input
-                      type="date"
-                      className={`${styles.inputquytrinh}`}
-                      style={{ width: "397.44px" }}
-                      placeholder="Nhập tên giai đoạn"
-                    ></input>
-                    <picture style={{ display: "none" }}>
-                      <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
-                        alt="Lỗi"
-                      ></img>
-                    </picture>
-                    <div
-                      className={`${styles.errors}`}
-                      style={{ display: "none" }}
-                    ></div>
-                  </div>
-                </div>
-
-                <div className={`${styles.form_groups}`}>
-                  <label>
-                    Hình thức khen thưởng
-                    <span className={`${styles.red}`}> *</span>
-                    <div
-                      className={`${styles.red} ${styles.float_right}`}
-                    ></div>
-                  </label>
-                  <div style={{ marginRight: "3%" }}>
-                    <Select
-                      isMulti={true}
-                      defaultValue={selectedOption}
-                      options={options.hinhthuckhenthuong}
-                      placeholder="-- Vui lòng chọn -- "
-                      styles={{
-                        control: (baseStyles, state) => ({
-                          ...baseStyles,
-                          borderRadius: 8,
-                          borderColor: "#4747477a",
-                          height: "auto",
-                          fontSize: state.isFocused ? 14 : 14,
-                          minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 397.44 : 397.44,
-                          fontWeight: state.isFocused ? 600 : 600,
-                        }),
-                        valueContainer: (baseStyles) => ({
-                          ...baseStyles,
-                          padding: "0",
-                        }),
-                        indicatorsContainer: (baseStyles) => ({
-                          ...baseStyles,
-                          height: 30,
-                        }),
-                      }}
-                    />
-                  </div>
-                </div>
-
-                <div className={`${styles.form_groups}`}>
-                  <label>
-                    Danh hiệu
-                    <span className={`${styles.red}`}> *</span>
-                  </label>
-                  <div className={`${styles.inputright}`}>
-                    <input
-                      type="text"
-                      className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
-                    ></input>
-                    <picture style={{ display: "none" }}>
-                      <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
-                        alt="Lỗi"
-                      ></img>
-                    </picture>
-                    <div
-                      className={`${styles.errors}`}
-                      style={{ display: "none" }}
-                    ></div>
-                  </div>
-                </div>
-
-                <div className={`${styles.form_groups}`}>
-                  <label>
-                    Cấp khen
-                    <span className={`${styles.red}`}> *</span>
-                  </label>
-                  <div className={`${styles.inputright}`}>
-                    <input
-                      type="text"
-                      className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                  
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -292,4 +255,4 @@ function ModalEditReward({ onClose, type }: any) {
   );
 }
 
-export default ModalEditReward;
+export default EditModalListDiscipline;

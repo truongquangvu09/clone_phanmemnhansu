@@ -1,10 +1,11 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from "react";
-import styles from "./modalAddTeamCompliments.module.css";
+import styles from "../modalAddPersonalCompliments/ModalAddReward.module.css";
 import Select from "react-select";
 
 type SelectOptionType = { label: string; value: string };
-function ModalAddTeamCompliments({ children,onClose }: any) {
+
+function ModalEditPersonalCompliments({ onClose, type }: any) {
+  
   const options = {
     tendoituong: [
       { value: "Lê Hồng Anh", label: "Lê Hồng Anh" },
@@ -42,9 +43,7 @@ function ModalAddTeamCompliments({ children,onClose }: any) {
           <div className={`${styles.modal_content} `}>
             {/* header */}
             <div className={`${styles.modal_header} ${styles.headquytrinh}`}>
-              <h5 className={`${styles.modal_title}`}>
-                THÊM THÀNH TÍCH TẬP THỂ
-              </h5>
+              <h5 className={`${styles.modal_title}`}>CẬP NHẬT THÀNH TÍCH</h5>
             </div>
             {/* body */}
             <form onSubmit={handleSubmit} className={`${styles.modal_form}`}>
@@ -58,7 +57,7 @@ function ModalAddTeamCompliments({ children,onClose }: any) {
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập số quyết định"
+                      placeholder="Nhập tên giai đoạn"
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -82,7 +81,7 @@ function ModalAddTeamCompliments({ children,onClose }: any) {
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập nội dung khen thưởng"
+                      placeholder="Nhập tên giai đoạn"
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -99,7 +98,7 @@ function ModalAddTeamCompliments({ children,onClose }: any) {
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                  Tên phòng ban 
+                  Tên đối tượng
                     <span className={`${styles.red}`}> *</span>
                     <div
                       className={`${styles.red} ${styles.float_right}`}
@@ -110,7 +109,7 @@ function ModalAddTeamCompliments({ children,onClose }: any) {
                       isMulti
                       defaultValue={selectedOption}
                       options={options.tendoituong}
-                      placeholder="Chọn phòng ban"
+                      placeholder="Chọn đối tượng"
                       styles={{
                         control: (baseStyles, state) => ({
                           ...baseStyles,
@@ -144,7 +143,7 @@ function ModalAddTeamCompliments({ children,onClose }: any) {
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Người ký quyết định"
+                      placeholder="Nhập tên giai đoạn"
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -231,7 +230,7 @@ function ModalAddTeamCompliments({ children,onClose }: any) {
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Danh hiệu"
+                      placeholder="Nhập tên giai đoạn"
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -255,7 +254,7 @@ function ModalAddTeamCompliments({ children,onClose }: any) {
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Cấp khen"
+                      placeholder="Nhập tên giai đoạn"
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -282,7 +281,7 @@ function ModalAddTeamCompliments({ children,onClose }: any) {
                   Hủy
                 </button>
                 <button type="button" className={`${styles.success}`}>
-                  Thêm
+                  Cập nhật
                 </button>
               </div>
             </form>
@@ -293,4 +292,4 @@ function ModalAddTeamCompliments({ children,onClose }: any) {
   );
 }
 
-export default ModalAddTeamCompliments;
+export default ModalEditPersonalCompliments;

@@ -3,6 +3,10 @@ import React, { useEffect, useState } from "react";
 import styles from "./Component.module.css";
 import MyPagination from "./Pagination";
 import AddModalPersonalDiscipline from "../personalDiscipline/addModalPersonalDiscipline/AddModalPersonalDiscipline";
+import AddModalCollectiveDiscipline from "../collectiveDiscipline/addModalCollectiveDiscipline/AddModalCollectiveDiscipline";
+import EditModalPersonalDiscipline from "../personalDiscipline/editModalPersonalDiscipline/EditModalPersonalDiscipline";
+import EditModalCollectiveDiscipline from "../collectiveDiscipline/editModalCollectiveDiscipline/EditModalCollectiveDiscipline";
+import EditModalListDiscipline from "../disciplineList/editModalListDiscipline/EditModalListDiscipline";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 
 function PunishmentTable({ display, data, violators, model }: any) {
@@ -10,31 +14,32 @@ function PunishmentTable({ display, data, violators, model }: any) {
   const [visible, setVisible] = useState(true);
   const [typeModal, setTypeModal] = useState(model);
   const [open, setOpen] = useState(false);
-  const [modalDetailType, setModalDetailType] = useState("");
-
+  const [modalEditType, setModalEditType] = useState("");
+  
   const handlePageChange = (page: any) => {
     setCurrentPage(page);
   };
 
+  console.log('typeModal', typeModal)
   const handleCloseModal = () => {
     setTypeModal(model);
     setOpen(false);
   };
 
   useEffect(() => {
-    const modalDetailTypes = () => {
+    const modalEditTypes = () => {
       if (typeModal === "canhan") {
-        setModalDetailType("canhan");
+        setModalEditType("canhan");
       }
       if (typeModal === "tapthe") {
-        setModalDetailType("tapthe");
+        setModalEditType("tapthe");
       }
       if (typeModal === "list") {
-        setModalDetailType("list");
+        setModalEditType("list");
       }
     };
-    modalDetailTypes();
-  }, [modalDetailType]);
+    modalEditTypes();
+  }, [modalEditType]);
 
   return (
     <>
@@ -55,19 +60,30 @@ function PunishmentTable({ display, data, violators, model }: any) {
           </button>
         </div>
         {typeModal === "canhan" && open && (
-          <AddModalPersonalDiscipline onClose={handleCloseModal}></AddModalPersonalDiscipline>
-        )}
-        {/* {typeModal === "tapthe" && open && (
-          <ModalAddTeamCompliments
+          <AddModalPersonalDiscipline
             onClose={handleCloseModal}
-          ></ModalAddTeamCompliments>
+          ></AddModalPersonalDiscipline>
         )}
-        {typeModal === "chitiet" && (
-          <ModalEditReward
-            type={modalDetailType}
+        {typeModal === "tapthe" && open && (
+          <AddModalCollectiveDiscipline
             onClose={handleCloseModal}
-          ></ModalEditReward>
-        )} */}
+          ></AddModalCollectiveDiscipline>
+        )}
+        {typeModal === "chitiet" && modalEditType === "canhan" && (
+          <EditModalPersonalDiscipline
+            onClose={handleCloseModal}
+          ></EditModalPersonalDiscipline>
+        )}
+        {typeModal === "chitiet" && modalEditType === "tapthe" && (
+          <EditModalCollectiveDiscipline
+            onClose={handleCloseModal}
+          ></EditModalCollectiveDiscipline>
+        )}
+        {typeModal === "chitiet" && modalEditType === "list" && (
+          <EditModalListDiscipline
+            onClose={handleCloseModal}
+          ></EditModalListDiscipline>
+        )}
         <div className={`${styles.tuyendung2_2}`}>
           <form className={`${styles.t_form_search}`}>
             <div className={`${styles.t_div_search}`}>
@@ -132,9 +148,11 @@ function PunishmentTable({ display, data, violators, model }: any) {
                       alt="Tùy chỉnh"
                       style={{ paddingTop: "6px" }}
                     />
-
                     {visible && (
-                      <div className={styles.settings}>
+                      <div
+                        className={styles.settings}
+                        onClick={() => setTypeModal("chitiet")}
+                      >
                         <li>Chỉnh sửa</li>
                       </div>
                     )}
@@ -154,7 +172,7 @@ function PunishmentTable({ display, data, violators, model }: any) {
           onChange={handlePageChange}
         />
       </div>
-      <BodyFrameFooter src="https://www.youtube.com/embed/qICTgD7Dt9w"></BodyFrameFooter>
+      <BodyFrameFooter src="https://www.youtube.com/embed/kjiQgo3VtLo"></BodyFrameFooter>
     </>
   );
 }

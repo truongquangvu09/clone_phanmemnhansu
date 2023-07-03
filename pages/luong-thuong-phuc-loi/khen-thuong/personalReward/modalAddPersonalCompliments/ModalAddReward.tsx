@@ -59,7 +59,7 @@ function ModalAddReward({ children ,onClose }: any) {
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Nhập số quyết định"
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -83,7 +83,7 @@ function ModalAddReward({ children ,onClose }: any) {
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Nhập nội dung khen thưởng"
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -145,7 +145,7 @@ function ModalAddReward({ children ,onClose }: any) {
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Người ký quyết định"
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -232,7 +232,7 @@ function ModalAddReward({ children ,onClose }: any) {
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Danh hiệu"
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -256,7 +256,7 @@ function ModalAddReward({ children ,onClose }: any) {
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Cấp khen"
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
