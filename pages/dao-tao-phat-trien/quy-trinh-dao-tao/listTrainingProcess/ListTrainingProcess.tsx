@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-key */
 import React, { useState, useEffect } from "react";
 import styles from "./ListTrainingProcess.module.css";
+import { useRouter } from 'next/router';
 import AddTrainingProcess from "../addTrainingProcess/AddTrainingProcess";
 import DeleteTrainingProcess from "../deleteTrainingProcess/DeleteTrainingProcess";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
@@ -8,14 +9,20 @@ import MyPagination from "@/pages/luong-thuong-phuc-loi/khen-thuong/component/Pa
 
 
 export default function ListTrainingProcess({ children }: any) {
-    const [open, setOpen] = useState(0)
+  const [open, setOpen] = useState(0)
   const [currentPage, setCurrentPage] = useState(1);
+  const router = useRouter();
   const handlePageChange = (page: any) => {
     setCurrentPage(page);
   };
   const handleCloseModal = () => {
     setOpen(0)
-}
+  }
+
+  const handleButtonClick = (id: number) => {
+     router.push('/dao-tao-phat-trien/quy-trinh-dao-tao/chi-tiet-quy-trinh/[idTrainingProcess]', 
+                `/dao-tao-phat-trien/quy-trinh-dao-tao/chi-tiet-quy-trinh/${id}`);
+  };
 
   const data = [
     {
@@ -90,7 +97,10 @@ export default function ListTrainingProcess({ children }: any) {
                 <>
                   <div key={item.id} className={`${styles.quytrinh_item}`}>
                     <div className={`${styles.quytrinh_item1}`}>
-                      <div className={`${styles.quytrinh_item11}`}>
+                      <div
+                        onClick={() => handleButtonClick(item.id)} 
+                        className={`${styles.quytrinh_item11}`} 
+                        style={{cursor:'pointer'}}>
                         <li >{item.title}</li>
                       </div>
                       <div className={`${styles.quytrinh_item12}`}>

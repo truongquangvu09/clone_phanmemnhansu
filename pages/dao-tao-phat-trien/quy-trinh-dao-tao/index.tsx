@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./styles.module.css";
 import ListTrainingProcess from "./listTrainingProcess/ListTrainingProcess";
+import DetailTrainingProcess from "./chi-tiet-quy-trinh/[idTrainingProcess]"
 
 
 export default function JobPosition({ children }: any) {
@@ -33,6 +34,7 @@ export default function JobPosition({ children }: any) {
           ))}
         </ul>
         {listTab.find((item) => item.key === active)?.component}
+       
       </div>
     </>
   );
