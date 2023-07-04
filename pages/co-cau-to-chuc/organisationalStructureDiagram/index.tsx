@@ -19,7 +19,7 @@ export default function OrganisationalStructureDiagram() {
                     <div className={`${styles.recruitment2_3}`}>
                         <button className={`${styles.adds}`} onClick={handleClick}>
                             <picture>
-                                <img src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />
+                                <img style={{ verticalAlign: 'middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />
                                 Thêm mới
                             </picture>
                         </button>

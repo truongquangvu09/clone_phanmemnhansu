@@ -48,10 +48,10 @@ export default function CandidateListDetail() {
                     <div className={`${styles.body}`}>
                         <div className={`${styles.recruitment}`}>
                             <button className={`${styles.add}`} onClick={() => setOpenModal(1)}>
-                                <img src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm ứng viên
+                                <img style={{ verticalAlign: 'middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm ứng viên
                             </button>
                             <button className={`${styles.add}`} onClick={() => setOpenModal(2)}>
-                                <img src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm giai đoạn
+                                <img style={{ verticalAlign: 'middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm giai đoạn
                             </button>
                         </div>
                         {openModal === 1 ? <CandidateAddModal onCancel={handleCloseModal}></CandidateAddModal> : ''}
@@ -69,6 +69,7 @@ export default function CandidateListDetail() {
                                 </div>
                                 <div className={`${styles.div_no_pad} `}>
                                     <Select
+
                                         defaultValue={selectedOption}
                                         onChange={(option) => handleSelectionChange(option, options.vitrituyendung)}
                                         options={options.vitrituyendung}
@@ -76,10 +77,17 @@ export default function CandidateListDetail() {
                                         styles={{
                                             control: (baseStyles, state) => ({
                                                 ...baseStyles,
+                                                borderRadius: 4,
+                                                borderColor: "#4747477a",
+                                                height: "auto",
                                                 fontSize: state.isFocused ? 14 : 14,
-                                                minHeight: state.isFocused ? 20 : 20,
                                                 width: state.isFocused ? 257.16 : 257.16,
-                                                fontWeight: state.isFocused ? 600 : 600
+                                                fontWeight: state.isFocused ? 600 : 600,
+                                                minHeight: 20
+                                            }),
+                                            indicatorsContainer: (baseStyles) => ({
+                                                ...baseStyles,
+                                                height: 33,
                                             }),
                                         }}
                                     />
@@ -95,10 +103,17 @@ export default function CandidateListDetail() {
                                         styles={{
                                             control: (baseStyles, state) => ({
                                                 ...baseStyles,
-                                                fontSize: state.isFocused ? 15 : 15,
-                                                minHeight: state.isFocused ? 20 : 20,
+                                                borderRadius: 4,
+                                                borderColor: "#4747477a",
+                                                height: "auto",
+                                                fontSize: state.isFocused ? 14 : 14,
                                                 width: state.isFocused ? 257.16 : 257.16,
-                                                fontWeight: state.isFocused ? 600 : 600
+                                                fontWeight: state.isFocused ? 600 : 600,
+                                                minHeight: 20
+                                            }),
+                                            indicatorsContainer: (baseStyles) => ({
+                                                ...baseStyles,
+                                                height: 33,
                                             }),
                                         }}
                                     />
@@ -112,10 +127,17 @@ export default function CandidateListDetail() {
                                         styles={{
                                             control: (baseStyles, state) => ({
                                                 ...baseStyles,
-                                                fontSize: state.isFocused ? 15 : 15,
-                                                minHeight: state.isFocused ? 20 : 20,
+                                                borderRadius: 4,
+                                                borderColor: "#4747477a",
+                                                height: "auto",
+                                                fontSize: state.isFocused ? 14 : 14,
                                                 width: state.isFocused ? 257.16 : 257.16,
-                                                fontWeight: state.isFocused ? 600 : 600
+                                                fontWeight: state.isFocused ? 600 : 600,
+                                                minHeight: 20
+                                            }),
+                                            indicatorsContainer: (baseStyles) => ({
+                                                ...baseStyles,
+                                                height: 33,
                                             }),
                                         }}
                                     />
@@ -129,10 +151,17 @@ export default function CandidateListDetail() {
                                         styles={{
                                             control: (baseStyles, state) => ({
                                                 ...baseStyles,
-                                                fontSize: state.isFocused ? 15 : 15,
-                                                minHeight: state.isFocused ? 20 : 20,
+                                                borderRadius: 4,
+                                                borderColor: "#4747477a",
+                                                height: "auto",
+                                                fontSize: state.isFocused ? 14 : 14,
                                                 width: state.isFocused ? 257.16 : 257.16,
-                                                fontWeight: state.isFocused ? 600 : 600
+                                                fontWeight: state.isFocused ? 600 : 600,
+                                                minHeight: 20
+                                            }),
+                                            indicatorsContainer: (baseStyles) => ({
+                                                ...baseStyles,
+                                                height: 33,
                                             }),
                                         }}
                                     />

@@ -10,10 +10,22 @@
 .sidebar_wrapper {
   background: #ffffff;
   box-shadow: 0px 12px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 0px 12px 0px 0px;
 }
 .sidebar_home {
   display: flex;
 }
+.footer_sidebar {
+  height: 500px;
+}
+.sidebar_home_img {
+  width: 52px;
+  height: 100%;
+  background: #4c5bd4;
+  text-align: center;
+  border-bottom: 1px solid #bbbbbb;
+}
+
 .sidebar_img {
 }
 .sidebar_text {
@@ -86,8 +98,8 @@
   z-index: 1;
 }
 .img_1 {
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 17px;
 }
 
 .clicked {

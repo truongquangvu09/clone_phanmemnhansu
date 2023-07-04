@@ -51,10 +51,20 @@ export default function StageAddModal({ onCancel }: any) {
                                                         control: (baseStyles, state) => ({
                                                             ...baseStyles,
                                                             borderRadius: 8,
-                                                            fontSize: state.isFocused ? 15 : 15,
-                                                            minHeight: state.isFocused ? 20 : 20,
+                                                            borderColor: "#4747477a",
+                                                            height: "auto",
+                                                            fontSize: state.isFocused ? 14 : 14,
                                                             width: state.isFocused ? 413.38 : 413.38,
-                                                            fontWeight: state.isFocused ? 600 : 600
+                                                            fontWeight: state.isFocused ? 600 : 600,
+                                                            minHeight: 20
+                                                        }),
+                                                        valueContainer: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            height: 31.6,
+                                                        }),
+                                                        indicatorsContainer: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            height: 31.6,
                                                         }),
                                                     }}
                                                 />

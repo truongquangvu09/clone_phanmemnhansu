@@ -21,7 +21,7 @@ export default function RegulationsWork() {
                         <div className={`${styles.recruitment2_3}`}>
                             <button className={`${styles.adds}`} onClick={handleClick}>
                                 <picture>
-                                    <img src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />
+                                    <img style={{ verticalAlign: 'middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />
                                     Thêm mới
                                 </picture>
                             </button>
@@ -36,7 +36,7 @@ export default function RegulationsWork() {
                         <div className={`${styles.recruitment2_2}`}>
                             <form action="" className={`${styles.t_form_search}`}>
                                 <div className={`${styles.t_div_search}`}>
-                                    <input type="text" className={`${styles.keyword_qd}`} placeholder='Tìm kiếm' />
+                                    <input style={{ verticalAlign: 'top' }} type="text" className={`${styles.keyword_qd}`} placeholder='Tìm kiếm' />
                                     <a href="">
                                         <picture>
                                             <img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search.png" alt="" />

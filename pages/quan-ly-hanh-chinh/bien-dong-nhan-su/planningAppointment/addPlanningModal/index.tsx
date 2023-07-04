@@ -79,7 +79,7 @@ export default function AddPlanningModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: state.isFocused ? 675 : 675,
@@ -100,7 +100,7 @@ export default function AddPlanningModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: state.isFocused ? 675 : 675,
@@ -121,7 +121,7 @@ export default function AddPlanningModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: state.isFocused ? 675 : 675,
@@ -142,7 +142,7 @@ export default function AddPlanningModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: state.isFocused ? 675 : 675,
@@ -163,7 +163,7 @@ export default function AddPlanningModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: state.isFocused ? 675 : 675,
@@ -190,7 +190,7 @@ export default function AddPlanningModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: state.isFocused ? 675 : 675,

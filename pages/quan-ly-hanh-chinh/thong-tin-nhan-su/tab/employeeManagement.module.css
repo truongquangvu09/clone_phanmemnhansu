@@ -76,6 +76,7 @@
   border-radius: 5px;
   padding: 1px 25px;
   width: 77%;
+  height: 34px;
   text-align: center;
 }
 .t_excel {
@@ -92,6 +93,9 @@
 .export_excel {
   float: right;
   top: 26%;
+}
+.export_excel_emp {
+  top: 46% !important;
 }
 .export_excel .t_excel_payroll {
   border: 1px solid #20744a !important;

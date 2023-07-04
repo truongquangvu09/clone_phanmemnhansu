@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import AddTrainingProcess from "../addTrainingProcess/AddTrainingProcess";
 import DeleteTrainingProcess from "../deleteTrainingProcess/DeleteTrainingProcess";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
-import MyPagination from "@/pages/luong-thuong-phuc-loi/khen-thuong/component/Pagination";
+import MyPagination from "@/components/pagination/Pagination";
 
 
 export default function ListTrainingProcess({ children }: any) {
@@ -20,8 +20,8 @@ export default function ListTrainingProcess({ children }: any) {
   }
 
   const handleButtonClick = (id: number) => {
-     router.push('/dao-tao-phat-trien/quy-trinh-dao-tao/chi-tiet-quy-trinh/[idTrainingProcess]', 
-                `/dao-tao-phat-trien/quy-trinh-dao-tao/chi-tiet-quy-trinh/${id}`);
+    router.push('/dao-tao-phat-trien/quy-trinh-dao-tao/chi-tiet-quy-trinh/[idTrainingProcess]',
+      `/dao-tao-phat-trien/quy-trinh-dao-tao/chi-tiet-quy-trinh/${id}`);
   };
 
   const data = [
@@ -55,8 +55,8 @@ export default function ListTrainingProcess({ children }: any) {
           <div className={`${styles.list_quytrinh}`}>
             <div className={`${styles.add_quytrinh}`}>
               <div className={`${styles.add_quytrinh1}`}>
-                <button className={`${styles.adds}`} 
-                onClick={() => setOpen(1)}
+                <button className={`${styles.adds}`}
+                  onClick={() => setOpen(1)}
                 >
                   <picture>
                     <img
@@ -67,8 +67,8 @@ export default function ListTrainingProcess({ children }: any) {
                   <p>Thêm mới</p>
                 </button>
               </div>
-                {open === 1 && <AddTrainingProcess closeModal = {handleCloseModal}></AddTrainingProcess>}
-                {open === 2 && <DeleteTrainingProcess closeModal = {handleCloseModal}></DeleteTrainingProcess>}
+              {open === 1 && <AddTrainingProcess closeModal={handleCloseModal}></AddTrainingProcess>}
+              {open === 2 && <DeleteTrainingProcess closeModal={handleCloseModal}></DeleteTrainingProcess>}
               <div className={`${styles.search_quytrinh}`}>
                 <form className={`${styles.t_form_search}`} method="POST">
                   <div className={`${styles.t_div_search}`}>
@@ -83,7 +83,7 @@ export default function ListTrainingProcess({ children }: any) {
                         <img
                           src="https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search.png"
                           alt="search"
-                          // onClick={() => handleSearch()}
+                        // onClick={() => handleSearch()}
                         ></img>
                       </picture>
                     </button>
@@ -98,9 +98,9 @@ export default function ListTrainingProcess({ children }: any) {
                   <div key={item.id} className={`${styles.quytrinh_item}`}>
                     <div className={`${styles.quytrinh_item1}`}>
                       <div
-                        onClick={() => handleButtonClick(item.id)} 
-                        className={`${styles.quytrinh_item11}`} 
-                        style={{cursor:'pointer'}}>
+                        onClick={() => handleButtonClick(item.id)}
+                        className={`${styles.quytrinh_item11}`}
+                        style={{ cursor: 'pointer' }}>
                         <li >{item.title}</li>
                       </div>
                       <div className={`${styles.quytrinh_item12}`}>
@@ -108,30 +108,30 @@ export default function ListTrainingProcess({ children }: any) {
                       </div>
                     </div>
 
-                    <div  className={`${styles.quytrinh_item2}`}>
-                        <button onClick={() => setOpen(2)}>
-                            <picture>
-                                <img src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/trash.png" alt="Xóa"></img>
-                            </picture>
-                        </button>
+                    <div className={`${styles.quytrinh_item2}`}>
+                      <button onClick={() => setOpen(2)}>
+                        <picture>
+                          <img src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/trash.png" alt="Xóa"></img>
+                        </picture>
+                      </button>
                     </div>
                   </div>
                   <hr className={`${styles.shr}`}></hr>
                 </>
               ))}
             </div>
-            
+
           </div>
         </div>
         <div className={`${styles.pagination}`}>
-        <MyPagination
-          current={currentPage}
-          total={50}
-          pageSize={10}
-          onChange={handlePageChange}
-        />
-      </div>
-      <BodyFrameFooter src="https://www.youtube.com/embed/U0c_dQb-6z0"></BodyFrameFooter>
+          <MyPagination
+            current={currentPage}
+            total={50}
+            pageSize={10}
+            onChange={handlePageChange}
+          />
+        </div>
+        <BodyFrameFooter src="https://www.youtube.com/embed/U0c_dQb-6z0"></BodyFrameFooter>
       </div>
     </>
   );

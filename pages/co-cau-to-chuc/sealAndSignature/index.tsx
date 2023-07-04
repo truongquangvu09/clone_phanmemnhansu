@@ -110,7 +110,7 @@ export default function SealAndSignature({ children }: any) {
                                 <p style={{ color: '#4C5BD4', fontWeight: 600, fontSize: 14 }}>Danh sách thành viên được sử dụng con dấu công ty</p></div>
                             <div className={`${styles.body_header_left}`}>
                                 <button className={`${styles.add} ${styles.add_planning}`} onClick={() => setOpenModal(1)}>
-                                    <img src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm mới
+                                    <img style={{ verticalAlign: 'middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm mới
                                 </button></div>
                         </div>
                         {openModal === 1 && <AddSealModal onCancel={handleCloseModal}></AddSealModal>}
@@ -129,18 +129,28 @@ export default function SealAndSignature({ children }: any) {
                                         styles={{
                                             control: (baseStyles, state) => ({
                                                 ...baseStyles,
-                                                borderRadius: 8,
-                                                fontSize: state.isFocused ? 15 : 15,
-                                                minHeight: state.isFocused ? 20 : 20,
+                                                borderRadius: 4,
+                                                borderColor: "#4747477a",
+                                                height: "auto",
+                                                fontSize: state.isFocused ? 14 : 14,
                                                 width: state.isFocused ? 320 : 320,
-                                                fontWeight: state.isFocused ? 600 : 600
+                                                fontWeight: state.isFocused ? 600 : 600,
+                                                minHeight: 20
+                                            }),
+                                            valueContainer: (baseStyles) => ({
+                                                ...baseStyles,
+                                                height: 33.6,
+                                            }),
+                                            indicatorsContainer: (baseStyles) => ({
+                                                ...baseStyles,
+                                                height: 33.6,
                                             }),
                                         }}
                                     />
                                 </div>
                                 <div className={`${styles.div_no_pad_search}   `}>
                                     <a href="" className={`${styles.icon_search_top} ${styles.div_search_salary} `}>
-                                        <img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search-n.svg" alt="" />
+                                        <img style={{ verticalAlign: '-webkit-baseline-middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search-n.svg" alt="" />
                                     </a>
                                 </div>
                             </div>
@@ -192,18 +202,28 @@ export default function SealAndSignature({ children }: any) {
                                         styles={{
                                             control: (baseStyles, state) => ({
                                                 ...baseStyles,
-                                                borderRadius: 8,
-                                                fontSize: state.isFocused ? 15 : 15,
-                                                minHeight: state.isFocused ? 20 : 20,
+                                                borderRadius: 4,
+                                                borderColor: "#4747477a",
+                                                height: "auto",
+                                                fontSize: state.isFocused ? 14 : 14,
                                                 width: state.isFocused ? 320 : 320,
-                                                fontWeight: state.isFocused ? 600 : 600
+                                                fontWeight: state.isFocused ? 600 : 600,
+                                                minHeight: 20
+                                            }),
+                                            valueContainer: (baseStyles) => ({
+                                                ...baseStyles,
+                                                height: 33.6,
+                                            }),
+                                            indicatorsContainer: (baseStyles) => ({
+                                                ...baseStyles,
+                                                height: 33.6,
                                             }),
                                         }}
                                     />
                                 </div>
                                 <div className={`${styles.div_no_pad_search}   `}>
                                     <a href="" className={`${styles.icon_search_top} ${styles.div_search_salary} `}>
-                                        <img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search-n.svg" alt="" />
+                                        <img style={{ verticalAlign: '-webkit-baseline-middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search-n.svg" alt="" />
                                     </a>
                                 </div>
                             </div>

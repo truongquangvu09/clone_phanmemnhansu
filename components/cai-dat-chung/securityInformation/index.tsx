@@ -38,11 +38,6 @@ export default function SecurityInfomation() {
 
         },
     ]
-    // useEffect(() => {
-    //     const dataFirst = data.slice(0, 2);
-    //     setDataSlice(dataFirst)
-
-    // }, [data])
     return (
         <>
             <div className={`${styles.wrapper}`}>

@@ -118,7 +118,7 @@ export default function TabEmployeeManagement({ children }: any) {
                     <div className={`${styles.body}`}>
                         <div className={`${styles.recruitment}`}>
                             <a target="blank" href="https://chamcong.timviec365.vn/quan-ly-cong-ty/nhan-vien.html" className={`${styles.add}`} >
-                                <img src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm ứng viên
+                                <img src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm mới nhân viên
                             </a>
                         </div>
                         <div className={`${styles.bg_search}`}>
@@ -132,10 +132,21 @@ export default function TabEmployeeManagement({ children }: any) {
                                         styles={{
                                             control: (baseStyles, state) => ({
                                                 ...baseStyles,
+                                                borderRadius: 4,
+                                                borderColor: "#4747477a",
+                                                height: "auto",
                                                 fontSize: state.isFocused ? 14 : 14,
-                                                minHeight: state.isFocused ? 20 : 20,
                                                 width: state.isFocused ? 300 : 300,
-                                                fontWeight: state.isFocused ? 600 : 600
+                                                fontWeight: state.isFocused ? 600 : 600,
+                                                minHeight: 20
+                                            }),
+                                            valueContainer: (baseStyles) => ({
+                                                ...baseStyles,
+                                                height: 33.6,
+                                            }),
+                                            indicatorsContainer: (baseStyles) => ({
+                                                ...baseStyles,
+                                                height: 33.6,
                                             }),
                                         }}
                                     />
@@ -149,22 +160,33 @@ export default function TabEmployeeManagement({ children }: any) {
                                         styles={{
                                             control: (baseStyles, state) => ({
                                                 ...baseStyles,
+                                                borderRadius: 4,
+                                                borderColor: "#4747477a",
+                                                height: "auto",
                                                 fontSize: state.isFocused ? 14 : 14,
-                                                minHeight: state.isFocused ? 20 : 20,
                                                 width: state.isFocused ? 300 : 300,
-                                                fontWeight: state.isFocused ? 600 : 600
+                                                fontWeight: state.isFocused ? 600 : 600,
+                                                minHeight: 20
+                                            }),
+                                            valueContainer: (baseStyles) => ({
+                                                ...baseStyles,
+                                                height: 33.6,
+                                            }),
+                                            indicatorsContainer: (baseStyles) => ({
+                                                ...baseStyles,
+                                                height: 33.6,
                                             }),
                                         }}
                                     />
                                 </div>
                                 <div className={`${styles.div_no_pad_search} `}>
                                     <a href="" className={`${styles.icon_search_top}`}>
-                                        <img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search-n.svg" alt="" />
+                                        <img style={{ verticalAlign: '-webkit-baseline-middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search-n.svg" alt="" />
                                     </a>
                                 </div>
                             </div>
                         </div>
-                        <div className={`${styles.export_excel}`} style={{ paddingRight: 20, right: 0, position: 'absolute' }}>
+                        <div className={`${styles.export_excel} ${styles.export_excel_emp}`} style={{ paddingRight: 20, right: 0, position: 'absolute' }}>
                             <a href="" className={`${styles.t_excel}`} >
                                 <img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-excel.svg" alt="" />
                                 Xuất file Excel

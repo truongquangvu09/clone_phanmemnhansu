@@ -118,7 +118,7 @@ export default function TabPayrollDown({ children }: any) {
                     <div className={`${styles.body} ${styles.body_planning}`}>
                         <div className={`${styles.recruitment}`}>
                             <button className={`${styles.add} ${styles.add_planning}`} onClick={() => setOpenModal(1)}>
-                                <img src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm mới giảm biên chế
+                                <img style={{ verticalAlign: 'middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm mới giảm biên chế
                             </button>
                             <div className={`${styles.export_excel}`} style={{ paddingRight: 20, right: 0, position: 'absolute' }}>
                                 <a href="" className={`${styles.t_excel} ${styles.t_excel_payroll}`} >
@@ -140,11 +140,21 @@ export default function TabPayrollDown({ children }: any) {
                                         styles={{
                                             control: (baseStyles, state) => ({
                                                 ...baseStyles,
-                                                borderRadius: 8,
-                                                fontSize: state.isFocused ? 15 : 15,
-                                                minHeight: state.isFocused ? 20 : 20,
+                                                borderRadius: 4,
+                                                borderColor: "#4747477a",
+                                                height: "auto",
+                                                fontSize: state.isFocused ? 14 : 14,
                                                 width: state.isFocused ? 225 : 225,
-                                                fontWeight: state.isFocused ? 600 : 600
+                                                fontWeight: state.isFocused ? 600 : 600,
+                                                minHeight: 20
+                                            }),
+                                            valueContainer: (baseStyles) => ({
+                                                ...baseStyles,
+                                                height: 33.6,
+                                            }),
+                                            indicatorsContainer: (baseStyles) => ({
+                                                ...baseStyles,
+                                                height: 33.6,
                                             }),
                                         }}
                                     />
@@ -158,11 +168,21 @@ export default function TabPayrollDown({ children }: any) {
                                         styles={{
                                             control: (baseStyles, state) => ({
                                                 ...baseStyles,
-                                                borderRadius: 8,
-                                                fontSize: state.isFocused ? 15 : 15,
-                                                minHeight: state.isFocused ? 20 : 20,
+                                                borderRadius: 4,
+                                                borderColor: "#4747477a",
+                                                height: "auto",
+                                                fontSize: state.isFocused ? 14 : 14,
                                                 width: state.isFocused ? 225 : 225,
-                                                fontWeight: state.isFocused ? 600 : 600
+                                                fontWeight: state.isFocused ? 600 : 600,
+                                                minHeight: 20
+                                            }),
+                                            valueContainer: (baseStyles) => ({
+                                                ...baseStyles,
+                                                height: 33.6,
+                                            }),
+                                            indicatorsContainer: (baseStyles) => ({
+                                                ...baseStyles,
+                                                height: 33.6,
                                             }),
                                         }}
                                     />
@@ -175,7 +195,7 @@ export default function TabPayrollDown({ children }: any) {
                                 </div>
                                 <div className={`${styles.div_no_pad_search}   `}>
                                     <a href="" className={`${styles.icon_search_top} ${styles.div_search_salary} `}>
-                                        <img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search-n.svg" alt="" />
+                                        <img style={{ verticalAlign: '-webkit-baseline-middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search-n.svg" alt="" />
                                     </a>
                                 </div>
                             </div>

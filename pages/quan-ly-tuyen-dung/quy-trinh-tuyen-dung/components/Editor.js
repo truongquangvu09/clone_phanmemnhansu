@@ -2,17 +2,17 @@ import React, { useEffect, useRef } from "react";
 
 function MyEditor({ onChange, editorLoaded, name, value }) {
   const editorRef = useRef();
-  const { CKEditor,Editor } = editorRef.current || {};
+  const { CKEditor, Editor } = editorRef.current || {};
 
   useEffect(() => {
     editorRef.current = {
       CKEditor: require("@ckeditor/ckeditor5-react").CKEditor,
-      Editor: require('ckeditor5/build/ckeditor.js')
+      Editor: require("ckeditor5/build/ckeditor.js"),
     };
   }, []);
 
   return (
-    <div >
+    <div>
       {editorLoaded ? (
         <CKEditor
           type=""
