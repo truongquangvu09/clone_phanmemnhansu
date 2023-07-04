@@ -6,14 +6,15 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-} 
+}
 
 .modal_setting {
     display: block;
     padding-right: 2px;
     opacity: 1;
-    
+
 }
+
 .modal {
     position: fixed;
     top: 0;
@@ -21,48 +22,71 @@
     bottom: 0;
     left: 0;
     z-index: 9999;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
+
+.modal_dialog {
+    position: relative;
+    margin: 30px auto;
+}
+
 .contentquytrinh {
     width: 736px;
     height: auto;
     border-radius: 8px;
+    margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 30px;
-    margin-bottom: 30px;
 }
+
 .modal_content {
     position: relative;
     background-color: #fff;
+    -webkit-background-clip: padding-box;
     background-clip: padding-box;
+    border: 1px solid #999;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 6px;
     outline: 0;
-}
-.contentdel {
-    height: 280px
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+    height: auto;
 }
 
 .modal_header {
     border: none;
     padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
 }
+
 .headquytrinh {
     text-align: center;
     background: #4C5BD4;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    height: 28px;
 }
 
 .headquytrinh h5 {
     color: white;
-    Font-size: 14px;
+    font-size: 14px;
 }
 
 .modal_title {
-    font-weight: 600;
+    margin: 0;
     line-height: 28px;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.modal_form {
+    display: block;
+    margin-top: 0em;
+}
+
+.modal_body {
+    position: relative;
+    padding: 15px;
 }
 
 .bodyquytrinh {
@@ -71,85 +95,104 @@
     padding-top: 3%;
     padding-left: 7%;
     padding-right: 7%;
-    height: 118px;
-    width: 631px;
 }
 
-.modal_body {
-    position: relative;
-}
-
-.form_groups {
+.bodyquytrinh .form_groups {
     margin-top: 30px;
-    
 }
-.bodyquytrinh label {
+
+.form_groups label {
+    color: #333333;
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
     line-height: 23px;
     letter-spacing: 0em;
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
 }
+
 .bodyquytrinh span {
     font-size: 16px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: bold;
     line-height: 24px;
     letter-spacing: 0em;
 }
+
 .red {
     color: #EB5757;
 }
 
 .inputright {
+    width: 66%;
     float: right;
-    width: 70%;
-}
-.inputquytrinh {
-    background-color: white;
-    border: 1px solid rgba(71, 71, 71, 0.48);
-    width: 95%;
-    height: 28px;
-    border-radius: 8px;
-    line-height: 45px;
-    outline: none ;
-    font-weight: 600;
-}
-.inputquytrinh::placeholder {
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 24px;
 }
 
-.dangers {
-    position: relative;
-    right: 6%;
-    background-color: #4C5BD4;
-    width: 100px;
-    height: 100px;
-    vertical-align: middle;
-    display: inline;
+.input_full {
+    width: 100%;
 }
+
+.inputright input {
+    outline: none;
+    margin: 0;
+}
+
+.inputright picture {
+    margin-left: 3px;
+}
+
+.inputquytrinh {
+    line-height: 23px;
+    background-color: white;
+    border: 1px solid rgba(71, 71, 71, 0.48);
+    width: 94%;
+    height: 30px;
+    border-radius: 8px;
+}
+
+.inputright input::placeholder {
+    background-color: #FFFFFF;
+    color: #333333;
+    font-size: 14px;
+    font-weight: 600;
+    opacity: 0.7;
+}
+
+
+
 .errors {
     background: #FFFFFF;
     box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.12);
     border-radius: 8px;
     font-style: italic;
-    font-weight: normal;
+    font-weight: 600;
     font-size: 12px;
     line-height: 14px;
     color: #EB5757;
     position: absolute;
     padding: 5px;
     right: 15%;
-    /* display: none; */
 }
+
+.list_process {
+    width: 631.600px;
+    height: 641.600px;
+}
+
+.dom_gd {
+    height: auto;
+}
+
+
+
 .footerquytrinh {
     margin-top: 2%;
     padding-right: 13%;
     text-align: right;
 }
+
 .modal_footer {
     border: none;
     padding: 15px;
@@ -157,6 +200,7 @@
     justify-content: flex-end;
     padding-right: 95px;
 }
+
 .modal_footer button {
     font-size: 14px;
     font-style: normal;
@@ -167,26 +211,132 @@
     border: none;
     border-radius: 4px;
     margin-right: 16px;
+
 }
+
+.clearfix {
+    width: 631.6px;
+    height: 56px;
+}
+
+.pull_right {
+    margin: 0;
+    float: right !important;
+    position: relative;
+}
+
+.add_gd {
+    margin-top: 10px;
+    margin-bottom: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 16px;
+    align-items: center;
+    text-decoration-line: underline;
+    color: #4C5BD4;
+}
+
+.footerquytrinh+button {
+    color: #EB5757;
+}
+
 .btn_huy span {
     opacity: 0.8;
 }
+
 .btn_huy:active {
     background-image: none;
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
-.update {
+
+.success {
     color: #fff;
     background-color: #5cb85c;
+    border-color: #4cae4c;
 }
-.update:hover {
+
+.success:hover {
     color: #fff;
     background-color: #449d44;
 }
-.update:active {
+
+.success:active {
     color: #fff;
     background-color: #449d44;
     background-image: none;
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.3);
 }
 
+.ckeditor_label {
+    width: 100%;
+}
+
+.ckeditor {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    ;
+
+}
+
+.remove_div {
+    margin-top: -20px;
+    margin-bottom: -15px;
+}
+/* ipad */
+@media screen and (min-width: 480px) and (max-width: 1024px) {
+    .contentquytrinh {
+        width: 95%;
+    }
+}
+
+@media (min-width: 768px) {
+    .modal_content {
+        -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    }
+}
+@media only screen and (max-width: 1025px){
+.inputquytrinh,  .select2-container {
+    width: 93% !important;
+}}
+@media only screen and (max-width: 1025px){
+        .list_process {
+            width: auto;
+            height: auto;
+        }
+    }
+
+    @media only screen and (max-width: 1025px){
+        .clearfix {
+            width: auto;
+        }
+    }
+
+@media screen and (min-width: 480px) and (max-width: 1024px){
+.bodyquytrinh label {
+    font-size: 11px;
+}}
+
+/* ipse */
+
+@media screen and (max-width: 479px){
+.contentquytrinh {
+    width: 95%;
+}}
+
+@media only screen and (max-width: 480px){
+.inputright {
+    float: left;
+    width: 100% !important;
+    margin-top: 2%;
+    margin-bottom: 5%;
+}}
+
+@media only screen and (max-width: 480px){
+.footerquytrinh {
+    margin-top: 0;
+    padding-right: 46px;
+}}

@@ -1,13 +1,23 @@
 import React, { useState } from "react";
 import styles from "./recruitmentProcess.module.css";
 import AddRecruitmentProcess from "./addRecruitmentProcess/addRecruitmentProcess";
+import EditRecruitmentProcess from "./editRecruitmentProcess/EditRecruitmentProcess";
+import DeleteRecruitmentProcess from "./deleteRecruitmentProcess/DeleteRecruitmentProcess";
 import ListRecruitment from "./listRecruitmentProcess/listRecruitmentProcess";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 export interface RecruitmentProcess {}
 
 export default function RecruitmentProcess({ children }: any) {
   const [openModalAdd, setOpenModalAdd] = useState(false);
+  const [openModalEdit, setOpenModalEdit] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
 
+  const handleOpenModalEdit = () => {
+    setOpenModalEdit(true);
+  };
+  const handleOpenModalDelete = () => {
+    setOpenModalDelete(true);
+  };
   const handleOpenModalAdd = () => {
     setOpenModalAdd(true);
   };
@@ -72,7 +82,9 @@ export default function RecruitmentProcess({ children }: any) {
                 </div>
               </form>
             </div>
+            
           </div>
+         
         </div>
         <ListRecruitment></ListRecruitment>
         <BodyFrameFooter src="https://www.youtube.com/embed/J7JEoQkqarA"></BodyFrameFooter>
