@@ -39,10 +39,19 @@ interface ItemCardFourth {
     souvgt: number;
 }
 export default function RecruitmentReport() {
-    const [currentPage, setCurrentPage] = useState(1);
-    const handlePageChange = (page: any) => {
-        setCurrentPage(page);
-      };
+    const [currentPageBox2, setCurrentPageBox2] = useState(1);
+    const [currentPageBox3, setCurrentPageBox3] = useState(1);
+    const [currentPageBox4, setCurrentPageBox4] = useState(1);
+    const handlePageChangeBox2 = (page: any) => {
+      setCurrentPageBox2(page);
+    };
+    const handlePageChangeBox3 = (page: any) => {
+      setCurrentPageBox3(page);
+    };const handlePageChangeBox4 = (page: any) => {
+      setCurrentPageBox4(page);
+    };
+
+
 
   const data: ItemCard[] = [
     {
@@ -193,10 +202,10 @@ export default function RecruitmentReport() {
           </table>
           <div className={`${styles.pagination}`}>
             <MyPagination
-              current={currentPage}
+              current={currentPageBox2}
               total={50}
               pageSize={10}
-              onChange={handlePageChange}
+              onChange={handlePageChangeBox2}
             />
           </div>
         </div>
@@ -223,10 +232,10 @@ export default function RecruitmentReport() {
           </table>
           <div className={`${styles.pagination}`}>
             <MyPagination
-              current={currentPage}
+              current={currentPageBox3}
               total={50}
               pageSize={10}
-              onChange={handlePageChange}
+              onChange={handlePageChangeBox3}
             />
           </div>
         </div>
@@ -253,10 +262,10 @@ export default function RecruitmentReport() {
           </table>
           <div className={`${styles.pagination}`}>
             <MyPagination
-              current={currentPage}
+              current={currentPageBox4}
               total={50}
               pageSize={10}
-              onChange={handlePageChange}
+              onChange={handlePageChangeBox4}
             />
           </div>
         </div>

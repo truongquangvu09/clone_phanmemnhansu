@@ -1,23 +1,13 @@
 import React, { useState } from "react";
 import styles from "./recruitmentProcess.module.css";
 import AddRecruitmentProcess from "./addRecruitmentProcess/addRecruitmentProcess";
-import EditRecruitmentProcess from "./editRecruitmentProcess/EditRecruitmentProcess";
-import DeleteRecruitmentProcess from "./deleteRecruitmentProcess/DeleteRecruitmentProcess";
 import ListRecruitment from "./listRecruitmentProcess/listRecruitmentProcess";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 export interface RecruitmentProcess {}
 
 export default function RecruitmentProcess({ children }: any) {
   const [openModalAdd, setOpenModalAdd] = useState(false);
-  const [openModalEdit, setOpenModalEdit] = useState(false);
-  const [openModalDelete, setOpenModalDelete] = useState(false);
 
-  const handleOpenModalEdit = () => {
-    setOpenModalEdit(true);
-  };
-  const handleOpenModalDelete = () => {
-    setOpenModalDelete(true);
-  };
   const handleOpenModalAdd = () => {
     setOpenModalAdd(true);
   };
@@ -30,14 +20,9 @@ export default function RecruitmentProcess({ children }: any) {
   };
   return (
     <>
-      <div
-        className={`${styles.l_body} ${
-          openModalAdd ? styles.scrollableModal  : ""
-        }`}
-      >
-        <div className={`${styles.l_body}`}>
+      <div className={`${styles.l_body} ${openModalAdd ? styles.scrollableModal  : ""}`}>
           <div className={`${styles.add_quytrinh}`}>
-            <div className={`${styles.add_quytrinh1}`}>
+              <div className={`${styles.add_quytrinh1}`}>
               <button
                 type="submit"
                 className="adds"
@@ -57,9 +42,9 @@ export default function RecruitmentProcess({ children }: any) {
                   </p>
                 </picture>
               </button>
-            </div>
-            {openModalAdd && <AddRecruitmentProcess handleCloseModalAdd = {handleCloseModalAdd}></AddRecruitmentProcess>}
-            <div className={`${styles.search_quytrinh}`}>
+              </div>
+                {openModalAdd && <AddRecruitmentProcess handleCloseModalAdd = {handleCloseModalAdd}></AddRecruitmentProcess>}
+              <div className={`${styles.search_quytrinh}`}>
               <form className={`${styles.t_form_search}`}>
                 <div className={`${styles.t_div_search}`}>
                   <input
@@ -81,14 +66,13 @@ export default function RecruitmentProcess({ children }: any) {
                   </button>
                 </div>
               </form>
-            </div>
-            
+              </div>
           </div>
-         
-        </div>
+
         <ListRecruitment></ListRecruitment>
         <BodyFrameFooter src="https://www.youtube.com/embed/J7JEoQkqarA"></BodyFrameFooter>
-      </div>
+        </div>
+        
     </>
   );
 }
