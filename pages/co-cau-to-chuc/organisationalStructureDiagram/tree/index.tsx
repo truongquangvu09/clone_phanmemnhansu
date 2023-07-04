@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import styles from './tree.module.css'
 import EditRoomModal from './room/editRoomModal';
 import DetailsRoomModal from './room/detailRoomModal/detailRoomModal';
+
+
 const StyledNode = styled.div`
 `;
 const MemberViewBoxRoom = ({
@@ -160,272 +162,274 @@ const StyledTreeExample = () => {
 
     return (
         <>
+            {typeof document !== 'undefined' && (
+                <Tree
+                    lineWidth={'2px'}
+                    lineColor={'#cccccc'}
+                    lineBorderRadius={'10px'}
+                    label={<StyledNode><div className={`${styles.member_view_box} ${styles.member_view_box_top}`}>
+                        <div className={`${styles.member_detail}`}>
+                            <p className={`${styles.text_center}`}>Công ty Cổ phần Thanh toán Hưng Hà 2</p>
+                            <p>Giám đốc: Chưa cập nhật</p>
+                            <p>Phó giám đốc: Vũ Diệu Linh</p>
+                            <a href="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html" target="_blank" className={`${styles.link_a}`}>Tổng nhân viên: 32</a>
+                            <a href="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html" target="_blank" className={`${styles.link_a}`}>Tổng nhân viên đã điểm danh: 0</a>
+                            <a href="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html" target="_blank" className={`${styles.link_a}`}>Tổng nhân viên chưa điểm danh: 32</a>
+                        </div>
+                    </div></StyledNode>}
+                >
+                    <TreeNode label={<StyledNode><MemberViewBoxRoom
+                        text_part='KỸ THUẬT'
+                        title="kỹ thuật"
+                        manager="Uy Phùng Hiểu (Ken)"
+                        deputy="Chưa cập nhật"
+                        employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                        checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                        absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                        employeeNumber='10'
+                        registered='15'
+                        noAttendance='12'
+                        setOpenModalEdit={() => setOpenModalEdit(true)}
+                    /></StyledNode>}>
+                        <TreeNode label={<StyledNode><MemberViewBoxNest text_part='Tổ anh Hiệp'
+                            title="kỹ thuật"
+                            leader="Uy Phùng Hiểu (Ken)"
+                            deputy_leader="Chưa cập nhật"
+                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                            employeeNumber='10'
+                            registered='15'
+                            noAttendance='12'
+                            setOpenModalEdit={() => setOpenModalEdit(true)} /></StyledNode>} />
+                        <TreeNode label={<StyledNode><MemberViewBoxNest text_part='Tổ 1'
+                            title="chưa cập nhật"
+                            leader="Uy Phùng Hiểu (Ken)"
+                            deputy_leader="Chưa cập nhật"
+                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                            employeeNumber='10'
+                            registered='15'
+                            noAttendance='12' setOpenModalEdit={() => setOpenModalEdit(true)} />
+                        </StyledNode>}>
+                            <TreeNode label={<StyledNode><MemberViewBoxGroup text_part='Nhóm A'
+                                title="chưa cập nhật"
+                                group_captain="Uy Phùng Hiểu (Ken)"
+                                deputy_group_captain="Chưa cập nhật"
+                                employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                                checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                                absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                                employeeNumber='10'
+                                registered='15'
+                                noAttendance='12' setOpenModalEdit={() => setOpenModalEdit(true)} /></StyledNode>} />
+                            <TreeNode label={<StyledNode><MemberViewBoxGroup text_part='Nhóm 13'
+                                title="chưa cập nhật "
+                                group_captain="Uy Phùng Hiểu (Ken)"
+                                deputy_group_captain="Chưa cập nhật"
+                                employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                                checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                                absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                                employeeNumber='10'
+                                registered='15'
+                                noAttendance='12' setOpenModalEdit={() => setOpenModalEdit(true)} /></StyledNode>} />
+                            <TreeNode label={<StyledNode><MemberViewBoxGroup text_part='Nhóm 13'
+                                title="chưa cập nhật"
+                                group_captain="Uy Phùng Hiểu (Ken)"
+                                deputy_group_captain="Chưa cập nhật"
+                                employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                                checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                                absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                                employeeNumber='10'
+                                registered='15'
+                                noAttendance='12' setOpenModalEdit={() => setOpenModalEdit(true)} /></StyledNode>} />
+                        </TreeNode>
+                    </TreeNode>
+                    <TreeNode label={<StyledNode><MemberViewBoxRoom
+                        text_part='PHÒNG NHÂN SỰ'
+                        title="kỹ thuật"
+                        manager="Uy Phùng Hiểu (Ken)"
+                        deputy="Chưa cập nhật"
+                        employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                        checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                        absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                        employeeNumber='10'
+                        registered='15'
+                        noAttendance='12'
+                        setOpenModalEdit={() => setOpenModalEdit(true)}
+                    /></StyledNode>}>
+                    </TreeNode>
+                    <TreeNode label={<StyledNode><MemberViewBoxRoom
+                        text_part='PHÒNG TÀI VỤ'
+                        title="kỹ thuật"
+                        manager="Uy Phùng Hiểu (Ken)"
+                        deputy="Chưa cập nhật"
+                        employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                        checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                        absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                        employeeNumber='10'
+                        registered='15'
+                        noAttendance='12'
+                        setOpenModalEdit={() => setOpenModalEdit(true)}
+                    /></StyledNode>}>
+                    </TreeNode>
+                    <TreeNode label={<StyledNode><MemberViewBoxRoom
+                        text_part='ĐỀ ÁN'
+                        title="kỹ thuật"
+                        manager="Uy Phùng Hiểu (Ken)"
+                        deputy="Chưa cập nhật"
+                        employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                        checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                        absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                        employeeNumber='10'
+                        registered='15'
+                        noAttendance='12'
+                        setOpenModalEdit={() => setOpenModalEdit(true)}
+                    /></StyledNode>}>
+                    </TreeNode>
+                    <TreeNode label={<StyledNode><MemberViewBoxRoom
+                        text_part='PHÒNG SEO'
+                        title="kỹ thuật"
+                        manager="Uy Phùng Hiểu (Ken)"
+                        deputy="Chưa cập nhật"
+                        employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                        checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                        absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                        employeeNumber='10'
+                        registered='15'
+                        noAttendance='12'
+                        setOpenModalEdit={() => setOpenModalEdit(true)}
+                    /></StyledNode>}>
+                    </TreeNode>
+                    <TreeNode label={<StyledNode><MemberViewBoxRoom
+                        text_part='PHÒNG ĐÀO TẠO'
+                        title="kỹ thuật"
+                        manager="Uy Phùng Hiểu (Ken)"
+                        deputy="Chưa cập nhật"
+                        employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                        checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                        absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                        employeeNumber='10'
+                        registered='15'
+                        noAttendance='12'
+                        setOpenModalEdit={() => setOpenModalEdit(true)}
+                    /></StyledNode>}>
+                    </TreeNode>
+                    <TreeNode label={<StyledNode><MemberViewBoxRoom
+                        text_part='PHÒNG SÁNG TẠO'
+                        title="kỹ thuật"
+                        manager="Uy Phùng Hiểu (Ken)"
+                        deputy="Chưa cập nhật"
+                        employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                        checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                        absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                        employeeNumber='10'
+                        registered='15'
+                        noAttendance='12'
+                        setOpenModalEdit={() => setOpenModalEdit(true)}
+                    /></StyledNode>}>
+                    </TreeNode>
+                    <TreeNode label={<StyledNode><MemberViewBoxRoom
+                        text_part='BIÊN TẬP'
+                        title="kỹ thuật"
+                        manager="Uy Phùng Hiểu (Ken)"
+                        deputy="Chưa cập nhật"
+                        employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                        checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                        absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                        employeeNumber='10'
+                        registered='15'
+                        noAttendance='12'
+                        setOpenModalEdit={() => setOpenModalEdit(true)}
+                    /></StyledNode>}>
+                    </TreeNode>
+                    <TreeNode label={<StyledNode><MemberViewBoxRoom
+                        text_part='KINH DOANH'
+                        title="kỹ thuật"
+                        manager="Uy Phùng Hiểu (Ken)"
+                        deputy="Chưa cập nhật"
+                        employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                        checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                        absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                        employeeNumber='10'
+                        registered='15'
+                        noAttendance='12'
+                        setOpenModalEdit={() => setOpenModalEdit(true)}
+                    /></StyledNode>}>
+                    </TreeNode>
+                    <TreeNode label={<StyledNode><MemberViewBoxCompany
+                        text_part='PT shop'
+                        describe="Công ty con"
+                        CEO="Uy Phùng Hiểu (Ken)"
+                        deputy_CEO="Chưa cập nhật"
+                        employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                        checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                        absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                        employeeNumber='10'
+                        registered='15'
+                        noAttendance='12'
+                        setOpenModalEdit={() => setOpenModalEdit(true)}
+                    /></StyledNode>}>
+                        <TreeNode label={<StyledNode><MemberViewBoxRoom
+                            text_part='KỸ THUẬT 2'
+                            title="kỹ thuật"
+                            manager="Uy Phùng Hiểu (Ken)"
+                            deputy="Chưa cập nhật"
+                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                            employeeNumber='10'
+                            registered='15'
+                            noAttendance='12'
+                            setOpenModalEdit={() => setOpenModalEdit(true)}
+                        /></StyledNode>}>
+                        </TreeNode>
+                        <TreeNode label={<StyledNode><MemberViewBoxRoom
+                            text_part='KỸ THUẬT 2'
+                            title="kỹ thuật"
+                            manager="Uy Phùng Hiểu (Ken)"
+                            deputy="Chưa cập nhật"
+                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                            employeeNumber='10'
+                            registered='15'
+                            noAttendance='12'
+                            setOpenModalEdit={() => setOpenModalEdit(true)}
+                        /></StyledNode>}>
+                        </TreeNode>
+                    </TreeNode>
+                    <TreeNode label={<StyledNode><MemberViewBoxCompany
+                        text_part='PT shop'
+                        describe="Công ty con"
+                        CEO="Uy Phùng Hiểu (Ken)"
+                        deputy_CEO="Chưa cập nhật"
+                        employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                        checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                        absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                        employeeNumber='10'
+                        registered='15'
+                        noAttendance='12'
+                        setOpenModalEdit={() => setOpenModalEdit(true)}
+                    /></StyledNode>}>
+                    </TreeNode>
+                    <TreeNode label={<StyledNode><MemberViewBoxCompany
+                        text_part='PT shop'
+                        describe="Công ty con"
+                        CEO="Uy Phùng Hiểu (Ken)"
+                        deputy_CEO="Chưa cập nhật"
+                        employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                        checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                        absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                        employeeNumber='10'
+                        registered='15'
+                        noAttendance='12'
+                        setOpenModalEdit={() => setOpenModalEdit(true)}
+                    /></StyledNode>}>
+                    </TreeNode>
+                </Tree>
+            )}
 
-            <Tree
-                lineWidth={'2px'}
-                lineColor={'#cccccc'}
-                lineBorderRadius={'10px'}
-                label={<StyledNode><div className={`${styles.member_view_box} ${styles.member_view_box_top}`}>
-                    <div className={`${styles.member_detail}`}>
-                        <p className={`${styles.text_center}`}>Công ty Cổ phần Thanh toán Hưng Hà 2</p>
-                        <p>Giám đốc: Chưa cập nhật</p>
-                        <p>Phó giám đốc: Vũ Diệu Linh</p>
-                        <a href="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html" target="_blank" className={`${styles.link_a}`}>Tổng nhân viên: 32</a>
-                        <a href="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html" target="_blank" className={`${styles.link_a}`}>Tổng nhân viên đã điểm danh: 0</a>
-                        <a href="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html" target="_blank" className={`${styles.link_a}`}>Tổng nhân viên chưa điểm danh: 32</a>
-                    </div>
-                </div></StyledNode>}
-            >
-                <TreeNode label={<StyledNode><MemberViewBoxRoom
-                    text_part='KỸ THUẬT'
-                    title="kỹ thuật"
-                    manager="Uy Phùng Hiểu (Ken)"
-                    deputy="Chưa cập nhật"
-                    employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                    checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                    absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                    employeeNumber='10'
-                    registered='15'
-                    noAttendance='12'
-                    setOpenModalEdit={() => setOpenModalEdit(true)}
-                /></StyledNode>}>
-                    <TreeNode label={<StyledNode><MemberViewBoxNest text_part='Tổ anh Hiệp'
-                        title="kỹ thuật"
-                        leader="Uy Phùng Hiểu (Ken)"
-                        deputy_leader="Chưa cập nhật"
-                        employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                        checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                        absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                        employeeNumber='10'
-                        registered='15'
-                        noAttendance='12'
-                        setOpenModalEdit={() => setOpenModalEdit(true)} /></StyledNode>} />
-                    <TreeNode label={<StyledNode><MemberViewBoxNest text_part='Tổ 1'
-                        title="chưa cập nhật"
-                        leader="Uy Phùng Hiểu (Ken)"
-                        deputy_leader="Chưa cập nhật"
-                        employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                        checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                        absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                        employeeNumber='10'
-                        registered='15'
-                        noAttendance='12' setOpenModalEdit={() => setOpenModalEdit(true)} />
-                    </StyledNode>}>
-                        <TreeNode label={<StyledNode><MemberViewBoxGroup text_part='Nhóm A'
-                            title="chưa cập nhật"
-                            group_captain="Uy Phùng Hiểu (Ken)"
-                            deputy_group_captain="Chưa cập nhật"
-                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                            employeeNumber='10'
-                            registered='15'
-                            noAttendance='12' setOpenModalEdit={() => setOpenModalEdit(true)} /></StyledNode>} />
-                        <TreeNode label={<StyledNode><MemberViewBoxGroup text_part='Nhóm 13'
-                            title="chưa cập nhật "
-                            group_captain="Uy Phùng Hiểu (Ken)"
-                            deputy_group_captain="Chưa cập nhật"
-                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                            employeeNumber='10'
-                            registered='15'
-                            noAttendance='12' setOpenModalEdit={() => setOpenModalEdit(true)} /></StyledNode>} />
-                        <TreeNode label={<StyledNode><MemberViewBoxGroup text_part='Nhóm 13'
-                            title="chưa cập nhật"
-                            group_captain="Uy Phùng Hiểu (Ken)"
-                            deputy_group_captain="Chưa cập nhật"
-                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                            employeeNumber='10'
-                            registered='15'
-                            noAttendance='12' setOpenModalEdit={() => setOpenModalEdit(true)} /></StyledNode>} />
-                    </TreeNode>
-                </TreeNode>
-                <TreeNode label={<StyledNode><MemberViewBoxRoom
-                    text_part='PHÒNG NHÂN SỰ'
-                    title="kỹ thuật"
-                    manager="Uy Phùng Hiểu (Ken)"
-                    deputy="Chưa cập nhật"
-                    employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                    checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                    absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                    employeeNumber='10'
-                    registered='15'
-                    noAttendance='12'
-                    setOpenModalEdit={() => setOpenModalEdit(true)}
-                /></StyledNode>}>
-                </TreeNode>
-                <TreeNode label={<StyledNode><MemberViewBoxRoom
-                    text_part='PHÒNG TÀI VỤ'
-                    title="kỹ thuật"
-                    manager="Uy Phùng Hiểu (Ken)"
-                    deputy="Chưa cập nhật"
-                    employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                    checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                    absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                    employeeNumber='10'
-                    registered='15'
-                    noAttendance='12'
-                    setOpenModalEdit={() => setOpenModalEdit(true)}
-                /></StyledNode>}>
-                </TreeNode>
-                <TreeNode label={<StyledNode><MemberViewBoxRoom
-                    text_part='ĐỀ ÁN'
-                    title="kỹ thuật"
-                    manager="Uy Phùng Hiểu (Ken)"
-                    deputy="Chưa cập nhật"
-                    employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                    checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                    absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                    employeeNumber='10'
-                    registered='15'
-                    noAttendance='12'
-                    setOpenModalEdit={() => setOpenModalEdit(true)}
-                /></StyledNode>}>
-                </TreeNode>
-                <TreeNode label={<StyledNode><MemberViewBoxRoom
-                    text_part='PHÒNG SEO'
-                    title="kỹ thuật"
-                    manager="Uy Phùng Hiểu (Ken)"
-                    deputy="Chưa cập nhật"
-                    employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                    checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                    absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                    employeeNumber='10'
-                    registered='15'
-                    noAttendance='12'
-                    setOpenModalEdit={() => setOpenModalEdit(true)}
-                /></StyledNode>}>
-                </TreeNode>
-                <TreeNode label={<StyledNode><MemberViewBoxRoom
-                    text_part='PHÒNG ĐÀO TẠO'
-                    title="kỹ thuật"
-                    manager="Uy Phùng Hiểu (Ken)"
-                    deputy="Chưa cập nhật"
-                    employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                    checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                    absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                    employeeNumber='10'
-                    registered='15'
-                    noAttendance='12'
-                    setOpenModalEdit={() => setOpenModalEdit(true)}
-                /></StyledNode>}>
-                </TreeNode>
-                <TreeNode label={<StyledNode><MemberViewBoxRoom
-                    text_part='PHÒNG SÁNG TẠO'
-                    title="kỹ thuật"
-                    manager="Uy Phùng Hiểu (Ken)"
-                    deputy="Chưa cập nhật"
-                    employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                    checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                    absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                    employeeNumber='10'
-                    registered='15'
-                    noAttendance='12'
-                    setOpenModalEdit={() => setOpenModalEdit(true)}
-                /></StyledNode>}>
-                </TreeNode>
-                <TreeNode label={<StyledNode><MemberViewBoxRoom
-                    text_part='BIÊN TẬP'
-                    title="kỹ thuật"
-                    manager="Uy Phùng Hiểu (Ken)"
-                    deputy="Chưa cập nhật"
-                    employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                    checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                    absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                    employeeNumber='10'
-                    registered='15'
-                    noAttendance='12'
-                    setOpenModalEdit={() => setOpenModalEdit(true)}
-                /></StyledNode>}>
-                </TreeNode>
-                <TreeNode label={<StyledNode><MemberViewBoxRoom
-                    text_part='KINH DOANH'
-                    title="kỹ thuật"
-                    manager="Uy Phùng Hiểu (Ken)"
-                    deputy="Chưa cập nhật"
-                    employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                    checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                    absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                    employeeNumber='10'
-                    registered='15'
-                    noAttendance='12'
-                    setOpenModalEdit={() => setOpenModalEdit(true)}
-                /></StyledNode>}>
-                </TreeNode>
-                <TreeNode label={<StyledNode><MemberViewBoxCompany
-                    text_part='PT shop'
-                    describe="Công ty con"
-                    CEO="Uy Phùng Hiểu (Ken)"
-                    deputy_CEO="Chưa cập nhật"
-                    employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                    checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                    absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                    employeeNumber='10'
-                    registered='15'
-                    noAttendance='12'
-                    setOpenModalEdit={() => setOpenModalEdit(true)}
-                /></StyledNode>}>
-                    <TreeNode label={<StyledNode><MemberViewBoxRoom
-                        text_part='KỸ THUẬT 2'
-                        title="kỹ thuật"
-                        manager="Uy Phùng Hiểu (Ken)"
-                        deputy="Chưa cập nhật"
-                        employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                        checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                        absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                        employeeNumber='10'
-                        registered='15'
-                        noAttendance='12'
-                        setOpenModalEdit={() => setOpenModalEdit(true)}
-                    /></StyledNode>}>
-                    </TreeNode>
-                    <TreeNode label={<StyledNode><MemberViewBoxRoom
-                        text_part='KỸ THUẬT 2'
-                        title="kỹ thuật"
-                        manager="Uy Phùng Hiểu (Ken)"
-                        deputy="Chưa cập nhật"
-                        employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                        checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                        absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                        employeeNumber='10'
-                        registered='15'
-                        noAttendance='12'
-                        setOpenModalEdit={() => setOpenModalEdit(true)}
-                    /></StyledNode>}>
-                    </TreeNode>
-                </TreeNode>
-                <TreeNode label={<StyledNode><MemberViewBoxCompany
-                    text_part='PT shop'
-                    describe="Công ty con"
-                    CEO="Uy Phùng Hiểu (Ken)"
-                    deputy_CEO="Chưa cập nhật"
-                    employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                    checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                    absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                    employeeNumber='10'
-                    registered='15'
-                    noAttendance='12'
-                    setOpenModalEdit={() => setOpenModalEdit(true)}
-                /></StyledNode>}>
-                </TreeNode>
-                <TreeNode label={<StyledNode><MemberViewBoxCompany
-                    text_part='PT shop'
-                    describe="Công ty con"
-                    CEO="Uy Phùng Hiểu (Ken)"
-                    deputy_CEO="Chưa cập nhật"
-                    employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                    checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                    absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                    employeeNumber='10'
-                    registered='15'
-                    noAttendance='12'
-                    setOpenModalEdit={() => setOpenModalEdit(true)}
-                /></StyledNode>}>
-                </TreeNode>
-            </Tree>
             {openModalEdit && <EditRoomModal defaultValue={defaultValue}
                 options={options}
                 soluongnhanvien={soluongnhanvien}
