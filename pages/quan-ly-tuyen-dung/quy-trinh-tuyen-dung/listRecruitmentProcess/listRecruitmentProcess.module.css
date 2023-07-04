@@ -66,10 +66,11 @@
   margin-top: 10px;
 }
 .quytrinh_item {
-  width: 1088.6px;
   height: 57.8px;
   padding: 13px;
   border-left: 4px solid #4c5bd4;
+  display: flex;
+ 
 }
 
 .quytrinh_item1 {

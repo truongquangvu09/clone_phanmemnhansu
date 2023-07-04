@@ -57,10 +57,10 @@ export default function listRecruitmentProcess({ children }: any) {
   ];
   return (
     <>
-      <div className={`${styles.all_quytrinh}`} id="filter">
+      <div className={`${styles.all_quytrinh}`} style={{marginTop:'20px'}}>
         {listRecruitment.map((item) => {
           return (
-            <div key={item._id}>
+            <div key={item._id} style={{width:'100%'}}>
               <div className={`${styles.quytrinh_item}`}>
                 <div className={`${styles.quytrinh_item1}`}>
                   <div className={`${styles.quytrinh_item11}`}>
@@ -121,9 +121,10 @@ export default function listRecruitmentProcess({ children }: any) {
             </div>
           );
         })}
-      </div>
-      {active === 2 && <EditRecruitmentProcess onClose={closeModal}/>}
+
+{active === 2 && <EditRecruitmentProcess onClose={closeModal}/>}
       {active === 3 && <DeleteRecruitmentProcess onClose={closeModal}/>}
+      </div> 
     </>
   );
 }
