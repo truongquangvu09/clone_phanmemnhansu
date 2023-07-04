@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import styles from '../quan-ly-hanh-chinh/thong-tin-nhan-su/administration.module.css'
 import Link from 'next/link';
 import SecurityInfomation from '@/components/cai-dat-chung/securityInformation';
+import GeneralSettings from '@/components/cai-dat-chung/generalSettings';
+
 
 export default function GeneralSetting({ children }: any) {
     const [active, setActive] = useState(1)
@@ -20,7 +22,9 @@ export default function GeneralSetting({ children }: any) {
                         <Link href=''>NHẬT KÍ HOẠT ĐỘNG</Link>
                     </li>
                 </ul>
+                {/* {active === 1 && <GeneralSetting></GeneralSetting>} */}
                 {active === 2 && <SecurityInfomation></SecurityInfomation>}
+
             </div>
         </>
     )
