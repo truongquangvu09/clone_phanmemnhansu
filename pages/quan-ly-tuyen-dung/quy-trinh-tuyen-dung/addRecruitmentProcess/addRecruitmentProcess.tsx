@@ -39,7 +39,7 @@ export default function AddRecruitmentProcess({ handleCloseModalAdd }: any) {
             {/* header */}
             <div className={`${styles.modal_header} ${styles.headquytrinh}`}>
               <h5 className={`${styles.modal_title}`}>
-                THÊM QUY TRÌNH TUYỂN DỤNG
+                THÊM QUY TRÌNH TUYỂN DỤNG 
               </h5>
             </div>
 
@@ -134,7 +134,7 @@ export default function AddRecruitmentProcess({ handleCloseModalAdd }: any) {
                   <span>Hủy</span>
                 </button>
                 <button type="button" className={`${styles.success}`}>
-                  Lưu
+                  Thêm
                 </button>
               </div>
             </form>
