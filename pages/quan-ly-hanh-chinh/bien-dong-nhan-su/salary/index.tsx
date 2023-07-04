@@ -119,15 +119,21 @@ export default function TabSalary({ children }: any) {
                                                 fontSize: state.isFocused ? 14 : 14,
                                                 width: state.isFocused ? 250 : 250,
                                                 fontWeight: state.isFocused ? 600 : 600,
-                                                minHeight: 20
+                                                minHeight: 20,
+                                                color: 'black'
                                             }),
                                             valueContainer: (baseStyles) => ({
                                                 ...baseStyles,
                                                 height: 33.6,
+
                                             }),
                                             indicatorsContainer: (baseStyles) => ({
                                                 ...baseStyles,
                                                 height: 33.6,
+                                            }),
+                                            placeholder: (baseStyles) => ({
+                                                ...baseStyles,
+                                                color: "#444444",
                                             }),
                                         }}
                                     />

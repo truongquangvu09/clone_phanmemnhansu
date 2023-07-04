@@ -19,7 +19,7 @@
   font-style: normal;
   padding: 20px 0 20px 20px;
   border-right: 2px solid #474747;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14px;
   color: #4c5bd4;
   width: 25%;
@@ -27,7 +27,7 @@
 .header_left_item2 {
   padding: 20px 0 20px 20px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14px;
   color: #474747;
   display: -webkit-box;
@@ -70,7 +70,9 @@
 }
 .name {
   padding-top: 5px;
+  font-style: normal;
   padding-right: 40px;
+  font-weight: 500;
   font-size: 14px;
   color: #666666;
   max-width: 120px;

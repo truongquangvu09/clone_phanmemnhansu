@@ -120,6 +120,10 @@ export default function TabHRReport() {
                                                 width: state.isFocused ? 170 : 170,
                                                 fontWeight: state.isFocused ? 600 : 600
                                             }),
+                                            placeholder: (baseStyles) => ({
+                                                ...baseStyles,
+                                                color: "#444444",
+                                            }),
                                         }}
                                     />
                                 </div>

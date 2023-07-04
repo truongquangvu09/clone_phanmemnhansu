@@ -22,9 +22,9 @@
   padding: 7px 18px;
 }
 .t_exp_header p {
-  font-family: Roboto;
-  font-weight: bold;
-  font-size: 17px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
   line-height: 19px;
   color: #666666;
 }
@@ -54,11 +54,15 @@
   color: #337ab7;
   background-color: transparent;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 14px;
 }
 .body_row_title2 a {
   color: #337ab7;
   background-color: transparent;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 14px;
+}
+.total_ep {
+  font-size: 14px;
+  font-weight: 600;
 }

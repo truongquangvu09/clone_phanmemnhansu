@@ -14,8 +14,8 @@ export default function PersonnalChange({ children }: any) {
 
     return (
         <>
-            <div className={`${styles.wrapper}`}>
-                <ul className={`${styles.nav_tab} ${styles.nav}`}>
+            <div className={`${styles.wrapper} ${styles.wrapper_personnal_change} `}>
+                <ul style={{ marginTop: 0 }} className={`${styles.nav_tab} ${styles.nav} ${styles.nav_tab_personnal_change} `}>
                     <li className={`${active === 1 ? styles.active : ""}`} onClick={() => setActive(1)}>
                         <Link href=''>Tăng/giảm lương</Link>
                     </li>

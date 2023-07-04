@@ -68,6 +68,10 @@ export default function AddSealModal({ onCancel }: any) {
                                                             width: state.isFocused ? 413.38 : 413.38,
                                                             fontWeight: state.isFocused ? 600 : 600
                                                         }),
+                                                        placeholder: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            color: "#444444",
+                                                        }),
                                                     }}
                                                 />
                                             </div>
@@ -91,6 +95,10 @@ export default function AddSealModal({ onCancel }: any) {
                                                             width: state.isFocused ? 413.38 : 413.38,
                                                             fontWeight: state.isFocused ? 600 : 600
                                                         }),
+                                                        placeholder: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            color: "#444444",
+                                                        }),
                                                     }}
                                                 />
                                             </div>
@@ -113,6 +121,10 @@ export default function AddSealModal({ onCancel }: any) {
                                                             minHeight: state.isFocused ? 20 : 20,
                                                             width: state.isFocused ? 413.38 : 413.38,
                                                             fontWeight: state.isFocused ? 600 : 600
+                                                        }),
+                                                        placeholder: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            color: "#444444",
                                                         }),
                                                     }}
                                                 />

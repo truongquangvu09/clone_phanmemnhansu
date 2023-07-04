@@ -89,6 +89,10 @@ export default function CandidateListDetail() {
                                                 ...baseStyles,
                                                 height: 33,
                                             }),
+                                            placeholder: (baseStyles) => ({
+                                                ...baseStyles,
+                                                color: "#444444",
+                                            }),
                                         }}
                                     />
                                 </div>
@@ -115,6 +119,10 @@ export default function CandidateListDetail() {
                                                 ...baseStyles,
                                                 height: 33,
                                             }),
+                                            placeholder: (baseStyles) => ({
+                                                ...baseStyles,
+                                                color: "#444444",
+                                            }),
                                         }}
                                     />
                                 </div>
@@ -139,6 +147,10 @@ export default function CandidateListDetail() {
                                                 ...baseStyles,
                                                 height: 33,
                                             }),
+                                            placeholder: (baseStyles) => ({
+                                                ...baseStyles,
+                                                color: "#444444",
+                                            }),
                                         }}
                                     />
                                 </div>
@@ -162,6 +174,10 @@ export default function CandidateListDetail() {
                                             indicatorsContainer: (baseStyles) => ({
                                                 ...baseStyles,
                                                 height: 33,
+                                            }),
+                                            placeholder: (baseStyles) => ({
+                                                ...baseStyles,
+                                                color: "#444444",
                                             }),
                                         }}
                                     />

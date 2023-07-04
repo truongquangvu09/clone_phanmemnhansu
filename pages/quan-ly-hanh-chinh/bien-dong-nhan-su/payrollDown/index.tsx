@@ -156,6 +156,10 @@ export default function TabPayrollDown({ children }: any) {
                                                 ...baseStyles,
                                                 height: 33.6,
                                             }),
+                                            placeholder: (baseStyles) => ({
+                                                ...baseStyles,
+                                                color: "#444444",
+                                            }),
                                         }}
                                     />
                                 </div>
@@ -183,6 +187,10 @@ export default function TabPayrollDown({ children }: any) {
                                             indicatorsContainer: (baseStyles) => ({
                                                 ...baseStyles,
                                                 height: 33.6,
+                                            }),
+                                            placeholder: (baseStyles) => ({
+                                                ...baseStyles,
+                                                color: "#444444",
                                             }),
                                         }}
                                     />

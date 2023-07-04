@@ -4,6 +4,9 @@
   margin-top: 50px;
   margin-bottom: 50px;
 }
+.wrapper_personnal_change {
+  margin-top: 30px !important;
+}
 .nav {
   padding-left: 0;
   margin-bottom: 0;
@@ -13,6 +16,9 @@
   border-bottom: 1px solid #ddd;
   overflow-y: hidden;
   display: flex;
+}
+.nav_tab_personnal_change li {
+  width: 17%;
 }
 .active a {
   cursor: default;

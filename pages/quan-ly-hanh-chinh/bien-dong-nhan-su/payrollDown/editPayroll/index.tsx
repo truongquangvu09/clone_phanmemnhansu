@@ -118,6 +118,10 @@ export default function EditPayroll({ onCancel }: any) {
                                                         width: state.isFocused ? 675 : 675,
                                                         fontWeight: state.isFocused ? 600 : 600
                                                     }),
+                                                    placeholder: (baseStyles) => ({
+                                                        ...baseStyles,
+                                                        color: "#444444",
+                                                    }),
                                                 }}
                                             />
                                         </div>
@@ -138,6 +142,10 @@ export default function EditPayroll({ onCancel }: any) {
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: state.isFocused ? 675 : 675,
                                                         fontWeight: state.isFocused ? 600 : 600
+                                                    }),
+                                                    placeholder: (baseStyles) => ({
+                                                        ...baseStyles,
+                                                        color: "#444444",
                                                     }),
                                                 }}
                                             />
@@ -160,6 +168,10 @@ export default function EditPayroll({ onCancel }: any) {
                                                         width: state.isFocused ? 675 : 675,
                                                         fontWeight: state.isFocused ? 600 : 600
                                                     }),
+                                                    placeholder: (baseStyles) => ({
+                                                        ...baseStyles,
+                                                        color: "#444444",
+                                                    }),
                                                 }}
                                             />
                                         </div>
@@ -181,6 +193,10 @@ export default function EditPayroll({ onCancel }: any) {
                                                         width: state.isFocused ? 675 : 675,
                                                         color: state.isFocused ? '#444444' : '#444444',
                                                         fontWeight: state.isFocused ? 600 : 600
+                                                    }),
+                                                    placeholder: (baseStyles) => ({
+                                                        ...baseStyles,
+                                                        color: "#444444",
                                                     }),
                                                 }}
                                             />
@@ -209,6 +225,10 @@ export default function EditPayroll({ onCancel }: any) {
                                                         width: state.isFocused ? 675 : 675,
                                                         fontWeight: state.isFocused ? 600 : 600
                                                     }),
+                                                    placeholder: (baseStyles) => ({
+                                                        ...baseStyles,
+                                                        color: "#444444",
+                                                    }),
                                                 }}
                                             />
                                         </div>
@@ -229,6 +249,10 @@ export default function EditPayroll({ onCancel }: any) {
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: state.isFocused ? 675 : 675,
                                                         fontWeight: state.isFocused ? 600 : 600
+                                                    }),
+                                                    placeholder: (baseStyles) => ({
+                                                        ...baseStyles,
+                                                        color: "#444444",
                                                     }),
                                                 }}
                                             />

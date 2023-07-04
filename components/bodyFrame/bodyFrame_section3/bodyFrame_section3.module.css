@@ -53,6 +53,7 @@
   color: #337ab7;
   text-decoration: none !important;
   text-align: center;
+  font-weight: 500;
 }
 
 @media only screen and (min-width: 1200px) {

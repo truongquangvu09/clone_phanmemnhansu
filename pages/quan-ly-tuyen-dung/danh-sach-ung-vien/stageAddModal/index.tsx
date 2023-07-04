@@ -66,6 +66,10 @@ export default function StageAddModal({ onCancel }: any) {
                                                             ...baseStyles,
                                                             height: 31.6,
                                                         }),
+                                                        placeholder: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            color: "#444444",
+                                                        }),
                                                     }}
                                                 />
                                             </div>

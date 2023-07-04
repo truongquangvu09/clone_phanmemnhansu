@@ -133,10 +133,15 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                         valueContainer: (baseStyles) => ({
                                                             ...baseStyles,
                                                             height: 33.6,
+
                                                         }),
                                                         indicatorsContainer: (baseStyles) => ({
                                                             ...baseStyles,
                                                             height: 33.6,
+                                                        }),
+                                                        placeholder: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            color: "#444444",
                                                         }),
                                                     }}
                                                 />
@@ -189,6 +194,10 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                             ...baseStyles,
                                                             height: 33.6,
                                                         }),
+                                                        placeholder: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            color: "#444444",
+                                                        }),
                                                     }}
                                                 />
                                             </div>
@@ -228,6 +237,10 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                             ...baseStyles,
                                                             height: 33.6,
                                                         }),
+                                                        placeholder: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            color: "#444444",
+                                                        }),
                                                     }}
                                                 />
                                             </div>
@@ -260,6 +273,10 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                         indicatorsContainer: (baseStyles) => ({
                                                             ...baseStyles,
                                                             height: 33.6,
+                                                        }),
+                                                        placeholder: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            color: "#444444",
                                                         }),
                                                     }}
                                                 />
@@ -306,6 +323,10 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                             ...baseStyles,
                                                             height: 33.6,
                                                         }),
+                                                        placeholder: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            color: "#444444",
+                                                        }),
                                                     }}
                                                 />
                                             </div>
@@ -339,6 +360,10 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                             ...baseStyles,
                                                             height: 33.6,
                                                         }),
+                                                        placeholder: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            color: "#444444",
+                                                        }),
                                                     }}
                                                 />
                                             </div>
@@ -371,6 +396,10 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                         indicatorsContainer: (baseStyles) => ({
                                                             ...baseStyles,
                                                             height: 33.6,
+                                                        }),
+                                                        placeholder: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            color: "#444444",
                                                         }),
                                                     }}
                                                 />
