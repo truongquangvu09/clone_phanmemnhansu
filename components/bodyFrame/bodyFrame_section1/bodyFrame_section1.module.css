@@ -94,3 +94,22 @@
 .weather_sign {
   padding: 11px 0;
 }
+@media only screen and (max-width: 1200px) {
+  .item_left_img img {
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .item_right {
+    display: none;
+  }
+  .item_left {
+    width: 100%;
+    margin: 50px 10px 15px 10px;
+  }
+}
+@media only screen and (max-width: 495px) {
+  .item_left_img img {
+    width: 71%;
+  }
+}

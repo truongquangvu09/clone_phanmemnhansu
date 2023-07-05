@@ -99,13 +99,14 @@ export default function CandidateRepo({ children }: any) {
                                 options={options.chongioitinh}
                                 placeholder="Chọn giới tính"
                                 styles={{
+
                                     control: (baseStyles, state) => ({
                                         ...baseStyles,
                                         borderRadius: 4,
                                         borderColor: "#4747477a",
                                         height: "auto",
                                         fontSize: state.isFocused ? 14 : 14,
-                                        width: state.isFocused ? 177.5 : 177.5,
+                                        width: '100%',
                                         fontWeight: state.isFocused ? 600 : 600,
                                         minHeight: 20
                                     }),
@@ -127,13 +128,14 @@ export default function CandidateRepo({ children }: any) {
                                 options={options.vitrituyendung}
                                 placeholder="Vị trí tuyển dụng"
                                 styles={{
+
                                     control: (baseStyles, state) => ({
                                         ...baseStyles,
                                         borderRadius: 4,
                                         borderColor: "#4747477a",
                                         height: "auto",
                                         fontSize: state.isFocused ? 14 : 14,
-                                        width: state.isFocused ? 177.5 : 177.5,
+                                        width: '100%',
                                         fontWeight: state.isFocused ? 600 : 600,
                                         minHeight: 20
                                     }),

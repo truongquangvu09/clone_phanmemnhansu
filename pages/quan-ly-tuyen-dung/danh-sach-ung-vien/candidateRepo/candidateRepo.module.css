@@ -1,5 +1,5 @@
 .wrapper {
-  width: 1123.5px;
+  width: 103%;
 }
 .body {
   display: inline-block;
@@ -13,10 +13,12 @@
   justify-content: space-between;
 }
 .div_no_pad {
+  width: 16.677777%;
+  padding-right: 15px;
 }
 .form_control {
   display: block;
-  width: 95%;
+  width: 85%;
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.42857143;
@@ -52,7 +54,7 @@
 .navigate_next {
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  width: 58%;
   align-items: center;
   position: absolute;
   top: 55%;
@@ -69,7 +71,7 @@
   left: 20px;
 }
 .turn_right {
-  right: 29%;
+  right: -25%;
 }
 .table_content {
   width: 100%;
@@ -86,7 +88,7 @@
   background-color: transparent;
 }
 .table_list {
-  width: 350%;
+  width: 200%;
   max-width: unset;
   border-collapse: collapse;
   border-radius: 8px;
@@ -122,6 +124,22 @@
   border-top: 1px solid #ddd;
 }
 .table td {
+  font-size: 14px;
   border: 1px solid rgba(102, 102, 102, 0.24);
 }
 /* scrollbar-color: red blue; */
+@media screen and (max-width: 1200px) {
+  .row_search_new_t {
+    display: block;
+  }
+  .div_no_pad {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .form_control {
+    width: 97%;
+  }
+  .icon_t_search_top {
+    width: 94%;
+  }
+}

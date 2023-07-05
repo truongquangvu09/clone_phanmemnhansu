@@ -46,3 +46,31 @@
   line-height: 14px;
   color: #b2b0b0;
 }
+@media screen and (max-width: 768px) {
+  .wrapper {
+    z-index: 5;
+    position: absolute;
+    width: 300px;
+    right: -2%;
+    top: 80px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    max-height: 400px;
+    overflow-y: scroll;
+  }
+}
+@media screen and (max-width: 494px) {
+  .wrapper {
+    z-index: 5;
+    position: absolute;
+    width: 300px;
+    right: -73%;
+    top: 80px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    max-height: 400px;
+    overflow-y: scroll;
+  }
+}

@@ -98,3 +98,73 @@
   line-height: 19px;
   color: #ffffff;
 }
+
+.item_right_weather {
+  height: 109px;
+  background: #ffffff;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  display: none;
+  width: 23%;
+  margin: 50px 10px 20px 12px;
+}
+
+.right_top {
+  padding: 17px 17px 6px;
+}
+
+.city_home {
+  font-size: 12px;
+  line-height: 14px;
+  color: #474747;
+  font-weight: 600;
+}
+
+.weather_image {
+  width: 71px;
+  height: 56px;
+}
+
+.weather {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.weather_flex {
+  display: flex;
+}
+
+.temperature {
+  padding: 0;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 44px;
+  color: #474747;
+}
+
+.weather_sign {
+  padding: 11px 0;
+}
+
+@media only screen and (max-width: 767px) {
+  .wrapper {
+    display: inline;
+  }
+  .item_right_weather {
+    display: block;
+    width: 98%;
+    margin: 10px 10px 20px 12px;
+  }
+  .item_left {
+    width: 97%;
+    padding: 0 15px 0px 15px;
+  }
+  .item_right {
+    width: 92%;
+    margin: 10px 10px 20px 12px;
+  }
+  .weather {
+    display: flex;
+    justify-content: center;
+  }
+}

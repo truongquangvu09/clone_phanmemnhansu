@@ -182,3 +182,20 @@
 .btn_add:hover {
   background-color: #449d44;
 }
+@media screen and (min-width: 480px) and (max-width: 1024px) {
+  .content_process {
+    width: 95%;
+  }
+}
+@media screen and (max-width: 479px) {
+  .content_process {
+    width: 90%;
+  }
+  .body_process .form_groups {
+    margin-top: 25px;
+    display: grid;
+  }
+  .input_right {
+    width: 100%;
+  }
+}

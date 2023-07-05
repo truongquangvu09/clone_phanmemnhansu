@@ -17,13 +17,22 @@
   padding-left: 15px;
   padding-right: 15px;
 }
-@media only screen and (max-width: 1024px){
-.sidebar_content {
+@media only screen and (max-width: 1024px) {
+  .sidebar_content {
     display: none;
-}}
+  }
+  .bodyframe {
+    max-width: 100%;
+    min-width: 100%;
+  }
+}
 
-@media only screen and (max-width: 1024px){
-  .bodyframe{
-      max-width: 100%;
-
-  }}
+@media only screen and (max-width: 495px) {
+  .bodyframe {
+    max-width: 100%;
+    min-width: 100%;
+  }
+  .wraper {
+    display: inline-table;
+  }
+}

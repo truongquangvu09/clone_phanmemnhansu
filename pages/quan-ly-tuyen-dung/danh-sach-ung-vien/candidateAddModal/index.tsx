@@ -120,13 +120,17 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                     options={options.chongioitinh}
                                                     placeholder="-- Vui lòng chọn --"
                                                     styles={{
+                                                        container: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            paddingRight: 15
+                                                        }),
                                                         control: (baseStyles, state) => ({
                                                             ...baseStyles,
                                                             borderRadius: 8,
                                                             borderColor: "#4747477a",
                                                             height: "auto",
                                                             fontSize: state.isFocused ? 14 : 14,
-                                                            width: state.isFocused ? 413.38 : 413.38,
+                                                            width: '100%',
                                                             fontWeight: state.isFocused ? 600 : 600,
                                                             minHeight: 20
                                                         }),
@@ -176,13 +180,17 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                     options={options.trinhdohocvan}
                                                     placeholder="-- Vui lòng chọn --"
                                                     styles={{
+                                                        container: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            paddingRight: 15
+                                                        }),
                                                         control: (baseStyles, state) => ({
                                                             ...baseStyles,
                                                             borderRadius: 8,
                                                             borderColor: "#4747477a",
                                                             height: "auto",
                                                             fontSize: state.isFocused ? 14 : 14,
-                                                            width: state.isFocused ? 413.38 : 413.38,
+                                                            width: '100%',
                                                             fontWeight: state.isFocused ? 600 : 600,
                                                             minHeight: 20
                                                         }),
@@ -219,13 +227,17 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                     options={options.kinhnghiemlamviec}
                                                     placeholder="-- Vui lòng chọn --"
                                                     styles={{
+                                                        container: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            paddingRight: 15
+                                                        }),
                                                         control: (baseStyles, state) => ({
                                                             ...baseStyles,
                                                             borderRadius: 8,
                                                             borderColor: "#4747477a",
                                                             height: "auto",
                                                             fontSize: state.isFocused ? 14 : 14,
-                                                            width: state.isFocused ? 413.38 : 413.38,
+                                                            width: '100%',
                                                             fontWeight: state.isFocused ? 600 : 600,
                                                             minHeight: 20
                                                         }),
@@ -256,13 +268,17 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                     options={options.tinhtranghonnhan}
                                                     placeholder="-- Vui lòng chọn --"
                                                     styles={{
+                                                        container: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            paddingRight: 15
+                                                        }),
                                                         control: (baseStyles, state) => ({
                                                             ...baseStyles,
                                                             borderRadius: 8,
                                                             borderColor: "#4747477a",
                                                             height: "auto",
                                                             fontSize: state.isFocused ? 14 : 14,
-                                                            width: state.isFocused ? 413.38 : 413.38,
+                                                            width: '100%',
                                                             fontWeight: state.isFocused ? 600 : 600,
                                                             minHeight: 20
                                                         }),
@@ -305,13 +321,17 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                     options={options.tennhanvientuyendung}
                                                     placeholder="Chọn nhân viên"
                                                     styles={{
+                                                        container: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            paddingRight: 15
+                                                        }),
                                                         control: (baseStyles, state) => ({
                                                             ...baseStyles,
                                                             borderRadius: 8,
                                                             borderColor: "#4747477a",
                                                             height: "auto",
                                                             fontSize: state.isFocused ? 14 : 14,
-                                                            width: state.isFocused ? 413.38 : 413.38,
+                                                            width: '100%',
                                                             fontWeight: state.isFocused ? 600 : 600,
                                                             minHeight: 20
                                                         }),
@@ -342,13 +362,17 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                     options={options.tennhanviengioithieu}
                                                     placeholder="Chọn nhân viên"
                                                     styles={{
+                                                        container: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            paddingRight: 15
+                                                        }),
                                                         control: (baseStyles, state) => ({
                                                             ...baseStyles,
                                                             borderRadius: 8,
                                                             borderColor: "#4747477a",
                                                             height: "auto",
                                                             fontSize: state.isFocused ? 14 : 14,
-                                                            width: state.isFocused ? 413.38 : 413.38,
+                                                            width: '100%',
                                                             fontWeight: state.isFocused ? 600 : 600,
                                                             minHeight: 20
                                                         }),
@@ -379,13 +403,17 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                     options={options.vitrituyendung}
                                                     placeholder="-- Vui lòng chọn --"
                                                     styles={{
+                                                        container: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            paddingRight: 15
+                                                        }),
                                                         control: (baseStyles, state) => ({
                                                             ...baseStyles,
                                                             borderRadius: 8,
                                                             borderColor: "#4747477a",
                                                             height: "auto",
                                                             fontSize: state.isFocused ? 14 : 14,
-                                                            width: state.isFocused ? 413.38 : 413.38,
+                                                            width: '100%',
                                                             fontWeight: state.isFocused ? 600 : 600,
                                                             minHeight: 20
                                                         }),

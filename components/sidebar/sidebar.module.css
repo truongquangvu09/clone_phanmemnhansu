@@ -115,30 +115,26 @@
 }
 
 /* Responsive Styling */
-@media (max-width: 768px) {
-  .sidebar {
-    /* width: 100%; */
-    height: 100vh; /* Chiếm toàn bộ chiều cao của màn hình */
-    position: relative;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+@media screen and (max-width: 1024px) {
+  .sidebar_wrapper {
+    position: absolute;
+    z-index: 3;
+    left: 15px;
+    width: 320px;
+    top: 80px;
   }
-
-  .ic_box1 {
-    margin-top: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start; /* Chỉnh sửa align-items thành flex-start để .ic_box1 và .ic_box2 sát nhau theo chiều cao */
+  .footer_sidebar {
+    height: 100px;
   }
-
-  .button1 {
-    margin: 10px;
-    width: 56px;
-    height: 56px;
+  .sidebar_text1:hover {
+    border-right: 4px solid #4c5bd4;
+    background: #f1f9fc;
+  }
+  .sidebar_text2:hover {
+    border-right: 4px solid #fc9797;
+    background: #fff6e5;
   }
 }
 
+@media (max-width: 768px) {
+}

@@ -136,7 +136,7 @@ export default function TabEmployeeManagement({ children }: any) {
                                                 borderColor: "#4747477a",
                                                 height: "auto",
                                                 fontSize: state.isFocused ? 14 : 14,
-                                                width: state.isFocused ? 300 : 300,
+                                                width: '100%',
                                                 fontWeight: state.isFocused ? 600 : 600,
                                                 minHeight: 20
                                             }),
@@ -164,7 +164,7 @@ export default function TabEmployeeManagement({ children }: any) {
                                                 borderColor: "#4747477a",
                                                 height: "auto",
                                                 fontSize: state.isFocused ? 14 : 14,
-                                                width: state.isFocused ? 300 : 300,
+                                                width: '100%',
                                                 fontWeight: state.isFocused ? 600 : 600,
                                                 minHeight: 20
                                             }),

@@ -58,13 +58,13 @@ export default function CandidateListDetail() {
                         {openModal === 2 ? <StageAddModal onCancel={handleCloseModal}></StageAddModal> : ''}
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_top}`}>
-                                <div className={`${styles.div_no_pad}`}>
+                                <div style={{ paddingRight: 10 }} className={`${styles.div_no_pad}`}>
                                     <input type="date" className={`${styles.search_date_from} ${styles.form_control}`} placeholder='Từ dd/mm/yyyy' />
                                 </div>
-                                <div className={`${styles.div_no_pad}`}>
+                                <div style={{ paddingRight: 10 }} className={`${styles.div_no_pad}`}>
                                     <input type="date" className={`${styles.search_date_to} ${styles.form_control}`} placeholder='Từ dd/mm/yyyy' />
                                 </div>
-                                <div className={`${styles.div_no_pad}`}>
+                                <div style={{ paddingRight: 10 }} className={`${styles.div_no_pad}`}>
                                     <input type="text" className={`${styles.search_can_name} ${styles.form_control}`} placeholder='Nhập tên ứng viên' />
                                 </div>
                                 <div className={`${styles.div_no_pad} `}>
@@ -75,13 +75,17 @@ export default function CandidateListDetail() {
                                         options={options.vitrituyendung}
                                         placeholder="Vị trí tuyển dụng"
                                         styles={{
+                                            container: (baseStyles) => ({
+                                                ...baseStyles,
+                                                paddingRight: 15
+                                            }),
                                             control: (baseStyles, state) => ({
                                                 ...baseStyles,
                                                 borderRadius: 4,
                                                 borderColor: "#4747477a",
                                                 height: "auto",
                                                 fontSize: state.isFocused ? 14 : 14,
-                                                width: state.isFocused ? 257.16 : 257.16,
+                                                width: '100%',
                                                 fontWeight: state.isFocused ? 600 : 600,
                                                 minHeight: 20
                                             }),
@@ -105,13 +109,17 @@ export default function CandidateListDetail() {
                                         options={options.chonnhanvien}
                                         placeholder="Chọn nhân viên"
                                         styles={{
+                                            container: (baseStyles) => ({
+                                                ...baseStyles,
+                                                paddingRight: 15
+                                            }),
                                             control: (baseStyles, state) => ({
                                                 ...baseStyles,
                                                 borderRadius: 4,
                                                 borderColor: "#4747477a",
                                                 height: "auto",
                                                 fontSize: state.isFocused ? 14 : 14,
-                                                width: state.isFocused ? 257.16 : 257.16,
+                                                width: '100%',
                                                 fontWeight: state.isFocused ? 600 : 600,
                                                 minHeight: 20
                                             }),
@@ -133,13 +141,17 @@ export default function CandidateListDetail() {
                                         options={options.chongioitinh}
                                         placeholder="Chọn giới tính"
                                         styles={{
+                                            container: (baseStyles) => ({
+                                                ...baseStyles,
+                                                paddingRight: 15
+                                            }),
                                             control: (baseStyles, state) => ({
                                                 ...baseStyles,
                                                 borderRadius: 4,
                                                 borderColor: "#4747477a",
                                                 height: "auto",
                                                 fontSize: state.isFocused ? 14 : 14,
-                                                width: state.isFocused ? 257.16 : 257.16,
+                                                width: '100%',
                                                 fontWeight: state.isFocused ? 600 : 600,
                                                 minHeight: 20
                                             }),
@@ -161,15 +173,20 @@ export default function CandidateListDetail() {
                                         options={options.chontrangthai}
                                         placeholder="Chọn trạng thái"
                                         styles={{
+                                            container: (baseStyles) => ({
+                                                ...baseStyles,
+                                                paddingRight: 15
+                                            }),
                                             control: (baseStyles, state) => ({
                                                 ...baseStyles,
                                                 borderRadius: 4,
                                                 borderColor: "#4747477a",
                                                 height: "auto",
                                                 fontSize: state.isFocused ? 14 : 14,
-                                                width: state.isFocused ? 257.16 : 257.16,
+                                                width: '100%',
                                                 fontWeight: state.isFocused ? 600 : 600,
-                                                minHeight: 20
+                                                minHeight: 20,
+
                                             }),
                                             indicatorsContainer: (baseStyles) => ({
                                                 ...baseStyles,

@@ -3,6 +3,7 @@ import styles from './bodyFrame_header.module.css'
 import DropDownMenu from './drop_down_menu/dropDownMenu';
 import Notify from './notify/notify';
 import Remind from './remind';
+import Sidebar from '@/components/sidebar/Sidebar';
 export interface BodyFrameHeader {
 
 }
@@ -11,21 +12,38 @@ export default function BodyFrameHeader({ children }: any) {
     const [menuClick, setMenuClick] = useState(false)
     const [noti, setNoti] = useState(false)
     const [remind, setRemind] = useState(false)
+    const [openSidebar, setOpenSidebar] = useState(false)
 
     const toggleMenu = () => {
-        setMenuClick(prevState => !prevState);
+        setMenuClick(!menuClick);
+        setNoti(false)
+        setRemind(false)
     };
     const handleNotify = () => {
-        setNoti(PrevState => !PrevState)
+        setMenuClick(false)
+        setNoti(!noti)
+        setRemind(false)
     }
     const handleRemind = () => {
-        setRemind(PrevState => !PrevState)
+        setMenuClick(false)
+        setRemind(!remind)
+        setNoti(false)
+    }
+    const handleOpenSidebar = () => {
+        setOpenSidebar(!openSidebar)
     }
     return (
         <>
             <div className={`${styles.wrapper}`}>
                 <div className={`${styles.header}`}>
                     <div className={`${styles.header_left}`} >
+                        <div className={`${styles.sidebar_renative}`}>
+                            <div>
+                                <div className={`${styles.icon_sidebar_all}`} onClick={handleOpenSidebar}>
+                                    <img src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/icon_sidebar_all.svg" alt="icon" />
+                                </div>
+                            </div>
+                        </div>
                         <div className={`${styles.header_left_item1}`}>ID-111111</div>
                         <div className={`${styles.header_left_item2}`}>Trương Quang Vũ</div>
                     </div>
@@ -41,18 +59,19 @@ export default function BodyFrameHeader({ children }: any) {
                                 <img className={`${styles.drop_down}`} src="	https://phanmemnhansu.timviec365.vn//assets/images/l_images/thongbao.svg" alt="icon" />
                             </div>
                         </div>
-                        <div className={`${styles.header_right_item2}`} >
+                        <div className={`${styles.header_right_item2}`} onClick={toggleMenu}>
                             <div className={`${styles.header_avatar}`}>
                                 <img className={`${styles.image_avatar}`} src="https://chamcong.24hpay.vn/upload/employee/ep555955/app_1686633773283.jpg" alt="" />
                             </div>
                             <div className={`${styles.name}`}>Trương Quang Vũ</div>
-                            <div className={`${styles.drop_down}`} onClick={toggleMenu}>
+                            <div className={`${styles.drop_down}`}>
                                 <img src="https://phanmemnhansu.timviec365.vn//assets/images/l_images/menu.svg" alt="icon" />
                             </div>
                         </div>
                     </div>
 
                 </div>
+                {openSidebar && <Sidebar></Sidebar>}
                 {menuClick && <DropDownMenu></DropDownMenu>}
                 {noti && <Notify></Notify>}
                 {remind && <Remind></Remind>}

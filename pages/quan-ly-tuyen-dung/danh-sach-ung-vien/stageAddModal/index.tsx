@@ -48,13 +48,17 @@ export default function StageAddModal({ onCancel }: any) {
                                                     options={options.chongiaidoandungtruoc}
                                                     placeholder="-- Vui lòng chọn --"
                                                     styles={{
+                                                        container: (baseStyles) => ({
+                                                            ...baseStyles,
+                                                            paddingRight: 10
+                                                        }),
                                                         control: (baseStyles, state) => ({
                                                             ...baseStyles,
                                                             borderRadius: 8,
                                                             borderColor: "#4747477a",
                                                             height: "auto",
                                                             fontSize: state.isFocused ? 14 : 14,
-                                                            width: state.isFocused ? 413.38 : 413.38,
+                                                            width: '100%',
                                                             fontWeight: state.isFocused ? 600 : 600,
                                                             minHeight: 20
                                                         }),
