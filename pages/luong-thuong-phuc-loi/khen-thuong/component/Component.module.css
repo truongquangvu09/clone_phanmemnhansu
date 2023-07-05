@@ -2,7 +2,8 @@
 .tuyendung2 {
     display: inline-block;
     width: 100%;
-    margin-top: 35px
+    margin-top: 35px;
+    margin-bottom: 130px;
 }
 .tuyendung2_3 {
     float: left;
@@ -44,12 +45,12 @@
     border-radius: 50px;
     height: 36px;
     padding: 6px 13px;
-    width: 400px;
     display: flex;
+    justify-content: space-between;
 }
 .t_div_search input {
     border: none;
-    width: 345px;
+    width: 100%;
    
 }
 .t_div_search input[type="search"]::-webkit-search-cancel-button,
@@ -84,7 +85,7 @@
     background-color: transparent;
 }
 .tab_content {
-    width: 1120px;
+    width: auto;
     height: auto;
     margin-top: 12%;
 }
@@ -92,7 +93,7 @@
     border-radius: 8px;
     overflow: hidden;
     overflow-x: auto;
-    width: 100%;
+    width: 102%;
     
 }
 .tablelist {
@@ -207,3 +208,8 @@
 }
 
 
+@media (max-width : 1024px) {
+    .member_list {
+        width: 100%;
+    }
+}

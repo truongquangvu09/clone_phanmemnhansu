@@ -107,7 +107,6 @@
 
 .list_uv {
     margin-top: 37px;
-    width: 1120px;
     margin-bottom: 24px;
     height: auto;
 }
@@ -115,12 +114,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    
+    display: flex;
+    flex-wrap: wrap;
+ 
 }
 .list_uv_cart {
     height: auto;
-    width: 33.33333333%;
-    max-width: 343px;
+    width: 30%;
     float: left;
     position: relative;
     min-height: 1px;
@@ -208,4 +208,18 @@
     font-weight: 600;
 }
 
+@media (min-width: 1024px) and (max-width: 1229px){
+    .list_uv_cart {
+        width: 29%;
+    }
+}@media (min-width: 765px) and (max-width: 991px){
+    .list_uv_cart {
+        width: 45%;
+    }
+}
+@media (max-width: 764px) {
+    .list_uv_cart {
+        width: 95%;
+    }
+}
 

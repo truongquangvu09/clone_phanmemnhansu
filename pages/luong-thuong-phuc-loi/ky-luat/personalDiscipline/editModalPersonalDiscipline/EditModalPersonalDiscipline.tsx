@@ -56,7 +56,6 @@ function EditModalPersonalDiscipline({ onClose, type }: any) {
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                     
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -80,7 +79,6 @@ function EditModalPersonalDiscipline({ onClose, type }: any) {
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                     
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -97,14 +95,13 @@ function EditModalPersonalDiscipline({ onClose, type }: any) {
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                  Số quy định xử lý vi phạm 
+                    Số quy định xử lý vi phạm
                     <span className={`${styles.red}`}> *</span>
                   </label>
                   <div className={`${styles.inputright}`}>
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                   
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -128,8 +125,7 @@ function EditModalPersonalDiscipline({ onClose, type }: any) {
                     <input
                       type="date"
                       className={`${styles.inputquytrinh}`}
-                      style={{ width: "397.44px" }}
-                    
+               
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -153,8 +149,7 @@ function EditModalPersonalDiscipline({ onClose, type }: any) {
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                      style={{ width: "397.44px" }}
-                    
+
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -171,13 +166,13 @@ function EditModalPersonalDiscipline({ onClose, type }: any) {
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                  Cá nhân vi phạm
+                    Cá nhân vi phạm
                     <span className={`${styles.red}`}> *</span>
                     <div
                       className={`${styles.red} ${styles.float_right}`}
                     ></div>
                   </label>
-                  <div style={{ marginRight: "3%" }}>
+                  <div style={{ marginRight: "3%" }} className={`${styles.select}`}>
                     <Select
                       isMulti={true}
                       defaultValue={selectedOption}
@@ -191,7 +186,7 @@ function EditModalPersonalDiscipline({ onClose, type }: any) {
                           height: "auto",
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 397.44 : 397.44,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
                         }),
                         valueContainer: (baseStyles) => ({
@@ -216,7 +211,6 @@ function EditModalPersonalDiscipline({ onClose, type }: any) {
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                      
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img

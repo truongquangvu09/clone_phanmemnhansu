@@ -197,3 +197,65 @@
     background-image: none;
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.3);
 }
+
+@media screen and (min-width: 480px) and (max-width: 1024px) {
+    .contentquytrinh {
+        width: 95%;
+    }
+}
+
+@media (min-width: 768px) {
+    .modal_content {
+        -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    }
+}
+
+@media only screen and (max-width: 1025px) {
+    .inputquytrinh {
+        width: 93% !important;
+    }
+}
+
+@media only screen and (max-width: 1025px) {
+    .list_process {
+        width: auto;
+        height: auto;
+    }
+}
+
+@media only screen and (max-width: 1025px) {
+    .clearfix {
+        width: auto;
+    }
+}
+
+@media screen and (min-width: 480px) and (max-width: 1024px) {
+    .bodyquytrinh label {
+        font-size: 11px;
+    }
+}
+
+/* ipse */
+
+@media screen and (max-width: 479px) {
+    .contentquytrinh {
+        width: 95%;
+    }
+}
+
+@media only screen and (max-width: 590px) {
+    .inputright {
+        float: left;
+        width: 100% !important;
+        margin-top: 2%;
+        margin-bottom: 5%;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .footerquytrinh {
+        margin-top: 0;
+        padding-right: 46px;
+    }
+}

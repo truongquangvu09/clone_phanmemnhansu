@@ -150,7 +150,6 @@
 }
 .pull_right {
     margin: 0;
-    float: right !important;
     position: relative;
 }
 .errors {
@@ -177,7 +176,8 @@
     padding: 15px;
     display: flex;
     justify-content: flex-end;
-    padding-right: 95px;
+    padding-right: 4%;
+    flex-wrap: wrap;
 }
 .modal_footer button {
     font-size: 14px;
@@ -217,4 +217,20 @@
     background-color: #449d44;
     background-image: none;
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 770px) {
+    .contentquytrinh {
+        width: 90%;
+    }
+}
+
+@media (max-width: 740px) {
+    .inputright {
+        width: 100%;
+        float: left;
+    }
+}
+@media (min-width: 560px) {
+    
 }

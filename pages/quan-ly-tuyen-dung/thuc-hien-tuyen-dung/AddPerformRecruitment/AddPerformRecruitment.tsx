@@ -354,7 +354,7 @@ export default function AddPerformRecruitment({ handleCloseModalAdd }: any) {
                         handleSelectionChange(option, options.vitrituyendung)
                       }
                       options={options.vitrituyendung}
-                      placeholder="Cấp bậc - Vui lòng chọn --"
+                      placeholder="-- Vui lòng chọn --"
                       styles={{
                         control: (baseStyles, state) => ({
                           ...baseStyles,
@@ -362,8 +362,17 @@ export default function AddPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 297 : 297,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
+                         
+                        }),
+                        valueContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          padding: "0",
+                        }),
+                        indicatorsContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          height: 30,
                         }),
                       }}
                     />
@@ -395,8 +404,16 @@ export default function AddPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 350 : 350,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
+                        }),
+                        valueContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          padding: "0",
+                        }),
+                        indicatorsContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          height: 30,
                         }),
                       }}
                     />
@@ -436,7 +453,7 @@ export default function AddPerformRecruitment({ handleCloseModalAdd }: any) {
                         handleSelectionChange(option, options.nganhnghe)
                       }
                       options={options.nganhnghe}
-                      placeholder="Cấp bậc - Vui lòng chọn --"
+                      placeholder="-- Vui lòng chọn --"
                       styles={{
                         control: (baseStyles, state) => ({
                           ...baseStyles,
@@ -444,8 +461,16 @@ export default function AddPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 297 : 297,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
+                        }),
+                        valueContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          padding: "0",
+                        }),
+                        indicatorsContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          height: 30,
                         }),
                       }}
                     />
@@ -477,15 +502,23 @@ export default function AddPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 350 : 350,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
+                        }),
+                        valueContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          padding: "0",
+                        }),
+                        indicatorsContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          height: 30,
                         }),
                       }}
                     />
                   </div>
                 </div>
 
-                <div className={`${styles.form_groups} ${styles.small_left}`}>
+                <div className={`${styles.form_groups} ${styles.small_left}  ${styles.full_width}`}>
                   <label>
                     Số lượng ứng tuyển
                     <span className={`${styles.red}`}> *</span>
@@ -562,8 +595,16 @@ export default function AddPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 297 : 297,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
+                        }),
+                        valueContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          padding: "0",
+                        }),
+                        indicatorsContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          height: 30,
                         }),
                       }}
                     />
@@ -659,8 +700,16 @@ export default function AddPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 297 : 297,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
+                        }),
+                        valueContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          padding: "0",
+                        }),
+                        indicatorsContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          height: 30,
                         }),
                       }}
                     />
@@ -692,8 +741,16 @@ export default function AddPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 350 : 350,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
+                        }),
+                        valueContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          padding: "0",
+                        }),
+                        indicatorsContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          height: 30,
                         }),
                       }}
                     />
@@ -724,8 +781,16 @@ export default function AddPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 297 : 297,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
+                        }),
+                        valueContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          padding: "0",
+                        }),
+                        indicatorsContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          height: 30,
                         }),
                       }}
                     />
@@ -757,8 +822,16 @@ export default function AddPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 350 : 350,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
+                        }),
+                        valueContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          padding: "0",
+                        }),
+                        indicatorsContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          height: 30,
                         }),
                       }}
                     />
@@ -807,8 +880,16 @@ export default function AddPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 661 : 661,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
+                        }),
+                        valueContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          padding: "0",
+                        }),
+                        indicatorsContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          height: 30,
                         }),
                       }}
                     />
@@ -840,8 +921,16 @@ export default function AddPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 661 : 661,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
+                        }),
+                        valueContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          padding: "0",
+                        }),
+                        indicatorsContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          height: 30,
                         }),
                       }}
                     />

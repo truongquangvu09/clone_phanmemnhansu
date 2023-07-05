@@ -198,7 +198,7 @@
     padding: 15px;
     display: flex;
     justify-content: flex-end;
-    padding-right: 95px;
+    padding-right: 4%;
 }
 
 .modal_footer button {
@@ -338,5 +338,5 @@
 @media only screen and (max-width: 480px){
 .footerquytrinh {
     margin-top: 0;
-    padding-right: 46px;
+   
 }}

@@ -2,7 +2,8 @@
 .tuyendung2 {
     display: inline-block;
     width: 100%;
-    margin-top: 35px
+    margin-top: 35px;
+    margin-bottom: 130px;
 }
 .tuyendung2_3 {
     float: left;
@@ -44,12 +45,12 @@
     border-radius: 50px;
     height: 36px;
     padding: 6px 13px;
-    width: 400px;
     display: flex;
+    justify-content: space-between;
 }
 .t_div_search input {
     border: none;
-    width: 345px;
+    width: 100%;
    
 }
 .t_div_search input[type="search"]::-webkit-search-cancel-button,
@@ -84,7 +85,7 @@
     background-color: transparent;
 }
 .tab_content {
-    width: 1120px;
+    width: auto;
     height: auto;
     margin-top: 12%;
 }
@@ -92,7 +93,7 @@
     border-radius: 8px;
     overflow: hidden;
     overflow-x: auto;
-    width: 100%;
+    width: 102%;
     
 }
 .tablelist {
@@ -147,7 +148,6 @@
     color: #333333;
     font-size: 14px;
     font-weight: 600;
-
 }
 .tablelist th {
     border: 1px solid white;
@@ -163,9 +163,11 @@
     background: white;
 }
 .filter {
-    width: 368px;
+    width: 370px;
 }
-
+.filter td {
+  
+}
 .r_t_top_right:hover {
     cursor: pointer;
 }
@@ -185,21 +187,29 @@
     right: 54%;
     top: 28px;
     box-shadow: 0 4px 10px rgb(0 0 0 / 5%);
+   
 }
 .settings li {
     border-left: 3px solid #ffffff;
     cursor: pointer;
     padding: 16px 40px 14px 13px;
+
 }
 .settings li:hover {
     color: #4C5BD4;
     border-left: 3px solid #4C5BD4;
 }
+
 .pagination {
     float: right;
     margin-top: 10px;
     border: #333333;
     margin-right: 40px;
-   
 }
 
+
+@media (max-width : 1024px) {
+    .member_list {
+        width: 100%;
+    }
+}

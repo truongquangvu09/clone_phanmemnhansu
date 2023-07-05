@@ -106,7 +106,7 @@ function ModalAddReward({ children ,onClose }: any) {
                       className={`${styles.red} ${styles.float_right}`}
                     ></div>
                   </label>
-                  <div style={{ marginRight: "3%" }}>
+                  <div style={{ marginRight: "3%" }} className={`${styles.select}`}>
                     <Select
                       isMulti
                       defaultValue={selectedOption}
@@ -120,7 +120,7 @@ function ModalAddReward({ children ,onClose }: any) {
                           height: "auto",
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 397.44 : 397.44,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
                         }),
                         valueContainer: (baseStyles) => ({
@@ -169,7 +169,7 @@ function ModalAddReward({ children ,onClose }: any) {
                     <input
                       type="date"
                       className={`${styles.inputquytrinh}`}
-                      style={{ width: "397.44px" }}
+                      
                       placeholder="Nhập tên giai đoạn"
                     ></input>
                     <picture style={{ display: "none" }}>
@@ -193,7 +193,7 @@ function ModalAddReward({ children ,onClose }: any) {
                       className={`${styles.red} ${styles.float_right}`}
                     ></div>
                   </label>
-                  <div style={{ marginRight: "3%" }}>
+                  <div style={{ marginRight: "3%" }} className={`${styles.select}`}>
                     <Select
                       isMulti={true}
                       defaultValue={selectedOption}
@@ -207,7 +207,7 @@ function ModalAddReward({ children ,onClose }: any) {
                           height: "auto",
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 397.44 : 397.44,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
                         }),
                         valueContainer: (baseStyles) => ({

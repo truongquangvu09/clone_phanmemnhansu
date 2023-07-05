@@ -5,17 +5,15 @@ import MyEditor from "../../components/Editor";
 export interface EditRecruitmentStage {}
 
 export default function EditRecruitmentStage({ onCloseModal }: any) {
-  
   const handleSubmit = () => {};
 
   const CloseModal = () => {
-    onCloseModal()
-  }
+    onCloseModal();
+  };
 
-  
   return (
     <>
-      <div className={`${styles.overlay}`} ></div>
+      <div className={`${styles.overlay}`}></div>
       <div className={`${styles.modal} ${styles.modal_setting}`}>
         <div className={`${styles.modal_dialog} ${styles.contentquytrinh}`}>
           <div className={`${styles.modal_content}`}>
@@ -38,19 +36,22 @@ export default function EditRecruitmentStage({ onCloseModal }: any) {
                       className={`${styles.inputquytrinh}`}
                       placeholder="Nhập tên giai đoạn"
                     ></input>
-                    <picture style={{display:'none'}}>
+                    <picture style={{ display: "none" }}>
                       <img
                         src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
                         alt="Lỗi"
                       ></img>
                     </picture>
-                    <div className={`${styles.errors}`} style={{display:'none'}}></div>
+                    <div
+                      className={`${styles.errors}`}
+                      style={{ display: "none" }}
+                    ></div>
                   </div>
                 </div>
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                  Bộ phận đảm nhận công việc
+                    Bộ phận đảm nhận công việc
                     <span className={`${styles.red}`}> *</span>
                   </label>
                   <div className={`${styles.inputright}`}>
@@ -59,19 +60,22 @@ export default function EditRecruitmentStage({ onCloseModal }: any) {
                       className={`${styles.inputquytrinh}`}
                       placeholder="Nhập tên giai đoạn"
                     ></input>
-                    <picture style={{display:'none'}}>
+                    <picture style={{ display: "none" }}>
                       <img
                         src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
                         alt="Lỗi"
                       ></img>
                     </picture>
-                    <div className={`${styles.errors}`} style={{display:'none'}}></div>
+                    <div
+                      className={`${styles.errors}`}
+                      style={{ display: "none" }}
+                    ></div>
                   </div>
                 </div>
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                  Mục tiêu
+                    Mục tiêu
                     <span className={`${styles.red}`}> *</span>
                   </label>
                   <div className={`${styles.inputright}`}>
@@ -80,19 +84,22 @@ export default function EditRecruitmentStage({ onCloseModal }: any) {
                       className={`${styles.inputquytrinh}`}
                       placeholder="Nhập tên giai đoạn"
                     ></input>
-                    <picture style={{display:'none'}}>
+                    <picture style={{ display: "none" }}>
                       <img
                         src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
                         alt="Lỗi"
                       ></img>
                     </picture>
-                    <div className={`${styles.errors}`} style={{display:'none'}}></div>
+                    <div
+                      className={`${styles.errors}`}
+                      style={{ display: "none" }}
+                    ></div>
                   </div>
                 </div>
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                  Thời gian định lượng
+                    Thời gian định lượng
                     <span className={`${styles.red}`}></span>
                   </label>
                   <div className={`${styles.inputright}`}>
@@ -106,42 +113,42 @@ export default function EditRecruitmentStage({ onCloseModal }: any) {
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                  Mô tả công việc
+                    Mô tả công việc
                     <span className={`${styles.red}`}></span>
                   </label>
                   <div className={`${styles.pull_right}`}>
-                         <Input_textarea />
+                    <Input_textarea />
                   </div>
                 </div>
               </div>
               <div
-                      className={`${styles.modal_footer} ${styles.footerquytrinh}`}
-                    >
-                      <button
-                        type="button"
-                        className={`${styles.btn_huy}`}
-                        onClick={CloseModal}
-                      >
-                        <span>Hủy</span>
-                      </button>
-                      <button type="button" className={`${styles.success}`}>
-                        Lưu
-                      </button>
-                    </div>
+                className={`${styles.modal_footer} ${styles.footerquytrinh}`}
+              >
+                <button
+                  type="button"
+                  className={`${styles.btn_huy}`}
+                  onClick={CloseModal}
+                >
+                  <span>Hủy</span>
+                </button>
+                <button type="button" className={`${styles.success}`}>
+                  Lưu
+                </button>
+              </div>
             </form>
           </div>
         </div>
       </div>
     </>
   );
-  function Input_textarea(){
+  function Input_textarea() {
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [data, setData] = useState("");
-  
+
     useEffect(() => {
       setEditorLoaded(true);
     }, []);
-    console.log(data)
+    console.log(data);
     return (
       <div>
         <MyEditor
@@ -149,8 +156,10 @@ export default function EditRecruitmentStage({ onCloseModal }: any) {
           onChange={(data: React.SetStateAction<string>) => {
             setData(data);
           }}
-          editorLoaded={editorLoaded} value={data}     />
-  
+          editorLoaded={editorLoaded}
+          value={data}
+        />
+
         {/* {JSON.stringify(data)} */}
       </div>
     );
