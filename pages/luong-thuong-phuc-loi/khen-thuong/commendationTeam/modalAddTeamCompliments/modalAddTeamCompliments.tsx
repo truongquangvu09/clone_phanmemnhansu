@@ -105,7 +105,7 @@ function ModalAddTeamCompliments({ children,onClose }: any) {
                       className={`${styles.red} ${styles.float_right}`}
                     ></div>
                   </label>
-                  <div style={{ marginRight: "3%" }} className={`${styles.select}`}>
+                  <div style={{ marginRight: "2%" }} className={`${styles.select}`}>
                     <Select
                       isMulti
                       defaultValue={selectedOption}
@@ -169,6 +169,7 @@ function ModalAddTeamCompliments({ children,onClose }: any) {
                       type="date"
                       className={`${styles.inputquytrinh}`}
                       placeholder="Nhập tên giai đoạn"
+                      style={{height:'30.6px'}}
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -191,7 +192,7 @@ function ModalAddTeamCompliments({ children,onClose }: any) {
                       className={`${styles.red} ${styles.float_right}`}
                     ></div>
                   </label>
-                  <div style={{ marginRight: "3%"}}  className={`${styles.select}`}>
+                  <div style={{ marginRight: "2%"}}  className={`${styles.select}`}>
                     <Select
                       isMulti={true}
                       defaultValue={selectedOption}

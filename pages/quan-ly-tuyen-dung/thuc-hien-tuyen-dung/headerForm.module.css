@@ -7,7 +7,7 @@
     display: inline-block;
     width: 100%;
     margin-top: 50px;
-    margin-bottom: 4%;
+    margin-bottom: 50px;
     max-width: 1120px;
     height: auto;
 }
@@ -22,6 +22,9 @@
     margin-top: 0;
     border-bottom: 1px solid #ddd;
     
+}
+.mr_5 {
+    margin-right: 5%;
 }
 .nav li {
     cursor: default;

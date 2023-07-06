@@ -60,6 +60,11 @@
         width: 35%;
     }
 }
+@media (max-width: 420px) {
+    .item {
+        width: 100%;
+    }
+}
 
 @media (max-width: 768px) {
     .t_tk_1 {

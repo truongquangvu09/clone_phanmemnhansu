@@ -115,7 +115,7 @@
 
 @media (max-width : 740px) {
     .t_div_search {
-        width: 380px;
+        width: 416px;
     }
 }
 .t_div_search input {
@@ -310,19 +310,31 @@
 .new_r_t_body_content .icon {
     margin-right: 12px;
 }
-.settings li {
+.settings li, .edit_new {
     color: #333333;
     font-size: 14px;
     font-weight: 600;
     padding: 16px 40px 14px 13px;
     border-left: 3px solid #ffffff;
     cursor: pointer;
+    background-color: transparent;
+    border: none;
 }
 
-.settings li:hover {
+.settings li:hover ,.edit_new:hover {
     color: #4C5BD4;
     border-left: 3px solid #4C5BD4;
 }
 /* body_detail_tin_tuyen_dung */
 
+@media (max-width: 1024px) {
+    .tuyendung2_2 {
+        margin-right: 4%;
+    }
+}
 
+@media (max-width: 765px) {
+    .t_new_dom {
+        margin-right: 4%;
+    }
+}

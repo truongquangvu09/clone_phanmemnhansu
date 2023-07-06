@@ -1,5 +1,3 @@
-
-
 .overlay {
     position: fixed;
     z-index: 9998;
@@ -8,15 +6,16 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-} 
+}
 
 
 .modal_setting {
     display: block;
     padding-right: 2px;
     opacity: 1;
-    
+
 }
+
 .modal {
     position: fixed;
     top: 0;
@@ -66,10 +65,12 @@
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
+
 .headquytrinh h5 {
     color: white;
     font-size: 14px;
 }
+
 .modal_title {
     margin: 0;
     line-height: 28px;
@@ -86,22 +87,26 @@
     position: relative;
     padding: 15px;
 }
+
 .bodytuyendung {
-    padding: 5% 5% 0 5%;
+    padding: 3% 5% 0 5%;
     text-align: left;
     display: inline-block;
 
 }
+
 .form_groups {
     margin-top: 30px;
     margin-bottom: 2%;
     width: 661px;
     height: auto;
 }
+
 .group_left {
     float: left;
     width: 45%;
 }
+
 .form_groups label {
     color: #333333;
     font-size: 14px;
@@ -113,6 +118,7 @@
     max-width: 100%;
     margin-bottom: 5px;
 }
+
 .bodyquytrinh span {
     font-size: 16px;
     font-style: normal;
@@ -120,9 +126,11 @@
     line-height: 24px;
     letter-spacing: 0em;
 }
+
 .red {
     color: #EB5757;
 }
+
 .inputright {
     width: 66%;
     float: right;
@@ -132,6 +140,7 @@
     outline: none;
     margin: 0;
 }
+
 .inputright picture {
     margin-left: 3px;
 }
@@ -162,12 +171,14 @@
     border-radius: 8px;
     line-height: 45px;
 }
+
 .form_groups textarea {
     outline: none;
 }
+
 .textareapolicy {
     height: 80px;
-}   
+}
 
 .textarea textarea::placeholder {
     background-color: #FFFFFF;
@@ -182,10 +193,10 @@
     font-size: 16px;
     padding: 2px;
     color: #333333;
-  }
-  
-  /* Tùy chỉnh nút Browse */
- .file input[type="file"]::-webkit-file-upload-button {
+}
+
+/* Tùy chỉnh nút Browse */
+.file input[type="file"]::-webkit-file-upload-button {
     font-weight: bold;
     padding: 8px 16px;
     border: none;
@@ -193,26 +204,28 @@
     background-color: #4C5BD4;
     color: #ffffff;
     cursor: pointer;
-  }
-  
-  
- .file input[type="file"]::placeholder {
+}
+
+
+.file input[type="file"]::placeholder {
     color: #999999;
     opacity: 0.6;
-  }
+}
 
 .footerquytrinh {
     margin-top: 2%;
     padding-right: 13%;
     text-align: right;
 }
+
 .modal_footer {
     border: none;
     padding: 15px;
     display: flex;
     justify-content: flex-end;
-    padding-right: 95px;
+    padding-right: 10%;
 }
+
 .modal_footer button {
     font-size: 14px;
     font-style: normal;
@@ -224,24 +237,84 @@
     border-radius: 4px;
     margin-right: 16px;
 }
+
 .btn_huy span {
     opacity: 0.8;
 }
+
 .btn_huy:active {
     background-image: none;
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
+
 .update {
     color: #fff;
     background-color: #5cb85c;
 }
+
 .update:hover {
     color: #fff;
     background-color: #449d44;
 }
+
 .update:active {
     color: #fff;
     background-color: #449d44;
     background-image: none;
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+
+@media screen and (min-width: 480px) and (max-width: 1024px) {
+    .contentquytrinh {
+        width: 95%;
+    }
+}
+
+
+
+@media screen and (min-width: 480px) and (max-width: 1024px) {
+    .bodytuyendung {
+        width: 90%;
+    }
+}
+
+
+@media screen and (min-width: 480px) and (max-width: 1024px) {
+    .form_groups {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 480px) and (max-width: 1024px) {
+    .form_groups label {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contentquytrinh {
+        width: 98%;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .inputright {
+        float: left;
+        width: 100% !important;
+        margin-top: 2%;
+        margin-bottom: 5%;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .bodytuyendung {
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .form_groups {
+        width: auto;
+    }
 }

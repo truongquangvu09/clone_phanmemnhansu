@@ -25,7 +25,7 @@
     float: left;
     padding: 20px;
     border-radius: 8px;
-    width: 45%;
+    width: 41%;
     margin-right: 3%;
     max-width: 510px;
 }
@@ -76,8 +76,7 @@
     float: left;
     margin-left: 15px;
     max-width: 357px;
-    display: flex;
-    flex-direction: column;
+    
 }
 
 .tin_all h4 {
@@ -94,18 +93,15 @@
     font-size: 16px;
 }
 
-.tin_item3 {
-    display: flex;
-    flex-direction: column;
-}
+
 
 .tin_item3 li {
     list-style: none;
-    display: flex;
+    
 }
 .tin_item3 li:nth-child(2) {
   display: flex;
-  flex-wrap: wrap;
+  
 }
 .tin_item33_img {
     width: 12px;
@@ -122,7 +118,7 @@
 }
 .tin_item4 {
     display: inline-flex;
-    flex-wrap: wrap;
+
 }
 .tin_item4 li {
     list-style: none;
@@ -209,21 +205,44 @@
     font-weight: 700;
 }
 
+
+
 @media (max-width: 776px) {
     .tin_item4 li {
         margin-right: 10px;
         padding: 4px 4px;
     }
 }
+ 
 
+@media (min-width: 1025px) and (max-width: 1256px) {
+    .tin_item2 {
+        width: 71%;
+    }
+}
+@media (min-width: 650px) and (max-width: 950px) {
+    .tin_item2 {
+        width: 68%;
+    }
+}
 @media (max-width: 420px) {
     .tin_item {
         width: 135.5px;
     }
 }
+
+@media (max-width: 700px) {
+    .tindangmo {
+        width: 37%;
+    }
+    
+}
 @media (max-width: 420px) {
     .tindangmo {
-        width: 175.5px;
+        width: 100%;
+    }
+    .tindangmo:nth-child(2) {
+        margin-top: 3%;
     }
 }
 @media (max-width: 402px) {
@@ -231,6 +250,7 @@
         width: 100%;
     }
 }
+
 
 @media (max-width: 402px) {
     .tab_content div:nth-child(2) {

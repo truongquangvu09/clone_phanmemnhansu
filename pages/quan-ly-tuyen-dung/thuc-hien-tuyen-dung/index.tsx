@@ -29,7 +29,7 @@ export default function HeaderForm({ children }: any) {
        <div className={`${styles.l_body}`}>
        <ul className={`${styles.nav} ${styles.nav_tabs}`}>
         {listTab.map((item)=>(
-          <div key={item.key}>
+          <div key={item.key} className={`${styles.mr_5}`}>
              <li  className={`${styles.li_tabs}`}>
            <span
              className={`${active === item?.key ? styles.active : styles.hover} `}

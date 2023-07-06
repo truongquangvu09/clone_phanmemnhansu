@@ -105,7 +105,7 @@
     display: flex;
     justify-content: flex-end;
     flex-wrap: wrap;
-    padding-right: 4%;
+    padding-right: 10%;
 }
 .modal_footer button {
     font-size: 14px;
