@@ -6,32 +6,36 @@ import DeleteRecruitmentStage from "../deleteRecruitmentStage/deleteRecruitmentS
 export interface ListRecruitmentStage {}
 
 export default function ListRecruitmentStage({ item }: any) {
-    const [openModal, setOpenModal] = useState(null);
+  const [openModalEdit, setOpenModalEdit] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
     const [visible, setVisible] = useState(false);
     const [hidden, setHidden] = useState(false);
 
     const handleCloseModal = () => {
-      setOpenModal(null);
+      setOpenModalEdit(false);
+    setOpenModalDelete(false)
       setVisible(false)
       setHidden(false);
     };
-    const handleItemClick = (modalId: any) => {
-      setOpenModal(modalId);
-      setHidden(false);
+    const handleItemClickEdit = (item:any) => {
+      setOpenModalEdit(true);
+    };
+    const handleItemClickDelete = (item:any) => {
+      setOpenModalDelete(true);
     };
 
-    if (openModal === 1) {
+    if (openModalEdit ) {
       return (
         <>
-          <EditRecruitmentStage  onCloseModal={handleCloseModal} />
+          <EditRecruitmentStage data = {item}  onCloseModal={handleCloseModal} />
         </>
       );
     }
   
-    if (openModal === 2) {
+    if (openModalDelete ) {
       return (
         <>
-          <DeleteRecruitmentStage onCloseModal={handleCloseModal} />
+          <DeleteRecruitmentStage  data = {item} onCloseModal={handleCloseModal} />
         </>
       );
     }
@@ -65,9 +69,9 @@ export default function ListRecruitmentStage({ item }: any) {
                          <>
                          {!hidden && (
                            <div className={`${styles.settings_hover}`}>
-                             <li onClick={() => handleItemClick(1)}>Chỉnh sửa</li>
+                             <li  onClick={() => handleItemClickEdit(item)}>Chỉnh sửa</li>
                              <hr style={{ marginTop: "0", marginBottom: "0" }}></hr>
-                             <li onClick={() => handleItemClick(2)}>Xóa</li>
+                             <li onClick={() => handleItemClickDelete(item)}>Xóa</li>
                            </div>
                          )}
                        </>

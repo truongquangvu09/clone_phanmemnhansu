@@ -119,15 +119,14 @@
     }
 }
 .t_div_search input {
-    outline: none;
+    color: #333333;
+    font-weight: 600;
     border: none;
     width: 345px;
     outline: none;
-    font-size: inherit;
+    font-size: 14px;
     line-height: inherit;
     margin: 0;
-    font: inherit;
-    color: inherit;
     background-color: transparent;
 }
 

@@ -53,7 +53,7 @@ function PunishmentTable({ display, data, violators, model }: any) {
           >
             <picture>
               <img
-                src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png"
+                 src={`/add.png`}
                 alt="+"
               ></img>
             </picture>
@@ -99,7 +99,7 @@ function PunishmentTable({ display, data, violators, model }: any) {
               <button className={`${styles.search_button}`}>
                 <picture>
                   <img
-                    src="https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search.png"
+                    src={`/icon-search.png`}
                     alt="search"
                   ></img>
                 </picture>
@@ -145,7 +145,7 @@ function PunishmentTable({ display, data, violators, model }: any) {
                     onMouseLeave={() => setVisible(false)}
                   >
                     <img
-                      src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/3cham.png"
+                      src={`/3cham.png`}
                       alt="Tùy chỉnh"
                       style={{ paddingTop: "6px" }}
                     />

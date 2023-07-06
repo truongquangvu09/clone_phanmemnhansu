@@ -63,7 +63,7 @@ export default function Recruitment({ children }: any) {
           >
             <picture style={{paddingLeft: '12px'}}>
               <img
-                src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png"
+                src={`/add.png`}
                 alt=""
               ></img>
               <p>Thêm tin tuyển dụng</p>
@@ -103,7 +103,7 @@ export default function Recruitment({ children }: any) {
                 <button className={`${styles.button_search}`}>
                   <picture>
                     <img
-                      src="https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search.png"
+                      src={`/icon-search.png`}
                       alt="search"
                     ></img>
                   </picture>

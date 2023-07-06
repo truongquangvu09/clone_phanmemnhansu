@@ -127,6 +127,9 @@
 }
 
 .tuyendungtext input {
+    color: #333333;
+    font-weight: 600;
+    font-size: 14px;
     border: 1px solid rgba(71, 71, 71, 0.48);
     width: 98%;
     height: 20px;

@@ -121,6 +121,9 @@
     float: right;
 }
 .inputright input {
+    font-size: 14px;
+    color: #333333;
+    font-weight: 600;
     outline: none;
     margin: 0;
 }
@@ -143,8 +146,7 @@
 .textarea {
     font-size: 14px;
     color: #333333;
-    font-weight: 600;
-    
+    font-weight: 600;    
 }
 
 .footerquytrinh {

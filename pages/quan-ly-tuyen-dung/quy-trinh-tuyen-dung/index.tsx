@@ -30,7 +30,7 @@ export default function RecruitmentProcess({ children }: any) {
               >
                 <picture className={`${styles.add_quytrinh2}`} >
                   <img
-                    src="https://phanmemnhansu.timviec365.vn//assets/images/l_images/add.png"
+                    src={`${'/add.png'}`}
                     alt=""
                     style={{ marginRight: "10px", marginTop: "-3px" }}
                   ></img>
@@ -58,7 +58,7 @@ export default function RecruitmentProcess({ children }: any) {
                   <button className={`${styles.button_search}`}>
                     <picture style={{paddingLeft: '12px'}}>
                       <img
-                        src="https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search.png"
+                        src={`${'/icon-search.png'}`}
                         alt="search"
                         onClick={() => handleSearch()}
                       ></img>

@@ -129,6 +129,9 @@
 }
 
 .inputright input {
+    color: #333333;
+    font-weight: 600;
+   font-size: 14px;
     outline: none;
     margin: 0;
 }
@@ -163,6 +166,9 @@
     line-height: 45px;
 }
 .form_groups textarea {
+    color: #333333;
+    font-weight: 600;
+   font-size: 14px;
     outline: none;
 }
 .textareapolicy {

@@ -4,7 +4,8 @@ import styles from "./editRecruitmentStage.module.css";
 
 export interface EditDetailTrainingProcess {}
 
-export default function EditDetailTrainingProcess({ onCloseModal }: any) {
+export default function EditDetailTrainingProcess({ data, onCloseModal }: any) {
+  console.log(data);
   const handleSubmit = () => {};
 
   const CloseModal = () => {
@@ -34,6 +35,7 @@ export default function EditDetailTrainingProcess({ onCloseModal }: any) {
                   </label>
                   <div className={`${styles.inputright}`}>
                     <input
+                      defaultValue={data.title}
                       type="text"
                       className={`${styles.inputquytrinh}`}
                       placeholder="Giai đoạn đào tạo"
@@ -58,6 +60,8 @@ export default function EditDetailTrainingProcess({ onCloseModal }: any) {
                   </label>
                   <div className={`${styles.inputright}`}>
                     <input
+                      
+                      defaultValue={data.doituong}
                       type="text"
                       className={`${styles.inputquytrinh}`}
                       placeholder="Đối tượng đào tạo"

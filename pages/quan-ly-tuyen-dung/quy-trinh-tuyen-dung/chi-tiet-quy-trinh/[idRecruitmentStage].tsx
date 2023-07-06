@@ -71,7 +71,7 @@ export default function listRecruitmentProcess({ children }: any) {
             >
               <picture>
                 <img
-                  src="https://phanmemnhansu.timviec365.vn//assets/images/l_images/add.png"
+                  src={`${'/add.png'}`}
                   alt=""
                 ></img>
               </picture>

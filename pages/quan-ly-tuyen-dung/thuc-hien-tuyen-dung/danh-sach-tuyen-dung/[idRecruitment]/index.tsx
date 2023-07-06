@@ -56,7 +56,7 @@ export default function IdRecruitment({ children }: any) {
                 <span className={`${styles.back_view}`}>
                   <picture>
                     <img
-                      src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/left_arrow.png"
+                      src={`/left_arrow.png`}
                       alt=""
                     ></img>
                   </picture>

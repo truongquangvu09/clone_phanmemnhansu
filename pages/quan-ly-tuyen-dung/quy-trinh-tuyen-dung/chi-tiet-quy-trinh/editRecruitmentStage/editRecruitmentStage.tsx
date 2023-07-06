@@ -4,7 +4,7 @@ import styles from "./editRecruitmentStage.module.css";
 import MyEditor from "../../components/Editor";
 export interface EditRecruitmentStage {}
 
-export default function EditRecruitmentStage({ onCloseModal }: any) {
+export default function EditRecruitmentStage({data, onCloseModal }: any) {
   const handleSubmit = () => {};
 
   const CloseModal = () => {

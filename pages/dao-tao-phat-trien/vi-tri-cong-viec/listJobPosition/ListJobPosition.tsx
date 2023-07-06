@@ -66,7 +66,7 @@ export default function ListJobPosition({ children }: any) {
           >
             <picture>
               <img
-                src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png"
+                src={`/add.png`}
                 alt="+"
               ></img>
             </picture>
@@ -138,7 +138,7 @@ export default function ListJobPosition({ children }: any) {
                     }}
                   >
                     <img
-                      src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/trash.png"
+                      src={`/trash.png`}
                       alt="Tùy chỉnh"
                       style={{ paddingTop: "6px" }}
                     />

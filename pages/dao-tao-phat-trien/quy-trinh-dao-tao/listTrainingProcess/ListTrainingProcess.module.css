@@ -8,12 +8,12 @@
     margin-top: 5%;
 }
 .add_quytrinh {
-    width: 1129px;
+   width: 100%;
     height: auto;
 }
 .add_quytrinh, .quytrinh_item {
     display: inline-block;
-    width: 100%;
+  
 }
 .add_quytrinh1 {
     float: left;
@@ -105,7 +105,7 @@
 .quytrinh_item {
     padding: 13px;
     border-left: 4px solid #4C5BD4;
-    max-width: 1087px
+    display: flex;
 }
 
 .quytrinh_item1 {
@@ -173,3 +173,5 @@
         width: 100%;
     }
 }
+
+

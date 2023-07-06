@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styles from "./deleteRecruitmentStage.module.css";
 export interface DeleteRecruitmentStage {}
 
-export default function DeleteRecruitmentStage({onCloseModal}: any) {
+export default function DeleteRecruitmentStage({ data, onCloseModal}: any) {
   
   const handleCancel = () => {
     onCloseModal();

@@ -1,15 +1,50 @@
 import React, { useState } from "react";
 import styles from './ListDetailTrainingProcess.module.css'
-import DetailTrainingProcessSetting from "../detailTrainingProcessSetting/DetailTrainingProcessSetting";
+
+import EditDetailTrainingProcess from "../editDetailTrainingProcess/EditDetailTrainingProcess";
+import DeleteDetailTrainingProcess from "../deleteDetailTrainingProcess/DeleteDetailTrainingProcess";
 export interface ListDetailTrainingProcess {}
 
 export default function ListDetailTrainingProcess({ item }: any) {
+  const [openModalEdit, setOpenModalEdit] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [visible, setVisible] = useState(false);
 
-    const [visible, setVisible] = useState(false);
+  const handleCloseModal = () => {
+    setOpenModalEdit(false);
+    setOpenModalDelete(false)
+    setHidden(false);
+    setVisible(false)
+  };
+  
+  const handleItemClickEdit = (item:any) => {
+    setOpenModalEdit(true);
+  };
+  const handleItemClickDelete = (item:any) => {
+    setOpenModalDelete(true);
+  };
+
+  if (openModalEdit) {
+    return (
+      <>
+        <EditDetailTrainingProcess data = {item} onCloseModal={handleCloseModal} />
+      </>
+    );
+  }
+  if (openModalDelete) {
+    return (
+      <>
+        <DeleteDetailTrainingProcess data = {item} onCloseModal={handleCloseModal} />
+      </>
+    );
+  }
+
+   
     return (
         <div key={item.id}>
         <div className={`${styles.title_giaidoans}`}>
-            <h5>({item.magiaidoan}) {item.title}</h5>
+            <h5> {item.title}</h5>
           </div>
           <div className={`${styles.all_giaidoans}`}>
             <div className={`${styles.giaidoans_item}`}>
@@ -27,11 +62,21 @@ export default function ListDetailTrainingProcess({ item }: any) {
                     >
                       <picture>
                         <img
-                          src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/3cham.png"
+                           src={`/3cham.png`}
                           alt="setting"
                         ></img>
                       </picture>
-                      {visible && <DetailTrainingProcessSetting dataId = {item.id} ></DetailTrainingProcessSetting> }
+                      {visible && (
+                         <>
+                         {!hidden && (
+                           <div className={`${styles.settings_hover}`}>
+                           <li onClick={() => handleItemClickEdit(item)}>Chỉnh sửa</li>
+                             <hr style={{ marginTop: "0", marginBottom: "0" }}></hr>
+                             <li onClick={() => handleItemClickDelete(item)}>Xóa</li>
+                           </div>
+                         )}
+                       </>
+                      )}
                     </div>
                   </div>
                   <ul>
@@ -46,6 +91,7 @@ export default function ListDetailTrainingProcess({ item }: any) {
                       <span> {"Numquam pariatur Au"} </span>
                     </li>
 
+                
                     <li>
                       <picture>
                         <img
@@ -56,6 +102,7 @@ export default function ListDetailTrainingProcess({ item }: any) {
                       Nội dung giai đoạn: <p className={`${styles.noidung}`}>{item.noidung}</p>
                       <span> </span>
                     </li>
+                  
                   </ul>
                 </div>
               </div>
@@ -65,3 +112,4 @@ export default function ListDetailTrainingProcess({ item }: any) {
         </div>
     )
 }
+

@@ -83,7 +83,7 @@ export default function listRecruitmentProcess({ children }: any) {
                   <div onClick={() => handleClickDetail(item._id)}>
                     <picture>
                       <img
-                        src="https://phanmemnhansu.timviec365.vn/assets/images/icon-new/t-icon-quy-trinh.svg"
+                        src={`${'/detail-quytrinh.svg'}`}
                         alt=""
                       ></img>
                     </picture>
@@ -94,7 +94,7 @@ export default function listRecruitmentProcess({ children }: any) {
                    onClick={() => handleModalEdit()}>
                     <picture>
                       <img
-                        src="https://phanmemnhansu.timviec365.vn/assets/images/icon-new/icon-edit.svg"
+                        src={`${'/icon-edit-quytrinh.svg'}`}
                         alt=""
                       ></img>
                     </picture>
@@ -107,7 +107,7 @@ export default function listRecruitmentProcess({ children }: any) {
                   >
                     <picture>
                       <img
-                        src="https://phanmemnhansu.timviec365.vn/assets/images/icon-new/icon-remove.svg"
+                        src={`${'/icon-remove-quytrinh.svg'}`}
                         alt=""
                       ></img>
                     </picture>

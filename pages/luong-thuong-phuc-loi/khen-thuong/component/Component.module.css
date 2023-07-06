@@ -51,6 +51,9 @@
 .t_div_search input {
     border: none;
     width: 100%;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333333;
    
 }
 .t_div_search input[type="search"]::-webkit-search-cancel-button,

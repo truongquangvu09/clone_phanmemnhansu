@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styles from "./DeleteDetailTrainingProcess.module.css";
 export interface DeleteDetailTrainingProcess {}
 
-export default function DeleteDetailTrainingProcess({onCloseModal}: any) {
+export default function DeleteDetailTrainingProcess({data, onCloseModal}: any) {
   
   const handleCancel = () => {
     onCloseModal();

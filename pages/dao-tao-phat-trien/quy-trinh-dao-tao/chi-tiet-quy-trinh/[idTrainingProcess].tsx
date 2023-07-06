@@ -76,7 +76,7 @@ export default function DetailTrainingProcess({ children }: any) {
               <button style={{ display: "flex" }} onClick={() => router.back()}>
                 <picture>
                   <img
-                    src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/left_arrow.png"
+                    src={`/left_arrow.png`}
                     alt=""
                   ></img>
                 </picture>
@@ -88,7 +88,7 @@ export default function DetailTrainingProcess({ children }: any) {
               <button style={{ display: "flex" }} onClick={() => setOpen(1)}>
                 <picture>
                   <img
-                    src="https://phanmemnhansu.timviec365.vn//assets/images/l_images/add.png"
+                    src={`/add.png`}
                     alt=""
                   ></img>
                 </picture>

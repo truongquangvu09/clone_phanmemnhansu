@@ -60,7 +60,7 @@ export default function ListTrainingProcess({ children }: any) {
                 >
                   <picture>
                     <img
-                      src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png"
+                      src={`/add.png`}
                       alt="+"
                     />
                   </picture>
@@ -81,7 +81,7 @@ export default function ListTrainingProcess({ children }: any) {
                     <button className={`${styles.button_search}`}>
                       <picture>
                         <img
-                          src="https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search.png"
+                           src={`/icon-search.png`}
                           alt="search"
                         // onClick={() => handleSearch()}
                         ></img>
@@ -111,7 +111,7 @@ export default function ListTrainingProcess({ children }: any) {
                     <div className={`${styles.quytrinh_item2}`}>
                       <button onClick={() => setOpen(2)}>
                         <picture>
-                          <img src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/trash.png" alt="Xóa"></img>
+                          <img src={`/trash.png`} alt="Xóa"></img>
                         </picture>
                       </button>
                     </div>

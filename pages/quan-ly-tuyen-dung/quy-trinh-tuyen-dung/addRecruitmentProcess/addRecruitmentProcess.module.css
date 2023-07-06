@@ -135,6 +135,9 @@
 }
 
 .inputright input {
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.9;
     outline: none;
     margin: 0;
 }

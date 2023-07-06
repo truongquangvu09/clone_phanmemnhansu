@@ -61,7 +61,7 @@ export default function ListRecruitment({ data }: any) {
                         className={`${styles.pull_right} ${styles.hover_t}`}
                       >
                         <picture className={`${styles.pull_right_img}`}>
-                          <img src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/3cham.png" alt=""></img>
+                          <img src={`/3cham.png`} alt=""></img>
                         </picture>
                         {visible &&  (
                          <div className={`${styles.settings}`}>
@@ -92,7 +92,7 @@ export default function ListRecruitment({ data }: any) {
                       <li>
                         <picture className={`${styles.icon}`}>
                           <img
-                            src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/calendar.png"
+                            src={`/calendar.png`}
                             alt=""
                           ></img>
                         </picture>
@@ -101,7 +101,7 @@ export default function ListRecruitment({ data }: any) {
                       <li>
                         <picture className={`${styles.icon}`}>
                           <img
-                            src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/house.png"
+                             src={`/house.png`}
                             alt=""
                           ></img>
                         </picture>
