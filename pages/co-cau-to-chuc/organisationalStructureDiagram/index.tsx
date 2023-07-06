@@ -24,13 +24,21 @@ export default function OrganisationalStructureDiagram() {
                             </picture>
                         </button>
                         {click === true && (<div className={`${styles.settings} ${styles.lefftset}`} >
-                            <li >Thêm mới công ty con</li>
+                            <li >
+                                <a href="https://chamcong.timviec365.vn/quan-ly-cong-ty/cong-ty-con.html" target="blank">Thêm mới công ty con</a>
+                            </li>
                             <hr style={{ marginTop: 0, marginBottom: 0 }} />
-                            <li >Thêm mới phòng ban</li>
+                            <li >
+                                <a href="https://chamcong.timviec365.vn/quan-ly-cong-ty/phong-ban.html" target="blank">Thêm mới phòng ban</a>
+                            </li>
                             <hr style={{ marginTop: 0, marginBottom: 0 }} />
-                            <li >Thêm mới tổ</li>
+                            <li >
+                                <a href="https://chamcong.timviec365.vn/quan-ly-cong-ty/ql-ds-to.html" target="blank">Thêm mới tổ</a>
+                            </li>
                             <hr style={{ marginTop: 0, marginBottom: 0 }} />
-                            <li >Thêm mới nhóm</li>
+                            <li >
+                                <a href="https://chamcong.timviec365.vn/quan-ly-cong-ty/ql-ds-nhom.html" target="blank">Thêm mới nhóm</a>
+                            </li>
                         </div>)}
                     </div>
                 </div>

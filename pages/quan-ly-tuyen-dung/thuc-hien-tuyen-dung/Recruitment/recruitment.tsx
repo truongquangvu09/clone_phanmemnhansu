@@ -61,7 +61,7 @@ export default function Recruitment({ children }: any) {
           <button className={`${styles.adds}`} 
           onClick={() => setOpenModalAdd(true)}
           >
-            <picture>
+            <picture style={{paddingLeft: '12px'}}>
               <img
                 src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png"
                 alt=""

@@ -117,7 +117,7 @@ export default function TabSalary({ children }: any) {
                                                 borderColor: "#4747477a",
                                                 height: "auto",
                                                 fontSize: state.isFocused ? 14 : 14,
-                                                width: state.isFocused ? 250 : 250,
+                                                width: '100%',
                                                 fontWeight: state.isFocused ? 600 : 600,
                                                 minHeight: 20,
                                                 color: 'black'

@@ -95,7 +95,7 @@ export default function AddOutJobModal({ onCancel }: any) {
                                                         borderRadius: 8,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
-                                                        width: state.isFocused ? 675 : 675,
+                                                        width: '100%',
                                                         fontWeight: state.isFocused ? 600 : 600
                                                     }),
                                                     placeholder: (baseStyles) => ({
@@ -120,7 +120,7 @@ export default function AddOutJobModal({ onCancel }: any) {
                                                         borderRadius: 8,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
-                                                        width: state.isFocused ? 675 : 675,
+                                                        width: '100%',
                                                         fontWeight: state.isFocused ? 600 : 600
                                                     }),
                                                     placeholder: (baseStyles) => ({
@@ -145,7 +145,7 @@ export default function AddOutJobModal({ onCancel }: any) {
                                                         borderRadius: 8,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
-                                                        width: state.isFocused ? 675 : 675,
+                                                        width: '100%',
                                                         fontWeight: state.isFocused ? 600 : 600
                                                     }),
                                                     placeholder: (baseStyles) => ({
@@ -170,7 +170,7 @@ export default function AddOutJobModal({ onCancel }: any) {
                                                         borderRadius: 8,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
-                                                        width: state.isFocused ? 675 : 675,
+                                                        width: '100%',
                                                         color: state.isFocused ? '#444444' : '#444444',
                                                         fontWeight: state.isFocused ? 600 : 600
                                                     }),

@@ -65,7 +65,7 @@ export default function AddSealModal({ onCancel }: any) {
                                                             borderRadius: 8,
                                                             fontSize: state.isFocused ? 15 : 15,
                                                             minHeight: state.isFocused ? 20 : 20,
-                                                            width: state.isFocused ? 413.38 : 413.38,
+                                                            width: '100%',
                                                             fontWeight: state.isFocused ? 600 : 600
                                                         }),
                                                         placeholder: (baseStyles) => ({
@@ -92,7 +92,7 @@ export default function AddSealModal({ onCancel }: any) {
                                                             borderRadius: 8,
                                                             fontSize: state.isFocused ? 15 : 15,
                                                             minHeight: state.isFocused ? 20 : 20,
-                                                            width: state.isFocused ? 413.38 : 413.38,
+                                                            width: '100%',
                                                             fontWeight: state.isFocused ? 600 : 600
                                                         }),
                                                         placeholder: (baseStyles) => ({
@@ -119,7 +119,7 @@ export default function AddSealModal({ onCancel }: any) {
                                                             borderRadius: 8,
                                                             fontSize: state.isFocused ? 15 : 15,
                                                             minHeight: state.isFocused ? 20 : 20,
-                                                            width: state.isFocused ? 413.38 : 413.38,
+                                                            width: '100%',
                                                             fontWeight: state.isFocused ? 600 : 600
                                                         }),
                                                         placeholder: (baseStyles) => ({

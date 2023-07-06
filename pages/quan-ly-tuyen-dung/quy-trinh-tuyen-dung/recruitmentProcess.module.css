@@ -4,8 +4,8 @@
 .l_body {
     display: inline-block;
     width: 100%;
-    margin-top: 25px;
-    margin-bottom: 0px
+    margin-top: 50px;
+    margin-bottom: 50px
 }
 
 .add_quytrinh {
@@ -27,14 +27,13 @@
     font-weight: 500;
     font-size: 14px;
     line-height: 16px;
- 
     color: #4C5BD4;
     padding: 0;
 }
 
 .add_quytrinh2_title {
     font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 14px;
     line-height: 16px;
     color: #4C5BD4;
@@ -63,10 +62,9 @@
     border-radius: 50px;
     height: 36px;
     padding: 8px 13px;
-    width: 400px;
+    width: 73%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-wrap: nowrap;
 }
 .t_div_search input {
     outline: none;
@@ -106,4 +104,8 @@
     background-color: transparent;
 }
 
-
+@media (max-width: 650px){
+    .t_div_search input {
+        width: 130px;
+    }
+}

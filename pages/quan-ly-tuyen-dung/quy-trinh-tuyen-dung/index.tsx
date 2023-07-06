@@ -28,7 +28,7 @@ export default function RecruitmentProcess({ children }: any) {
                 className="adds"
                 style={{ outline: "none", border: "none", padding: "0" }}
               >
-                <picture className={`${styles.add_quytrinh2}`}>
+                <picture className={`${styles.add_quytrinh2}`} >
                   <img
                     src="https://phanmemnhansu.timviec365.vn//assets/images/l_images/add.png"
                     alt=""
@@ -56,7 +56,7 @@ export default function RecruitmentProcess({ children }: any) {
                     autoComplete="off"
                   ></input>
                   <button className={`${styles.button_search}`}>
-                    <picture>
+                    <picture style={{paddingLeft: '12px'}}>
                       <img
                         src="https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search.png"
                         alt="search"

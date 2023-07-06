@@ -127,13 +127,16 @@ export default function SealAndSignature({ children }: any) {
                                         options={options.chonphongban}
                                         placeholder="Chọn phòng ban"
                                         styles={{
+                                            container: (baseStyles) => ({
+                                                paddingRight: 50
+                                            }),
                                             control: (baseStyles, state) => ({
                                                 ...baseStyles,
                                                 borderRadius: 4,
                                                 borderColor: "#4747477a",
                                                 height: "auto",
                                                 fontSize: state.isFocused ? 14 : 14,
-                                                width: state.isFocused ? 320 : 320,
+                                                width: '100%',
                                                 fontWeight: state.isFocused ? 600 : 600,
                                                 minHeight: 20
                                             }),
@@ -204,13 +207,16 @@ export default function SealAndSignature({ children }: any) {
                                         options={options.chonphongban}
                                         placeholder="Chọn phòng ban"
                                         styles={{
+                                            container: (baseStyles) => ({
+                                                paddingRight: 50
+                                            }),
                                             control: (baseStyles, state) => ({
                                                 ...baseStyles,
                                                 borderRadius: 4,
                                                 borderColor: "#4747477a",
                                                 height: "auto",
                                                 fontSize: state.isFocused ? 14 : 14,
-                                                width: state.isFocused ? 320 : 320,
+                                                width: '100%',
                                                 fontWeight: state.isFocused ? 600 : 600,
                                                 minHeight: 20
                                             }),

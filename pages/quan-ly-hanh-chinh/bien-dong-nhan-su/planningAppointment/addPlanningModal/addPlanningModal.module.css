@@ -66,6 +66,7 @@
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
+  width: 95%;
 }
 .edit_room {
   display: flex !important;
@@ -136,6 +137,29 @@
 .cke {
   display: inline-block !important;
 }
-.ckeditor {
-  width: 677px;
+/* .ckeditor {
+  width: 100%;
+} */
+@media screen and (min-width: 480px) and (max-width: 1024px) {
+  .content_process {
+    width: 95%;
+  }
+  .body_process .form_groups {
+    margin-top: 25px;
+    display: flex;
+    width: 100%;
+  }
+}
+@media screen and (max-width: 479px) {
+  .content_process {
+    width: 90%;
+  }
+  .body_process .form_groups {
+    margin-top: 25px;
+    display: grid;
+    width: 100%;
+  }
+  .input_right {
+    width: 100%;
+  }
 }

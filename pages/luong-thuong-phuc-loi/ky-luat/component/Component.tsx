@@ -16,12 +16,12 @@ function PunishmentTable({ display, data, violators, model }: any) {
   const [typeModal, setTypeModal] = useState(model);
   const [open, setOpen] = useState(false);
   const [modalEditType, setModalEditType] = useState("");
-  
+
   const handlePageChange = (page: any) => {
     setCurrentPage(page);
   };
 
-  console.log('typeModal', typeModal)
+  console.log("typeModal", typeModal);
   const handleCloseModal = () => {
     setTypeModal(model);
     setOpen(false);

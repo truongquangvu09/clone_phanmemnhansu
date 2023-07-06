@@ -57,3 +57,11 @@
 .wrapper .nav_tab_setting li a {
   font-weight: 500;
 }
+@media screen and (max-width: 495px) {
+  .nav_tab {
+    display: block;
+  }
+  .nav_tab_personnal_change li {
+    width: 30%;
+  }
+}

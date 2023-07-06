@@ -15,17 +15,20 @@ export default function SalaryAndBenefits({ children }: any) {
     {
       img: "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_chamcong.svg",
       title: 'Chấm công',
-      href: '',
+      href: 'https://chamcong.timviec365.vn/quan-ly-cong-ty.html',
+      target: 'blank'
     },
     {
       img: "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_tinhluong.svg",
       title: 'Tính lương',
-      href: '',
+      href: 'https://tinhluong.timviec365.vn/',
+      target: 'blank'
     },
     {
       img: "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_kpi.svg",
       title: 'KPI',
-      href: '',
+      href: 'https://kpi.timviec365.vn/quan-ly-chung.html',
+      target: 'blank'
     },
     {
       img: "		https://phanmemnhansu.timviec365.vn//assets/images/l_images/thanhtich.svg",
@@ -40,7 +43,8 @@ export default function SalaryAndBenefits({ children }: any) {
     {
       img: "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_phucloi.svg",
       title: 'Phúc lợi',
-      href: '',
+      href: 'https://tinhluong.timviec365.vn/quan-ly-phuc-loi.html',
+      target: 'blank'
     },
   ]
 
@@ -53,6 +57,7 @@ export default function SalaryAndBenefits({ children }: any) {
               className={` ${activeButton === 1 ? styles.clicked : ""}`}
               onClick={() => handleClick(index)}
               href={item.href}
+              target={item.target}
             >
               <div className={`${styles.sidebar_home}`}>
                 <div className={`${styles.button2}`}>

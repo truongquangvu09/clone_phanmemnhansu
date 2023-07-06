@@ -129,8 +129,6 @@ function EditModalListDiscipline({ onClose, type }: any) {
                     <input
                       type="date"
                       className={`${styles.inputquytrinh}`}
-                      style={{ width: "397.44px" }}
-                    
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -154,8 +152,6 @@ function EditModalListDiscipline({ onClose, type }: any) {
                     <input
                       type="text"
                       className={`${styles.inputquytrinh}`}
-                      style={{ width: "397.44px" }}
-                   
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
@@ -178,7 +174,7 @@ function EditModalListDiscipline({ onClose, type }: any) {
                       className={`${styles.red} ${styles.float_right}`}
                     ></div>
                   </label>
-                  <div style={{ marginRight: "3%" }}>
+                  <div style={{ marginRight: "3%" }} className={`${styles.select}`}>
                     <Select
                       isMulti={true}
                       defaultValue={selectedOption}
@@ -192,7 +188,7 @@ function EditModalListDiscipline({ onClose, type }: any) {
                           height: "auto",
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 397.44 : 397.44,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
                         }),
                         valueContainer: (baseStyles) => ({

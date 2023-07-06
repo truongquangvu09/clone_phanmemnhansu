@@ -1,6 +1,7 @@
 .wraper {
   display: flex;
   flex-direction: row;
+  width: 100%;
   height: 100vh;
 }
 .sidebar_content {
@@ -33,6 +34,6 @@
     min-width: 100%;
   }
   .wraper {
-    display: inline-table;
+    display: inline-block;
   }
 }

@@ -7,7 +7,7 @@
     display: inline-block;
     width: 100%;
     margin-top: 50px;
-    margin-bottom: 50px;
+    margin-bottom: 4%;
     max-width: 1120px;
     height: auto;
 }
@@ -49,8 +49,7 @@
 .li_tabs span {
     font-weight: 700;
     font-size: 14px;
-    margin-right: 56px;
-    padding: 12px 21.5px;
+    padding: 12px 15px;
 }
 .li_tabs .hover:hover {
     border-color: #eee #eee #ddd;

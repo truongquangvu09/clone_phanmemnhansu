@@ -16,7 +16,7 @@ export default function EditRecruitmentProcess({ onClose }: any) {
             {/* header */}
             <div className={`${styles.modal_header} ${styles.headquytrinh}`}>
               <h5 className={`${styles.modal_title}`}>
-                THÊM QUY TRÌNH TUYỂN DỤNG 
+              CẬP NHẬT QUY TRÌNH TUYỂN DỤNG
               </h5>
             </div>
 
@@ -83,7 +83,7 @@ export default function EditRecruitmentProcess({ onClose }: any) {
                   <span>Hủy</span>
                 </button>
                 <button type="button" className={`${styles.success}`}>
-                  Thêm
+                 Cập nhật
                 </button>
               </div>
             </form>

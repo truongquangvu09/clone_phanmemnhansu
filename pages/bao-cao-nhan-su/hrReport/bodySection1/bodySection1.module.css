@@ -66,3 +66,21 @@
   font-size: 14px;
   font-weight: 600;
 }
+@media screen and (max-width: 768px) {
+  .row_top {
+    display: block;
+  }
+  .row_top_item {
+    width: 100%;
+    margin: 10px auto;
+  }
+  .t_rp {
+    background: #ffffff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0px 8px 8px 8px;
+    padding: 0px !important;
+    margin-right: 0px;
+    margin-bottom: 42px;
+    width: 100%;
+  }
+}

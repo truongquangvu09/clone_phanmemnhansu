@@ -1,5 +1,5 @@
 .all_quytrinh {
-  width: 1119.6px;
+ 
   border: 0.5px solid rgba(71, 71, 71, 0.24);
   box-sizing: border-box;
   border-radius: 8px;
@@ -27,6 +27,7 @@
 .quytrinh_item12 {
   margin-top: 13px;
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   justify-content: flex-start;
   align-items: revert;
@@ -54,7 +55,7 @@
 }
 .span_a_detail {
   width: 52px;
-  line-height: 35px;
+
 }
 
 .qtrspan1 {
@@ -66,10 +67,11 @@
   margin-top: 10px;
 }
 .quytrinh_item {
-  height: 57.8px;
+
   padding: 13px;
   border-left: 4px solid #4c5bd4;
-  display: flex;
+  box-sizing: border-box;
+  height: auto;
  
 }
 
@@ -81,6 +83,7 @@
 .quytrinh_item2 {
   display: flex;
   justify-content: space-evenly;
+  flex-wrap: wrap;
   align-items: flex-start;
 }
 .button_option {
@@ -92,4 +95,17 @@
   border: 0.5px solid rgba(71, 71, 71, 0.24);
   margin-bottom: 20px;
   height: 0;
+}
+
+@media (max-width: 280px) {
+  .quytrinh_item {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 280px) {
+  .quytrinh_item2 {
+    margin-top: 6px;
+  }
 }

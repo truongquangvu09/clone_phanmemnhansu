@@ -64,18 +64,16 @@ export default function listRecruitmentProcess({ children }: any) {
               <div className={`${styles.quytrinh_item}`}>
                 <div className={`${styles.quytrinh_item1}`}>
                   <div className={`${styles.quytrinh_item11}`}>
-                    <Link
+                    <div
+                     onClick={() => handleClickDetail(item._id)}
                       className={`${styles.quytrinh_item11_link}`}
-                      href={{
-                        pathname: "/",
-                        query: {},
-                      }}
+                     
                     >
                       {item.title}
-                    </Link>
+                    </div>
                   </div>
                   <div className={`${styles.quytrinh_item12}`}>
-                    <span className={`${styles.qtrspan1}`}>{item.date}</span>
+                    <span className={`${styles.qtrspan1}`}><p style={{background:"#F1F9FC"}}>{item.date}</p></span>
                     <span>Tạo bởi công ty: {item.company}.</span>
                     <span>Đối tượng áp dụng: {item.relative}</span>
                   </div>
@@ -122,7 +120,7 @@ export default function listRecruitmentProcess({ children }: any) {
           );
         })}
 
-{active === 2 && <EditRecruitmentProcess onClose={closeModal}/>}
+      {active === 2 && <EditRecruitmentProcess onClose={closeModal}/>}
       {active === 3 && <DeleteRecruitmentProcess onClose={closeModal}/>}
       </div> 
     </>
