@@ -1,12 +1,41 @@
 import React, { useState } from "react";
 import styles from '../detailRecruitmentStage.module.css'
-import RecruitmentStageSetting from "../RecruitmentStageSetting/RecruitmentStageSetting";
+import EditRecruitmentStage from "../editRecruitmentStage/editRecruitmentStage";
+import DeleteRecruitmentStage from "../deleteRecruitmentStage/deleteRecruitmentStage";
 
 export interface ListRecruitmentStage {}
 
 export default function ListRecruitmentStage({ item }: any) {
-
+    const [openModal, setOpenModal] = useState(null);
     const [visible, setVisible] = useState(false);
+    const [hidden, setHidden] = useState(false);
+
+    const handleCloseModal = () => {
+      setOpenModal(null);
+      setVisible(false)
+      setHidden(false);
+    };
+    const handleItemClick = (modalId: any) => {
+      setOpenModal(modalId);
+      setHidden(false);
+    };
+
+    if (openModal === 1) {
+      return (
+        <>
+          <EditRecruitmentStage  onCloseModal={handleCloseModal} />
+        </>
+      );
+    }
+  
+    if (openModal === 2) {
+      return (
+        <>
+          <DeleteRecruitmentStage onCloseModal={handleCloseModal} />
+        </>
+      );
+    }
+  
     return (
         <div key={item.id}>
         <div className={`${styles.title_giaidoans}`}>
@@ -32,7 +61,17 @@ export default function ListRecruitmentStage({ item }: any) {
                           alt="setting"
                         ></img>
                       </picture>
-                      {visible && <RecruitmentStageSetting dataId = {item.id} ></RecruitmentStageSetting> }
+                      {visible && (
+                         <>
+                         {!hidden && (
+                           <div className={`${styles.settings_hover}`}>
+                             <li onClick={() => handleItemClick(1)}>Chỉnh sửa</li>
+                             <hr style={{ marginTop: "0", marginBottom: "0" }}></hr>
+                             <li onClick={() => handleItemClick(2)}>Xóa</li>
+                           </div>
+                         )}
+                       </>
+                      )}
                     </div>
                   </div>
                   <ul>

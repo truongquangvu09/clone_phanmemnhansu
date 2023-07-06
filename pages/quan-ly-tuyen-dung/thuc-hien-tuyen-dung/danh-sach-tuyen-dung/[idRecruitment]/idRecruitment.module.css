@@ -57,7 +57,7 @@
     background-color: #eee;
 }
 .tab_content {
-    width: 1120px;
+ 
     margin-top: 50px;
     margin-bottom: 50px;
 }
@@ -221,5 +221,13 @@
     .list_uv_cart {
         width: 95%;
     }
+}
+
+@media (max-width: 1024px) {
+    .row {
+        width: 90%;
+    }
+   
+
 }
 

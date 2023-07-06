@@ -4,7 +4,6 @@ import styles from "./detailRecruitmentStage.module.css";
 import { useRouter } from "next/router";
 import AddRecruitmentStage from "./addRecruitmentStage/them-quy-trinh";
 import ListRecruitmentStage from "./listRecruitmentStage/listRecruitmentStage";
-import RecruitmentStageSetting from "./RecruitmentStageSetting/RecruitmentStageSetting";
 export interface listRecruitmentProcess {}
 
 export default function listRecruitmentProcess({ children }: any) {

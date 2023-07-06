@@ -17,7 +17,7 @@
 }
 .add_quytrinh1 {
     float: left;
-    width: 50%;
+    width: 25%;
     cursor: pointer;
 }
 .adds {
@@ -38,7 +38,7 @@
 }
 .search_quytrinh {
     float: right;
-    width: 50%;
+    width: auto;
 }
 .t_form_search {
     float: right;
@@ -50,7 +50,7 @@
     border-radius: 50px;
     height: 36px;
     padding: 8px 13px;
-    width: 400px;
+    width: auto;
     display: flex;
 }
 .t_div_search input {
@@ -153,4 +153,23 @@
     margin-top: 10px;
     border: #333333;
     margin-right: 40px;
+}
+
+@media (max-width: 600px) {
+    .t_div_search input {
+        width: 200px;
+    }
+}
+@media (min-width: 281px) and (max-width: 480px) {
+    .add_quytrinh {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+}
+@media (max-width: 280px) {
+    .add_quytrinh1 {
+        margin-bottom: 2%;
+        width: 100%;
+    }
 }

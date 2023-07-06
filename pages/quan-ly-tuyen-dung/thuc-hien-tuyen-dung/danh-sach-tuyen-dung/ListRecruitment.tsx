@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import styles from "../Recruitment/recruitment.module.css"
 import Link from "next/link";
-import RecruitmentSetting from "../RecruitmentSetting/RecruitmentSetting";
-
+import { useRouter } from "next/router";
+import EditPerformRecruitment from "../EditPerformRecruitment/EditPerformRecruitment";
 export interface ListRecruitment {}
 
 export default function ListRecruitment({ data }: any) {
-    
+  const [openModalEdit, setOpenModalEdit] = useState(false)
     const [visible, setVisible] = useState(false);
-    
+    const handleCloseModalAdd = () => {
+      setOpenModalEdit(false)
+    }
+    const router = useRouter();
+    const handleClick = (id: any) => {
+      router.push('/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/[idRecruitment]', `/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/${id}`);
+    };
     return (
         <div>
               <div className={`${styles.new_r_t}`}>
@@ -58,12 +64,24 @@ export default function ListRecruitment({ data }: any) {
                           <img src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/3cham.png" alt=""></img>
                         </picture>
                         {visible &&  (
-                          <RecruitmentSetting dataId = {data.id}></RecruitmentSetting>
+                         <div className={`${styles.settings}`}>
+                         <li className={`${styles.detail_new}`} onClick={() => handleClick(data.id)}>
+                           Chi tiết
+                         </li>
+                         <button className={`${styles.edit_new}`} 
+                           onClick={() => setOpenModalEdit(true)}
+                         >
+                           Chỉnh sửa tin
+                         </button>
+                         <hr style={{ marginTop: "0", marginBottom: "0" }}></hr>
+                         <li>Gỡ tin tuyển dụng</li>
+                         <li>Thiết lập làm tin mẫu</li>
+                       </div>
                         )}
                       </button>
                     </div>
                   </div>
-
+                  {openModalEdit && <EditPerformRecruitment handleCloseModalAdd = {handleCloseModalAdd}></EditPerformRecruitment>}
                   <div className={`${styles.new_r_t_body}`}>
                     <ul className={`${styles.new_r_t_body_content}`}>
                       <li>

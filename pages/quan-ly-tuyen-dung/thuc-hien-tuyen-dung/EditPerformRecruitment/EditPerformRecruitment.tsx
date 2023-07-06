@@ -362,7 +362,7 @@ export default function EditPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 297 : 297,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
                         }),
                       }}
@@ -395,7 +395,7 @@ export default function EditPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 350 : 350,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
                         }),
                       }}
@@ -444,7 +444,7 @@ export default function EditPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 297 : 297,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
                         }),
                       }}
@@ -477,7 +477,7 @@ export default function EditPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 350 : 350,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
                         }),
                       }}
@@ -562,7 +562,7 @@ export default function EditPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 297 : 297,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
                         }),
                       }}
@@ -596,7 +596,7 @@ export default function EditPerformRecruitment({ handleCloseModalAdd }: any) {
                       type="text"
                       placeholder="Nhập hoa hồng được nhận (nếu có)"
                       spellCheck="false"
-                      style={{width: "43%"}}
+                     
                     />
                   </div>
                 </div>
@@ -659,7 +659,7 @@ export default function EditPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 297 : 297,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
                         }),
                       }}
@@ -692,7 +692,7 @@ export default function EditPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 350 : 350,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
                         }),
                       }}
@@ -724,7 +724,7 @@ export default function EditPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 297 : 297,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
                         }),
                       }}
@@ -757,7 +757,7 @@ export default function EditPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 350 : 350,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
                         }),
                       }}
@@ -807,7 +807,7 @@ export default function EditPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 661 : 661,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
                         }),
                       }}
@@ -840,7 +840,7 @@ export default function EditPerformRecruitment({ handleCloseModalAdd }: any) {
                           height: 32,
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? 661 : 661,
+                          width: state.isFocused ? '100%' : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
                         }),
                       }}

@@ -148,7 +148,7 @@
     background-color: white;
     border: 1px solid rgba(71, 71, 71, 0.48);
     width: 94%;
-    height: 30px;
+    height: 27px;
     border-radius: 8px;
 }
 
@@ -199,7 +199,7 @@
     display: flex;
     justify-content: flex-end;
     flex-wrap: wrap;
-    padding-right: 4%;
+    padding-right: 10%;
 
 }
 

@@ -130,7 +130,7 @@ function AddModalCollectiveDiscipline({ children,onClose }: any) {
                     <input
                       type="date"
                       className={`${styles.inputquytrinh}`}
-                 
+                      style={{height: '30.6px'}}
               
                     ></input>
                     <picture style={{ display: "none" }}>
@@ -178,7 +178,7 @@ function AddModalCollectiveDiscipline({ children,onClose }: any) {
                       className={`${styles.red} ${styles.float_right}`}
                     ></div>
                   </label>
-                  <div style={{ marginRight: "3%" }} className={`${styles.select}`}>
+                  <div style={{ marginRight: "2%" }} className={`${styles.select}`}>
                     <Select
                       isMulti={true}
                       defaultValue={selectedOption}
