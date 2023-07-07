@@ -1,20 +1,35 @@
 import React, { useState } from "react";
-import styles from "../Recruitment/recruitment.module.css"
+import styles from "../Recruitment/recruitment.module.css";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import EditPerformRecruitment from "../EditPerformRecruitment/EditPerformRecruitment";
 export interface ListRecruitment { }
 
 export default function ListRecruitment({ data }: any) {
-  const [openModalEdit, setOpenModalEdit] = useState(false)
-  const [visible, setVisible] = useState(false);
-  const handleCloseModalAdd = () => {
-    setOpenModalEdit(false)
-  }
   const router = useRouter();
-  const handleClick = (id: any) => {
-    router.push('/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/[idRecruitment]', `/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/${id}`);
+  const [openModalEdit, setOpenModalEdit] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [animateModal, setAnimateModal] = useState(false);
+
+
+  const handleCloseModalAdd = () => {
+    setAnimateModal(false);
+    setTimeout(() => {
+      setOpenModalEdit(false);
+    }, 300);
   };
+  const handleOpenModalEdit = () => {
+    setOpenModalEdit(true);
+    setAnimateModal(true);
+  };
+
+  const handleClick = (id: any) => {
+    router.push(
+      "/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/[idRecruitment]",
+      `/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/${id}`
+    );
+  };
+
   return (
     <div>
       <div className={`${styles.new_r_t}`}>
@@ -22,34 +37,26 @@ export default function ListRecruitment({ data }: any) {
           <div className={`${styles.new_r_t_header} ${styles.row}`}>
             <div className={`${styles.new_r_t_header_content} `}>
               <h3 className={`${styles.new_r_t_left_h3}`}>
-                <Link
-                  className={`${styles.new_r_t_left_link}`}
-                  href={{
-                    pathname: "",
-                    query: "",
-                  }}
+                <button
+                  style={{ border: "none", backgroundColor: "transparent", padding: 0 }}
                 >
-                  {data?.tieude}
-                </Link>
+                  <p
+                    style={{ cursor: "default" }}
+                    className={`${styles.new_r_t_left_link}`}
+                    onClick={() => handleClick(data?.id)}
+                  >
+                    {data?.tieude}
+                  </p>
+                </button>
               </h3>
             </div>
 
             <div className={``}>
-              <p className={`${styles.t_ita}`}>
-                Tạo bởi: {data?.company}
-              </p>
+              <p className={`${styles.t_ita}`}>Tạo bởi: {data?.company}</p>
             </div>
 
             <div className={`${styles.t_new_type}`}>
-              <Link
-                className={`${styles.new_r_t_left_tin}`}
-                href={{
-                  pathname: "",
-                  query: "",
-                }}
-              >
-                Tin quá hạn tuyển
-              </Link>
+              <p className={`${styles.new_r_t_left_tin}`}>Tin quá hạn tuyển</p>
             </div>
 
             <div
@@ -57,19 +64,28 @@ export default function ListRecruitment({ data }: any) {
               onMouseEnter={() => setVisible(true)}
               onMouseLeave={() => setVisible(false)}
             >
-              <button
-                className={`${styles.pull_right} ${styles.hover_t}`}
-              >
+              <div className={`${styles.pull_right} ${styles.hover_t}`}>
                 <picture className={`${styles.pull_right_img}`}>
-                  <img src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/3cham.png" alt=""></img>
+                  <img src={`/3cham.png`} alt=""></img>
                 </picture>
                 {visible && (
                   <div className={`${styles.settings}`}>
-                    <li className={`${styles.detail_new}`} onClick={() => handleClick(data?.id)}>
-                      Chi tiết
-                    </li>
-                    <button className={`${styles.edit_new}`}
-                      onClick={() => setOpenModalEdit(true)}
+                    <button
+                      style={{ border: "none", backgroundColor: "transparent", padding: '0' }}
+                    >
+                      <li
+                        style={{ paddingRight: '102px' }}
+                        className={`${styles.detail_new}`}
+                        onClick={() => handleClick(data?.id)}
+                      >
+                        Chi tiết
+                      </li>
+                    </button>
+
+                    <button
+                      style={{ paddingRight: '55px' }}
+                      className={`${styles.edit_new}`}
+                      onClick={handleOpenModalEdit}
                     >
                       Chỉnh sửa tin
                     </button>
@@ -78,10 +94,14 @@ export default function ListRecruitment({ data }: any) {
                     <li>Thiết lập làm tin mẫu</li>
                   </div>
                 )}
-              </button>
+              </div>
             </div>
           </div>
-          {openModalEdit && <EditPerformRecruitment handleCloseModalAdd={handleCloseModalAdd}></EditPerformRecruitment>}
+          {openModalEdit && (
+            <EditPerformRecruitment animation={animateModal}
+              handleCloseModalAdd={handleCloseModalAdd}
+            ></EditPerformRecruitment>
+          )}
           <div className={`${styles.new_r_t_body}`}>
             <ul className={`${styles.new_r_t_body_content}`}>
               <li>
@@ -91,21 +111,15 @@ export default function ListRecruitment({ data }: any) {
               </li>
               <li>
                 <picture className={`${styles.icon}`}>
-                  <img
-                    src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/calendar.png"
-                    alt=""
-                  ></img>
+                  <img src={`/calendar.png`} alt=""></img>
                 </picture>
                 <span className={`${styles.text}`}>{data?.date}</span>
               </li>
               <li>
                 <picture className={`${styles.icon}`}>
-                  <img
-                    src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/house.png"
-                    alt=""
-                  ></img>
+                  <img src={`/house.png`} alt=""></img>
                 </picture>
-                <span className={`${styles.text}`}>{data?.diachi}      </span>
+                <span className={`${styles.text}`}>{data?.diachi} </span>
               </li>
             </ul>
 
@@ -131,6 +145,5 @@ export default function ListRecruitment({ data }: any) {
         </div>
       </div>
     </div>
-  )
-
+  );
 }

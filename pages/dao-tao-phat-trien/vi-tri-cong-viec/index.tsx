@@ -17,7 +17,7 @@ export default function JobPosition({ children }: any) {
       <div className={`${styles.l_body}`}>
         <ul className={`${styles.nav} ${styles.nav_tabs}`}>
           {listTab.map((item) => (
-            <div key={item.key}>
+            <div key={item.key} className={`${styles.w_480}`}>
               <li className={`${styles.li_tabs}`}>
                 <span
                   className={`${
@@ -31,8 +31,8 @@ export default function JobPosition({ children }: any) {
             </div>
           ))}
         </ul>
+        {listTab.find((item) => item.key === active)?.component}
       </div>
-      {listTab.find((item) => item.key === active)?.component}
     </>
   );
 }

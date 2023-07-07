@@ -3,7 +3,7 @@ import styles from "./AddModalPersonalDiscipline.module.css";
 import Select from "react-select";
 
 type SelectOptionType = { label: string; value: string };
-function AddModalCollectiveDiscipline({ children,onClose }: any) {
+function AddModalCollectiveDiscipline({ animation,onClose }: any) {
   const options = {
     tendoituong: [
       { value: "Lê Hồng Anh", label: "Lê Hồng Anh" },
@@ -35,7 +35,7 @@ function AddModalCollectiveDiscipline({ children,onClose }: any) {
   return (
     <>
       <div className={`${styles.overlay}`}></div>
-      <div className={`${styles.modal} ${styles.modal_setting} `}>
+      <div className={`${styles.modal} ${styles.modal_setting}  ${animation ? styles.fade_in : styles.fade_out }`} style={{display:'block'}}>
         <div className={`${styles.modal_dialog} ${styles.contentquytrinh}`}>
           <div className={`${styles.modal_content} `}>
             {/* header */}
@@ -62,7 +62,7 @@ function AddModalCollectiveDiscipline({ children,onClose }: any) {
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                        src={`${'/danger.png'}`}
                         alt="Lỗi"
                       ></img>
                     </picture>
@@ -86,7 +86,7 @@ function AddModalCollectiveDiscipline({ children,onClose }: any) {
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                       src={`${'/danger.png'}`}
                         alt="Lỗi"
                       ></img>
                     </picture>
@@ -110,7 +110,7 @@ function AddModalCollectiveDiscipline({ children,onClose }: any) {
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                        src={`${'/danger.png'}`}
                         alt="Lỗi"
                       ></img>
                     </picture>
@@ -135,7 +135,7 @@ function AddModalCollectiveDiscipline({ children,onClose }: any) {
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                        src={`${'/danger.png'}`}
                         alt="Lỗi"
                       ></img>
                     </picture>
@@ -159,7 +159,7 @@ function AddModalCollectiveDiscipline({ children,onClose }: any) {
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                       src={`${'/danger.png'}`}
                         alt="Lỗi"
                       ></img>
                     </picture>
@@ -222,7 +222,7 @@ function AddModalCollectiveDiscipline({ children,onClose }: any) {
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                        src={`${'/danger.png'}`}
                         alt="Lỗi"
                       ></img>
                     </picture>
@@ -247,7 +247,7 @@ function AddModalCollectiveDiscipline({ children,onClose }: any) {
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                        src={`${'/danger.png'}`}
                         alt="Lỗi"
                       ></img>
                     </picture>
@@ -271,7 +271,7 @@ function AddModalCollectiveDiscipline({ children,onClose }: any) {
                     ></textarea>
                     <picture style={{ display: "none" }}>
                       <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                       src={`${'/danger.png'}`}
                         alt="Lỗi"
                       ></img>
                     </picture>

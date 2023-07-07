@@ -1,37 +1,55 @@
 import React, { useState } from "react";
-import styles from '../detailRecruitmentStage.module.css'
+import styles from "../detailRecruitmentStage.module.css";
 import EditRecruitmentStage from "../editRecruitmentStage/editRecruitmentStage";
 import DeleteRecruitmentStage from "../deleteRecruitmentStage/deleteRecruitmentStage";
 
 export interface ListRecruitmentStage { }
 
 export default function ListRecruitmentStage({ item }: any) {
-  const [openModal, setOpenModal] = useState(null);
+  const [animateModal, setAnimateModal] = useState(false);
+  const [openModalEdit, setOpenModalEdit] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
   const [visible, setVisible] = useState(false);
   const [hidden, setHidden] = useState(false);
 
   const handleCloseModal = () => {
-    setOpenModal(null);
-    setVisible(false)
-    setHidden(false);
+    setAnimateModal(false);
+    setTimeout(() => {
+      setOpenModalEdit(false);
+      setOpenModalDelete(false);
+      setVisible(false);
+      setHidden(false);
+    }, 300);
   };
-  const handleItemClick = (modalId: any) => {
-    setOpenModal(modalId);
-    setHidden(false);
+  const handleItemClickEdit = (item: any) => {
+    setOpenModalEdit(true);
+    setAnimateModal(true);
+  };
+  const handleItemClickDelete = (item: any) => {
+    setOpenModalDelete(true);
+    setAnimateModal(true);
   };
 
-  if (openModal === 1) {
+  if (openModalEdit) {
     return (
       <>
-        <EditRecruitmentStage onCloseModal={handleCloseModal} />
+        <EditRecruitmentStage
+          data={item}
+          animation={animateModal}
+          onCloseModal={handleCloseModal}
+        />
       </>
     );
   }
 
-  if (openModal === 2) {
+  if (openModalDelete) {
     return (
       <>
-        <DeleteRecruitmentStage onCloseModal={handleCloseModal} />
+        <DeleteRecruitmentStage
+          data={item}
+          animation={animateModal}
+          onCloseModal={handleCloseModal}
+        />
       </>
     );
   }
@@ -39,7 +57,9 @@ export default function ListRecruitmentStage({ item }: any) {
   return (
     <div key={item?.id}>
       <div className={`${styles.title_giaidoans}`}>
-        <h5>({item?.magiaidoan}) {item?.title}</h5>
+        <h5>
+          ({item?.magiaidoan}) {item?.title}
+        </h5>
       </div>
       <div className={`${styles.all_giaidoans}`}>
         <div className={`${styles.giaidoans_item}`}>
@@ -56,18 +76,21 @@ export default function ListRecruitmentStage({ item }: any) {
                   onMouseLeave={() => setVisible(false)}
                 >
                   <picture>
-                    <img
-                      src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/3cham.png"
-                      alt="setting"
-                    ></img>
+                    <img src={`${"/3cham.png"}`} alt="setting"></img>
                   </picture>
                   {visible && (
                     <>
                       {!hidden && (
                         <div className={`${styles.settings_hover}`}>
-                          <li onClick={() => handleItemClick(1)}>Chỉnh sửa</li>
-                          <hr style={{ marginTop: "0", marginBottom: "0" }}></hr>
-                          <li onClick={() => handleItemClick(2)}>Xóa</li>
+                          <li onClick={() => handleItemClickEdit(item)}>
+                            Chỉnh sửa
+                          </li>
+                          <hr
+                            style={{ marginTop: "0", marginBottom: "0" }}
+                          ></hr>
+                          <li onClick={() => handleItemClickDelete(item)}>
+                            Xóa
+                          </li>
                         </div>
                       )}
                     </>
@@ -77,10 +100,7 @@ export default function ListRecruitmentStage({ item }: any) {
               <ul>
                 <li>
                   <picture>
-                    <img
-                      src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/right_blue.png"
-                      alt=""
-                    ></img>
+                    <img src={`${"/right_blue.png"}`} alt=""></img>
                   </picture>
                   Thành viên thực hiện: {item?.thanhvien}
                   <span> {"Numquam pariatur Au"} </span>
@@ -88,10 +108,7 @@ export default function ListRecruitmentStage({ item }: any) {
 
                 <li>
                   <picture>
-                    <img
-                      src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/right_blue.png"
-                      alt=""
-                    ></img>
+                    <img src={`${"/right_blue.png"}`} alt=""></img>
                   </picture>
                   Mục tiêu: {item?.muctieu}
                   <span> </span>
@@ -99,10 +116,7 @@ export default function ListRecruitmentStage({ item }: any) {
 
                 <li>
                   <picture>
-                    <img
-                      src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/right_blue.png"
-                      alt=""
-                    ></img>
+                    <img src={`${"/right_blue.png"}`} alt=""></img>
                   </picture>
                   Thời gian định lượng: {item?.thoigian}
                   <span> {"Laboriosam eum natu"} </span>
@@ -110,16 +124,16 @@ export default function ListRecruitmentStage({ item }: any) {
 
                 <li>
                   <picture>
-                    <img
-                      src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/right_blue.png"
-                      alt=""
-                    ></img>
+                    <img src={`${"/right_blue.png"}`} alt=""></img>
                   </picture>
                   Mô tả công việc:
                   <span className={`${styles.view_detail_desc}`}>
                     (Xem chi tiết)
                   </span>
-                  <div className={`${styles.motacv}`} style={{ maxHeight: "200px" }}>
+                  <div
+                    className={`${styles.motacv}`}
+                    style={{ maxHeight: "200px" }}
+                  >
                     <p>{item?.mota}</p>
                   </div>
                 </li>
@@ -130,5 +144,5 @@ export default function ListRecruitmentStage({ item }: any) {
         <hr></hr>
       </div>
     </div>
-  )
+  );
 }

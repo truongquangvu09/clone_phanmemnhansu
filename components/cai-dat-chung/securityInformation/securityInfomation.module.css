@@ -210,3 +210,38 @@ input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   transform: translateX(26px);
 }
+.content_retyperPass {
+  background: #f7f7f7;
+  padding: 40px;
+}
+.retyprPass_right {
+  margin: 0px auto;
+}
+
+.content_retyperPass table {
+  background-color: transparent;
+}
+.retyprPass_left {
+  text-align: right;
+  width: 50%;
+}
+.retyprPass_text {
+  font-size: 14px;
+  line-height: 16px;
+  color: #474747;
+  padding: 15px;
+}
+.retyprPass_right td {
+  background: white;
+  padding: 15px 20px;
+  outline: none;
+}
+.l_retypePass_input {
+  border: none;
+  padding: 0 10px;
+  width: 254px;
+  height: 30px;
+  background: #ffffff;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+}

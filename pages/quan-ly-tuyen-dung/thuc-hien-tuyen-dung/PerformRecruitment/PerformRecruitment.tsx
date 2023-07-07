@@ -95,7 +95,7 @@ export default function PerformRecruitment({ children }: any) {
                         <picture>
                           <img
                             className={`${styles.tin_item33_img}`}
-                            src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/calendar.png"
+                            src={`/calendar.png`}
                           ></img>
                           <span>{item.date}</span>
                         </picture>

@@ -152,12 +152,21 @@ export default function SecurityInfomation() {
                                         <tbody>
                                             <tr className={`${styles.retyprPass_left}`}>
                                                 <td className={`${styles.retyprPass_text}`}>Mật khẩu hiện tại</td>
+                                                <td>
+                                                    <input type="password" className={`${styles.l_retypePass_input} ${styles.t_current_pass}`} />
+                                                </td>
                                             </tr>
                                             <tr className={`${styles.retyprPass_left}`}>
                                                 <td className={`${styles.retyprPass_text}`}>Mật khẩu mới</td>
+                                                <td>
+                                                    <input type="password" className={`${styles.l_retypePass_input} ${styles.t_current_pass}`} />
+                                                </td>
                                             </tr>
                                             <tr className={`${styles.retyprPass_left}`}>
                                                 <td className={`${styles.retyprPass_text}`}>Nhập lại mật khẩu mới</td>
+                                                <td>
+                                                    <input type="password" className={`${styles.l_retypePass_input} ${styles.t_current_pass}`} />
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>

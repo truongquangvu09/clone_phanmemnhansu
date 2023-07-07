@@ -56,3 +56,14 @@
     border-color: #eee #eee #ddd;
     background-color: #eee;
 }
+
+@media (min-width: 281px) and (max-width: 480px) {
+    .w_480 {
+        width: 110%;
+    }
+}
+@media (max-width: 280) {
+    .w_480 {
+        width: 120%;
+    }
+}

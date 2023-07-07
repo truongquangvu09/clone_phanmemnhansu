@@ -3,14 +3,14 @@ import styles from "./EditRecruitmentProcess.module.css";
 
 export interface EditRecruitmentProcess {}
 
-export default function EditRecruitmentProcess({ onClose }: any) {
+export default function EditRecruitmentProcess({animation, onClose }: any) {
   const handleCancel = () => {
       onClose();
     };
   return (
     <>
       <div className={`${styles.overlay}`}></div>
-      <div className={`${styles.modal} ${styles.modal_setting} `}>
+      <div className={`${styles.modal} ${styles.modal_setting}  ${animation ? styles.fade_in : styles.fade_out }`}>
         <div className={`${styles.modal_dialog} ${styles.contentquytrinh}`}>
           <div className={`${styles.modal_content} `}>
             {/* header */}
@@ -36,7 +36,7 @@ export default function EditRecruitmentProcess({ onClose }: any) {
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                      src = {`${'/danger.png'}`}
                         alt="Lỗi"
                       ></img>
                     </picture>
@@ -60,7 +60,7 @@ export default function EditRecruitmentProcess({ onClose }: any) {
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                       src = {`${'/danger.png'}`}
                         alt="Lỗi"
                       ></img>
                     </picture>

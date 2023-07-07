@@ -22,7 +22,7 @@ export default function RecruitmentProcess({ children }: any) {
             ></input>
             <picture style={{ display: "none" }}>
               <img
-                src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                src = {`${'/danger.png'}`}
                 alt="Lỗi"
               ></img>
             </picture>
@@ -46,7 +46,7 @@ export default function RecruitmentProcess({ children }: any) {
             ></input>
             <picture style={{ display: "none" }}>
               <img
-                src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                src = {`${'/danger.png'}`}
                 alt="Lỗi"
               ></img>
             </picture>
@@ -70,7 +70,7 @@ export default function RecruitmentProcess({ children }: any) {
             ></input>
             <picture style={{ display: "none" }}>
               <img
-                src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+               src = {`${'/danger.png'}`}
                 alt="Lỗi"
               ></img>
             </picture>

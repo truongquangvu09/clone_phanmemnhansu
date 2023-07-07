@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from './AddDetailTrainingProcess.module.css'
 
-export default function AddDetailTrainingProcess({ closeModal }: any) {
+export default function AddDetailTrainingProcess({animation, closeModal }: any) {
     const handleSubmit = () => {};
     const handleCloseModalAdd = () => {
         closeModal()
@@ -10,10 +10,7 @@ export default function AddDetailTrainingProcess({ closeModal }: any) {
         <>
             
       <div className={`${styles.overlay}`}></div>
-      <div
-        className={`${styles.modal} ${styles.modal_setting}`}
-        style={{ display: "block" }}
-      >
+      <div className={`${styles.modal} ${styles.modal_setting}  ${animation ? styles.fade_in : styles.fade_out }`}>
         <div className={` ${styles.modal_dialog} ${styles.contentquytrinh}`}>
           <div className={`${styles.modal_content} `}>
             {/* header */}

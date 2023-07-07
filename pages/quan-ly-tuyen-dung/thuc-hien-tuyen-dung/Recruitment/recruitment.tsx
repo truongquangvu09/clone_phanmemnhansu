@@ -10,11 +10,19 @@ export interface Recruitment {}
 
 export default function Recruitment({ children }: any) {
   
+  const [animateModal, setAnimateModal] = useState(false);
   const [openModalAdd, setOpenModalAdd] = useState(false)
+  
   const handleCloseModalAdd = () => {
-    setOpenModalAdd(false)
-  }
-
+    setAnimateModal(false);
+    setTimeout(() => {
+      setOpenModalAdd(false);
+    }, 300);
+  };
+  const handleOpenModalAdd = () => {
+    setOpenModalAdd(true);
+    setAnimateModal(true);
+  };
   const data = [
     {
       id: 1,
@@ -59,18 +67,18 @@ export default function Recruitment({ children }: any) {
       <div className={`${styles.tintuyendung}`}>
         <div className={`${styles.tuyendung1}`}>
           <button className={`${styles.adds}`} 
-          onClick={() => setOpenModalAdd(true)}
+          onClick={handleOpenModalAdd}
           >
             <picture style={{paddingLeft: '12px'}}>
               <img
-                src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png"
+                src={`/add.png`}
                 alt=""
               ></img>
               <p>Thêm tin tuyển dụng</p>
             </picture>
           </button>
         </div>
-        {openModalAdd && <AddPerformRecruitment handleCloseModalAdd = {handleCloseModalAdd}></AddPerformRecruitment>}
+        {openModalAdd && <AddPerformRecruitment animation = {animateModal}  handleCloseModalAdd = {handleCloseModalAdd}></AddPerformRecruitment>}
         <div className={`${styles.tuyendung2}`}>
           <div className={`${styles.tuyendung2_1}`}>
             <li>
@@ -103,7 +111,7 @@ export default function Recruitment({ children }: any) {
                 <button className={`${styles.button_search}`}>
                   <picture>
                     <img
-                      src="https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search.png"
+                      src={`/icon-search.png`}
                       alt="search"
                     ></img>
                   </picture>

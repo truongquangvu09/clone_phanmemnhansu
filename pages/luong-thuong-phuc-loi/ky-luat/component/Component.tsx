@@ -16,27 +16,36 @@ function PunishmentTable({ display, data, violators, model }: any) {
   const [typeModal, setTypeModal] = useState(model);
   const [open, setOpen] = useState(false);
   const [modalEditType, setModalEditType] = useState("");
+  const [animateModal, setAnimateModal] = useState(false);
 
   const handlePageChange = (page: any) => {
     setCurrentPage(page);
   };
 
-  console.log("typeModal", typeModal);
+  
   const handleCloseModal = () => {
-    setTypeModal(model);
-    setOpen(false);
+   
+    setAnimateModal(false);
+    setTimeout(() => {
+       setOpen(false);
+       setTypeModal(model);
+       setModalEditType('')
+    }, 300);
   };
 
   useEffect(() => {
     const modalEditTypes = () => {
       if (typeModal === "canhan") {
         setModalEditType("canhan");
+        setAnimateModal(true)
       }
       if (typeModal === "tapthe") {
         setModalEditType("tapthe");
+        setAnimateModal(true)
       }
       if (typeModal === "list") {
         setModalEditType("list");
+        setAnimateModal(true)
       }
     };
     modalEditTypes();
@@ -53,7 +62,7 @@ function PunishmentTable({ display, data, violators, model }: any) {
           >
             <picture>
               <img
-                src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png"
+                 src={`/add.png`}
                 alt="+"
               ></img>
             </picture>
@@ -62,26 +71,35 @@ function PunishmentTable({ display, data, violators, model }: any) {
         </div>
         {typeModal === "canhan" && open && (
           <AddModalPersonalDiscipline
+          animation = {animateModal}
             onClose={handleCloseModal}
           ></AddModalPersonalDiscipline>
         )}
+
         {typeModal === "tapthe" && open && (
           <AddModalCollectiveDiscipline
+          animation = {animateModal}
             onClose={handleCloseModal}
           ></AddModalCollectiveDiscipline>
         )}
+
         {typeModal === "chitiet" && modalEditType === "canhan" && (
           <EditModalPersonalDiscipline
+          animation = {animateModal}
             onClose={handleCloseModal}
           ></EditModalPersonalDiscipline>
         )}
+
         {typeModal === "chitiet" && modalEditType === "tapthe" && (
           <EditModalCollectiveDiscipline
+          animation = {animateModal}
             onClose={handleCloseModal}
           ></EditModalCollectiveDiscipline>
         )}
+        
         {typeModal === "chitiet" && modalEditType === "list" && (
           <EditModalListDiscipline
+          animation = {animateModal}
             onClose={handleCloseModal}
           ></EditModalListDiscipline>
         )}
@@ -99,7 +117,7 @@ function PunishmentTable({ display, data, violators, model }: any) {
               <button className={`${styles.search_button}`}>
                 <picture>
                   <img
-                    src="https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search.png"
+                    src={`/icon-search.png`}
                     alt="search"
                   ></img>
                 </picture>
@@ -145,7 +163,7 @@ function PunishmentTable({ display, data, violators, model }: any) {
                     onMouseLeave={() => setVisible(false)}
                   >
                     <img
-                      src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/3cham.png"
+                      src={`/3cham.png`}
                       alt="Tùy chỉnh"
                       style={{ paddingTop: "6px" }}
                     />

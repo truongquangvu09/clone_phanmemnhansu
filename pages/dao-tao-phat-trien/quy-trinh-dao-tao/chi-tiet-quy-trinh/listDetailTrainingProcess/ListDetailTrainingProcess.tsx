@@ -1,15 +1,62 @@
 import React, { useState } from "react";
-import styles from './ListDetailTrainingProcess.module.css'
-import DetailTrainingProcessSetting from "../detailTrainingProcessSetting/DetailTrainingProcessSetting";
+import styles from "./ListDetailTrainingProcess.module.css";
+
+import EditDetailTrainingProcess from "../editDetailTrainingProcess/EditDetailTrainingProcess";
+import DeleteDetailTrainingProcess from "../deleteDetailTrainingProcess/DeleteDetailTrainingProcess";
 export interface ListDetailTrainingProcess { }
 
 export default function ListDetailTrainingProcess({ item }: any) {
-
+  const [animateModal, setAnimateModal] = useState(false);
+  const [openModalEdit, setOpenModalEdit] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [hidden, setHidden] = useState(false);
+
+  const handleCloseModal = () => {
+    setAnimateModal(false);
+    setTimeout(() => {
+      setOpenModalEdit(false);
+      setOpenModalDelete(false);
+      setVisible(false);
+      setHidden(false);
+    }, 300);
+  };
+  const handleItemClickEdit = (item: any) => {
+    setOpenModalEdit(true);
+    setAnimateModal(true);
+  };
+  const handleItemClickDelete = (item: any) => {
+    setOpenModalDelete(true);
+    setAnimateModal(true);
+  };
+
+  if (openModalEdit) {
+    return (
+      <>
+        <EditDetailTrainingProcess
+          data={item}
+          animation={animateModal}
+          onCloseModal={handleCloseModal}
+        />
+      </>
+    );
+  }
+  if (openModalDelete) {
+    return (
+      <>
+        <DeleteDetailTrainingProcess
+          data={item}
+          animation={animateModal}
+          onCloseModal={handleCloseModal}
+        />
+      </>
+    );
+  }
+
   return (
     <div key={item?.id}>
       <div className={`${styles.title_giaidoans}`}>
-        <h5>({item?.magiaidoan}) {item?.title}</h5>
+        <h5> {item?.title}</h5>
       </div>
       <div className={`${styles.all_giaidoans}`}>
         <div className={`${styles.giaidoans_item}`}>
@@ -26,16 +73,29 @@ export default function ListDetailTrainingProcess({ item }: any) {
                   onMouseLeave={() => setVisible(false)}
                 >
                   <picture>
-                    <img
-                      src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/3cham.png"
-                      alt="setting"
-                    ></img>
+                    <img src={`/3cham.png`} alt="setting"></img>
                   </picture>
-                  {visible && <DetailTrainingProcessSetting dataId={item?.id} ></DetailTrainingProcessSetting>}
+                  {visible && (
+                    <>
+                      {!hidden && (
+                        <div className={`${styles.settings_hover}`}>
+                          <li onClick={() => handleItemClickEdit(item)}>
+                            Chỉnh sửa
+                          </li>
+                          <hr
+                            style={{ marginTop: "0", marginBottom: "0" }}
+                          ></hr>
+                          <li onClick={() => handleItemClickDelete(item)}>
+                            Xóa
+                          </li>
+                        </div>
+                      )}
+                    </>
+                  )}
                 </div>
               </div>
               <ul>
-                <li style={{ marginBottom: '4px' }}>
+                <li style={{ marginBottom: "4px" }}>
                   <picture>
                     <img
                       src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/right_blue.png"
@@ -53,7 +113,8 @@ export default function ListDetailTrainingProcess({ item }: any) {
                       alt=""
                     ></img>
                   </picture>
-                  Nội dung giai đoạn: <p className={`${styles.noidung}`}>{item?.noidung}</p>
+                  Nội dung giai đoạn:{" "}
+                  <p className={`${styles.noidung}`}>{item?.noidung}</p>
                   <span> </span>
                 </li>
               </ul>
@@ -63,5 +124,5 @@ export default function ListDetailTrainingProcess({ item }: any) {
         <hr></hr>
       </div>
     </div>
-  )
+  );
 }

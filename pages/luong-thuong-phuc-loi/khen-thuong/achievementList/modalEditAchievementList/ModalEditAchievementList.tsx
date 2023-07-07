@@ -4,8 +4,7 @@ import Select from "react-select";
 
 type SelectOptionType = { label: string; value: string };
 
-function ModalEditAchievementList({ onClose, type }: any) {
-  
+function ModalEditAchievementList({ animation, onClose }: any) {
   const options = {
     tendoituong: [
       { value: "Lê Hồng Anh", label: "Lê Hồng Anh" },
@@ -38,7 +37,12 @@ function ModalEditAchievementList({ onClose, type }: any) {
   return (
     <>
       <div className={`${styles.overlay}`}></div>
-      <div className={`${styles.modal} ${styles.modal_setting} `}>
+      <div
+        className={`${styles.modal} ${styles.modal_setting}  ${
+          animation ? styles.fade_in : styles.fade_out
+        }`}
+        style={{ display: "block" }}
+      >
         <div className={`${styles.modal_dialog} ${styles.contentquytrinh}`}>
           <div className={`${styles.modal_content} `}>
             {/* header */}
@@ -60,10 +64,7 @@ function ModalEditAchievementList({ onClose, type }: any) {
                       placeholder="Nhập tên giai đoạn"
                     ></input>
                     <picture style={{ display: "none" }}>
-                      <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
-                        alt="Lỗi"
-                      ></img>
+                      <img src={`${"/danger.png"}`} alt="Lỗi"></img>
                     </picture>
                     <div
                       className={`${styles.errors}`}
@@ -84,10 +85,7 @@ function ModalEditAchievementList({ onClose, type }: any) {
                       placeholder="Nhập tên giai đoạn"
                     ></input>
                     <picture style={{ display: "none" }}>
-                      <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
-                        alt="Lỗi"
-                      ></img>
+                      <img src={`${"/danger.png"}`} alt="Lỗi"></img>
                     </picture>
                     <div
                       className={`${styles.errors}`}
@@ -98,13 +96,16 @@ function ModalEditAchievementList({ onClose, type }: any) {
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                  Tên đối tượng
+                    Tên đối tượng
                     <span className={`${styles.red}`}> *</span>
                     <div
                       className={`${styles.red} ${styles.float_right}`}
                     ></div>
                   </label>
-                  <div style={{ marginRight: "2%" }} className={`${styles.select}`}>
+                  <div
+                    style={{ marginRight: "2%" }}
+                    className={`${styles.select}`}
+                  >
                     <Select
                       isMulti
                       defaultValue={selectedOption}
@@ -118,7 +119,7 @@ function ModalEditAchievementList({ onClose, type }: any) {
                           height: "auto",
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? '100%' : baseStyles.width,
+                          width: state.isFocused ? "100%" : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
                         }),
                         valueContainer: (baseStyles) => ({
@@ -146,10 +147,7 @@ function ModalEditAchievementList({ onClose, type }: any) {
                       placeholder="Nhập tên giai đoạn"
                     ></input>
                     <picture style={{ display: "none" }}>
-                      <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
-                        alt="Lỗi"
-                      ></img>
+                      <img src={`${"/danger.png"}`} alt="Lỗi"></img>
                     </picture>
                     <div
                       className={`${styles.errors}`}
@@ -168,13 +166,10 @@ function ModalEditAchievementList({ onClose, type }: any) {
                       type="date"
                       className={`${styles.inputquytrinh}`}
                       placeholder="Nhập tên giai đoạn"
-                      style={{height: '30.6px'}}
+                      style={{ height: "30.6px" }}
                     ></input>
                     <picture style={{ display: "none" }}>
-                      <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
-                        alt="Lỗi"
-                      ></img>
+                      <img src={`${"/danger.png"}`} alt="Lỗi"></img>
                     </picture>
                     <div
                       className={`${styles.errors}`}
@@ -191,7 +186,10 @@ function ModalEditAchievementList({ onClose, type }: any) {
                       className={`${styles.red} ${styles.float_right}`}
                     ></div>
                   </label>
-                  <div style={{ marginRight: "2%" }} className={`${styles.select}`}>
+                  <div
+                    style={{ marginRight: "2%" }}
+                    className={`${styles.select}`}
+                  >
                     <Select
                       isMulti={true}
                       defaultValue={selectedOption}
@@ -205,7 +203,7 @@ function ModalEditAchievementList({ onClose, type }: any) {
                           height: "auto",
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? '100%' : baseStyles.width,
+                          width: state.isFocused ? "100%" : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
                         }),
                         valueContainer: (baseStyles) => ({
@@ -233,10 +231,7 @@ function ModalEditAchievementList({ onClose, type }: any) {
                       placeholder="Nhập tên giai đoạn"
                     ></input>
                     <picture style={{ display: "none" }}>
-                      <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
-                        alt="Lỗi"
-                      ></img>
+                      <img src={`${"/danger.png"}`} alt="Lỗi"></img>
                     </picture>
                     <div
                       className={`${styles.errors}`}
@@ -257,10 +252,7 @@ function ModalEditAchievementList({ onClose, type }: any) {
                       placeholder="Nhập tên giai đoạn"
                     ></input>
                     <picture style={{ display: "none" }}>
-                      <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
-                        alt="Lỗi"
-                      ></img>
+                      <img src={`${"/danger.png"}`} alt="Lỗi"></img>
                     </picture>
                     <div
                       className={`${styles.errors}`}

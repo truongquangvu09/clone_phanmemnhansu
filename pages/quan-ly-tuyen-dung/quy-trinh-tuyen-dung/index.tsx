@@ -7,13 +7,19 @@ export interface RecruitmentProcess {}
 
 export default function RecruitmentProcess({ children }: any) {
   const [openModalAdd, setOpenModalAdd] = useState(false);
+  const [animateModal, setAnimateModal] = useState(false);
 
   const handleOpenModalAdd = () => {
     setOpenModalAdd(true);
+    setAnimateModal(true);
   };
+ 
   const handleCloseModalAdd = () => {
-    setOpenModalAdd(false)
-  }
+    setAnimateModal(false);
+    setTimeout(() => {
+      setOpenModalAdd(false);
+    }, 300);
+  };
 
   const handleSearch = () => {
     alert("hdhdhdh");
@@ -30,7 +36,7 @@ export default function RecruitmentProcess({ children }: any) {
               >
                 <picture className={`${styles.add_quytrinh2}`} >
                   <img
-                    src="https://phanmemnhansu.timviec365.vn//assets/images/l_images/add.png"
+                    src={`${'/add.png'}`}
                     alt=""
                     style={{ marginRight: "10px", marginTop: "-3px" }}
                   ></img>
@@ -43,7 +49,7 @@ export default function RecruitmentProcess({ children }: any) {
                 </picture>
               </button>
               </div>
-                {openModalAdd && <AddRecruitmentProcess handleCloseModalAdd = {handleCloseModalAdd}></AddRecruitmentProcess>}
+                {openModalAdd && <AddRecruitmentProcess animation = {animateModal} handleCloseModalAdd = {handleCloseModalAdd}></AddRecruitmentProcess>}
               <div className={`${styles.search_quytrinh}`}>
               <form className={`${styles.t_form_search}`}>
                 <div className={`${styles.t_div_search}`}>
@@ -58,7 +64,7 @@ export default function RecruitmentProcess({ children }: any) {
                   <button className={`${styles.button_search}`}>
                     <picture style={{paddingLeft: '12px'}}>
                       <img
-                        src="https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search.png"
+                        src={`${'/icon-search.png'}`}
                         alt="search"
                         onClick={() => handleSearch()}
                       ></img>

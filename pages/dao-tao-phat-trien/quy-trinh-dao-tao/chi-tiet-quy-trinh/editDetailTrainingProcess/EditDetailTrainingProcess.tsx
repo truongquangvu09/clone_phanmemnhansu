@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import styles from "./editRecruitmentStage.module.css";
 
-export interface EditDetailTrainingProcess {}
+export interface EditDetailTrainingProcess { }
 
-export default function EditDetailTrainingProcess({ onCloseModal }: any) {
-  const handleSubmit = () => {};
+export default function EditDetailTrainingProcess({ data, animation, onCloseModal }: any) {
+  console.log(data);
+  const handleSubmit = () => { };
 
   const CloseModal = () => {
     onCloseModal();
@@ -14,7 +15,7 @@ export default function EditDetailTrainingProcess({ onCloseModal }: any) {
   return (
     <>
       <div className={`${styles.overlay}`}></div>
-      <div className={`${styles.modal} ${styles.modal_setting}`}>
+      <div className={`${styles.modal} ${styles.modal_setting}  ${animation ? styles.fade_in : styles.fade_out}`}>
         <div className={`${styles.modal_dialog} ${styles.contentquytrinh}`}>
           <div className={`${styles.modal_content}`}>
             {/* header */}
@@ -34,6 +35,7 @@ export default function EditDetailTrainingProcess({ onCloseModal }: any) {
                   </label>
                   <div className={`${styles.inputright}`}>
                     <input
+                      defaultValue={data?.title}
                       type="text"
                       className={`${styles.inputquytrinh}`}
                       placeholder="Giai đoạn đào tạo"
@@ -58,6 +60,8 @@ export default function EditDetailTrainingProcess({ onCloseModal }: any) {
                   </label>
                   <div className={`${styles.inputright}`}>
                     <input
+
+                      defaultValue={data?.doituong}
                       type="text"
                       className={`${styles.inputquytrinh}`}
                       placeholder="Đối tượng đào tạo"

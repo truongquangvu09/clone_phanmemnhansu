@@ -7,13 +7,23 @@ import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_f
 import MyPagination from "@/components/pagination/Pagination";
 
 export default function ListJobPosition({ children }: any) {
-  const [open, setOpen] = useState(0)
+  const [openModal, setOpenModal] = useState(0);
+  const [animateModal, setAnimateModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const handleCloseModal = () => {
-    setOpen(0)
-  }
+  
 
+  const handleOpenModal = (type: any) => {
+    setOpenModal(type);
+    setAnimateModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setAnimateModal(false);
+    setTimeout(() => {
+      setOpenModal(0);
+    }, 300);
+  };
   const handlePageChange = (page: any) => {
     setCurrentPage(page);
   };
@@ -61,12 +71,12 @@ export default function ListJobPosition({ children }: any) {
       <div className={`${styles.tuyendung2}`} style={{ display: "block" }}>
         <div className={`${styles.tuyendung2_3}`}>
           <button
-            onClick={() => setOpen(1)}
+            onClick={() => handleOpenModal(1)}
             className={`${styles.adds}`}
           >
             <picture>
               <img
-                src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png"
+                src={`/add.png`}
                 alt="+"
               ></img>
             </picture>
@@ -74,8 +84,8 @@ export default function ListJobPosition({ children }: any) {
           </button>
         </div>
 
-        {open === 1 && <AddJobPosition closeModal={handleCloseModal}></AddJobPosition>}
-        {open === 2 && <DeleteJobPosition closeModal={handleCloseModal}></DeleteJobPosition>}
+        {openModal === 1 && <AddJobPosition animation = {animateModal} closeModal={handleCloseModal}></AddJobPosition>}
+        {openModal === 2 && <DeleteJobPosition animation = {animateModal} closeModal={handleCloseModal}></DeleteJobPosition>}
         <div className={`${styles.tuyendung2_2}`}>
           <form className={`${styles.t_form_search}`}>
             <div className={`${styles.t_div_search}`} style={{ display: 'none' }}>
@@ -90,7 +100,8 @@ export default function ListJobPosition({ children }: any) {
               <button className={`${styles.search_button}`}>
                 <picture>
                   <img
-                    src="https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search.png"
+                  src={`${'/icon-search.png'}`}
+                    
                     alt="search"
                   ></img>
                 </picture>
@@ -129,7 +140,7 @@ export default function ListJobPosition({ children }: any) {
                   </td>
 
                   <td
-                    onClick={() => setOpen(2)}
+                    onClick={() => handleOpenModal(2)}
                     className={`${styles.r_t_top_right}`}
                     style={{
                       position: "relative",
@@ -138,7 +149,7 @@ export default function ListJobPosition({ children }: any) {
                     }}
                   >
                     <img
-                      src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/trash.png"
+                      src={`/trash.png`}
                       alt="Tùy chỉnh"
                       style={{ paddingTop: "6px" }}
                     />
