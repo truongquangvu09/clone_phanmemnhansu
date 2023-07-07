@@ -8,7 +8,8 @@ export interface listRecruitmentProcess {}
 
 export default function listRecruitmentProcess({ children }: any) {
   const router =  useRouter()
-
+  const [openModalAdd, setOpenModalAdd] = useState(false);
+  const [animateModal, setAnimateModal] = useState(false);
   
 
   const [isModalOpen, setIsModalOpen] = useState(0);
@@ -17,8 +18,16 @@ export default function listRecruitmentProcess({ children }: any) {
       router.back()
   }
 
-  const handleCloseModal = () => {
-    setIsModalOpen(0);
+  const handleOpenModalAdd = () => {
+    setOpenModalAdd(true);
+    setAnimateModal(true);
+  };
+ 
+  const handleCloseModalAdd = () => {
+    setAnimateModal(false);
+    setTimeout(() => {
+      setOpenModalAdd(false);
+    }, 300);
   };
 
   const data = [
@@ -58,7 +67,7 @@ export default function listRecruitmentProcess({ children }: any) {
             <span onClick={handleBack}>
               <picture>
                 <img
-                  src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/left_arrow.png"
+                  src={`${'/left_arrow.png'}`}
                   alt="Back"
                 ></img>
               </picture>
@@ -67,7 +76,7 @@ export default function listRecruitmentProcess({ children }: any) {
           </div>
           <div className={`${styles.add_quytrinh1}`}>
             <button className={`${styles.adds}`}
-            onClick={() => setIsModalOpen(1)}
+            onClick={handleOpenModalAdd}
             >
               <picture>
                 <img
@@ -79,7 +88,7 @@ export default function listRecruitmentProcess({ children }: any) {
             </button>
           </div>
         </div>
-          {isModalOpen === 1 && <AddRecruitmentStage onCloseModal={handleCloseModal}></AddRecruitmentStage>}
+          {openModalAdd && <AddRecruitmentStage animation = {animateModal} onCloseModal={handleCloseModalAdd}></AddRecruitmentStage>}
       
         <div className={`${styles.giaidoans}`}>
           {data?.map((item,index) => (

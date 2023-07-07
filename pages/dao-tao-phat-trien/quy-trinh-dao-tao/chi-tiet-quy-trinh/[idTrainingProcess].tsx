@@ -7,12 +7,21 @@ import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_f
 
 export default function DetailTrainingProcess({ children }: any) {
   const [active, setActive] = useState(1);
-  const [open, setOpen] = useState(0);
+  const [openModal, setOpenModal] = useState(0);
+  const [animateModal, setAnimateModal] = useState(false);
   const router = useRouter();
-  const handleCloseModal = () => {
-    setOpen(0);
+  
+  const handleOpenModal = (type: any) => {
+    setOpenModal(type);
+    setAnimateModal(true);
   };
 
+  const handleCloseModal = () => {
+    setAnimateModal(false);
+    setTimeout(() => {
+      setOpenModal(0);
+    }, 300);
+  };
   const listTab = [
     {
       key: 1,
@@ -85,7 +94,7 @@ export default function DetailTrainingProcess({ children }: any) {
             </div>
 
             <div className={`${styles.add_quytrinh1}`}>
-              <button style={{ display: "flex" }} onClick={() => setOpen(1)}>
+              <button style={{ display: "flex" }} onClick={() => handleOpenModal(1)}>
                 <picture>
                   <img
                     src={`/add.png`}
@@ -96,8 +105,9 @@ export default function DetailTrainingProcess({ children }: any) {
               </button>
             </div>
           </div>
-          {open === 1 && (
+          {openModal === 1 && (
             <AddDetailTrainingProcess
+            animation = {animateModal}
               closeModal={handleCloseModal}
             ></AddDetailTrainingProcess>
           )}

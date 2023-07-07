@@ -5,7 +5,7 @@ import SecurityInfomation from '@/components/cai-dat-chung/securityInformation';
 import GeneralSettings from '@/components/cai-dat-chung/generalSettings';
 
 
-export default function GeneralSetting({ children }: any) {
+export default function Setting({ children }: any) {
     const [active, setActive] = useState(1)
 
     return (
@@ -22,9 +22,8 @@ export default function GeneralSetting({ children }: any) {
                         <Link href=''>NHẬT KÍ HOẠT ĐỘNG</Link>
                     </li>
                 </ul>
-                {/* {active === 1 && <GeneralSetting></GeneralSetting>} */}
+                {active === 1 && <GeneralSettings></GeneralSettings>}
                 {active === 2 && <SecurityInfomation></SecurityInfomation>}
-
             </div>
         </>
     )

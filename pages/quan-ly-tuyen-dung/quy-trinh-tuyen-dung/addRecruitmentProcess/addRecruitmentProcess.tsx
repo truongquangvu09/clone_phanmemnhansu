@@ -7,7 +7,7 @@ import AddAdditionalRecruitmentProcess from "../addAdditionalRecruitmentProcess/
 
 export interface AddRecruitmentProcess {}
 
-export default function AddRecruitmentProcess({ handleCloseModalAdd }: any) {
+export default function AddRecruitmentProcess({animation, handleCloseModalAdd }: any) {
   const [additionalProcesses, setAdditionalProcesses] =useState<JSX.Element[]>([]);
   const [lastAddedIndex, setLastAddedIndex] = useState(-1);
 
@@ -32,14 +32,14 @@ export default function AddRecruitmentProcess({ handleCloseModalAdd }: any) {
   const handleSubmit = () => {};
   return (
     <>
-      <div className={`${styles.overlay}`}></div>
-      <div className={`${styles.modal} ${styles.modal_setting} `}>
+      <div className={`${styles.overlay} `}></div>
+      <div className={`${styles.modal} ${styles.modal_setting}  ${animation ? styles.fade_in : styles.fade_out }`}>
         <div className={`${styles.modal_dialog} ${styles.contentquytrinh}`}>
           <div className={`${styles.modal_content} `}>
             {/* header */}
             <div className={`${styles.modal_header} ${styles.headquytrinh}`}>
               <h5 className={`${styles.modal_title}`}>
-                THÊM QUY TRÌNH TUYỂN DỤNG 
+                THÊM QUY TRÌNH TUYỂN DỤNG  
               </h5>
             </div>
 
@@ -59,7 +59,7 @@ export default function AddRecruitmentProcess({ handleCloseModalAdd }: any) {
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                        src={`${'/danger.png'}`}
                         alt="Lỗi"
                       ></img>
                     </picture>
@@ -83,7 +83,7 @@ export default function AddRecruitmentProcess({ handleCloseModalAdd }: any) {
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                       src={`${'/danger.png'}`}
                         alt="Lỗi"
                       ></img>
                     </picture>
@@ -102,7 +102,7 @@ export default function AddRecruitmentProcess({ handleCloseModalAdd }: any) {
                         style={{border:'none', backgroundColor:'transparent', marginLeft:'94%', position:'relative', top:'25px'}}
                         >
                           <picture>
-                            <img src="https://phanmemnhansu.timviec365.vn/assets/images/icon-new/icon-remove.svg" alt="Xóa"/>
+                            <img  src={`${'/icon-remove-quytrinh.svg'}`} alt="Xóa"/>
                           </picture>
                         </button>
                       )}

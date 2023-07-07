@@ -4,7 +4,7 @@ import styles from "./editRecruitmentStage.module.css";
 import MyEditor from "../../components/Editor";
 export interface EditRecruitmentStage {}
 
-export default function EditRecruitmentStage({data, onCloseModal }: any) {
+export default function EditRecruitmentStage({data,animation, onCloseModal }: any) {
   const handleSubmit = () => {};
 
   const CloseModal = () => {
@@ -14,7 +14,7 @@ export default function EditRecruitmentStage({data, onCloseModal }: any) {
   return (
     <>
       <div className={`${styles.overlay}`}></div>
-      <div className={`${styles.modal} ${styles.modal_setting}`}>
+      <div className={`${styles.modal} ${styles.modal_setting}  ${animation ? styles.fade_in : styles.fade_out }`}>
         <div className={`${styles.modal_dialog} ${styles.contentquytrinh}`}>
           <div className={`${styles.modal_content}`}>
             {/* header */}
@@ -38,7 +38,7 @@ export default function EditRecruitmentStage({data, onCloseModal }: any) {
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                        src = {`${'/danger.png'}`}
                         alt="Lỗi"
                       ></img>
                     </picture>
@@ -62,7 +62,7 @@ export default function EditRecruitmentStage({data, onCloseModal }: any) {
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                       src = {`${'/danger.png'}`}
                         alt="Lỗi"
                       ></img>
                     </picture>
@@ -86,7 +86,7 @@ export default function EditRecruitmentStage({data, onCloseModal }: any) {
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
+                       src = {`${'/danger.png'}`}
                         alt="Lỗi"
                       ></img>
                     </picture>

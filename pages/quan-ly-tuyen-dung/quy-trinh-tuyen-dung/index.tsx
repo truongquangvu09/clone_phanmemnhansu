@@ -7,13 +7,19 @@ export interface RecruitmentProcess {}
 
 export default function RecruitmentProcess({ children }: any) {
   const [openModalAdd, setOpenModalAdd] = useState(false);
+  const [animateModal, setAnimateModal] = useState(false);
 
   const handleOpenModalAdd = () => {
     setOpenModalAdd(true);
+    setAnimateModal(true);
   };
+ 
   const handleCloseModalAdd = () => {
-    setOpenModalAdd(false)
-  }
+    setAnimateModal(false);
+    setTimeout(() => {
+      setOpenModalAdd(false);
+    }, 300);
+  };
 
   const handleSearch = () => {
     alert("hdhdhdh");
@@ -43,7 +49,7 @@ export default function RecruitmentProcess({ children }: any) {
                 </picture>
               </button>
               </div>
-                {openModalAdd && <AddRecruitmentProcess handleCloseModalAdd = {handleCloseModalAdd}></AddRecruitmentProcess>}
+                {openModalAdd && <AddRecruitmentProcess animation = {animateModal} handleCloseModalAdd = {handleCloseModalAdd}></AddRecruitmentProcess>}
               <div className={`${styles.search_quytrinh}`}>
               <form className={`${styles.t_form_search}`}>
                 <div className={`${styles.t_div_search}`}>

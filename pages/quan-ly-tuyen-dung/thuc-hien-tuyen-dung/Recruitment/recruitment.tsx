@@ -10,11 +10,19 @@ export interface Recruitment {}
 
 export default function Recruitment({ children }: any) {
   
+  const [animateModal, setAnimateModal] = useState(false);
   const [openModalAdd, setOpenModalAdd] = useState(false)
+  
   const handleCloseModalAdd = () => {
-    setOpenModalAdd(false)
-  }
-
+    setAnimateModal(false);
+    setTimeout(() => {
+      setOpenModalAdd(false);
+    }, 300);
+  };
+  const handleOpenModalAdd = () => {
+    setOpenModalAdd(true);
+    setAnimateModal(true);
+  };
   const data = [
     {
       id: 1,
@@ -59,7 +67,7 @@ export default function Recruitment({ children }: any) {
       <div className={`${styles.tintuyendung}`}>
         <div className={`${styles.tuyendung1}`}>
           <button className={`${styles.adds}`} 
-          onClick={() => setOpenModalAdd(true)}
+          onClick={handleOpenModalAdd}
           >
             <picture style={{paddingLeft: '12px'}}>
               <img
@@ -70,7 +78,7 @@ export default function Recruitment({ children }: any) {
             </picture>
           </button>
         </div>
-        {openModalAdd && <AddPerformRecruitment handleCloseModalAdd = {handleCloseModalAdd}></AddPerformRecruitment>}
+        {openModalAdd && <AddPerformRecruitment animation = {animateModal}  handleCloseModalAdd = {handleCloseModalAdd}></AddPerformRecruitment>}
         <div className={`${styles.tuyendung2}`}>
           <div className={`${styles.tuyendung2_1}`}>
             <li>

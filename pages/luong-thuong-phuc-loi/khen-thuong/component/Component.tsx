@@ -17,25 +17,35 @@ function RewardTable({ display, data, model }: any) {
   const [typeModal, setTypeModal] = useState(model);
   const [open, setOpen] = useState(false);
   const [modalEditType, setModalEditType] = useState('')
+  const [animateModal, setAnimateModal] = useState(false);
+ 
 
   const handlePageChange = (page: any) => {
     setCurrentPage(page);
   };
 
   const handleCloseModal = () => {
-    setTypeModal(model);
-    setOpen(false);
+   
+    setAnimateModal(false);
+    setTimeout(() => {
+       setOpen(false);
+       setTypeModal(model);
+       setModalEditType('')
+    }, 300);
   };
   
  useEffect(()=> {
   const modalEditTypes = () => {
     if (typeModal === 'canhan'){
       setModalEditType('canhan')
+      setAnimateModal(true)
     }
     if (typeModal === 'tapthe'){
+      setAnimateModal(true)
       setModalEditType('tapthe')
     }
     if (typeModal === 'list'){
+      setAnimateModal(true)
       setModalEditType('list')
     }
   }
@@ -61,22 +71,23 @@ function RewardTable({ display, data, model }: any) {
           </button>
         </div>
         {typeModal === "canhan" && open && (
-          <ModalAddReward onClose={handleCloseModal}></ModalAddReward>
+          <ModalAddReward animation = {animateModal} onClose={handleCloseModal}></ModalAddReward>
         )}
         {typeModal === "tapthe" && open && (
           <ModalAddTeamCompliments
+          animation = {animateModal}
             onClose={handleCloseModal}
           ></ModalAddTeamCompliments>
         )}
         {typeModal === "chitiet" && modalEditType === 'canhan' && (
-          <ModalEditPersonalCompliments onClose={handleCloseModal}></ModalEditPersonalCompliments>
+          <ModalEditPersonalCompliments animation = {animateModal} onClose={handleCloseModal}></ModalEditPersonalCompliments>
         )}
         {typeModal === "chitiet" && modalEditType === 'tapthe' && (
-          <ModalEditCommendationTeam onClose={handleCloseModal}></ModalEditCommendationTeam>
+          <ModalEditCommendationTeam animation = {animateModal} onClose={handleCloseModal}></ModalEditCommendationTeam>
         )}
 
         {typeModal === "chitiet" && modalEditType === 'list' && (
-          <ModalEditAchievementList onClose={handleCloseModal}></ModalEditAchievementList>
+          <ModalEditAchievementList animation = {animateModal} onClose={handleCloseModal}></ModalEditAchievementList>
         )}
 
         <div className={`${styles.tuyendung2_2}`}>

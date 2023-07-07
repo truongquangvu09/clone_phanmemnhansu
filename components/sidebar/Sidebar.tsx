@@ -128,6 +128,7 @@ export default function Sidebar(props: SideBarProp) {
                 key={index}
                 onClick={() => handleClick(index)}
                 href={item.href}
+                replace= {true}
               >
                 <div className={`${styles.sidebar_home} `}>
                   <div className={`${styles.button1}`}>

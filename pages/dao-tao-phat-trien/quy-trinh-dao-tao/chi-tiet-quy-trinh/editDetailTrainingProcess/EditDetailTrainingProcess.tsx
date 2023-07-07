@@ -4,7 +4,7 @@ import styles from "./editRecruitmentStage.module.css";
 
 export interface EditDetailTrainingProcess {}
 
-export default function EditDetailTrainingProcess({ data, onCloseModal }: any) {
+export default function EditDetailTrainingProcess({ data, animation, onCloseModal }: any) {
   console.log(data);
   const handleSubmit = () => {};
 
@@ -15,7 +15,7 @@ export default function EditDetailTrainingProcess({ data, onCloseModal }: any) {
   return (
     <>
       <div className={`${styles.overlay}`}></div>
-      <div className={`${styles.modal} ${styles.modal_setting}`}>
+      <div className={`${styles.modal} ${styles.modal_setting}  ${animation ? styles.fade_in : styles.fade_out }`}>
         <div className={`${styles.modal_dialog} ${styles.contentquytrinh}`}>
           <div className={`${styles.modal_content}`}>
             {/* header */}

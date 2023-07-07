@@ -16,27 +16,36 @@ function PunishmentTable({ display, data, violators, model }: any) {
   const [typeModal, setTypeModal] = useState(model);
   const [open, setOpen] = useState(false);
   const [modalEditType, setModalEditType] = useState("");
+  const [animateModal, setAnimateModal] = useState(false);
 
   const handlePageChange = (page: any) => {
     setCurrentPage(page);
   };
 
-  console.log("typeModal", typeModal);
+  
   const handleCloseModal = () => {
-    setTypeModal(model);
-    setOpen(false);
+   
+    setAnimateModal(false);
+    setTimeout(() => {
+       setOpen(false);
+       setTypeModal(model);
+       setModalEditType('')
+    }, 300);
   };
 
   useEffect(() => {
     const modalEditTypes = () => {
       if (typeModal === "canhan") {
         setModalEditType("canhan");
+        setAnimateModal(true)
       }
       if (typeModal === "tapthe") {
         setModalEditType("tapthe");
+        setAnimateModal(true)
       }
       if (typeModal === "list") {
         setModalEditType("list");
+        setAnimateModal(true)
       }
     };
     modalEditTypes();
@@ -62,26 +71,35 @@ function PunishmentTable({ display, data, violators, model }: any) {
         </div>
         {typeModal === "canhan" && open && (
           <AddModalPersonalDiscipline
+          animation = {animateModal}
             onClose={handleCloseModal}
           ></AddModalPersonalDiscipline>
         )}
+
         {typeModal === "tapthe" && open && (
           <AddModalCollectiveDiscipline
+          animation = {animateModal}
             onClose={handleCloseModal}
           ></AddModalCollectiveDiscipline>
         )}
+
         {typeModal === "chitiet" && modalEditType === "canhan" && (
           <EditModalPersonalDiscipline
+          animation = {animateModal}
             onClose={handleCloseModal}
           ></EditModalPersonalDiscipline>
         )}
+
         {typeModal === "chitiet" && modalEditType === "tapthe" && (
           <EditModalCollectiveDiscipline
+          animation = {animateModal}
             onClose={handleCloseModal}
           ></EditModalCollectiveDiscipline>
         )}
+        
         {typeModal === "chitiet" && modalEditType === "list" && (
           <EditModalListDiscipline
+          animation = {animateModal}
             onClose={handleCloseModal}
           ></EditModalListDiscipline>
         )}

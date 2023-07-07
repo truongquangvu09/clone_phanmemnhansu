@@ -5,7 +5,7 @@ export interface EditPerformRecruitment {}
 
 type SelectOptionType = { label: string; value: string };
 
-export default function EditPerformRecruitment({ handleCloseModalAdd }: any) {
+export default function EditPerformRecruitment({ animation, handleCloseModalAdd }: any) {
   const [content, setContent] = useState("");
 
   const handleContentChange = (value: string) => {
@@ -308,10 +308,7 @@ export default function EditPerformRecruitment({ handleCloseModalAdd }: any) {
   return (
     <>
       <div className={`${styles.overlay}`}></div>
-      <div
-        className={`${styles.modal} ${styles.modal_setting}`}
-        style={{ display: "block" }}
-      >
+      <div className={`${styles.modal} ${styles.modal_setting}  ${animation ? styles.fade_in : styles.fade_out }`} style={{display:'block'}}>
         <div className={` ${styles.modal_dialog} ${styles.contentquytrinh}`}>
           <div className={`${styles.modal_content} `}>
             {/* header */}
