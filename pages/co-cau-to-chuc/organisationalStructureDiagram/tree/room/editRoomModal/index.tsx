@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from '../../../../../quan-ly-hanh-chinh/bien-dong-nhan-su/planningAppointment/addPlanningModal/addPlanningModal.module.css'
 import Select from 'react-select';
 
@@ -12,17 +12,41 @@ type EditRoomModalProps = {
 };
 
 export default function EditRoomModal({ defaultValue, options, soluongnhanvien, mota, onCancel }: EditRoomModalProps) {
+
+    useEffect(() => {
+
+
+
+    })
+
     const [selectedOptions, setSelectedOptions] = useState<{ [key: string]: SelectOptionType | null }>({
-        chonphongban: options.chonphongban[0],
-        truongphong: options.truongphong[0],
-        photruongphong: options.photruongphong[0]
+        chonphongban: options?.chonphongban ? options?.chonphongban[0] : null,
+        truongphong: options?.truongphong ? options?.truongphong[0] : null,
+        photruongphong: options?.photruongphong ? options?.photruongphong[0] : null
     });
+
+    const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
+
     const handleSelectionChange = (option: SelectOptionType | null, field: string) => {
         setSelectedOptions(prevState => ({
             ...prevState,
             [field]: option
         }));
     };
+
+    const optionss = {
+        chonphongban: [
+            { value: 'BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
+            { value: 'Phó GIÁM ĐỐC', label: 'Phó GIÁM ĐỐC' },
+        ],
+        truongphong: [
+            { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
+        ],
+        photruongphong: [
+            { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
+        ]
+    };
+
 
     return (
         <>
@@ -39,9 +63,9 @@ export default function EditRoomModal({ defaultValue, options, soluongnhanvien, 
                                         <label htmlFor="">Tên phòng ban <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}  ${styles.edit_right}`}>
                                             <Select
-                                                defaultValue={selectedOptions.chonphongban}
+                                                defaultValue={selectedOptions.chonphongban ? selectedOptions.chonphongban : selectedOption}
                                                 onChange={(option) => handleSelectionChange(option, 'chonphongban')}
-                                                options={options.chonphongban}
+                                                options={options?.chonphongban}
                                                 placeholder="Cập nhật phòng ban"
                                                 styles={{
                                                     control: (baseStyles, state) => ({
@@ -60,9 +84,9 @@ export default function EditRoomModal({ defaultValue, options, soluongnhanvien, 
                                         <label htmlFor="">Trưởng phòng <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}  ${styles.edit_right}`}>
                                             <Select
-                                                defaultValue={selectedOptions.truongphong}
+                                                defaultValue={selectedOptions.truongphong ? selectedOptions.truongphong : selectedOption}
                                                 onChange={(option) => handleSelectionChange(option, 'truongphong')}
-                                                options={options.truongphong}
+                                                options={options?.truongphong}
                                                 placeholder="Cập nhật trưởng phòng"
                                                 styles={{
                                                     control: (baseStyles, state) => ({
@@ -81,9 +105,9 @@ export default function EditRoomModal({ defaultValue, options, soluongnhanvien, 
                                         <label htmlFor="">Phó trưởng phòng <span style={{ color: 'red' }}> * </span> </label>
                                         <div className={`${styles.input_right} ${styles.edit_right}`}>
                                             <Select
-                                                defaultValue={selectedOptions.photruongphong}
+                                                defaultValue={selectedOptions.photruongphong ? selectedOptions.photruong : selectedOption}
                                                 onChange={(option) => handleSelectionChange(option, 'photruongphong')}
-                                                options={options.photruongphong}
+                                                options={options?.photruongphong}
                                                 placeholder="Cập nhật phó trưởng phòng"
                                                 styles={{
                                                     control: (baseStyles, state) => ({

@@ -6,7 +6,7 @@ export default function LeaderBiography() {
 
     const Employee = [
         {
-            img: 'https://chamcong.24hpay.vn/upload/employee/ep284670/app_Artboard 3900.png',
+            img: '/app_Artboard 3900.png',
             name: 'nguyen van a',
             chucvu: 'PGD',
             phongban: 'Biên tập',
@@ -14,7 +14,7 @@ export default function LeaderBiography() {
             nhom: 'chưa cập nhật'
         },
         {
-            img: 'https://chamcong.24hpay.vn/upload/employee/ep284670/app_Artboard 3900.png',
+            img: '/app_Artboard 3900.png',
             name: 'nguyen van a',
             chucvu: 'PGD',
             phongban: 'Biên tập',
@@ -22,7 +22,7 @@ export default function LeaderBiography() {
             nhom: 'chưa cập nhật'
         },
         {
-            img: 'https://chamcong.24hpay.vn/upload/employee/ep284670/app_Artboard 3900.png',
+            img: '/app_Artboard 3900.png',
             name: 'nguyen van a',
             chucvu: 'PGD',
             phongban: 'Biên tập',
@@ -30,7 +30,7 @@ export default function LeaderBiography() {
             nhom: 'chưa cập nhật'
         },
         {
-            img: 'https://chamcong.24hpay.vn/upload/employee/ep284670/app_Artboard 3900.png',
+            img: '/app_Artboard 3900.png',
             name: 'nguyen van a',
             chucvu: 'PGD',
             phongban: 'Biên tập',
@@ -48,7 +48,7 @@ export default function LeaderBiography() {
                                 <div className={`${styles.row_search_2}`}>
                                     <input type="text" id="search_list" className={`${styles.ui_autocomplete_input}`} placeholder="Tìm kiếm theo họ tên lãnh đạo" />
                                     <a href="" className={`${styles.search_3}`}>
-                                        <img style={{ verticalAlign: 'middle' }} src="https://phanmemnhansu.timviec365.vn/assets/images/search-gray.svg" />
+                                        <img style={{ verticalAlign: 'middle' }} src={`/search-gray.svg`} />
                                     </a>
                                 </div>
                             </div>

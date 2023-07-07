@@ -3,7 +3,7 @@ import styles from "./ListDetailTrainingProcess.module.css";
 
 import EditDetailTrainingProcess from "../editDetailTrainingProcess/EditDetailTrainingProcess";
 import DeleteDetailTrainingProcess from "../deleteDetailTrainingProcess/DeleteDetailTrainingProcess";
-export interface ListDetailTrainingProcess {}
+export interface ListDetailTrainingProcess { }
 
 export default function ListDetailTrainingProcess({ item }: any) {
   const [animateModal, setAnimateModal] = useState(false);
@@ -54,14 +54,14 @@ export default function ListDetailTrainingProcess({ item }: any) {
   }
 
   return (
-    <div key={item.id}>
+    <div key={item?.id}>
       <div className={`${styles.title_giaidoans}`}>
-        <h5> {item.title}</h5>
+        <h5> {item?.title}</h5>
       </div>
       <div className={`${styles.all_giaidoans}`}>
         <div className={`${styles.giaidoans_item}`}>
           <div className={`${styles.giaidoans_item_1}`}>
-            <div className={`${styles.circle_blue}`}>{item.id}</div>
+            <div className={`${styles.circle_blue}`}>{item?.id}</div>
             <div className={`${styles.giaidoans_item_2}`}>
               <div className={`${styles.row} ${styles.r_t_top}`}>
                 <div className={`${styles.row_top_right}`}>
@@ -102,7 +102,7 @@ export default function ListDetailTrainingProcess({ item }: any) {
                       alt=""
                     ></img>
                   </picture>
-                  Đối tượng đào tạo: {item.doituong}
+                  Đối tượng đào tạo: {item?.doituong}
                   <span> {"Numquam pariatur Au"} </span>
                 </li>
 
@@ -114,7 +114,7 @@ export default function ListDetailTrainingProcess({ item }: any) {
                     ></img>
                   </picture>
                   Nội dung giai đoạn:{" "}
-                  <p className={`${styles.noidung}`}>{item.noidung}</p>
+                  <p className={`${styles.noidung}`}>{item?.noidung}</p>
                   <span> </span>
                 </li>
               </ul>

@@ -118,11 +118,11 @@ export default function TabPayrollDown({ children }: any) {
                     <div className={`${styles.body} ${styles.body_planning}`}>
                         <div className={`${styles.recruitment}`}>
                             <button className={`${styles.add} ${styles.add_planning}`} onClick={() => setOpenModal(1)}>
-                                <img style={{ verticalAlign: 'middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm mới giảm biên chế
+                                <img style={{ verticalAlign: 'middle' }} src={`/add.png`} alt="" />Thêm mới giảm biên chế
                             </button>
                             <div className={`${styles.export_excel}`} style={{ paddingRight: 20, right: 0, position: 'absolute' }}>
                                 <a href="" className={`${styles.t_excel} ${styles.t_excel_payroll}`} >
-                                    <img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-excel.svg" alt="" />
+                                    <img src={`/t-icon-excel.svg`} alt="" />
                                     Xuất file Excel
                                 </a>
                             </div>
@@ -203,7 +203,7 @@ export default function TabPayrollDown({ children }: any) {
                                 </div>
                                 <div className={`${styles.div_no_pad_search}   `}>
                                     <a href="" className={`${styles.icon_search_top} ${styles.div_search_salary} `}>
-                                        <img style={{ verticalAlign: '-webkit-baseline-middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search-n.svg" alt="" />
+                                        <img style={{ verticalAlign: '-webkit-baseline-middle' }} src={`/t-icon-search-n.svg`} alt="" />
                                     </a>
                                 </div>
                             </div>
@@ -211,10 +211,10 @@ export default function TabPayrollDown({ children }: any) {
                         <div className={`${styles.member_list} ${styles.member_list_salary}`}>
                             <div className={`${styles.navigate_next} ${styles.navigate_next_salary}`} >
                                 <div className={`${styles.turn} ${styles.turn_left}`} onClick={handleLeftClick}>
-                                    <img src="	https://phanmemnhansu.timviec365.vn/assets/images/arrow_left.png" alt="" />
+                                    <img src={`/arrow_left.png`} alt="" />
                                 </div>
                                 <div className={`${styles.turn} ${styles.turn_right}`} onClick={handleRightClick}>
-                                    <img src="	https://phanmemnhansu.timviec365.vn/assets/images/arrow_right.png" alt="" />
+                                    <img src={`/arrow_right.png`} alt="" />
                                 </div>
                             </div>
                             <div className={`${styles.table_content}`} ref={tableContentRef}>
@@ -242,8 +242,8 @@ export default function TabPayrollDown({ children }: any) {
                                                 <td>{item.giambienchenghiviec}</td>
                                                 <td>{item.ngaybatdaunghi.toString().slice(0, 16)}</td>
                                                 <td>
-                                                    <a onClick={handleOpenEdit} href="" className={`${styles.btn_edit}`}><img src="https://phanmemnhansu.timviec365.vn/assets/images/icon-menu-vn/icon_edit.svg" alt="" /></a>
-                                                    <a href="" className={`${styles.btn_delete}`}><img src="https://phanmemnhansu.timviec365.vn/assets/images/icon-menu-vn/icon_delete.svg" alt="" /></a>
+                                                    <a onClick={handleOpenEdit} href="" className={`${styles.btn_edit}`}><img src={`/icon_edit.svg`} alt="" /></a>
+                                                    <a href="" className={`${styles.btn_delete}`}><img src={`/icon_delete.svg`} alt="" /></a>
                                                 </td>
                                             </tr>
                                         ))}

@@ -73,7 +73,7 @@ export default function Notify() {
                                     <div className={`${styles.time_noti}`}>{item.time_noti}</div>
                                 </div>
                                 <div className={`${styles.close_remind}`}>
-                                    <img src="https://phanmemnhansu.timviec365.vn//assets/images/l_images/close_noti.svg" alt="" />
+                                    <img src={`/close_noti.svg`} alt="" />
                                 </div>
                             </div>
                         </div>)

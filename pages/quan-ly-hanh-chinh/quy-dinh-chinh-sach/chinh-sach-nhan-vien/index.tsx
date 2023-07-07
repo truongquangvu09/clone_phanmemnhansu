@@ -22,7 +22,7 @@ export default function EmployeePolicy() {
                             <div className={`${styles.recruitment2_3}`}>
                                 <button className={`${styles.adds}`} onClick={handleClick}>
                                     <picture>
-                                        <img style={{ verticalAlign: 'middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />
+                                        <img style={{ verticalAlign: 'middle' }} src={`	/add.png`} alt="" />
                                         Thêm mới
                                     </picture>
                                 </button>
@@ -40,7 +40,7 @@ export default function EmployeePolicy() {
                                         <input style={{ verticalAlign: 'top' }} type="text" className={`${styles.keyword_qd}`} placeholder='Tìm kiếm' />
                                         <a href="">
                                             <picture>
-                                                <img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search.png" alt="" />
+                                                <img src={`/t-icon-search.png`} alt="" />
                                             </picture>
                                         </a>
                                     </div>

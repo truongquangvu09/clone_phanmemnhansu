@@ -13,35 +13,35 @@ export default function SalaryAndBenefits({ children }: any) {
 
   const submenu = [
     {
-      img: "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_chamcong.svg",
+      img: "	/vn_chamcong.svg",
       title: 'Chấm công',
       href: 'https://chamcong.timviec365.vn/quan-ly-cong-ty.html',
       target: 'blank'
     },
     {
-      img: "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_tinhluong.svg",
+      img: "	/vn_tinhluong.svg",
       title: 'Tính lương',
       href: 'https://tinhluong.timviec365.vn/',
       target: 'blank'
     },
     {
-      img: "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_kpi.svg",
+      img: "	/vn_kpi.svg",
       title: 'KPI',
       href: 'https://kpi.timviec365.vn/quan-ly-chung.html',
       target: 'blank'
     },
     {
-      img: "		https://phanmemnhansu.timviec365.vn//assets/images/l_images/thanhtich.svg",
+      img: "	/thanhtich.svg",
       title: 'Khen thưởng',
       href: '/luong-thuong-phuc-loi/khen-thuong',
     },
     {
-      img: "	https://phanmemnhansu.timviec365.vn//assets/images/l_images/vipham.svg",
+      img: "	/vipham.svg",
       title: 'Kỷ luật( Vi phạm )',
       href: '/luong-thuong-phuc-loi/ky-luat',
     },
     {
-      img: "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_phucloi.svg",
+      img: "	/vn_phucloi.svg",
       title: 'Phúc lợi',
       href: 'https://tinhluong.timviec365.vn/quan-ly-phuc-loi.html',
       target: 'blank'

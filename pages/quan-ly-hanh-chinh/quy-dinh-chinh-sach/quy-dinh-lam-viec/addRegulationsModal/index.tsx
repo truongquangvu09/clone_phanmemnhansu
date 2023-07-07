@@ -1,9 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from './addRegulationsModal.module.css'
-import dynamic from "next/dynamic";
-const Editor = dynamic(() => import("./CKEditor/index"), {
-    ssr: false
-})
+
+import MyEditor from "@/pages/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/components/Editor";
+
+function Input_textarea() {
+    const [editorLoaded, setEditorLoaded] = useState(false);
+    const [data, setData] = useState("");
+
+    useEffect(() => {
+        setEditorLoaded(true);
+    }, []);
+    console.log(data);
+    return (
+        <div>
+            <MyEditor
+                name="Editor"
+                onChange={(data: React.SetStateAction<string>) => {
+                    setData(data);
+                }}
+                editorLoaded={editorLoaded}
+                value={data}
+            />
+
+            {/* {JSON.stringify(data)} */}
+        </div>
+    );
+}
 
 export default function AddRegulationsModal({ onCancel }: any) {
     function handleUploadClick(event: React.MouseEvent<HTMLAnchorElement>) {
@@ -50,7 +72,7 @@ export default function AddRegulationsModal({ onCancel }: any) {
                                     <div className={`${styles.form_groups} ${styles.cke}`}>
                                         <label htmlFor="">Mô tả ngắn <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.ckeditor}`}>
-                                            <Editor content={content} onChange={handleContentChange} />
+                                            <Input_textarea />
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -58,7 +80,7 @@ export default function AddRegulationsModal({ onCancel }: any) {
                                         <div className={`${styles.input_right} ${styles.input_upload_t}`}>
                                             <input type="file" className={`${styles.upload_cv}`} id="upload_cv" accept="application/pdf, image/*" />
                                             <a href="" className={`${styles.t_ion_file}`} onClick={handleUploadClick} >
-                                                <img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-file.svg" alt="" />
+                                                <img src={`/t-icon-file.svg`} alt="" />
                                             </a>
                                         </div>
                                     </div>

@@ -63,9 +63,9 @@ export default function EmployeeInformation() {
                         <EmployeeForm
                             title1='Tổng số nhân viên'
                             title2='Nam/Nữ'
-                            img1='https://phanmemnhansu.timviec365.vn/assets/images/t_images/icon-users.svg'
-                            img2='https://phanmemnhansu.timviec365.vn/assets/images/t_images/icon-male.svg'
-                            img3='https://phanmemnhansu.timviec365.vn/assets/images/t_images/icon-female.svg'
+                            img1='/icon-users.svg'
+                            img2='/icon-male.svg'
+                            img3='/icon-female.svg'
                             title_details1='Tổng số'
                             title_details2='Nam'
                             title_details3='Nữ'
@@ -80,9 +80,9 @@ export default function EmployeeInformation() {
                         <EmployeeForm
                             title1='Tỷ lệ nhân viên'
                             title2='giảm biên chế/nghỉ việc'
-                            img1='https://phanmemnhansu.timviec365.vn/assets/images/t_images/icon-users.svg'
-                            img2='https://phanmemnhansu.timviec365.vn/assets/images/icon-report/career_green.svg'
-                            img3='	https://phanmemnhansu.timviec365.vn/assets/images/icon-report/career_red.svg'
+                            img1='/icon-users.svg'
+                            img2='/career_green.svg'
+                            img3='/career_red.svg'
                             title_details1='Tổng số'
                             title_details2='Giảm biên chế'
                             title_details3='Nghỉ việc'
@@ -97,9 +97,9 @@ export default function EmployeeInformation() {
                         <EmployeeForm
                             title1='Bổ nhiệm'
                             title2='Quy hoạch'
-                            img1='	https://phanmemnhansu.timviec365.vn/assets/images/icon-report/icon-bo-nghiem.svg'
-                            img2='	https://phanmemnhansu.timviec365.vn/assets/images/t_images/icon-male.svg'
-                            img3='	https://phanmemnhansu.timviec365.vn/assets/images/t_images/icon-female.svg'
+                            img1='/icon-bo-nghiem.svg'
+                            img2='/icon-male.svg'
+                            img3='/icon-female.svg'
                             title_details1='Tổng số'
                             title_details2='Nam'
                             title_details3='Nữ'
@@ -115,9 +115,9 @@ export default function EmployeeInformation() {
                     <div className={`${styles.row_top_item}`}>
                         <EmployeeForm
                             title1='Tăng lương/giảm lương'
-                            img1='https://phanmemnhansu.timviec365.vn/assets/images/t_images/icon-users.svg'
-                            img2='	https://phanmemnhansu.timviec365.vn/assets/images/icon-report/salary_up.svg'
-                            img3='	https://phanmemnhansu.timviec365.vn/assets/images/icon-report/salary_down.svg'
+                            img1='/icon-users.svg'
+                            img2='/salary_up.svg'
+                            img3='/salary_down.svg'
                             title_details1='Tổng số'
                             title_details2='Tăng lương'
                             title_details3='Giảm lương'
@@ -131,9 +131,9 @@ export default function EmployeeInformation() {
                     <div className={`${styles.row_top_item}`}>
                         <EmployeeForm
                             title1='Luân chuyển công tác'
-                            img1='https://phanmemnhansu.timviec365.vn/assets/images/icon-report/icon-tranfer-job.svg'
-                            img2='https://phanmemnhansu.timviec365.vn/assets/images/t_images/icon-male.svg'
-                            img3='https://phanmemnhansu.timviec365.vn/assets/images/t_images/icon-female.svg'
+                            img1='/icon-tranfer-job.svg'
+                            img2='/icon-male.svg'
+                            img3='/icon-female.svg'
                             title_details1='Tổng số'
                             title_details2='Nam'
                             title_details3='Nữ'
@@ -147,8 +147,8 @@ export default function EmployeeInformation() {
                     <div className={`${styles.row_top_item}`}>
                         <EmployeeForm
                             title1='Tình trạng hôn nhân'
-                            img1='https://phanmemnhansu.timviec365.vn/assets/images/icon-report/icon-couple.svg'
-                            img3='https://phanmemnhansu.timviec365.vn/assets/images/icon-report/icon-alone.svg	'
+                            img1='/icon-couple.svg'
+                            img3='/icon-alone.svg	'
                             title_details1='Đã lập gia đình'
                             title_details3='Độc thân'
                             number1='32'

@@ -3,14 +3,14 @@ import styles from "../Recruitment/recruitment.module.css";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import EditPerformRecruitment from "../EditPerformRecruitment/EditPerformRecruitment";
-export interface ListRecruitment {}
+export interface ListRecruitment { }
 
 export default function ListRecruitment({ data }: any) {
   const router = useRouter();
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [visible, setVisible] = useState(false);
   const [animateModal, setAnimateModal] = useState(false);
-  
+
 
   const handleCloseModalAdd = () => {
     setAnimateModal(false);
@@ -38,21 +38,21 @@ export default function ListRecruitment({ data }: any) {
             <div className={`${styles.new_r_t_header_content} `}>
               <h3 className={`${styles.new_r_t_left_h3}`}>
                 <button
-                  style={{ border: "none", backgroundColor: "transparent", padding:0 }}
+                  style={{ border: "none", backgroundColor: "transparent", padding: 0 }}
                 >
                   <p
                     style={{ cursor: "default" }}
                     className={`${styles.new_r_t_left_link}`}
-                    onClick={() => handleClick(data.id)}
+                    onClick={() => handleClick(data?.id)}
                   >
-                    {data.tieude}
+                    {data?.tieude}
                   </p>
                 </button>
               </h3>
             </div>
 
             <div className={``}>
-              <p className={`${styles.t_ita}`}>Tạo bởi: {data.company}</p>
+              <p className={`${styles.t_ita}`}>Tạo bởi: {data?.company}</p>
             </div>
 
             <div className={`${styles.t_new_type}`}>
@@ -71,19 +71,19 @@ export default function ListRecruitment({ data }: any) {
                 {visible && (
                   <div className={`${styles.settings}`}>
                     <button
-                      style={{ border: "none", backgroundColor: "transparent" , padding:'0'}}
+                      style={{ border: "none", backgroundColor: "transparent", padding: '0' }}
                     >
                       <li
-                        style={{paddingRight: '102px'}}
+                        style={{ paddingRight: '102px' }}
                         className={`${styles.detail_new}`}
-                        onClick={() => handleClick(data.id)}
+                        onClick={() => handleClick(data?.id)}
                       >
                         Chi tiết
                       </li>
                     </button>
 
                     <button
-                     style={{paddingRight: '55px'}}
+                      style={{ paddingRight: '55px' }}
                       className={`${styles.edit_new}`}
                       onClick={handleOpenModalEdit}
                     >
@@ -98,7 +98,7 @@ export default function ListRecruitment({ data }: any) {
             </div>
           </div>
           {openModalEdit && (
-            <EditPerformRecruitment  animation = {animateModal}
+            <EditPerformRecruitment animation={animateModal}
               handleCloseModalAdd={handleCloseModalAdd}
             ></EditPerformRecruitment>
           )}
@@ -106,38 +106,38 @@ export default function ListRecruitment({ data }: any) {
             <ul className={`${styles.new_r_t_body_content}`}>
               <li>
                 <span className={`${styles.text}`}>
-                  {data.loaihinhlamviec}. {data.luong}
+                  {data?.loaihinhlamviec}. {data?.luong}
                 </span>
               </li>
               <li>
                 <picture className={`${styles.icon}`}>
                   <img src={`/calendar.png`} alt=""></img>
                 </picture>
-                <span className={`${styles.text}`}>{data.date}</span>
+                <span className={`${styles.text}`}>{data?.date}</span>
               </li>
               <li>
                 <picture className={`${styles.icon}`}>
                   <img src={`/house.png`} alt=""></img>
                 </picture>
-                <span className={`${styles.text}`}>{data.diachi} </span>
+                <span className={`${styles.text}`}>{data?.diachi} </span>
               </li>
             </ul>
 
             <ul className={`${styles.new_r_t_body_content}`}>
               <li>
                 <span className={`${styles.text}`}>
-                  Cần tuyển: {data.soluong}
+                  Cần tuyển: {data?.soluong}
                 </span>
               </li>
 
               <li>
                 <span className={`${styles.text}`}>
-                  Người phụ trách: {data.nguoiphutrach}
+                  Người phụ trách: {data?.nguoiphutrach}
                 </span>
               </li>
               <li>
                 <span className={`${styles.text}`}>
-                  Mã quy trình tuyển dụng áp dụng: {data.matuyendung}
+                  Mã quy trình tuyển dụng áp dụng: {data?.matuyendung}
                 </span>
               </li>
             </ul>

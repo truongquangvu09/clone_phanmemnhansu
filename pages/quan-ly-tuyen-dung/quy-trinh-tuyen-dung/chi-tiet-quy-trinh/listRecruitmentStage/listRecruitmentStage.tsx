@@ -3,7 +3,7 @@ import styles from "../detailRecruitmentStage.module.css";
 import EditRecruitmentStage from "../editRecruitmentStage/editRecruitmentStage";
 import DeleteRecruitmentStage from "../deleteRecruitmentStage/deleteRecruitmentStage";
 
-export interface ListRecruitmentStage {}
+export interface ListRecruitmentStage { }
 
 export default function ListRecruitmentStage({ item }: any) {
   const [animateModal, setAnimateModal] = useState(false);
@@ -55,16 +55,16 @@ export default function ListRecruitmentStage({ item }: any) {
   }
 
   return (
-    <div key={item.id}>
+    <div key={item?.id}>
       <div className={`${styles.title_giaidoans}`}>
         <h5>
-          ({item.magiaidoan}) {item.title}
+          ({item?.magiaidoan}) {item?.title}
         </h5>
       </div>
       <div className={`${styles.all_giaidoans}`}>
         <div className={`${styles.giaidoans_item}`}>
           <div className={`${styles.giaidoans_item_1}`}>
-            <div className={`${styles.circle_blue}`}>{item.id}</div>
+            <div className={`${styles.circle_blue}`}>{item?.id}</div>
             <div className={`${styles.giaidoans_item_2}`}>
               <div className={`${styles.row} ${styles.r_t_top}`}>
                 <div className={`${styles.row_top_right}`}>
@@ -102,7 +102,7 @@ export default function ListRecruitmentStage({ item }: any) {
                   <picture>
                     <img src={`${"/right_blue.png"}`} alt=""></img>
                   </picture>
-                  Thành viên thực hiện: {item.thanhvien}
+                  Thành viên thực hiện: {item?.thanhvien}
                   <span> {"Numquam pariatur Au"} </span>
                 </li>
 
@@ -110,7 +110,7 @@ export default function ListRecruitmentStage({ item }: any) {
                   <picture>
                     <img src={`${"/right_blue.png"}`} alt=""></img>
                   </picture>
-                  Mục tiêu: {item.muctieu}
+                  Mục tiêu: {item?.muctieu}
                   <span> </span>
                 </li>
 
@@ -118,7 +118,7 @@ export default function ListRecruitmentStage({ item }: any) {
                   <picture>
                     <img src={`${"/right_blue.png"}`} alt=""></img>
                   </picture>
-                  Thời gian định lượng: {item.thoigian}
+                  Thời gian định lượng: {item?.thoigian}
                   <span> {"Laboriosam eum natu"} </span>
                 </li>
 
@@ -134,7 +134,7 @@ export default function ListRecruitmentStage({ item }: any) {
                     className={`${styles.motacv}`}
                     style={{ maxHeight: "200px" }}
                   >
-                    <p>{item.mota}</p>
+                    <p>{item?.mota}</p>
                   </div>
                 </li>
               </ul>
