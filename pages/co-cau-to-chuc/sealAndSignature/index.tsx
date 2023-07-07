@@ -74,7 +74,7 @@ export default function SealAndSignature({ children }: any) {
             name: 'nguyen van a',
             chucvu: 'PGD',
             phongban: '201',
-            mauchuki: File
+            mauchuki: ''
         };
         return Array(n).fill(obj);
     }
@@ -110,7 +110,7 @@ export default function SealAndSignature({ children }: any) {
                                 <p style={{ color: '#4C5BD4', fontWeight: 600, fontSize: 14 }}>Danh sách thành viên được sử dụng con dấu công ty</p></div>
                             <div className={`${styles.body_header_left}`}>
                                 <button className={`${styles.add} ${styles.add_planning}`} onClick={() => setOpenModal(1)}>
-                                    <img style={{ verticalAlign: 'middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm mới
+                                    <img style={{ verticalAlign: 'middle' }} src={`/add.png`} alt="" />Thêm mới
                                 </button></div>
                         </div>
                         {openModal === 1 && <AddSealModal onCancel={handleCloseModal}></AddSealModal>}
@@ -157,7 +157,7 @@ export default function SealAndSignature({ children }: any) {
                                 </div>
                                 <div className={`${styles.div_no_pad_search}   `}>
                                     <a href="" className={`${styles.icon_search_top} ${styles.div_search_salary} `}>
-                                        <img style={{ verticalAlign: '-webkit-baseline-middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search-n.svg" alt="" />
+                                        <img style={{ verticalAlign: '-webkit-baseline-middle' }} src={`/t-icon-search-n.svg`} alt="" />
                                     </a>
                                 </div>
                             </div>
@@ -237,7 +237,7 @@ export default function SealAndSignature({ children }: any) {
                                 </div>
                                 <div className={`${styles.div_no_pad_search}   `}>
                                     <a href="" className={`${styles.icon_search_top} ${styles.div_search_salary} `}>
-                                        <img style={{ verticalAlign: '-webkit-baseline-middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search-n.svg" alt="" />
+                                        <img style={{ verticalAlign: '-webkit-baseline-middle' }} src={`/t-icon-search-n.svg`} alt="" />
                                     </a>
                                 </div>
                             </div>
@@ -271,12 +271,12 @@ export default function SealAndSignature({ children }: any) {
                                                 <td>
                                                     <label htmlFor="" className={`${styles.edit_stamp}`} >
                                                         <a href="" onClick={handleEditClick} style={{ paddingRight: 10 }}>
-                                                            <img src="https://phanmemnhansu.timviec365.vn/assets/images/icon-menu-vn/icon_edit.svg" alt="" />
+                                                            <img src={`/icon_edit.svg`} alt="" />
                                                         </a>
                                                     </label>
                                                     <input type="file" className={`${styles.upload_file}`} id="edit_file" accept="application/pdf, image/*" />
                                                     <a href="" className={`${styles.btn_delete}`} >
-                                                        <img src="https://phanmemnhansu.timviec365.vn/assets/images/icon-menu-vn/icon_delete.svg" alt="" />
+                                                        <img src={`/icon_delete.svg`} alt="" />
                                                     </a>
                                                 </td>
                                             </tr>

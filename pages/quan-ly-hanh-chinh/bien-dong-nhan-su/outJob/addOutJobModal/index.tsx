@@ -1,10 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from '../../planningAppointment/addPlanningModal/addPlanningModal.module.css'
 import Select from 'react-select';
-import dynamic from "next/dynamic";
-const Editor = dynamic(() => import("../../../quy-dinh-chinh-sach/quy-dinh-lam-viec/addRegulationsModal/CKEditor"), {
-    ssr: false
-})
+import MyEditor from "@/pages/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/components/Editor";
+
+function Input_textarea() {
+    const [editorLoaded, setEditorLoaded] = useState(false);
+    const [data, setData] = useState("");
+
+    useEffect(() => {
+        setEditorLoaded(true);
+    }, []);
+    console.log(data);
+    return (
+        <div>
+            <MyEditor
+                name="Editor"
+                onChange={(data: React.SetStateAction<string>) => {
+                    setData(data);
+                }}
+                editorLoaded={editorLoaded}
+                value={data}
+            />
+
+            {/* {JSON.stringify(data)} */}
+        </div>
+    );
+}
+
 type SelectOptionType = { label: string, value: string }
 
 export default function AddOutJobModal({ onCancel }: any) {
@@ -191,7 +213,7 @@ export default function AddOutJobModal({ onCancel }: any) {
                                     <div className={`${styles.form_groups} ${styles.cke}`}>
                                         <label htmlFor="">Lý do </label>
                                         <div className={`${styles.ckeditor}`}>
-                                            <Editor content={content} onChange={handleContentChange} />
+                                            <Input_textarea />
                                         </div>
                                     </div>
                                     <div className={`${styles.modal_footer} ${styles.footer_process}`}>

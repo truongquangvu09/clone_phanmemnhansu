@@ -110,7 +110,7 @@ export default function TabPlaningAppointment({ children }: any) {
                     <div className={`${styles.body} ${styles.body_planning}`}>
                         <div className={`${styles.recruitment}`}>
                             <button className={`${styles.add} ${styles.add_planning}`} onClick={() => setOpenModal(1)}>
-                                <img style={{ verticalAlign: 'middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm mới bổ nhiệm, quy hoạch
+                                <img style={{ verticalAlign: 'middle' }} src={`/add.png`} alt="" />Thêm mới bổ nhiệm, quy hoạch
                             </button>
                         </div>
                         {openModal === 1 && <AddPlanningModal onCancel={handleCloseModal}></AddPlanningModal>}
@@ -188,7 +188,7 @@ export default function TabPlaningAppointment({ children }: any) {
                                 </div>
                                 <div className={`${styles.div_no_pad_search}   `}>
                                     <a href="" className={`${styles.icon_search_top} ${styles.div_search_salary} `}>
-                                        <img style={{ verticalAlign: '-webkit-baseline-middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search-n.svg" alt="" />
+                                        <img style={{ verticalAlign: '-webkit-baseline-middle' }} src={`/t-icon-search-n.svg`} alt="" />
                                     </a>
                                 </div>
                             </div>
@@ -196,10 +196,10 @@ export default function TabPlaningAppointment({ children }: any) {
                         <div className={`${styles.member_list} ${styles.member_list_salary}`}>
                             <div className={`${styles.navigate_next} ${styles.navigate_next_salary}`} >
                                 <div className={`${styles.turn} ${styles.turn_left}`} onClick={handleLeftClick}>
-                                    <img src="	https://phanmemnhansu.timviec365.vn/assets/images/arrow_left.png" alt="" />
+                                    <img src={`/arrow_left.png`} alt="" />
                                 </div>
                                 <div className={`${styles.turn} ${styles.turn_right}`} onClick={handleRightClick}>
-                                    <img src="	https://phanmemnhansu.timviec365.vn/assets/images/arrow_right.png" alt="" />
+                                    <img src={`/arrow_right.png`} alt="" />
                                 </div>
                             </div>
                             <div className={`${styles.table_content}`} ref={tableContentRef}>

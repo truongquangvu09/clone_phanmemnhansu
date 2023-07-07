@@ -14,17 +14,17 @@ export default function RecruitmentManager({ children }: any) {
 
     const submenu = [
         {
-            img: "https://phanmemnhansu.timviec365.vn//assets/images/l_images/quytrinh_td.svg",
+            img: "/quytrinh_td.svg",
             title: 'Quy trình tuyển dụng',
             href: '/quan-ly-tuyen-dung/quy-trinh-tuyen-dung',
         },
         {
-            img: "	https://phanmemnhansu.timviec365.vn//assets/images/l_images/thuchien_td.svg",
+            img: "/thuchien_td.svg",
             title: 'Thực hiện tuyển dụng',
             href: '/quan-ly-tuyen-dung/thuc-hien-tuyen-dung'
         },
         {
-            img: "https://phanmemnhansu.timviec365.vn//assets/images/l_images/ds_ungvien.svg",
+            img: "/ds_ungvien.svg",
             title: 'Danh sách ứng viên',
             href: '/quan-ly-tuyen-dung/danh-sach-ung-vien'
         },

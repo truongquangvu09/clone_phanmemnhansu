@@ -154,7 +154,7 @@ export default function TabHRReport() {
                                 </div>
                                 <div className={`${styles.div_no_pad_search}   `}>
                                     <a href="" className={`${styles.icon_search_top} ${styles.div_search_hrreport} `} onClick={handleSearch}>
-                                        <img style={{ verticalAlign: 'middle', height: 30 }} src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search-n.svg" alt="" />
+                                        <img style={{ verticalAlign: 'middle', height: 30 }} src={`/t-icon-search-n.svg`} alt="" />
                                     </a>
                                 </div>
                             </div>

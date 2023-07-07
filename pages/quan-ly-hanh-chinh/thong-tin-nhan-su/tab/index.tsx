@@ -118,7 +118,7 @@ export default function TabEmployeeManagement({ children }: any) {
                     <div className={`${styles.body}`}>
                         <div className={`${styles.recruitment}`}>
                             <a target="blank" href="https://chamcong.timviec365.vn/quan-ly-cong-ty/nhan-vien.html" className={`${styles.add}`} >
-                                <img src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm mới nhân viên
+                                <img src={`/add.png`} alt="" />Thêm mới nhân viên
                             </a>
                         </div>
                         <div className={`${styles.bg_search}`}>
@@ -181,24 +181,24 @@ export default function TabEmployeeManagement({ children }: any) {
                                 </div>
                                 <div className={`${styles.div_no_pad_search} `}>
                                     <a href="" className={`${styles.icon_search_top}`}>
-                                        <img style={{ verticalAlign: '-webkit-baseline-middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search-n.svg" alt="" />
+                                        <img style={{ verticalAlign: '-webkit-baseline-middle' }} src={`/t-icon-search-n.svg`} alt="" />
                                     </a>
                                 </div>
                             </div>
                         </div>
                         <div className={`${styles.export_excel} ${styles.export_excel_emp}`} style={{ paddingRight: 20, right: 0, position: 'absolute' }}>
                             <a href="" className={`${styles.t_excel}`} >
-                                <img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-excel.svg" alt="" />
+                                <img src={`/t-icon-excel.svg`} alt="" />
                                 Xuất file Excel
                             </a>
                         </div>
                         <div className={`${styles.member_list}`}>
                             <div className={`${styles.navigate_next}`} >
                                 <div className={`${styles.turn} ${styles.turn_left}`} onClick={handleLeftClick}>
-                                    <img src="	https://phanmemnhansu.timviec365.vn/assets/images/arrow_left.png" alt="" />
+                                    <img src={`/arrow_left.png`} alt="" />
                                 </div>
                                 <div className={`${styles.turn} ${styles.turn_right}`} onClick={handleRightClick}>
-                                    <img src="	https://phanmemnhansu.timviec365.vn/assets/images/arrow_right.png" alt="" />
+                                    <img src={`/arrow_right.png`} alt="" />
                                 </div>
                             </div>
                             <div className={`${styles.table_content}`} ref={tableContentRef}>
@@ -235,7 +235,7 @@ export default function TabEmployeeManagement({ children }: any) {
                                                     <p>SDT: {item.thongtinlienhe_email}</p>
                                                 </td>
                                                 <td>{item.ngayvaocongty}</td>
-                                                <td><img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/icon-settting.png" alt=" " />
+                                                <td><img src={`	/icon-settting.png`} alt=" " />
                                                     <div className={`${styles.setting}`}>
                                                     </div>
                                                 </td>

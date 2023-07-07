@@ -155,17 +155,17 @@ export default function CandidateRepo({ children }: any) {
                         </div>
                         <div className={`${styles.div_no_pad} `}>
                             <a href="" className={`${styles.icon_t_search_top}`}>
-                                <img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search-n.svg" alt="" />
+                                <img src={`/t-icon-search-n.svg`} alt="" />
                             </a>
                         </div>
                     </div>
                     <div className={`${styles.member_list}`}>
                         <div className={`${styles.navigate_next}`}>
                             <div className={`${styles.turn} ${styles.turn_left}`}>
-                                <img src="	https://phanmemnhansu.timviec365.vn/assets/images/arrow_left.png" alt="" />
+                                <img src={`/arrow_left.png`} alt="" />
                             </div>
                             <div className={`${styles.turn} ${styles.turn_right}`}>
-                                <img src="	https://phanmemnhansu.timviec365.vn/assets/images/arrow_right.png" alt="" />
+                                <img src={`/arrow_right.png`} alt="" />
                             </div>
                         </div>
                         <div className={`${styles.table_content}`}>
@@ -199,9 +199,9 @@ export default function CandidateRepo({ children }: any) {
                                             <td>{item.maquytrinhtuyendungapdung}</td>
                                             <td>{item.thoigianguihoso}</td>
                                             <td><a href="">{item.tailencvtuungvien}</a></td>
-                                            <td><img src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/3cham.png" alt=" " />
+                                            <td><img src={`/3cham.png`} alt=" " />
                                                 <div className={`${styles.setting}`}>
-                                                    <li>Xóa hồ sơ</li>
+                                                    {/* <li>Xóa hồ sơ</li> */}
                                                 </div>
                                             </td>
                                         </tr>

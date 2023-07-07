@@ -29,7 +29,7 @@ export default function Sidebar(props: SideBarProp) {
   const sidebarItems = [
     {
       label: "Trang chủ",
-      icon: "https://phanmemnhansu.timviec365.vn//assets/images/l_images/home.svg",
+      icon: "/home.svg",
       href: '/',
       submenu: null,
       imgWithd: 20,
@@ -38,7 +38,7 @@ export default function Sidebar(props: SideBarProp) {
     },
     {
       label: "Quản lý tuyển dụng",
-      icon: "https://phanmemnhansu.timviec365.vn//assets/images/l_images/tuyendung.svg",
+      icon: "/tuyendung.svg",
       href: '',
       submenu: <RecruitmentManager />,
       imgWithd: 20,
@@ -46,7 +46,7 @@ export default function Sidebar(props: SideBarProp) {
     },
     {
       label: "Lương thưởng và phúc lợi",
-      icon: "https://phanmemnhansu.timviec365.vn//assets/images/l_images/thanhtich_vipham.svg",
+      icon: "/thanhtich_vipham.svg",
       href: '',
       submenu: <SalaryAndBenefits />,
       imgWithd: 20,
@@ -54,7 +54,7 @@ export default function Sidebar(props: SideBarProp) {
     },
     {
       label: "Quản lý hành chính",
-      icon: "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn-hanhchinh.svg",
+      icon: "	/vn-hanhchinh.svg",
       href: '',
       submenu: <Administration />,
       imgWithd: 20,
@@ -62,7 +62,7 @@ export default function Sidebar(props: SideBarProp) {
     },
     {
       label: "Đào tạo phát triển",
-      icon: "	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_daotao.svg",
+      icon: "	/vn_daotao.svg",
       href: '',
       submenu: < DevelopmentTraining />,
       imgWithd: 21,
@@ -70,7 +70,7 @@ export default function Sidebar(props: SideBarProp) {
     },
     {
       label: "Sơ đồ tổ chức",
-      icon: "https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_sodotochuc.svg",
+      icon: "/vn_sodotochuc.svg",
       href: '/co-cau-to-chuc',
       submenu: '',
       imgWithd: 20,
@@ -78,7 +78,7 @@ export default function Sidebar(props: SideBarProp) {
     },
     {
       label: "Báo cáo nhân sự",
-      icon: "		https://phanmemnhansu.timviec365.vn//assets/images/l_images/baocao_ns.svg",
+      icon: "		/baocao_ns.svg",
       href: '/bao-cao-nhan-su',
       submenu: '',
       imgWithd: 18,
@@ -86,7 +86,7 @@ export default function Sidebar(props: SideBarProp) {
     },
     {
       label: "Cài đặt",
-      icon: "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_icon_setting.svg",
+      icon: "		/vn_icon_setting.svg",
       href: '/cai-dat-chung',
       submenu: '',
       imgWithd: 20,
@@ -94,7 +94,7 @@ export default function Sidebar(props: SideBarProp) {
     },
     {
       label: "Dữ liệu gần đây đã xóa",
-      icon: "		https://phanmemnhansu.timviec365.vn//assets/images/l_images/daxoa.svg",
+      icon: "		/daxoa.svg",
       href: '',
       submenu: '',
       imgWithd: 14,
@@ -102,7 +102,7 @@ export default function Sidebar(props: SideBarProp) {
     },
     {
       label: "Chuyển đổi số",
-      icon: "		https://phanmemnhansu.timviec365.vn//assets/images/icon-menu/vn_chuyendoiso.svg",
+      icon: "		/vn_chuyendoiso.svg",
       href: '',
       submenu: '',
       imgWithd: 20,
@@ -116,7 +116,7 @@ export default function Sidebar(props: SideBarProp) {
         <div className={`${styles.logo}`}>
           <a href="https://https://timviec365.vn/">
             <img
-              src="https://phanmemnhansu.timviec365.vn//assets/images/l_images/logo.svg"
+              src={`/logo.svg`}
               alt="icon"
             />
           </a>

@@ -16,18 +16,18 @@ export default function BodyFrameSection1({ children }: any) {
                         </div>
                     </div>
                     <div className={`${styles.item_left_img}`}>
-                        <img src="	https://phanmemnhansu.timviec365.vn//assets/images/l_images/xinchao.png" alt="xinchao" />
+                        <img src={`/xinchao.png`} alt="xinchao" />
                     </div>
                 </div>
                 <div className={`${styles.item_right}`}>
                     <div className={`${styles.right_top}`}>
                         <div className={`${styles.city_home}`}>Hà Nội, Việt Nam</div>
                         <div className={`${styles.weather}`}>
-                            <div><img className={`${styles.weather_image}`} src="	https://openweathermap.org/img/w/02d.png" alt="thoitiet" /></div>
+                            <div><img className={`${styles.weather_image}`} src={`/02d.png`} alt="thoitiet" /></div>
                             <div className={`${styles.weather_flex}`}>
                                 <div className={`${styles.temperature}`}>35.03</div>
                                 <div className={`${styles.weather_sign}`}>
-                                    <img src="	https://phanmemnhansu.timviec365.vn//assets/images/l_images/doC.svg" alt="thoitiet" />
+                                    <img src={`/doC.svg`} alt="thoitiet" />
                                 </div>
                             </div>
                         </div>

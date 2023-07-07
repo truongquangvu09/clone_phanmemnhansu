@@ -10,42 +10,42 @@ export default function DropDownMenu() {
 
     const ListMenu = [
         {
-            img: 'https://phanmemnhansu.timviec365.vn//assets/images/l_images/huongdan.svg',
+            img: '/huongdan.svg',
             text: 'Hướng dẫn',
             href: '',
-            icon: '	https://phanmemnhansu.timviec365.vn//assets/images/l_images/iconmenu.svg'
+            icon: '	/iconmenu.svg'
 
         },
         {
-            img: '	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu-vn/vn_icon_tttk.svg',
+            img: '	/vn_icon_tttk.svg',
             text: 'Thông tin tài khoản',
             href: '',
-            icon: '	https://phanmemnhansu.timviec365.vn//assets/images/l_images/iconmenu.svg'
+            icon: '	/iconmenu.svg'
         },
         {
-            img: '	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu-vn/vn_icon_baoloi.svg',
+            img: '	/vn_icon_baoloi.svg',
             text: 'Báo lỗi',
             href: '',
-            icon: '	https://phanmemnhansu.timviec365.vn//assets/images/l_images/iconmenu.svg'
+            icon: '	/iconmenu.svg'
         },
         {
-            img: '	https://phanmemnhansu.timviec365.vn//assets/images/icon-menu-vn/vn_icon_danhgia.svg',
+            img: '	/vn_icon_danhgia.svg',
             text: 'Đánh giá',
             href: '',
-            icon: '	https://phanmemnhansu.timviec365.vn//assets/images/l_images/iconmenu.svg'
+            icon: '	/iconmenu.svg'
         },
         {
-            img: '	https://phanmemnhansu.timviec365.vn//assets/images/l_images/dangxuat.svg',
+            img: '	/dangxuat.svg',
             text: 'Đăng xuất',
             href: '',
-            icon: '	https://phanmemnhansu.timviec365.vn//assets/images/l_images/iconmenu.svg'
+            icon: '	/iconmenu.svg'
         },
 
     ]
     return (
         <>
             <div className={`${styles.wrapper}`}>
-                <div className={`${styles.avatar}`}><img className={`${styles.img_avatar}`} src="https://chamcong.24hpay.vn/upload/employee/ep555955/app_1686633773283.jpg" alt="" /></div>
+                <div className={`${styles.avatar}`}><img className={`${styles.img_avatar}`} src={`/app_1686633773283.jpg`} alt="" /></div>
                 <div className={`${styles.menu_name}`}>Trương Quang Vu</div>
                 <div className={`${styles.menu_cpn}`}>CÔNG TY CỔ PHẦN THANH TOÁN HƯNG HÀ</div>
                 <div className={`${styles.menu_id}`}>555955</div>

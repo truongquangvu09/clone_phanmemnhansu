@@ -465,7 +465,7 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                 </div>
                                                 <div className={`${styles.icon_delete}`}>
                                                     <a href="" className={`${styles.remove_another_skill}`}>
-                                                        <img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/icon-del-kn.svg" alt="" />
+                                                        <img src={`/icon-del-kn.svg`} alt="" />
                                                     </a>
                                                 </div>
                                             </div>
@@ -484,7 +484,7 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                 </div>
                                                 <div className={`${styles.icon_delete}`}>
                                                     <a href="" className={`${styles.remove_another_skill}`}>
-                                                        <img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/icon-del-kn.svg" alt="" />
+                                                        <img src={`/icon-del-kn.svg`} alt="" />
                                                     </a>
                                                 </div>
                                             </div>
@@ -503,7 +503,7 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                 </div>
                                                 <div className={`${styles.icon_delete}`}>
                                                     <a href="" className={`${styles.remove_another_skill}`}>
-                                                        <img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/icon-del-kn.svg" alt="" />
+                                                        <img src={`/icon-del-kn.svg`} alt="" />
                                                     </a>
                                                 </div>
 
@@ -516,7 +516,7 @@ export default function CandidateAddModal({ onCancel }: any) {
                                         <div className={`${styles.input_right} ${styles.input_upload_t}`}>
                                             <input type="file" className={`${styles.upload_cv}`} id="upload_cv" accept="application/pdf, image/*" />
                                             <a href="" className={`${styles.t_ion_file}`} onClick={handleUploadClick} >
-                                                <img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-file.svg" alt="" />
+                                                <img src={`/t-icon-file.svg`} alt="" />
                                             </a>
                                         </div>
                                     </div>

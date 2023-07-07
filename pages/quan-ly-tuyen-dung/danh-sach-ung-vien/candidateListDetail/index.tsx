@@ -48,10 +48,10 @@ export default function CandidateListDetail() {
                     <div className={`${styles.body}`}>
                         <div className={`${styles.recruitment}`}>
                             <button className={`${styles.add}`} onClick={() => setOpenModal(1)}>
-                                <img style={{ verticalAlign: 'middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm ứng viên
+                                <img style={{ verticalAlign: 'middle' }} src={`/add.png`} alt="" />Thêm ứng viên
                             </button>
                             <button className={`${styles.add}`} onClick={() => setOpenModal(2)}>
-                                <img style={{ verticalAlign: 'middle' }} src="	https://phanmemnhansu.timviec365.vn/assets/images/l_images/add.png" alt="" />Thêm giai đoạn
+                                <img style={{ verticalAlign: 'middle' }} src={`/add.png`} alt="" />Thêm giai đoạn
                             </button>
                         </div>
                         {openModal === 1 ? <CandidateAddModal onCancel={handleCloseModal}></CandidateAddModal> : ''}
@@ -201,14 +201,14 @@ export default function CandidateListDetail() {
                                 </div>
                                 <div className={`${styles.div_no_pad} `}>
                                     <a href="" className={`${styles.icon_search_top}`}>
-                                        <img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-search-n.svg" alt="" />
+                                        <img src={`	/t-icon-search-n.svg`} alt="" />
                                     </a>
                                 </div>
                             </div>
                         </div>
                         <div className={`${styles.export_excel}`} style={{ paddingRight: 20, right: 0, position: 'absolute' }}>
                             <a href="" className={`${styles.t_excel}`} >
-                                <img src="	https://phanmemnhansu.timviec365.vn/assets/images/t_images/t-icon-excel.svg" alt="" />
+                                <img src={`/t-icon-excel.svg`} alt="" />
                                 Xuất file Excel
                             </a>
                         </div>

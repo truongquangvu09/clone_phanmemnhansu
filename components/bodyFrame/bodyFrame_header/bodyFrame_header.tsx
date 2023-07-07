@@ -40,7 +40,7 @@ export default function BodyFrameHeader({ children }: any) {
                         <div className={`${styles.sidebar_renative}`}>
                             <div>
                                 <div className={`${styles.icon_sidebar_all}`} onClick={handleOpenSidebar}>
-                                    <img src="https://phanmemnhansu.timviec365.vn/assets/images/l_images/icon_sidebar_all.svg" alt="icon" />
+                                    <img src={`/icon_sidebar_all.svg`} alt="icon" />
                                 </div>
                             </div>
                         </div>
@@ -50,22 +50,22 @@ export default function BodyFrameHeader({ children }: any) {
                     <div className={`${styles.header_right}`} >
                         <div className={`${styles.header_right_item1}`} >
                             <div className={`${styles.menu_top_icon}`}>
-                                <img className={`${styles.drop_down}`} src="	https://phanmemnhansu.timviec365.vn//assets/images/l_images/chat.svg" alt="icon" />
+                                <img className={`${styles.drop_down}`} src={`/chat.svg`} alt="icon" />
                             </div>
                             <div className={`${styles.menu_top_icon}`} onClick={handleNotify}>
-                                <img className={`${styles.drop_down}`} src="	https://phanmemnhansu.timviec365.vn//assets/images/l_images/nhacnho.svg" alt="icon" />
+                                <img className={`${styles.drop_down}`} src={`/nhacnho.svg`} alt="icon" />
                             </div>
                             <div className={`${styles.menu_top_icon}`} onClick={handleRemind}>
-                                <img className={`${styles.drop_down}`} src="	https://phanmemnhansu.timviec365.vn//assets/images/l_images/thongbao.svg" alt="icon" />
+                                <img className={`${styles.drop_down}`} src={`/thongbao.svg`} alt="icon" />
                             </div>
                         </div>
                         <div className={`${styles.header_right_item2}`} onClick={toggleMenu}>
                             <div className={`${styles.header_avatar}`}>
-                                <img className={`${styles.image_avatar}`} src="https://chamcong.24hpay.vn/upload/employee/ep555955/app_1686633773283.jpg" alt="" />
+                                <img className={`${styles.image_avatar}`} src={`/app_1686633773283.jpg`} alt="" />
                             </div>
                             <div className={`${styles.name}`}>Trương Quang Vũ</div>
                             <div className={`${styles.drop_down}`}>
-                                <img src="https://phanmemnhansu.timviec365.vn//assets/images/l_images/menu.svg" alt="icon" />
+                                <img src={`/menu.svg`} alt="icon" />
                             </div>
                         </div>
                     </div>
