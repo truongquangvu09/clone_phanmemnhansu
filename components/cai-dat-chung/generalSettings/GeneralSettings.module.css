@@ -44,3 +44,31 @@
     font-size: 14px;
     font-weight: 500;
 }
+
+.content_1_show {
+    display: block;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    margin-top: 20px;
+}
+.content_1_show_body {
+    width: 100%;
+    display: flex;
+    padding: 20px 0px;
+    justify-content: space-between;
+}
+.content_1_show_body p {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    color: #474747;
+}
+.l_content_border {
+    border-bottom: 1px dotted gray;
+}
+
+.content_1_show_body_left, .content_1_show_body_right {
+    padding: 0 90px 0 20px;
+}
