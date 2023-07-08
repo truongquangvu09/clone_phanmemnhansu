@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styles from "./DetailTrainingProcess.module.css";
 import { useRouter } from "next/router";
-import ListDetailTrainingProcess from "./listDetailTrainingProcess/ListDetailTrainingProcess";
-import AddDetailTrainingProcess from "./addDetailTrainingProcess/AddDetailTrainingProcess";
+import ListDetailTrainingProcess from "@/components/dao-tao-phat-trien/quy-trinh-dao-tao/chi-tiet-quy-trinh/listDetailTrainingProcess/ListDetailTrainingProcess";
+import AddDetailTrainingProcess from "@/components/dao-tao-phat-trien/quy-trinh-dao-tao/chi-tiet-quy-trinh/addDetailTrainingProcess/AddDetailTrainingProcess";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 
 export default function DetailTrainingProcess({ children }: any) {

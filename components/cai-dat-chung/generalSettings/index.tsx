@@ -70,7 +70,14 @@ export default function GeneralSettings() {
             )}
           </div>
         </div>
-        
+        <style jsx>{`
+            .content_1_show {
+                animation: ${isShow ? 'fadeIn 0.3s forwards' : 'fadeOut 0.3s forwards'};
+            }
+            .l_content_border {
+                animation: ${isShow ? 'rollUp 0.3s forwards' : 'rollDown 0.3s forwards'};
+            }
+        `}</style>
       </>
     );
 }

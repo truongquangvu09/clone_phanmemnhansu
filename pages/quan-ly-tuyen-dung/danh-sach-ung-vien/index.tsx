@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './candidateList.module.css'
 import Link from 'next/link';
 import CandidateListDetail from './candidateListDetail';
-import CandidateRepo from './candidateRepo';
+import CandidateRepo from '@/components/quan-ly-tuyen-dung/danh-sach-ung-vien/candidateRepo';
 
 export interface CandidateList {
 

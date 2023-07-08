@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styles from "./styles.module.css";
-import PersonalReward from "./personalReward/PersonalReward";
-import CommendationTeam from "./commendationTeam/CommendationTeam";
-import AchievementList from "./achievementList/AchievementList";
+import PersonalReward from "@/components/luong-thuong-phuc-loi/khen-thuong/personalReward/PersonalReward";
+import CommendationTeam from "@/components/luong-thuong-phuc-loi/khen-thuong/commendationTeam/CommendationTeam";
+import AchievementList from "@/components/luong-thuong-phuc-loi/khen-thuong/achievementList/AchievementList";
 
 export default function NavBar({ children }: any) {
   const [active, setActive] = useState(1);

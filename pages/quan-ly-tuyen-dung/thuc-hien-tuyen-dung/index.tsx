@@ -1,8 +1,8 @@
 
 import React, { useState } from "react";
 import styles from './headerForm.module.css'
-import PerformRecruitment from "./PerformRecruitment/PerformRecruitment";
-import Recruitment from "./Recruitment/recruitment";
+import PerformRecruitment from "@/components/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/PerformRecruitment/PerformRecruitment";
+import Recruitment from "@/components/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/Recruitment/recruitment";
 
 
 export interface HeaderForm {}

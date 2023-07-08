@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Select from 'react-select';
 import styles from './candidateListDetail.module.css'
-import CandidateAddModal from "../candidateAddModal";
-import StageAddModal from "../stageAddModal";
+import CandidateAddModal from "@/components/quan-ly-tuyen-dung/danh-sach-ung-vien/candidateAddModal";
+import StageAddModal from "@/components/quan-ly-tuyen-dung/danh-sach-ung-vien/stageAddModal";
 
 type SelectOptionType = { label: string, value: string }
 

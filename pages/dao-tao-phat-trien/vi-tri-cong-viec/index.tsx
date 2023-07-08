@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./styles.module.css";
-import ListJobPosition from "./listJobPosition/ListJobPosition";
+import ListJobPosition from "@/components/dao-tao-phat-trien/vi-tri-cong-viec/listJobPosition/ListJobPosition";
 
 export default function JobPosition({ children }: any) {
   const [active, setActive] = useState(1);

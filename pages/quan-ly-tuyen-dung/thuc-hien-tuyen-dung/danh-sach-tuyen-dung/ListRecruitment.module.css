@@ -1,7 +1,61 @@
+
+/* body_tin_tuyen_dung */
 .new_r_t {
-    padding: 0px 0px;
-    padding-left: 0px;
+    margin-top: 30px;
+    background: #FFFFFF;
+    border: 0.5px solid rgba(71, 71, 71, 0.24);
+    box-sizing: border-box;
+    border-radius: 8px;
+    
 }
+
+.row {
+    margin: 0;
+}
+
+.t_ita {
+    width: 157px;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 24px;
+    color: #666666;
+    padding: 0;
+    margin: 0;
+}
+
+.t_new_type {
+    padding: 0;
+    display: inline-block;
+    margin-left: 6%;
+}
+
+.pull_right {
+    float: right !important;
+    background: transparent;
+    border: none;
+}
+.pull_right_img {
+   display: flex;
+   justify-content: flex-end;
+}
+
+/* setting */
+
+.settings {
+    position: relative;
+    width: 165px;
+    overflow: hidden;
+    background-color: #4C5BD4;
+    z-index: 10;
+    text-align: left;
+    border-radius: 8px;
+    background: white;
+    right: 15px;
+    box-shadow: 0 4px 10px rgb(0 0 0 / 5%);
+    
+}
+
 .new_r_t_left {
     padding-left: 0px;
     padding-bottom: 10px;
@@ -13,7 +67,9 @@
     border-left: 5px solid #4C5BD4;
     border-top-left-radius: 5px;
     display: flex;
-    height: 36px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  
 }
 .new_r_t_left_h3 {
     width: 250px;
@@ -53,9 +109,7 @@
     width: 62px;
     height: 18px;
 }
-.new_r_t_body {
-    width: 771px;
-}
+
 .new_r_t_body_content {
     padding: 13px 20px;
     border-bottom: 0.5px dashed rgba(71, 71, 71, 0.24);
@@ -83,4 +137,32 @@
 }
 .new_r_t_body_content .icon {
     margin-right: 12px;
+}
+.settings li, .edit_new {
+    color: #333333;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 16px 20px 14px 13px;
+    border-left: 3px solid #ffffff;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+}
+
+.settings li:hover ,.edit_new:hover {
+    color: #4C5BD4;
+    border-left: 3px solid #4C5BD4;
+}
+/* body_detail_tin_tuyen_dung */
+
+@media (max-width: 1024px) {
+    .tuyendung2_2 {
+        margin-right: 4%;
+    }
+}
+
+@media (max-width: 765px) {
+    .t_new_dom {
+        margin-right: 4%;
+    }
 }

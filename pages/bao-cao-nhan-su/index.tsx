@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../quan-ly-hanh-chinh/thong-tin-nhan-su/administration.module.css'
 import Link from 'next/link';
-import TabHRReport from './hrReport';
-import RecruitmentReport from './recruitmentReport';
+import TabHRReport from '@/components/bao-cao-nhan-su/hrReport';
+import RecruitmentReport from '@/components/bao-cao-nhan-su/recruitmentReport';
 
 
 export default function HRReport({ children }: any) {

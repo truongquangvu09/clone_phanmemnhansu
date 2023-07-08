@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import styles from '../thong-tin-nhan-su/administration.module.css'
 import Link from 'next/link';
-import TabSalary from './salary';
-import TabPlaningAppointment from './planningAppointment';
-import TabWorkingRotation from './workingRotation';
-import TabPayrollDown from './payrollDown';
-import TabOutJob from './outJob';
-import TabChart from './chart';
+import TabSalary from '@/components/quan-ly-hanh-chinh/bien-dong-nhan-su/salary';
+import TabPlaningAppointment from '@/components/quan-ly-hanh-chinh/bien-dong-nhan-su/planningAppointment';
+import TabWorkingRotation from '@/components/quan-ly-hanh-chinh/bien-dong-nhan-su/workingRotation';
+import TabPayrollDown from '@/components/quan-ly-hanh-chinh/bien-dong-nhan-su/payrollDown';
+import TabOutJob from '@/components/quan-ly-hanh-chinh/bien-dong-nhan-su/outJob';
+import TabChart from '@/components/quan-ly-hanh-chinh/bien-dong-nhan-su/chart';
 
 export default function PersonnalChange({ children }: any) {
     const [active, setActive] = useState(1)

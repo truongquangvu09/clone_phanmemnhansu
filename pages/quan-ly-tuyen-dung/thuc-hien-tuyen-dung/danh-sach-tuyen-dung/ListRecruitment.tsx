@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import styles from "../Recruitment/recruitment.module.css";
-import Link from "next/link";
+// import styles from "@/components/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/Recruitment/recruitment.module.css";
+import styles from "./ListRecruitment.module.css"
 import { useRouter } from "next/router";
-import EditPerformRecruitment from "../EditPerformRecruitment/EditPerformRecruitment";
+import EditPerformRecruitment from "@/components/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/EditPerformRecruitment/EditPerformRecruitment";
 export interface ListRecruitment { }
 
 export default function ListRecruitment({ data }: any) {

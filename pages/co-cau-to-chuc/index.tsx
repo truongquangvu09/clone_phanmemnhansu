@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../quan-ly-hanh-chinh/thong-tin-nhan-su/administration.module.css'
 import Link from 'next/link';
-import OrganisationalStructureDiagram from './organisationalStructureDiagram';
-import SealAndSignature from './sealAndSignature';
+import OrganisationalStructureDiagram from '@/components/co-cau-to-chuc/organisationalStructureDiagram';
+import SealAndSignature from '@/components/co-cau-to-chuc/sealAndSignature';
 import LeaderBiography from './leaderBiography';
 import dynamic from "next/dynamic";
-const PostionCharTree = dynamic(() => import("./postionChar"), {
+const PostionCharTree = dynamic(() => import("@/components/co-cau-to-chuc/postionChar"), {
     ssr: false
 })
 

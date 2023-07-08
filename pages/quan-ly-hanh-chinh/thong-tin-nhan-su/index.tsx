@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './administration.module.css'
 import Link from 'next/link';
-import TabEmployeeManagement from './tab';
+import TabEmployeeManagement from '@/components/quan-ly-hanh-chinh/thong-tin-nhan-su/tab';
 
 export interface EmployeeManagement {
 

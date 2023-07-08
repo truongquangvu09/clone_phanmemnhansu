@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import styles from "./detailRecruitmentStage.module.css";
 import { useRouter } from "next/router";
-import AddRecruitmentStage from "./addRecruitmentStage/them-quy-trinh";
-import ListRecruitmentStage from "./listRecruitmentStage/listRecruitmentStage";
+import AddRecruitmentStage from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/chi-tiet-quy-trinh/addRecruitmentStage/them-quy-trinh";
+import ListRecruitmentStage from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/chi-tiet-quy-trinh/listRecruitmentStage/listRecruitmentStage";
 export interface listRecruitmentProcess {}
 
 export default function listRecruitmentProcess({ children }: any) {

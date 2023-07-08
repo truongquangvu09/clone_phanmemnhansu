@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styles from "./styles.module.css";
-import PersonalDiscipline from "./personalDiscipline/PersonalDiscipline";
-import DisciplineList from "./disciplineList/DisciplineList";
-import CollectiveDiscipline from "./collectiveDiscipline/CollectiveDiscipline";
+import PersonalDiscipline from "@/components/luong-thuong-phuc-loi/ky-luat/personalDiscipline/PersonalDiscipline";
+import DisciplineList from "@/components/luong-thuong-phuc-loi/ky-luat/disciplineList/DisciplineList";
+import CollectiveDiscipline from "@/components/luong-thuong-phuc-loi/ky-luat/collectiveDiscipline/CollectiveDiscipline";
 
 
 export default function NavBar({ children }: any) {

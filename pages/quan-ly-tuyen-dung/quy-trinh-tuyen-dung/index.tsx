@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./recruitmentProcess.module.css";
-import AddRecruitmentProcess from "./addRecruitmentProcess/addRecruitmentProcess";
-import ListRecruitment from "./listRecruitmentProcess/listRecruitmentProcess";
+import AddRecruitmentProcess from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/addRecruitmentProcess/addRecruitmentProcess";
+import ListRecruitment from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/listRecruitmentProcess/listRecruitmentProcess";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 export interface RecruitmentProcess {}
 

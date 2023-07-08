@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./styles.module.css";
-import ListTrainingProcess from "./listTrainingProcess/ListTrainingProcess";
-import DetailTrainingProcess from "./chi-tiet-quy-trinh/[idTrainingProcess]"
+import ListTrainingProcess from "@/components/dao-tao-phat-trien/quy-trinh-dao-tao/listTrainingProcess/ListTrainingProcess";
+
 
 
 export default function JobPosition({ children }: any) {

@@ -24,9 +24,7 @@ export default function IdRecruitment({ children }: any) {
       header: "TIN TUYỂN DỤNG",
     },
   ];
-  const {
-    query: { idRecruitment },
-  } = router;
+  
   return (
     <>
       <div className={`${styles.l_body}`}>
