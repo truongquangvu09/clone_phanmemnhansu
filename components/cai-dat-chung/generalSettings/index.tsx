@@ -1,83 +1,209 @@
 import React, { useEffect, useState } from "react";
 import styles from "./GeneralSettings.module.css";
+import { Space } from "antd";
+import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
+import CustomCollapse from "@/components/collapse/CustomCollapse";
+import PublicInformation from "./publicinformation";
+import Edit from "./edit";
+import NotificationSetting from "./notification/Notification";
+import Remind from "./remind/Remind";
+import Decentralization from "./decentralization";
+
+
+const handleButtonClick = (e) => {
+  e.preventDefault();
+};
+
+
 
 export default function GeneralSettings() {
-    const [isShow, setIsShow] = useState(false)
-    const toggleDropAnimation = () => {
-        setIsShow(!isShow);
-      };
 
-    const data = [
-        {
-            congty: 'Công ty Cổ phần Thanh toán Hưng Hà 2',
-            phone:'0356021606',
-            linhvuc: 'Công nghệ thông tin',
-            quymo: '50',
-            diachi: 'Trần Nguyên Đán, đô thị Định Công, Hoàng Mai, Hà Nội',
-            email: 'trangchuoi4@gmail.com'
-        }
-    ]
-    return (
-      <>
-        <div className={`${styles.tab_content}`}>
-          <div className={`${styles.l_content_setting}`}>
-            <div className={`${styles.content_1}`}>
-              <div onClick={toggleDropAnimation} className={`${styles.content_1_left} ${isShow ? styles.active : ''}`}>
-                <p>THÔNG TIN CÔNG TY</p>
-                <picture>
-                    <img src={`${'/icon_down.svg'}`} alt=""></img>
+  const componentObj = {
+    city: <PublicInformation />,
+    edit: <Edit onClickButton={handleButtonClick} />,
+    notification: <NotificationSetting />,
+    remind: <Remind />
+  };
+
+
+  const [page, setPage] = useState(1)
+  const [currentComponents, setCurrentComponents] = useState<string[]>([]);
+
+  console.log(currentComponents)
+
+  const handleClick = (typeCollapse: string) => {
+    setCurrentComponents((prev) => {
+      const hasCity = prev.includes('city');
+      const hasEdit = prev.includes('edit');
+  
+      if (typeCollapse === 'city' && hasCity) {
+        // Xóa city và thêm edit
+        return prev.filter((component) => component !== 'city').concat('edit');
+      } else if (typeCollapse === 'edit' && hasEdit) {
+        // Xóa edit và thêm city
+        return prev.filter((component) => component !== 'edit').concat('city');
+      } else {
+        // Giữ nguyên các giá trị khác
+        return prev.filter((component) => component !== 'city' && component !== 'edit').concat(typeCollapse);
+      }
+    });
+  };
+  
+  return (
+    <>
+      <div className={`${styles.tab_content}`}>
+        <div className={`${styles.l_content_setting}`}>
+
+        {page === 1 && (
+          <>
+           <Space direction="vertical" style={{ width: "100%" }}>
+            <div className={`${styles.content}`}>
+              <CustomCollapse
+                label={
+                  <>
+                    <div
+                      className={`${styles.content_1_left}`}
+                       onClick={() => handleClick('city')}
+                    >
+                      <p style={{ lineHeight: "36px" }}>THÔNG TIN CÔNG TY</p>
+                      <picture
+                        style={{ marginTop: "-3px", lineHeight: "36px" }}
+                      >
+                        <img src={`${"/icon_down.svg"}`} alt=""></img>
+                      </picture>
+                    </div>
+                    <div
+                      className={`${styles.content_1_right}`}
+                      onClick={() => handleClick('edit')}
+                    >
+                      <button>Chỉnh sửa</button>
+                    </div>
+                  </>
+                }
+              >
+              {currentComponents.filter((component) => component === 'city') ? componentObj.city : componentObj.edit}
+              </CustomCollapse>
+            </div>
+          </Space>
+
+          <div className={`${styles.box}`} style={{ height: "60px" }}>
+            <div className={`${styles.content2}`}
+            onClick={() => setPage(2)}
+            >
+              <div className={`${styles.content_1_left}`}>
+                <p style={{ lineHeight: "36px" }}>Phân quyền người dùng</p>
+                <picture style={{ lineHeight: "56px" }}>
+                  <img src={`${"/icon_right.svg"}`} alt=""></img>
                 </picture>
               </div>
-              <div className={`${styles.content_1_right}`}>
-                <button>
-                    <p>Chỉnh sửa</p>
-                </button>
+            </div>
+          </div>
+
+           <Space
+            direction="vertical"
+            style={{ width: "100%", marginTop: "15px" }}
+            onClick={() => handleClick('notification')}
+          >
+            <div className={`${styles.content}`}>
+              <CustomCollapse
+                label={
+                  <>
+                    <div className={`${styles.content_3_left}`}>
+                      <p style={{ lineHeight: "36px" }}>THÔNG BÁO</p>
+                      <picture
+                        style={{ marginTop: "-3px", lineHeight: "36px" }}
+                      >
+                        <img src={`${"/icon_down.svg"}`} alt=""></img>
+                      </picture>
+                    </div>
+                  </>
+                }
+              >
+              {currentComponents.includes('notification')  && componentObj.notification}
+
+              </CustomCollapse>
+            </div>
+          </Space>
+
+          <Space
+            direction="vertical"
+            style={{ width: "100%", marginTop: "15px" }}
+            onClick={() => handleClick('remind')}
+          >
+            <div className={`${styles.content}`}>
+              <CustomCollapse
+                label={
+                  <>
+                    <div className={`${styles.content_4_left}`}>
+                      <p style={{ lineHeight: "36px" }}>NHẮC NHỞ</p>
+                      <picture
+                        style={{ marginTop: "-3px", lineHeight: "36px" }}
+                      >
+                        <img src={`${"/icon_down.svg"}`} alt=""></img>
+                      </picture>
+                    </div>
+                  </>
+                }
+              >
+                {currentComponents.includes('remind')  && componentObj.remind}
+              </CustomCollapse>
+            </div>
+          </Space>
+
+          <div className={`${styles.box}`} style={{ height: "60px" }}>
+            <div className={`${styles.content2}`}>
+              <div className={`${styles.content_1_left}`}>
+                <p style={{ lineHeight: "36px" }}>NGÔN NGỮ</p>
+                <div
+                  className={`${styles.button_language}`}
+                  onClick={() => setCurrent(4)}
+                >
+                  <button>Tiếng Việt(VI)</button>
+                </div>
               </div>
             </div>
+          </div> 
 
-            {isShow && (
-                <div className={`${styles.content_1_show} ${isShow ? 'open' : ''}`}>
-                    <div className={`${styles.content_1_show_body} ${styles.l_content_border} ${isShow ? 'open' : ''}`}>
-                        <div className={`${styles.content_1_show_body_left}`}>
-                            <p>{data[0]?.congty}</p>
-                        </div>
+          <div className={`${styles.box}`} style={{ height: "60px" }}>
+            <div className={`${styles.content2}`}>
+              <div className={`${styles.content_1_left}`}>
+                <p style={{ lineHeight: "36px" }}>GIAO DIỆN</p>
+                <div className={`${styles.flex}`}>
+                  <div className={`${styles.l_backgroung}`}></div>
+                  <div className={`${styles.l_border_left}`}></div>
+                  <div
+                    className={`${styles.content_1_right}`}
+                  >
+                    <button style={{ padding: "9px 28px" }}>Mặc định</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          </>
+        )}
 
-                        <div className={`${styles.content_1_show_body_right}`}>
-                            <p>Điện thoại: {data[0]?.phone}</p>
-                        </div>
-                    </div>
-
-                    <div className={`${styles.content_1_show_body} ${styles.l_content_border}`}>
-                        <div className={`${styles.content_1_show_body_left}`}>
-                            <p>Lĩnh vực hoạt động: {data[0]?.linhvuc}</p>
-                        </div>
-
-                        <div className={`${styles.content_1_show_body_right}`}>
-                            <p>Quy mô nhân sự: {data[0]?.quymo}</p>
-                        </div>
-                    </div>
-
-                    <div className={`${styles.content_1_show_body} ${styles.l_content_border}`}>
-                        <div className={`${styles.content_1_show_body_left}`}>
-                            <p>Địa chỉ liên lạc: {data[0]?.diachi}</p>
-                        </div>
-
-                        <div className={`${styles.content_1_show_body_right}`}>
-                            <p>Email: {data[0]?.email}</p>
-                        </div>
+        {page === 2 && (
+          <>
+              <div className={`${styles.l_quyennguoidung}`} style={{cursor:'default'}}>
+                <div style={{display: 'flex'}}
+                onClick={() => setPage(1)}
+                >
+                    <picture>
+                        <img src={`${'/icon_cancel.svg'}`} alt=""></img>
+                    </picture>
+                    <div>
+                    Phân quyền người dùng
                     </div>
                 </div>
-            )}
-          </div>
+            </div>
+            <Decentralization></Decentralization>
+          </>
+        )}
+      
         </div>
-        <style jsx>{`
-            .content_1_show {
-                animation: ${isShow ? 'fadeIn 0.3s forwards' : 'fadeOut 0.3s forwards'};
-            }
-            .l_content_border {
-                animation: ${isShow ? 'rollUp 0.3s forwards' : 'rollDown 0.3s forwards'};
-            }
-        `}</style>
-      </>
-    );
+      </div>
+      <BodyFrameFooter src="https://www.youtube.com/embed/tsMJjyUxJFs"></BodyFrameFooter>
+    </>
+  );
 }

@@ -95,7 +95,7 @@ export default function Sidebar(props: SideBarProp) {
     {
       label: "Dữ liệu gần đây đã xóa",
       icon: "		/daxoa.svg",
-      href: '',
+      href: '/du-lieu-da-xoa',
       submenu: '',
       imgWithd: 14,
       imgheight: 18

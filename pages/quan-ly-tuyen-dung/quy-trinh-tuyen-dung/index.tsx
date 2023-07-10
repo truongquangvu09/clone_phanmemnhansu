@@ -34,7 +34,9 @@ export default function RecruitmentProcess({ children }: any) {
                 className="adds"
                 style={{ outline: "none", border: "none", padding: "0" }}
               >
-                <picture className={`${styles.add_quytrinh2}`} >
+                <picture className={`${styles.add_quytrinh2}`} 
+                    onClick={handleOpenModalAdd}
+                    >
                   <img
                     src={`${'/add.png'}`}
                     alt=""
@@ -42,7 +44,6 @@ export default function RecruitmentProcess({ children }: any) {
                   ></img>
                   <p
                     className={`${styles.add_quytrinh2_title}`}
-                    onClick={handleOpenModalAdd}
                   >
                     Thêm quy trình tuyển dụng
                   </p>

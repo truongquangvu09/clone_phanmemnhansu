@@ -18,7 +18,7 @@
     "@types/node": "18.13.0",
     "@types/react": "18.0.27",
     "@types/react-dom": "18.0.10",
-    "antd": "^5.6.3",
+    "antd": "^5.6.4",
     "axios": "^1.3.2",
     "bootstrap": "^5.3.0",
     "ckeditor5-custom-build": "file:ckeditor5",
@@ -31,6 +31,7 @@
     "next": "13.1.6",
     "react": "18.2.0",
     "react-bootstrap": "^2.7.4",
+    "react-collapse": "^5.1.1",
     "react-d3-tree": "^3.6.1",
     "react-dom": "18.2.0",
     "react-icons": "^4.9.0",
@@ -44,6 +45,7 @@
     "typescript": "4.9.5"
   },
   "devDependencies": {
-    "@types/highcharts": "^7.0.0"
+    "@types/highcharts": "^7.0.0",
+    "@types/react-collapse": "^5.0.1"
   }
 }
