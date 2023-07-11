@@ -33,7 +33,8 @@ export default function Sidebar(props: SideBarProp) {
       href: '/',
       submenu: null,
       imgWithd: 20,
-      imgheight: 17
+      imgheight: 17,
+      target: ''
 
     },
     {
@@ -42,7 +43,8 @@ export default function Sidebar(props: SideBarProp) {
       href: '',
       submenu: <RecruitmentManager />,
       imgWithd: 20,
-      imgheight: 18
+      imgheight: 18,
+      target: ''
     },
     {
       label: "Lương thưởng và phúc lợi",
@@ -50,7 +52,8 @@ export default function Sidebar(props: SideBarProp) {
       href: '',
       submenu: <SalaryAndBenefits />,
       imgWithd: 20,
-      imgheight: 20
+      imgheight: 20,
+      target: ''
     },
     {
       label: "Quản lý hành chính",
@@ -58,7 +61,8 @@ export default function Sidebar(props: SideBarProp) {
       href: '',
       submenu: <Administration />,
       imgWithd: 20,
-      imgheight: 18
+      imgheight: 18,
+      target: ''
     },
     {
       label: "Đào tạo phát triển",
@@ -66,7 +70,8 @@ export default function Sidebar(props: SideBarProp) {
       href: '',
       submenu: < DevelopmentTraining />,
       imgWithd: 21,
-      imgheight: 21
+      imgheight: 21,
+      target: ''
     },
     {
       label: "Sơ đồ tổ chức",
@@ -74,7 +79,8 @@ export default function Sidebar(props: SideBarProp) {
       href: '/co-cau-to-chuc',
       submenu: '',
       imgWithd: 20,
-      imgheight: 20
+      imgheight: 20,
+      target: ''
     },
     {
       label: "Báo cáo nhân sự",
@@ -82,7 +88,8 @@ export default function Sidebar(props: SideBarProp) {
       href: '/bao-cao-nhan-su',
       submenu: '',
       imgWithd: 18,
-      imgheight: 18
+      imgheight: 18,
+      target: ''
     },
     {
       label: "Cài đặt",
@@ -90,7 +97,8 @@ export default function Sidebar(props: SideBarProp) {
       href: '/cai-dat-chung',
       submenu: '',
       imgWithd: 20,
-      imgheight: 20
+      imgheight: 20,
+      target: ''
     },
     {
       label: "Dữ liệu gần đây đã xóa",
@@ -98,15 +106,17 @@ export default function Sidebar(props: SideBarProp) {
       href: '/du-lieu-da-xoa',
       submenu: '',
       imgWithd: 14,
-      imgheight: 18
+      imgheight: 18,
+      target: ''
     },
     {
       label: "Chuyển đổi số",
       icon: "		/vn_chuyendoiso.svg",
-      href: '',
+      href: 'https://quanlychung.timviec365.vn/quan-ly-ung-dung-cong-ty.html',
       submenu: '',
       imgWithd: 20,
-      imgheight: 20
+      imgheight: 20,
+      target: 'blank'
     },
   ];
 
@@ -128,7 +138,8 @@ export default function Sidebar(props: SideBarProp) {
                 key={index}
                 onClick={() => handleClick(index)}
                 href={item.href}
-                replace= {true}
+                replace={true}
+                target={item.target}
               >
                 <div className={`${styles.sidebar_home} `}>
                   <div className={`${styles.button1}`}>

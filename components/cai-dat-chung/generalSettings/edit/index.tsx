@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./edit.module.css";
 
-export default function Edit( {onClickButton }) {
+export default function Edit( {onClickButton}) {
   const handleSubmit = () => {};
 
   const handleClickEdit = (e: any) => {
@@ -64,7 +64,7 @@ export default function Edit( {onClickButton }) {
           <div className={`${styles.l_chinhsua_item_button}`}>
                 <div className={`${styles.l_button_left}`}>
                     <button
-                     onClick={(e) => onClickButton(e)}
+                     onClick={onClickButton}
                     >Hủy bỏ</button>
                 </div>
 

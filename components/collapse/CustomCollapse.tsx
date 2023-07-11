@@ -6,17 +6,17 @@ interface CustomCollapseProps {
   children: ReactNode;
 }
 
-const CustomCollapse: React.FC<CustomCollapseProps> = ({ label, children }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const CustomCollapse: React.FC<CustomCollapseProps> = ({ label, children }) => { 
 
   return (
     <Collapse
-      onChange={(value) => setIsOpen(value?.length === 0)}
+      
       style={{ width: "100%", backgroundColor: "none", border: "none" }}
-      expandIcon={() => <div></div>}
+      expandIcon={() => <></>}
     >
       
-        <Collapse.Panel key="panel" header={label}>
+        <Collapse.Panel key="panel" header={label}  
+        >
           {children}
         </Collapse.Panel>
     

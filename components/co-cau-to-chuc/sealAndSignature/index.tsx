@@ -244,7 +244,7 @@ export default function SealAndSignature({ children }: any) {
                         </div>
                         <div className={`${styles.member_list} ${styles.member_list_salary}`}>
                             <div className={`${styles.table_content}`} ref={tableContentRef}>
-                                <table className={`${styles.table} ${styles.table_list}`} >
+                                <table className={`${styles.table} ${styles.table_list} ${styles.table_list2} `} >
                                     <thead>
                                         <tr>
                                             <th>STT</th>

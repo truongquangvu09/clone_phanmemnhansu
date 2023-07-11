@@ -338,9 +338,25 @@
     margin-left: 0px;
   }
   .icon_search_top {
-    width: 91%;
+    width: 85%;
   }
   .navigate_next_salary {
     display: none;
+  }
+  .export_excel_emp {
+    top: 50% !important;
+  }
+  .turn_right {
+    right: -21%;
+  }
+}
+
+@media screen and (max-width: 465px) {
+  .search_date {
+    width: 93% !important;
+  }
+  .export_excel {
+    float: right;
+    top: 43%;
   }
 }

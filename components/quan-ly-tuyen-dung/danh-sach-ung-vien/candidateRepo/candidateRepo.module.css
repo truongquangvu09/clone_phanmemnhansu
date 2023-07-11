@@ -178,3 +178,25 @@
     width: 94%;
   }
 }
+
+@media screen and (max-width: 465px) {
+  .table_list {
+    width: 400%;
+  }
+  .navigate_next {
+    top: 80%;
+  }
+  .turn_right {
+    right: -50%;
+  }
+  .form_control {
+    width: 93%;
+  }
+  .icon_t_search_top {
+    width: 86%;
+  }
+  .r_t_top_right:hover .settings {
+    display: block;
+    width: 400% !important;
+  }
+}
