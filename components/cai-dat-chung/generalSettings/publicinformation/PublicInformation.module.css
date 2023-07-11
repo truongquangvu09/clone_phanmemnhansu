@@ -17,3 +17,7 @@
     line-height: 19px;
     color: #474747;
 }
+
+.ant-collapse-content-box {
+    padding: 0 !important;
+}
