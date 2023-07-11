@@ -1,12 +1,23 @@
 import React, { useState } from "react";
 import styles from './candidateRepo.module.css'
 import Select from 'react-select';
+import { useRouter } from "next/router";
 
 type SelectOptionType = { label: string, value: string }
 
 export default function CandidateRepo({ children }: any) {
 
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
+    const router = useRouter()
+    const handleClickDetail = (item: number, event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        if (typeof item === "number" && !isNaN(item)) {
+            router.push(
+                `/quan-ly-tuyen-dung/danh-sach-ung-vien/chi-tiet-ung-vien/${item}`
+            );
+        }
+    };
+
 
 
     const listCandidates = [
@@ -44,7 +55,7 @@ export default function CandidateRepo({ children }: any) {
             matinungtuyen: 'TD189',
             maquytrinhtuyendungapdung: 'QTTD0',
             thoigianguihoso: '15:28 17/06/2023',
-            tailencvtuungvien: 'chua tai len cv'
+            tailencvtuungvien: 'cv_271922.jpg (Tải xuống)   '
         },
         {
             id: 4,
@@ -188,7 +199,8 @@ export default function CandidateRepo({ children }: any) {
                                     {listCandidates.map((item, index) => (
                                         <tr key={index}>
                                             <td>{item.id}</td>
-                                            <td>   <a href="">{item.name}( xem chi tiết )</a></td>
+                                            <td>   <a target="_blank" href={`/quan-ly-tuyen-dung/danh-sach-ung-vien/chi-tiet-ung-vien/${item.id}`}
+                                                onClick={(event) => handleClickDetail(item.id, event)} rel="noreferrer">{item.name} ( xem chi tiết ) </a></td>
                                             <td>
                                                 <p>Email:{item.email}</p>
                                                 <p>SDT: {item.sdt}</p>
@@ -199,9 +211,10 @@ export default function CandidateRepo({ children }: any) {
                                             <td>{item.maquytrinhtuyendungapdung}</td>
                                             <td>{item.thoigianguihoso}</td>
                                             <td><a href="">{item.tailencvtuungvien}</a></td>
-                                            <td><img src={`/3cham.png`} alt=" " />
-                                                <div className={`${styles.setting}`}>
-                                                    {/* <li>Xóa hồ sơ</li> */}
+                                            <td className={`${styles.r_t_top_right}`} style={{ position: 'relative' }}>
+                                                <img src={`/3cham.png`} alt=" " />
+                                                <div className={`${styles.settings}`} style={{ width: '350%' }}>
+                                                    <li>Xóa hồ sơ</li>
                                                 </div>
                                             </td>
                                         </tr>

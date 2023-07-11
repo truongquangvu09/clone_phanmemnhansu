@@ -29,7 +29,7 @@ function Input_textarea() {
 
 type SelectOptionType = { label: string, value: string }
 
-export default function EditPayroll({ onCancel }: any) {
+export default function EditOutJobModal({ onCancel }: any) {
     const [content, setContent] = useState('');
 
     const handleContentChange = (value: string) => {
@@ -89,25 +89,6 @@ export default function EditPayroll({ onCancel }: any) {
             { value: 'phó chủ tịch hội đồng quản trị', label: 'PHÓ CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ' },
             { value: 'thành viên hội đồng quản trị', label: 'THÀNH VIÊN HỘI ĐỒNG QUẢN TRỊ' },
         ],
-        choncanghi: [
-            { value: 'ca sáng', label: 'Ca sáng' },
-            { value: 'ca trưa kinh doanh', label: 'Ca trưa kinh doanh' },
-            { value: 'ca hành chính', label: 'Ca hành chính' },
-            { value: 'partime buổi sáng', label: 'Partime buổi sáng' },
-            { value: 'ca chiều', label: 'Ca chiều' },
-            { value: 'ca gãy trưa', label: 'Ca gãy trưa' },
-            { value: 'ca gãy sáng', label: 'Ca gãy sáng' },
-            { value: 'ca 1', label: 'Ca 1' },
-            { value: 'ca ăn trưa', label: 'Ca ăn trưa' },
-        ],
-        hinhthuc: [
-            { value: 'giảm biên chế', label: 'Giảm biên chế' },
-            { value: 'nghỉ việc', label: 'Nghỉ việc' },
-        ],
-        chonquydinh: [
-            { value: '  BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
-            { value: 'KỸ THUẬT', label: 'KỸ THUẬT' },
-        ],
 
     };
 
@@ -118,7 +99,7 @@ export default function EditPayroll({ onCancel }: any) {
                     <div className={` ${styles.modal_dialog} ${styles.content_process}`}>
                         <div className={`${styles.modal_content}`}>
                             <div className={`${styles.modal_header} ${styles.header_process}`}>
-                                <h5 className={`${styles.modal_tittle}`}>CẬP NHẬT GIẢM BIÊN CHẾ</h5>
+                                <h5 className={`${styles.modal_tittle}`}>THÊM MỚI NGHỈ VIỆC SAI QUY ĐỊNH</h5>
                             </div>
                             <div className={`${styles.modal_body}`}>
                                 <form action="">
@@ -148,7 +129,7 @@ export default function EditPayroll({ onCancel }: any) {
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Chức vụ hiện tại <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Chức vụ hiện tại </label>
                                         <div className={`${styles.input_right}`}>
                                             <Select
                                                 defaultValue={selectedOption}
@@ -227,56 +208,6 @@ export default function EditPayroll({ onCancel }: any) {
                                         <label htmlFor="">Thời gian bắt đầu nghỉ <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="date" id="names" placeholder="dd/mm/yyyy" className={`${styles.input_process}`} />
-                                        </div>
-                                    </div>
-                                    <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Hình thức </label>
-                                        <div className={`${styles.input_right}`}>
-                                            <Select
-                                                defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.hinhthuc)}
-                                                options={options.hinhthuc}
-                                                placeholder="Chọn hình thức"
-                                                styles={{
-                                                    control: (baseStyles, state) => ({
-                                                        ...baseStyles,
-                                                        borderRadius: 8,
-                                                        fontSize: state.isFocused ? 14 : 14,
-                                                        minHeight: state.isFocused ? 20 : 20,
-                                                        width: '100%',
-                                                        fontWeight: state.isFocused ? 600 : 600
-                                                    }),
-                                                    placeholder: (baseStyles) => ({
-                                                        ...baseStyles,
-                                                        color: "#444444",
-                                                    }),
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Chọn quy định <span style={{ color: 'red' }}> * </span></label>
-                                        <div className={`${styles.input_right}`}>
-                                            <Select
-                                                defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.chonquydinh)}
-                                                options={options.chonquydinh}
-                                                placeholder="Chọn quy định"
-                                                styles={{
-                                                    control: (baseStyles, state) => ({
-                                                        ...baseStyles,
-                                                        borderRadius: 8,
-                                                        fontSize: state.isFocused ? 14 : 14,
-                                                        minHeight: state.isFocused ? 20 : 20,
-                                                        width: '100%',
-                                                        fontWeight: state.isFocused ? 600 : 600
-                                                    }),
-                                                    placeholder: (baseStyles) => ({
-                                                        ...baseStyles,
-                                                        color: "#444444",
-                                                    }),
-                                                }}
-                                            />
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups} ${styles.cke}`}>

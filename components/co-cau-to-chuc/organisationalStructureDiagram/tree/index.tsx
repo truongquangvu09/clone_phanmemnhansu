@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import styles from './tree.module.css'
 import EditRoomModal from './room/editRoomModal';
+import EditNestModal from './nest/editNestModal';
+import EditGroupModal from './group/editGroupModal';
 import DetailsRoomModal from './room/detailRoomModal/detailRoomModal';
+import DetailsNestModal from './nest/detailNestModal';
+import DetailsGroupModal from './group/detailGroupModal';
 
 import dynamic from 'next/dynamic';
 
@@ -45,7 +49,7 @@ const MemberViewBoxRoom = ({
                 </button>
             </div>
             <div className={`${styles.member_details_body}`}>
-                <p>Mô tả: {describe} <button className={`${styles.see_more}`} onClick={() => { setOpenModalDetails }}>( Chi tiết )</button></p>
+                <p>Mô tả: {describe} <button className={`${styles.see_more}`} onClick={() => setOpenModalDetails()}>( Chi tiết )</button></p>
                 <p>Trưởng phòng: {manager}</p>
                 <p>Phó phòng: {deputy}</p>
                 <a href={employeeLink} target="_blank" rel="noreferrer" className={`${styles.link_a_2}`}>Số nhân viên: {employeeNumber}</a>
@@ -67,19 +71,19 @@ const MemberViewBoxNest = ({
     employeeNumber,
     registered,
     noAttendance,
-    setOpenModalEdit,
-    setOpenModalDetails
+    setOpenModalEditNest,
+    setOpenModalDetailsNest
 }: any) => (
     <div className={`${styles.member_view_box} ${styles.member_view_box_top_3}`}>
         <div className={`${styles.member_detail}`}>
             <div className={`${styles.member_details_header}`}>
                 <span style={{ color: '#474747', fontWeight: 600 }}>{text_part}</span>
-                <button className={`${styles.edit_dep}`} onClick={() => setOpenModalEdit()}>
+                <button className={`${styles.edit_dep}`} onClick={() => setOpenModalEditNest()}>
                     <img src={`/vn_icon-edit.svg`} />
                 </button>
             </div>
             <div className={`${styles.member_details_body}`}>
-                <p>Mô tả: {describe} <button className={`${styles.see_more}`} onClick={() => setOpenModalDetails}>( Chi tiết )</button></p>
+                <p>Mô tả: {describe} <button className={`${styles.see_more}`} onClick={() => setOpenModalDetailsNest()}>( Chi tiết )</button></p>
                 <p>Tổ trưởng: {leader}</p>
                 <p>Phó tổ trưởng: {deputy_leader}</p>
                 <a href={employeeLink} target="_blank" rel="noreferrer" className={`${styles.link_a_2}`}>Số nhân viên: {employeeNumber}</a>
@@ -102,19 +106,19 @@ const MemberViewBoxGroup = ({
     employeeNumber,
     registered,
     noAttendance,
-    setOpenModalEdit,
-    setOpenModalDetails
+    setOpenModalEditGroup,
+    setOpenModalDetailsGroup
 }: any) => (
     <div className={`${styles.member_view_box} ${styles.member_view_box_top_3}`}>
         <div className={`${styles.member_detail}`}>
             <div className={`${styles.member_details_header}`}>
                 <span style={{ color: '#474747', fontWeight: 600 }}>{text_part}</span>
-                <button className={`${styles.edit_dep}`} onClick={() => setOpenModalEdit()}>
+                <button className={`${styles.edit_dep}`} onClick={() => setOpenModalEditGroup()}>
                     <img src={`/vn_icon-edit.svg`} />
                 </button>
             </div>
             <div className={`${styles.member_details_body}`}>
-                <p>Mô tả: {describe} <button className={`${styles.see_more}`} onClick={() => setOpenModalDetails}>( Chi tiết )</button></p>
+                <p>Mô tả: {describe} <button className={`${styles.see_more}`} onClick={() => setOpenModalDetailsGroup()}>( Chi tiết )</button></p>
                 <p>Trưởng nhóm: {group_captain}</p>
                 <p>Phó nhóm: {deputy_group_captain}</p>
                 <a href={employeeLink} target="_blank" rel="noreferrer" className={`${styles.link_a_2}`}>Số nhân viên: {employeeNumber}</a>
@@ -160,6 +164,20 @@ const StyledTreeExample = () => {
         setOpenModalDetails(false);
     }
 
+    const [openModalEditNest, setOpenModalEditNest] = useState(false)
+    const [openModalDetailsNest, setOpenModalDetailsNest] = useState(false)
+    const handleCloseModalNest = () => {
+        setOpenModalEditNest(false);
+        setOpenModalDetailsNest(false);
+    }
+
+    const [openModalEditGroup, setOpenModalEditGroup] = useState(false)
+    const [openModalDetailsGroup, setOpenModalDetailsGroup] = useState(false)
+    const handleCloseModalGroup = () => {
+        setOpenModalEditGroup(false);
+        setOpenModalDetailsGroup(false);
+    }
+
     const options = {
         chonphongban: [
             { value: 'BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
@@ -170,10 +188,16 @@ const StyledTreeExample = () => {
         ],
         photruongphong: [
             { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
-        ]
+        ],
+        tento: [
+            { value: 'tổ anh hiệp', label: 'Tổ anh Hiệp' },
+        ],
+        tennhom: [
+            { value: 'nhóm a', label: 'Nhóm A' },
+        ],
     };
     const soluongnhanvien = 13;
-    const mota = 'kĩ thuật';
+    const mota: any = 'kĩ thuật';
 
     return (
         <>
@@ -206,8 +230,11 @@ const StyledTreeExample = () => {
                             registered='15'
                             noAttendance='12'
                             setOpenModalEdit={() => setOpenModalEdit(true)}
+                            setOpenModalDetails={() => setOpenModalDetails(true)}
+
                         /></StyledNode>}>
-                            <TreeNode label={<StyledNode><MemberViewBoxNest text_part='Tổ anh Hiệp'
+                            <TreeNode label={<StyledNode><MemberViewBoxNest
+                                text_part='Tổ anh Hiệp'
                                 title="kỹ thuật"
                                 leader="Uy Phùng Hiểu (Ken)"
                                 deputy_leader="Chưa cập nhật"
@@ -217,7 +244,10 @@ const StyledTreeExample = () => {
                                 employeeNumber='10'
                                 registered='15'
                                 noAttendance='12'
-                                setOpenModalEdit={() => setOpenModalEdit(true)} /></StyledNode>} />
+                                setOpenModalEditNest={() => setOpenModalEditNest(true)}
+                                setOpenModalDetailsNest={() => setOpenModalDetailsNest(true)}
+                            />
+                            </StyledNode>} />
                             <TreeNode label={<StyledNode><MemberViewBoxNest text_part='Tổ 1'
                                 title="chưa cập nhật"
                                 leader="Uy Phùng Hiểu (Ken)"
@@ -227,7 +257,9 @@ const StyledTreeExample = () => {
                                 absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
                                 employeeNumber='10'
                                 registered='15'
-                                noAttendance='12' setOpenModalEdit={() => setOpenModalEdit(true)} />
+                                noAttendance='12'
+                                setOpenModalEditNest={() => setOpenModalEditNest(true)}
+                                setOpenModalDetailsNest={() => setOpenModalDetailsNest(true)} />
                             </StyledNode>}>
                                 <TreeNode label={<StyledNode><MemberViewBoxGroup text_part='Nhóm A'
                                     title="chưa cập nhật"
@@ -238,7 +270,10 @@ const StyledTreeExample = () => {
                                     absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
                                     employeeNumber='10'
                                     registered='15'
-                                    noAttendance='12' setOpenModalEdit={() => setOpenModalEdit(true)} /></StyledNode>} />
+                                    noAttendance='12'
+                                    setOpenModalEditGroup={() => setOpenModalEditGroup(true)}
+                                    setOpenModalDetailsGroup={() => setOpenModalDetailsGroup(true)}
+                                /></StyledNode>} />
                                 <TreeNode label={<StyledNode><MemberViewBoxGroup text_part='Nhóm 13'
                                     title="chưa cập nhật "
                                     group_captain="Uy Phùng Hiểu (Ken)"
@@ -248,7 +283,8 @@ const StyledTreeExample = () => {
                                     absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
                                     employeeNumber='10'
                                     registered='15'
-                                    noAttendance='12' setOpenModalEdit={() => setOpenModalEdit(true)} /></StyledNode>} />
+                                    noAttendance='12' setOpenModalEditGroup={() => setOpenModalEditGroup(true)}
+                                    setOpenModalDetailsGroup={() => setOpenModalDetailsGroup(true)} /></StyledNode>} />
                                 <TreeNode label={<StyledNode><MemberViewBoxGroup text_part='Nhóm 13'
                                     title="chưa cập nhật"
                                     group_captain="Uy Phùng Hiểu (Ken)"
@@ -258,7 +294,8 @@ const StyledTreeExample = () => {
                                     absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
                                     employeeNumber='10'
                                     registered='15'
-                                    noAttendance='12' setOpenModalEdit={() => setOpenModalEdit(true)} /></StyledNode>} />
+                                    noAttendance='12' setOpenModalEditGroup={() => setOpenModalEditGroup(true)}
+                                    setOpenModalDetailsGroup={() => setOpenModalDetailsGroup(true)} /></StyledNode>} />
                             </TreeNode>
                         </TreeNode>
                         <TreeNode label={<StyledNode><MemberViewBoxRoom
@@ -273,6 +310,7 @@ const StyledTreeExample = () => {
                             registered='15'
                             noAttendance='12'
                             setOpenModalEdit={() => setOpenModalEdit(true)}
+                            setOpenModalDetails={() => setOpenModalDetails(true)}
                         /></StyledNode>}>
                         </TreeNode>
                         <TreeNode label={<StyledNode><MemberViewBoxRoom
@@ -287,6 +325,7 @@ const StyledTreeExample = () => {
                             registered='15'
                             noAttendance='12'
                             setOpenModalEdit={() => setOpenModalEdit(true)}
+                            setOpenModalDetails={() => setOpenModalDetails(true)}
                         /></StyledNode>}>
                         </TreeNode>
                         <TreeNode label={<StyledNode><MemberViewBoxRoom
@@ -301,6 +340,7 @@ const StyledTreeExample = () => {
                             registered='15'
                             noAttendance='12'
                             setOpenModalEdit={() => setOpenModalEdit(true)}
+                            setOpenModalDetails={() => setOpenModalDetails(true)}
                         /></StyledNode>}>
                         </TreeNode>
                         <TreeNode label={<StyledNode><MemberViewBoxRoom
@@ -315,6 +355,7 @@ const StyledTreeExample = () => {
                             registered='15'
                             noAttendance='12'
                             setOpenModalEdit={() => setOpenModalEdit(true)}
+                            setOpenModalDetails={() => setOpenModalDetails(true)}
                         /></StyledNode>}>
                         </TreeNode>
                         <TreeNode label={<StyledNode><MemberViewBoxRoom
@@ -329,6 +370,7 @@ const StyledTreeExample = () => {
                             registered='15'
                             noAttendance='12'
                             setOpenModalEdit={() => setOpenModalEdit(true)}
+                            setOpenModalDetails={() => setOpenModalDetails(true)}
                         /></StyledNode>}>
                         </TreeNode>
                         <TreeNode label={<StyledNode><MemberViewBoxRoom
@@ -343,6 +385,7 @@ const StyledTreeExample = () => {
                             registered='15'
                             noAttendance='12'
                             setOpenModalEdit={() => setOpenModalEdit(true)}
+                            setOpenModalDetails={() => setOpenModalDetails(true)}
                         /></StyledNode>}>
                         </TreeNode>
                         <TreeNode label={<StyledNode><MemberViewBoxRoom
@@ -357,6 +400,7 @@ const StyledTreeExample = () => {
                             registered='15'
                             noAttendance='12'
                             setOpenModalEdit={() => setOpenModalEdit(true)}
+                            setOpenModalDetails={() => setOpenModalDetails(true)}
                         /></StyledNode>}>
                         </TreeNode>
                         <TreeNode label={<StyledNode><MemberViewBoxRoom
@@ -371,6 +415,7 @@ const StyledTreeExample = () => {
                             registered='15'
                             noAttendance='12'
                             setOpenModalEdit={() => setOpenModalEdit(true)}
+                            setOpenModalDetails={() => setOpenModalDetails(true)}
                         /></StyledNode>}>
                         </TreeNode>
                         <TreeNode label={<StyledNode><MemberViewBoxCompany
@@ -398,6 +443,7 @@ const StyledTreeExample = () => {
                                 registered='15'
                                 noAttendance='12'
                                 setOpenModalEdit={() => setOpenModalEdit(true)}
+                                setOpenModalDetails={() => setOpenModalDetails(true)}
                             /></StyledNode>}>
                             </TreeNode>
                             <TreeNode label={<StyledNode><MemberViewBoxRoom
@@ -412,6 +458,7 @@ const StyledTreeExample = () => {
                                 registered='15'
                                 noAttendance='12'
                                 setOpenModalEdit={() => setOpenModalEdit(true)}
+                                setOpenModalDetails={() => setOpenModalDetails(true)}
                             /></StyledNode>}>
                             </TreeNode>
                         </TreeNode>
@@ -448,7 +495,18 @@ const StyledTreeExample = () => {
                         options={options}
                         soluongnhanvien={soluongnhanvien}
                         mota={mota} onCancel={handleCloseModal}></EditRoomModal>}
-                    {/* {openModalDetails && <openModalDetails mota={mota} />}s */}
+                    {openModalDetails && <DetailsRoomModal mota={mota} onCancel={handleCloseModal} />}
+
+                    {openModalEditNest && <EditNestModal defaultValue={defaultValue}
+                        options={options} mota={mota} onCancel={handleCloseModalNest} />}
+                    {openModalDetailsNest && <DetailsNestModal mota={mota} onCancel={handleCloseModalNest} />}
+
+
+                    {openModalEditGroup && <EditGroupModal defaultValue={defaultValue}
+                        options={options} mota={mota} onCancel={handleCloseModalGroup} />}
+                    {openModalDetailsGroup && <DetailsGroupModal mota={mota} onCancel={handleCloseModalGroup} />}
+
+
                 </div>
             )}
         </>

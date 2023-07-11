@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, MouseEventHandler } from "react";
 import Select from 'react-select'
 import styles from '../../thong-tin-nhan-su/tab/employeeManagement.module.css'
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 import AddOutJobModal from "./addOutJobModal";
+import EditOutJobModal from "./editOutJobModal";
 
 type SelectOptionType = { label: string, value: string }
 export interface TabOutJob {
@@ -103,6 +104,13 @@ export default function TabOutJob({ children }: any) {
     const [openModal, setOpenModal] = useState(0)
     const handleCloseModal = () => {
         setOpenModal(0)
+        setOpenEditModal(false)
+    }
+
+    const [openEditModal, setOpenEditModal] = useState(false)
+    const handleOpenEdit: MouseEventHandler<HTMLAnchorElement> = (event) => {
+        event.preventDefault();
+        setOpenEditModal(true);
     }
     return (
         <>
@@ -115,6 +123,7 @@ export default function TabOutJob({ children }: any) {
                             </button>
                         </div>
                         {openModal === 1 && <AddOutJobModal onCancel={handleCloseModal}></AddOutJobModal>}
+                        {openEditModal && <EditOutJobModal onCancel={handleCloseModal} />}
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_new_t}`}>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning} `}>
@@ -204,7 +213,7 @@ export default function TabOutJob({ children }: any) {
                                 </div>
                             </div>
                             <div className={`${styles.table_content}`} ref={tableContentRef}>
-                                <table className={`${styles.table} ${styles.table_list}`} >
+                                <table className={`${styles.table} ${styles.table_list}`} style={{ width: '150%' }}>
                                     <thead>
                                         <tr>
                                             <th>ID nhân viên</th>
@@ -223,7 +232,10 @@ export default function TabOutJob({ children }: any) {
                                                 <td>{item.phongban}</td>
                                                 <td>{item.chucvu}</td>
                                                 <td>{item.ngaybatdaunghi.toString().slice(0, 16)}</td>
-                                                <td></td>
+                                                <td>
+                                                    <a onClick={handleOpenEdit} href="" className={`${styles.btn_edit}`}><img src={`/icon_edit.svg`} alt="" /></a>
+                                                    <a href="" className={`${styles.btn_delete}`}><img src={`/icon_delete.svg`} alt="" /></a>
+                                                </td>
                                             </tr>
                                         ))}
                                     </tbody>

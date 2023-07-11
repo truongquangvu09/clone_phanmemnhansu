@@ -3,7 +3,7 @@ import styles from '../quan-ly-hanh-chinh/thong-tin-nhan-su/administration.modul
 import Link from 'next/link';
 import SecurityInfomation from '@/components/cai-dat-chung/securityInformation';
 import GeneralSettings from '@/components/cai-dat-chung/generalSettings';
-
+import ActivityLog from '@/components/cai-dat-chung/activityLog';
 
 export default function Setting({ children }: any) {
     const [active, setActive] = useState(1)
@@ -24,6 +24,7 @@ export default function Setting({ children }: any) {
                 </ul>
                 {active === 1 && <GeneralSettings></GeneralSettings>}
                 {active === 2 && <SecurityInfomation></SecurityInfomation>}
+                {active === 3 && <ActivityLog></ActivityLog>}
             </div>
         </>
     )
