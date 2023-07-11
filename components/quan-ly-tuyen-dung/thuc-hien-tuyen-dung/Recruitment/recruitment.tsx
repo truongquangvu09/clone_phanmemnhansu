@@ -3,8 +3,8 @@
 import React, { useState } from "react";
 import styles from "./recruitment.module.css";
 import AddPerformRecruitment from "../AddPerformRecruitment/AddPerformRecruitment";
-import ListRecruitment from "@/pages/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/ListRecruitment";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
+import ListRecruitmentPage from "@/pages/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/ListRecruitment";
 
 export interface Recruitment {}
 
@@ -127,7 +127,7 @@ export default function Recruitment({ children }: any) {
         >
           {data.map((item) => (
             <div key={item.id}>
-             <ListRecruitment data = {item} ></ListRecruitment>
+             <ListRecruitmentPage data = {item} ></ListRecruitmentPage>
             </div>
           ))}
         </div>

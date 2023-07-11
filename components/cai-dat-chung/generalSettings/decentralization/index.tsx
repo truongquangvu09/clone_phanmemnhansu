@@ -14,35 +14,36 @@ export default function Decentralization ({}) {
     null
   );
 
-  const handleSelectionChange = (
-    option: SelectOptionType | null,
-    optionsArray: SelectOptionType[]
-  ) => {
-    if (option) {
-      setSelectedOption(option);
-    }
-  };
+  // const handleSelectionChange = (
+  //   option: SelectOptionType | null,
+  //   optionsArray: SelectOptionType[]
+  // ) => {
+  //   if (option) {
+  //     setSelectedOption(option);
+  //   }
+  // };
   const updateRole = () => {}
 
   const handleUpdateRole = () => {}
   const options = {
     nhanvienphutrach: [
-      { value: "Lê Hồng Anh", label: "Lê Hồng Anh (KỸ THUẬT - ID:284670)" },
+      { value: "Lê Hồng Anh",
+       label: "Lê Hồng Anh (KỸ THUẬT - ID:284670)" },
       {
         value: "Phan Mạnh Hùng",
         label: "Phan Mạnh Hùng (SÁNG TẠO - ID:153846)",
       },
       {
-        value: "Phan Mạnh Hùng",
-        label: "Phan Mạnh Hùng (SÁNG TẠO - ID:153846)",
+        value: "Phan Bội Châu",
+        label: "Phan Bội Châu (Kế Toán - ID:146)",
       },
       {
-        value: "Phan Mạnh Hùng",
-        label: "Phan Mạnh Hùng (SÁNG TẠO - ID:153846)",
+        value: "Nguyễn Tùng Lâm",
+        label: "Nguyễn Tùng Lâm (SÁNG TẠO - ID:3846)",
       },
       {
-        value: "Phan Mạnh Hùng",
-        label: "Phan Mạnh Hùng (SÁNG TẠO - ID:153846)",
+        value: "Nguyễn Văn A",
+        label: "Nguyễn Văn A (SÁNG TẠO - ID:156)",
       },
     ],
   };
@@ -58,34 +59,32 @@ export default function Decentralization ({}) {
             Chọn nhân viên :
           </div>
           <div className={`${styles.l_timkiem_nhanvien_item2}`}>
-            <Select
-              className={`${styles.position_recruit}`}
-              defaultValue={selectedOption}
-              onChange={(option) =>
-                handleSelectionChange(option, options.nhanvienphutrach)
-              }
-              options={options.nhanvienphutrach}
-              placeholder=''
-              styles={{
-                control: (baseStyles, state) => ({
-                  ...baseStyles,
-
-                  height: 32,
-                  fontSize: state.isFocused ? 14 : 14,
-                  minHeight: state.isFocused ? 20 : 20,
-                  width: state.isFocused ? "100%" : baseStyles.width,
-                  fontWeight: state.isFocused ? 600 : 600,
-                }),
-                valueContainer: (baseStyles) => ({
-                  ...baseStyles,
-                  padding: "0",
-                }),
-                indicatorsContainer: (baseStyles) => ({
-                  ...baseStyles,
-                  height: 30,
-                }),
-              }}
-            />
+          <Select
+                      isMulti
+                      defaultValue={selectedOption}
+                      options={options.nhanvienphutrach}
+                      placeholder="Chọn đối tượng"
+                      styles={{
+                        control: (baseStyles, state) => ({
+                          ...baseStyles,
+                          borderRadius:4 ,
+                          borderColor: "#4747477a",
+                          height: "auto",
+                          fontSize: state.isFocused ? 14 : 14,
+                          minHeight: state.isFocused ? 20 : 20,
+                          width: state.isFocused ? '100%' : baseStyles.width,
+                          fontWeight: state.isFocused ? 600 : 600,
+                        }),
+                        valueContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          padding: "0",
+                        }),
+                        indicatorsContainer: (baseStyles) => ({
+                          ...baseStyles,
+                          height: 30,
+                        }),
+                      }}
+                    />
           </div>
 
           <div>
