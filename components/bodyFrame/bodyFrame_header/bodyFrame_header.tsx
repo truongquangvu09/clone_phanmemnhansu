@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './bodyFrame_header.module.css'
 import DropDownMenu from './drop_down_menu/dropDownMenu';
 import Notify from './notify/notify';
@@ -13,6 +13,23 @@ export default function BodyFrameHeader({ children }: any) {
     const [noti, setNoti] = useState(false)
     const [remind, setRemind] = useState(false)
     const [openSidebar, setOpenSidebar] = useState(false)
+    const [windowWidth, setWindowWidth] = useState<number>(typeof window !== 'undefined' ? window.innerWidth : 0);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowWidth(window.innerWidth);
+            if (window.innerWidth > 1024) {
+                setOpenSidebar(false);
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        // Xóa bỏ sự kiện lắng nghe khi component bị hủy
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     const toggleMenu = () => {
         setMenuClick(!menuClick);
@@ -75,7 +92,6 @@ export default function BodyFrameHeader({ children }: any) {
                 {menuClick && <DropDownMenu></DropDownMenu>}
                 {noti && <Notify></Notify>}
                 {remind && <Remind></Remind>}
-
             </div>
         </>
     )
