@@ -185,13 +185,49 @@
 .table tbody tr td {
   padding: 8px;
   line-height: 1.42857143;
-  vertical-align: middle;
+  vertical-align: top;
   border-top: 1px solid #ddd;
 }
 .table td {
   font-size: 14px;
   border: 1px solid rgba(102, 102, 102, 0.24);
 }
+
+.r_t_top_right:hover .settings {
+  display: block;
+}
+.settings {
+  z-index: 1;
+  text-align: left;
+  border-radius: 8px;
+  display: none;
+  position: absolute;
+  background: white;
+  right: 27px;
+  top: 27px;
+  box-shadow: 0 4px 10px rgb(0 0 0 / 5%);
+}
+.settings li {
+  border-radius: 6px 6px 0px 0px;
+  text-align: left !important;
+  padding: 11px 10px;
+  border-bottom: 1px solid #6666;
+  border-top-left-radius: 0px;
+}
+
+.settings li,
+.settings1 li {
+  border-left: 3px solid #ffffff;
+}
+.settings li {
+  cursor: pointer;
+  padding: 8px 40px 8px 13px;
+}
+.settings li:hover {
+  color: #4c5bd4;
+  border-left: 3px solid #4c5bd4;
+}
+
 /* scrollbar-color: red blue; */
 .pull_left {
   margin: 20px 0;
@@ -302,9 +338,25 @@
     margin-left: 0px;
   }
   .icon_search_top {
-    width: 91%;
+    width: 85%;
   }
   .navigate_next_salary {
     display: none;
+  }
+  .export_excel_emp {
+    top: 50% !important;
+  }
+  .turn_right {
+    right: -21%;
+  }
+}
+
+@media screen and (max-width: 465px) {
+  .search_date {
+    width: 93% !important;
+  }
+  .export_excel {
+    float: right;
+    top: 43%;
   }
 }

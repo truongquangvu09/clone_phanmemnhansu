@@ -82,7 +82,7 @@
 
 @media screen and (max-width: 670px) {
   .t_div_search input {
-    width: 80%;
+    width: 75%;
   }
 }
 @media screen and (max-width: 465px) {

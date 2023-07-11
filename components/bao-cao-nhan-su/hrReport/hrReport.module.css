@@ -85,3 +85,8 @@
     text-align: center;
   }
 }
+@media screen and (max-width: 465px) {
+  .search_date {
+    width: 88% !important;
+  }
+}

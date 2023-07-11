@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import styles from './detailRoomModal.module.css'
+import styles from '../room/detailRoomModal/detailRoomModal.module.css'
 import Select from 'react-select';
 
-export default function DetailsRoomModal({ mota, onCancel }: any) {
+export default function DetailsNestModal({ mota, onCancel }: any) {
 
     return (
         <>

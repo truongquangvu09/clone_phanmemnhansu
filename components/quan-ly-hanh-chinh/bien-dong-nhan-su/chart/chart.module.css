@@ -33,3 +33,16 @@
   padding: 24px 0px;
   height: 930px;
 }
+
+@media screen and (max-width: 465px) {
+  .search_person_change2 {
+    display: block;
+  }
+  .time1,
+  .time2 {
+    width: 100%;
+    margin-bottom: 10px;
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+}

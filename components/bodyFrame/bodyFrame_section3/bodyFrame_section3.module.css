@@ -26,6 +26,7 @@
   padding-right: 15px;
   padding-left: 15px;
   width: 20%;
+  text-align: center;
 }
 .item_image {
   display: block;
@@ -86,7 +87,7 @@
 
 @media only screen and (min-width: 465px) and (max-width: 768px) {
   .item_title {
-    height: 60px;
+    height: 70px;
   }
   .item_text {
     font-weight: 600;
@@ -94,8 +95,8 @@
     line-height: 20px;
     text-align: justify;
     color: #666666;
-    /* max-height: 300px; */
-    height: 300px;
+    max-height: 320px;
+    /* height: 300px; */
   }
 }
 @media only screen and (max-width: 465px) {
@@ -122,5 +123,10 @@
   .item_detail {
     display: block;
     margin-bottom: 20px;
+  }
+}
+@media screen and (max-width: 479px) {
+  .item {
+    width: 92%;
   }
 }

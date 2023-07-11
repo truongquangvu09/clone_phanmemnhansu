@@ -299,4 +299,25 @@
   .div_search_salary {
     width: 85.5% !important;
   }
+  .body_header_left {
+    width: 50%;
+  }
+  .bg_search {
+    padding-left: 0px;
+    padding-right: 4px;
+  }
+}
+@media screen and (max-width: 465px) {
+  .tab_content {
+    padding: 10px;
+  }
+  .search_date {
+    width: 78% !important;
+  }
+  .div_search_salary {
+    width: 70.5% !important;
+  }
+  .table_list2 {
+    width: 250%;
+  }
 }

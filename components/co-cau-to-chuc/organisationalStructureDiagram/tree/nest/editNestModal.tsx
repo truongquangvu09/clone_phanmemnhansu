@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
-import styles from './editRoomModal.module.css'
+import styles from '../room/editRoomModal/editRoomModal.module.css'
 import Select from 'react-select';
 
 type SelectOptionType = { label: string, value: string }
-type EditRoomModalProps = {
+type EditNestModalProps = {
     defaultValue: SelectOptionType | null;
     options: { [key: string]: SelectOptionType[] };
-    soluongnhanvien: number;
     mota: string;
     onCancel: any
 };
 
-export default function EditRoomModal({ defaultValue, options, soluongnhanvien, mota, onCancel }: EditRoomModalProps) {
+export default function EditNestModal({ defaultValue, options, mota, onCancel }: EditNestModalProps) {
 
     useEffect(() => {
 
@@ -39,12 +38,10 @@ export default function EditRoomModal({ defaultValue, options, soluongnhanvien, 
             { value: 'BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
             { value: 'Phó GIÁM ĐỐC', label: 'Phó GIÁM ĐỐC' },
         ],
-        truongphong: [
-            { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
+        tento: [
+            { value: 'tổ anh hiệp', label: 'Tổ anh Hiệp' },
         ],
-        photruongphong: [
-            { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
-        ]
+
     };
 
 
@@ -60,7 +57,7 @@ export default function EditRoomModal({ defaultValue, options, soluongnhanvien, 
                             <div className={`${styles.modal_body}`}>
                                 <form action="">
                                     <div className={`${styles.form_groups} ${styles.edit_room}`}>
-                                        <label htmlFor="">Tên phòng ban <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Tên phòng  <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}  ${styles.edit_right}`}>
                                             <Select
                                                 defaultValue={selectedOptions.chonphongban ? selectedOptions.chonphongban : selectedOption}
@@ -81,12 +78,12 @@ export default function EditRoomModal({ defaultValue, options, soluongnhanvien, 
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups} ${styles.edit_room}`}>
-                                        <label htmlFor="">Trưởng phòng <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Tên tổ <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}  ${styles.edit_right}`}>
                                             <Select
-                                                defaultValue={selectedOptions.truongphong ? selectedOptions.truongphong : selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, 'truongphong')}
-                                                options={options?.truongphong}
+                                                defaultValue={selectedOptions.tento ? selectedOptions.tento : selectedOption}
+                                                onChange={(option) => handleSelectionChange(option, 'tento')}
+                                                options={options?.tento}
                                                 placeholder="Cập nhật trưởng phòng"
                                                 styles={{
                                                     control: (baseStyles, state) => ({
@@ -99,33 +96,6 @@ export default function EditRoomModal({ defaultValue, options, soluongnhanvien, 
                                                     }),
                                                 }}
                                             />
-                                        </div>
-                                    </div>
-                                    <div className={`${styles.form_groups} ${styles.edit_room}`}>
-                                        <label htmlFor="">Phó trưởng phòng <span style={{ color: 'red' }}> * </span> </label>
-                                        <div className={`${styles.input_right} ${styles.edit_right}`}>
-                                            <Select
-                                                defaultValue={selectedOptions.photruongphong ? selectedOptions.photruong : selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, 'photruongphong')}
-                                                options={options?.photruongphong}
-                                                placeholder="Cập nhật phó trưởng phòng"
-                                                styles={{
-                                                    control: (baseStyles, state) => ({
-                                                        ...baseStyles,
-                                                        borderRadius: 4,
-                                                        fontSize: state.isFocused ? 14 : 14,
-                                                        minHeight: state.isFocused ? 20 : 20,
-                                                        width: '100%',
-                                                        fontWeight: state.isFocused ? 600 : 600
-                                                    }),
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
-                                    <div className={`${styles.form_groups} ${styles.edit_room}`}>
-                                        <label htmlFor="">Số lượng nhân viên <span style={{ color: 'red' }}> * </span></label>
-                                        <div className={`${styles.input_right}  ${styles.edit_right}`}>
-                                            <input defaultValue={soluongnhanvien} type="text" id="names" placeholder="" className={`${styles.input_process}`} />
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>

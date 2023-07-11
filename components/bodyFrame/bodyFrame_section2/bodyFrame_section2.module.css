@@ -168,3 +168,20 @@
     justify-content: center;
   }
 }
+@media screen and (max-width: 479px) {
+  .item_content {
+    padding: 10px;
+  }
+  .item_content_top {
+    width: 95%;
+  }
+  .contennt_text {
+    height: 60px;
+  }
+  .item_right_weather {
+    width: 93%;
+  }
+  .item_right {
+    width: 82%;
+  }
+}

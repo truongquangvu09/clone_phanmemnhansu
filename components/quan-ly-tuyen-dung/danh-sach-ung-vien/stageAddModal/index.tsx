@@ -50,7 +50,7 @@ export default function StageAddModal({ onCancel }: any) {
                                                     styles={{
                                                         container: (baseStyles) => ({
                                                             ...baseStyles,
-                                                            paddingRight: 10
+                                                            paddingRight: 16
                                                         }),
                                                         control: (baseStyles, state) => ({
                                                             ...baseStyles,

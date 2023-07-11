@@ -8,6 +8,7 @@ export default function SecurityInfomation() {
     const [isExpanded, setIsExpanded] = useState(false);
     const [isCheckedLogin, setIsCheckedLogin] = useState(false);
     const [isCheckedNoti, setIsCheckedNoti] = useState(false);
+    const [dropDownPassword, setDropdownPassword] = useState(false);
 
     function handleCheckedLoginClick(event: React.MouseEvent<HTMLDivElement>) {
         event.preventDefault();
@@ -31,6 +32,9 @@ export default function SecurityInfomation() {
     const handleSeeMore = () => {
         setDataSlice(data)
         setIsExpanded(true)
+    }
+    const handlePassWord = () => {
+        setDropdownPassword(!dropDownPassword)
     }
     const handleCollapse = () => {
         setDataSlice(data.slice(0, 2));
@@ -131,47 +135,57 @@ export default function SecurityInfomation() {
                     </div>
                     <div className={`${styles.tab_pane}`}>
                         <div className={`${styles.title_menu2}`}>ĐĂNG NHẬP</div>
-                        <div className={`${styles.menu2_content}`} >
+                        <div className={`${styles.menu2_content} ${styles.menu2_content_bottom}`} >
                             <div className={`${styles.menu2_padding}`}>
                                 <div className={`${styles.menu2_item1}`}>
                                     <img className={`${styles.l_img_pc}`} src="/icon_doimatkhau.svg" alt="icon" />
                                 </div>
                                 <div className={`${styles.menu2_item2}`}>Đổi mật khẩu</div>
                                 <div className={`${styles.menu2_item3}`}>
-                                    <div className={`${styles.btn_group}`}>
+                                    <div className={`${styles.btn_group}`} onClick={handlePassWord}>
                                         <button type="button" className={`${styles.dropdown_toggle} ${styles.btn}`} >
                                             <img className={`${styles.l_img_pc}`} src={`/icon_down.svg`} alt="icon" />
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                            <div className={`${styles.content_retyperPass}`}>
-                                <p className={`${styles.t_validation}`}></p>
-                                <form action="">
-                                    <table className={`${styles.retyprPass_right}`}>
-                                        <tbody>
-                                            <tr className={`${styles.retyprPass_left}`}>
-                                                <td className={`${styles.retyprPass_text}`}>Mật khẩu hiện tại</td>
-                                                <td>
-                                                    <input type="password" className={`${styles.l_retypePass_input} ${styles.t_current_pass}`} />
-                                                </td>
-                                            </tr>
-                                            <tr className={`${styles.retyprPass_left}`}>
-                                                <td className={`${styles.retyprPass_text}`}>Mật khẩu mới</td>
-                                                <td>
-                                                    <input type="password" className={`${styles.l_retypePass_input} ${styles.t_current_pass}`} />
-                                                </td>
-                                            </tr>
-                                            <tr className={`${styles.retyprPass_left}`}>
-                                                <td className={`${styles.retyprPass_text}`}>Nhập lại mật khẩu mới</td>
-                                                <td>
-                                                    <input type="password" className={`${styles.l_retypePass_input} ${styles.t_current_pass}`} />
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </form>
-                            </div>
+                            {dropDownPassword && (
+                                <div className={`${styles.content_retyperPass}`}>
+                                    <p className={`${styles.t_validation}`}></p>
+                                    <form action="">
+                                        <table className={`${styles.retyprPass_right}`}>
+                                            <tbody>
+                                                <tr className={`${styles.retyprPass_left}`}>
+                                                    <td className={`${styles.retyprPass_text}`}>Mật khẩu hiện tại</td>
+                                                    <td>
+                                                        <input type="password" className={`${styles.l_retypePass_input} ${styles.t_current_pass}`} />
+                                                    </td>
+                                                </tr>
+                                                <tr className={`${styles.retyprPass_left}`}>
+                                                    <td className={`${styles.retyprPass_text}`}>Mật khẩu mới</td>
+                                                    <td>
+                                                        <input type="password" className={`${styles.l_retypePass_input} ${styles.t_current_pass}`} />
+                                                    </td>
+                                                </tr>
+                                                <tr className={`${styles.retyprPass_left}`}>
+                                                    <td className={`${styles.retyprPass_text}`}>Nhập lại mật khẩu mới</td>
+                                                    <td>
+                                                        <input type="password" className={`${styles.l_retypePass_input} ${styles.t_current_pass}`} />
+                                                    </td>
+                                                </tr>
+                                                <tr className={`${styles.retyprPass_left}`}>
+                                                    <td className={`${styles.retyprPass_text}`}>
+                                                        <a href="" className={`${styles.menu2_custom_btn}`}>Quên mật khẩu ?</a>
+                                                    </td>
+                                                    <td className={`${styles.retyprPass_text} ${styles.text_left}`}>
+                                                        <button className={`${styles.btn_retypePass}`}>Lưu thay đổi</button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </form>
+                                </div>
+                            )}
                             <div className={`${styles.menu2_padding}`}>
                                 <div className={`${styles.menu2_item1}`}>
                                     <img className={`${styles.l_img_pc}`} src="	/icon_luuthongtin.svg" alt="icon" />

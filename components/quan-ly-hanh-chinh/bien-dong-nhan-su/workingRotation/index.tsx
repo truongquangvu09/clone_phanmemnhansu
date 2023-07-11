@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, MouseEventHandler } from "react";
 import Select from 'react-select'
 import styles from '../../thong-tin-nhan-su/tab/employeeManagement.module.css'
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 import AddWorkingModal from "./addWorkingModal";
+import EditWorkingModal from "./editWorkingModal";
 
 type SelectOptionType = { label: string, value: string }
 export interface TabWorkingRotation {
@@ -105,7 +106,14 @@ export default function TabWorkingRotation({ children }: any) {
     };
     const [openModal, setOpenModal] = useState(0)
     const handleCloseModal = () => {
-        setOpenModal(0);
+        setOpenModal(0)
+        setOpenEditModal(false)
+    }
+
+    const [openEditModal, setOpenEditModal] = useState(false)
+    const handleOpenEdit: MouseEventHandler<HTMLAnchorElement> = (event) => {
+        event.preventDefault();
+        setOpenEditModal(true);
     }
     return (
         <>
@@ -118,6 +126,7 @@ export default function TabWorkingRotation({ children }: any) {
                             </button>
                         </div>
                         {openModal === 1 && <AddWorkingModal onCancel={handleCloseModal}></AddWorkingModal>}
+                        {openEditModal && <EditWorkingModal onCancel={handleCloseModal} />}
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_new_t}`}>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning} `}>
@@ -234,7 +243,10 @@ export default function TabWorkingRotation({ children }: any) {
                                                 <td>{item.tenconty}</td>
                                                 <td>{item.chucvucu}</td>
                                                 <td>{item.chucvumoi}</td>
-                                                <td>{item.tuychinh}</td>
+                                                <td>
+                                                    <a onClick={handleOpenEdit} href="" className={`${styles.btn_edit}`}><img src={`/icon_edit.svg`} alt="" /></a>
+                                                    <a href="" className={`${styles.btn_delete}`}><img src={`/icon_delete.svg`} alt="" /></a>
+                                                </td>
                                             </tr>
                                         ))}
                                     </tbody>

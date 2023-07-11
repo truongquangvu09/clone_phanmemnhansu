@@ -102,3 +102,11 @@
   border-radius: 50%;
   object-fit: cover;
 }
+@media screen and (max-width: 768px) {
+  .row_search_2 {
+    width: 100%;
+  }
+  .content {
+    padding: 5px;
+  }
+}

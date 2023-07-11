@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, MouseEventHandler } from "react";
 import Select from 'react-select'
 import styles from '../../thong-tin-nhan-su/tab/employeeManagement.module.css'
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 import AddPlanningModal from "./addPlanningModal";
+import EditPlanningModal from "./editPlanningModal";
 
 type SelectOptionType = { label: string, value: string }
 export interface TabPlaningAppointment {
@@ -102,6 +103,13 @@ export default function TabPlaningAppointment({ children }: any) {
     const [openModal, setOpenModal] = useState(0)
     const handleCloseModal = () => {
         setOpenModal(0)
+        setOpenEditModal(false)
+    }
+
+    const [openEditModal, setOpenEditModal] = useState(false)
+    const handleOpenEdit: MouseEventHandler<HTMLAnchorElement> = (event) => {
+        event.preventDefault();
+        setOpenEditModal(true);
     }
     return (
         <>
@@ -114,6 +122,7 @@ export default function TabPlaningAppointment({ children }: any) {
                             </button>
                         </div>
                         {openModal === 1 && <AddPlanningModal onCancel={handleCloseModal}></AddPlanningModal>}
+                        {openEditModal === true ? <EditPlanningModal onCancel={handleCloseModal}></EditPlanningModal> : ''}
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_new_t}`}>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning} `}>
@@ -226,7 +235,10 @@ export default function TabPlaningAppointment({ children }: any) {
                                                 <td>{item.chucvuquyhoachbonhiem}</td>
                                                 <td>{item.phongbanmoi}</td>
                                                 <td>{item.thoigianquyhoachbonhiem.toString().slice(0, 16)}</td>
-                                                <td>{item.tuychinh}</td>
+                                                <td>
+                                                    <a onClick={handleOpenEdit} href="" className={`${styles.btn_edit}`}><img src={`/icon_edit.svg`} alt="" /></a>
+                                                    <a href="" className={`${styles.btn_delete}`}><img src={`/icon_delete.svg`} alt="" /></a>
+                                                </td>
                                             </tr>
                                         ))}
                                     </tbody>

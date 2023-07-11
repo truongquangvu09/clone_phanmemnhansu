@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import styles from '../../planningAppointment/addPlanningModal/addPlanningModal.module.css'
+import styles from '../addPlanningModal/addPlanningModal.module.css'
 import Select from 'react-select';
+
 import MyEditor from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/components/Editor";
 
 function Input_textarea() {
@@ -29,7 +30,14 @@ function Input_textarea() {
 
 type SelectOptionType = { label: string, value: string }
 
-export default function EditPayroll({ onCancel }: any) {
+export default function EditPlanningModal({ onCancel }: any) {
+    function handleUploadClick(event: React.MouseEvent<HTMLAnchorElement>) {
+        event.preventDefault();
+        const uploadInput = document.getElementById('upload_cv') as HTMLInputElement;
+        if (uploadInput) {
+            uploadInput.click();
+        }
+    }
     const [content, setContent] = useState('');
 
     const handleContentChange = (value: string) => {
@@ -45,23 +53,6 @@ export default function EditPayroll({ onCancel }: any) {
     };
 
     const options = {
-        chonchinhanh: [
-            { value: 'PT shop', label: 'PT shop' },
-            { value: 'LT legend', label: 'LT legend' },
-            { value: 'LT pay 3', label: 'LT pay 3' },
-            { value: 'Công ty cổ phần Thanh toán Hưng Hà 2 ', label: 'Công ty cổ phần Thanh toán Hưng Hà 2 ' },
-        ],
-        chonphongban: [
-            { value: '  BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
-            { value: 'KỸ THUẬT', label: 'KỸ THUẬT' },
-            { value: 'Biên tập', label: 'Biên tập' },
-            { value: 'Kinh Doanh', label: 'Kinh Doanh' },
-            { value: 'Đề án', label: 'Đề án' },
-            { value: 'Phòng SEO', label: 'Phòng SEO' },
-            { value: 'Phòng Đào tạo', label: 'Phòng Đào tạo' },
-            { value: 'Phòng sáng tạo', label: 'phòng sáng tạo' },
-            { value: 'Phòng tài vụ', label: 'Phòng tài vụ' },
-        ],
         chonnhanvien: [
             { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
             { value: 'Phan Mạnh Hùng', label: 'Phan Mạnh Hùng (SÁNG TẠO - ID:153846)' },
@@ -69,46 +60,23 @@ export default function EditPayroll({ onCancel }: any) {
         chucvuhientai: [
             { value: 'sinh viên thực tập', label: 'SINH VIÊN THỰC TẬP' },
             { value: 'nhân viên part time', label: 'NHÂN VIÊN PART TIME' },
-            { value: 'nhân viên thử việc', label: 'NHÂN VIÊN THỬ VIỆC' },
-            { value: 'nhân viên chính thức', label: 'NHÂN VIÊN CHÍNH THỨC' },
-            { value: 'trưởng nhóm', label: 'TRƯỞNG NHÓM' },
-            { value: 'nhóm phó', label: 'NHÓM PHÓ' },
-            { value: 'tổ trưởng', label: 'TỔ TRƯỞNG' },
-            { value: 'phó tổ trưởng', label: 'PHÓ TỔ TRƯỞNG' },
-            { value: 'trưởng ban dự án', label: 'TRƯỞNG BAN DỰ ÁN   ' },
-            { value: 'phó ban dự án', label: 'PHÓ BAN DỰ ÁN' },
-            { value: 'trưởng phòng', label: 'TRƯỞNG PHÒNG' },
-            { value: 'phó trưởng phòng', label: 'PHÓ TRƯỞNG PHÒNG' },
-            { value: 'giám đốc', label: 'GIÁM ĐỐC' },
-            { value: 'phó giám đốc', label: 'PHÓ GIÁM ĐỐC   ' },
-            { value: 'tổng giám đốc', label: 'TỔNG GIÁM ĐỐC' },
-            { value: 'phó tổng giám đốc', label: 'PHÓ TỔNG GIÁM ĐỐC' },
-            { value: 'tổng giám đốc tập đoàn', label: 'TỔNG GIÁM ĐỐC TẬP ĐOÀN' },
-            { value: 'phó  tổng giám đốc tập đoàn', label: 'PHÓ TỔNG GIÁM ĐỐC TẬP ĐOÀN' },
-            { value: 'chủ tịch hội đồng quản trị', label: 'CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ' },
-            { value: 'phó chủ tịch hội đồng quản trị', label: 'PHÓ CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ' },
-            { value: 'thành viên hội đồng quản trị', label: 'THÀNH VIÊN HỘI ĐỒNG QUẢN TRỊ' },
         ],
-        choncanghi: [
-            { value: 'ca sáng', label: 'Ca sáng' },
-            { value: 'ca trưa kinh doanh', label: 'Ca trưa kinh doanh' },
-            { value: 'ca hành chính', label: 'Ca hành chính' },
-            { value: 'partime buổi sáng', label: 'Partime buổi sáng' },
-            { value: 'ca chiều', label: 'Ca chiều' },
-            { value: 'ca gãy trưa', label: 'Ca gãy trưa' },
-            { value: 'ca gãy sáng', label: 'Ca gãy sáng' },
-            { value: 'ca 1', label: 'Ca 1' },
-            { value: 'ca ăn trưa', label: 'Ca ăn trưa' },
-        ],
-        hinhthuc: [
-            { value: 'giảm biên chế', label: 'Giảm biên chế' },
-            { value: 'nghỉ việc', label: 'Nghỉ việc' },
-        ],
-        chonquydinh: [
+        chonphongban: [
             { value: '  BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
             { value: 'KỸ THUẬT', label: 'KỸ THUẬT' },
         ],
-
+        quyhoachbonhiem: [
+            { value: 'sinh viên thực tập', label: 'SINH VIÊN THỰC TẬP' },
+            { value: 'nhân viên part time', label: 'NHÂN VIÊN PART TIME' },
+        ],
+        phongbanmoi: [
+            { value: '  BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
+            { value: 'KỸ THUẬT', label: 'KỸ THUẬT' },
+        ],
+        chonquydinh: [
+            { value: 'quy định bổ nhiệm số 003/HHP-P1', label: 'Quy định bổ nhiệm số 003/HHP-P1' },
+            { value: 'quy định bổ nhiệm số 003/HHP-P2', label: 'Quy định bổ nhiệm số 003/HHP-P2' },
+        ],
     };
 
     return (
@@ -118,7 +86,7 @@ export default function EditPayroll({ onCancel }: any) {
                     <div className={` ${styles.modal_dialog} ${styles.content_process}`}>
                         <div className={`${styles.modal_content}`}>
                             <div className={`${styles.modal_header} ${styles.header_process}`}>
-                                <h5 className={`${styles.modal_tittle}`}>CẬP NHẬT GIẢM BIÊN CHẾ</h5>
+                                <h5 className={`${styles.modal_tittle}`}>CẬP NHẬT BỔ NHIỆM, QUY HOẠCH</h5>
                             </div>
                             <div className={`${styles.modal_body}`}>
                                 <form action="">
@@ -133,7 +101,7 @@ export default function EditPayroll({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -158,7 +126,7 @@ export default function EditPayroll({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -173,7 +141,7 @@ export default function EditPayroll({ onCancel }: any) {
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Phòng ban hiện tại </label>
+                                        <label htmlFor="">Phòng ban <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <Select
                                                 defaultValue={selectedOption}
@@ -183,7 +151,7 @@ export default function EditPayroll({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -198,21 +166,20 @@ export default function EditPayroll({ onCancel }: any) {
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Đơn vị công tác hiện tại</label>
+                                        <label htmlFor=""> Quy hoạch bổ nhiệm <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <Select
                                                 defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.chonchinhanh)}
-                                                options={options.chonchinhanh}
-                                                placeholder="Chọn chi nhánh"
+                                                onChange={(option) => handleSelectionChange(option, options.quyhoachbonhiem)}
+                                                options={options.quyhoachbonhiem}
+                                                placeholder="Chọn chức vụ"
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
-                                                        color: state.isFocused ? '#444444' : '#444444',
                                                         fontWeight: state.isFocused ? 600 : 600
                                                     }),
                                                     placeholder: (baseStyles) => ({
@@ -224,34 +191,34 @@ export default function EditPayroll({ onCancel }: any) {
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Thời gian bắt đầu nghỉ <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Phòng ban mới <span style={{ color: 'red' }}> * </span></label>
+                                        <div className={`${styles.input_right}`}>
+                                            <Select
+                                                defaultValue={selectedOption}
+                                                onChange={(option) => handleSelectionChange(option, options.phongbanmoi)}
+                                                options={options.phongbanmoi}
+                                                placeholder="Chọn phòng ban"
+                                                styles={{
+                                                    control: (baseStyles, state) => ({
+                                                        ...baseStyles,
+                                                        borderRadius: 4,
+                                                        fontSize: state.isFocused ? 14 : 14,
+                                                        minHeight: state.isFocused ? 20 : 20,
+                                                        width: '100%',
+                                                        fontWeight: state.isFocused ? 600 : 600
+                                                    }),
+                                                    placeholder: (baseStyles) => ({
+                                                        ...baseStyles,
+                                                        color: "#444444",
+                                                    }),
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className={`${styles.form_groups}`}>
+                                        <label htmlFor="">Thời gian quy hoạch bổ nhiệm <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="date" id="names" placeholder="dd/mm/yyyy" className={`${styles.input_process}`} />
-                                        </div>
-                                    </div>
-                                    <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Hình thức </label>
-                                        <div className={`${styles.input_right}`}>
-                                            <Select
-                                                defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.hinhthuc)}
-                                                options={options.hinhthuc}
-                                                placeholder="Chọn hình thức"
-                                                styles={{
-                                                    control: (baseStyles, state) => ({
-                                                        ...baseStyles,
-                                                        borderRadius: 8,
-                                                        fontSize: state.isFocused ? 14 : 14,
-                                                        minHeight: state.isFocused ? 20 : 20,
-                                                        width: '100%',
-                                                        fontWeight: state.isFocused ? 600 : 600
-                                                    }),
-                                                    placeholder: (baseStyles) => ({
-                                                        ...baseStyles,
-                                                        color: "#444444",
-                                                    }),
-                                                }}
-                                            />
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -265,7 +232,7 @@ export default function EditPayroll({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -280,11 +247,12 @@ export default function EditPayroll({ onCancel }: any) {
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups} ${styles.cke}`}>
-                                        <label htmlFor="">Lý do </label>
+                                        <label htmlFor="">Lý do <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.ckeditor}`}>
                                             <Input_textarea />
                                         </div>
                                     </div>
+
                                     <div className={`${styles.modal_footer} ${styles.footer_process}`}>
                                         <button className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
                                         <button className={`${styles.btn_add}`}>Thêm</button>

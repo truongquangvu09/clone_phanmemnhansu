@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import Select from 'react-select';
 import styles from './employeeManagement.module.css'
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
+import DetailCandidateList from "../detailModal";
+import EditCandidateList from "../editModal";
 
 type SelectOptionType = { label: string, value: string }
 export interface TabEmployeeManagement {
@@ -26,6 +28,21 @@ export default function TabEmployeeManagement({ children }: any) {
 
     const [activeButton, setActiveButton] = useState(0)
     const [employeeCount, setEmployeeCount] = useState(10)
+    const [detailModal, setDetailModal] = useState(false)
+    const [editModal, setEditmodal] = useState(false)
+
+    const handleOpenDetailModal = () => {
+        setDetailModal(!detailModal)
+    }
+
+    const handleOpenEditModal = () => {
+        setEditmodal(!editModal)
+    }
+
+    const handleCloseModal = () => {
+        setDetailModal(false)
+        setEditmodal(false)
+    }
 
     useEffect(() => {
         setCurrentList(listCandidates.slice(0, employeeCount));
@@ -235,8 +252,13 @@ export default function TabEmployeeManagement({ children }: any) {
                                                     <p>SDT: {item.thongtinlienhe_email}</p>
                                                 </td>
                                                 <td>{item.ngayvaocongty}</td>
-                                                <td><img src={`	/icon-settting.png`} alt=" " />
-                                                    <div className={`${styles.setting}`}>
+                                                <td className={`${styles.r_t_top_right}`} style={{ position: 'relative' }}>
+                                                    <img src={`	/icon-settting.png`} alt=" " />
+                                                    <div className={`${styles.settings}`} style={{ width: '100%' }}>
+                                                        <li onClick={handleOpenDetailModal}>Chi tiết</li>
+                                                        {detailModal && <DetailCandidateList onCancel={handleCloseModal} id={index} />}
+                                                        <li onClick={handleOpenEditModal}>Chỉnh sửa</li>
+                                                        {editModal && <EditCandidateList onCancel={handleCloseModal} id={index} />}
                                                     </div>
                                                 </td>
                                             </tr>

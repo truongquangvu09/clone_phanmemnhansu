@@ -18,7 +18,7 @@ export default function GeneralSettings() {
     edit: <Edit onClickButton={(e) => handleButtonClick(e)} />,
   }
   const componentObj = {
-   
+
     notification: <NotificationSetting />,
     remind: <Remind />,
   };
@@ -28,11 +28,11 @@ export default function GeneralSettings() {
   const [component, setComponent] = useState<string>('');
 
   const handleButtonClick = (e: any) => {
-     
+
     setComponent('')
     e.stopPropagation()
   };
-  
+
 
   const handleClick = (typeCollapse: string) => {
     setCurrentComponents((prev) => {
@@ -42,7 +42,7 @@ export default function GeneralSettings() {
         return [...prev, typeCollapse];
       }
     });
-   
+
   };
 
   return (
@@ -52,7 +52,7 @@ export default function GeneralSettings() {
           {page === 1 && (
             <>
               <Space direction="vertical" style={{ width: "100%" }}
-              onClick={(e) => e.stopPropagation}
+                onClick={(e) => e.stopPropagation}
               >
                 <div className={`${styles.content}`}>
                   <CustomCollapse
@@ -86,7 +86,7 @@ export default function GeneralSettings() {
                       </>
                     }
                   >
-                   {componentObj2[component]}
+                    {componentObj2[component]}
                   </CustomCollapse>
                 </div>
               </Space>
