@@ -5,6 +5,7 @@ import styles from '../organisationalStructureDiagram/tree/tree.module.css'
 import EditPositionCharModal from './editPositonCharModal';
 import DetailsPositionCharModal from './detailsPositionCharModal';
 import BodyFrameFooter from '@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer';
+import { PostionCharData } from '@/pages/api/co_cau_to_chuc';
 
 import dynamic from 'next/dynamic';
 
@@ -82,6 +83,53 @@ const PostionCharTree = () => {
     const soluongnhanvien = 13;
     const mota = 'kĩ thuật';
     const missions = 'không gì cả'
+
+    const [PostionCharDatas, setPosttionCharData] = useState<any>(null)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                console.log(1);
+                const response = await PostionCharData()
+                setPosttionCharData(response.data)
+            } catch (error) {
+                console.log({ error });
+            }
+        }
+        fetchData()
+    }, [])
+
+    const renderTreeNode = (data: any, rootId: number) => {
+        const rootNode = data?.find((position: any) => position.positionId === rootId);
+
+        if (!rootNode) {
+            return null;
+        }
+
+        const childNodes = data?.filter((position: any) => position.parentId === rootId);
+
+        return (
+            <TreeNode
+                key={rootNode.positionId}
+                label={
+                    <StyledNode>
+                        <MemberViewBox1
+                            text_part={rootNode.positionName}
+                            name={rootNode.users}
+                            mission={rootNode.mission}
+                            setOpenModalEdit={() => setOpenModalEdit(true)}
+                            setOpenModalDetails={() => setOpenModalDetails(true)}
+                        />
+                    </StyledNode>
+                }
+            >
+                {childNodes.map((position: any) => renderTreeNode(data, position.positionId))}
+            </TreeNode>
+        );
+    };
+
+    const treeNode = renderTreeNode(PostionCharDatas?.listPosition, PostionCharDatas?.listPosition[0].positionId);
+
 
 
     return (
@@ -243,6 +291,7 @@ const PostionCharTree = () => {
                                         </TreeNode>
                                     </TreeNode>
                                 </TreeNode>
+                                {treeNode}
                             </Tree>
                         </div>
                     )}

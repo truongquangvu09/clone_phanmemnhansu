@@ -4,6 +4,7 @@ import styles from './employeeManagement.module.css'
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 import DetailCandidateList from "../detailModal";
 import EditCandidateList from "../editModal";
+import { EmployeeListData } from "@/pages/api/quan_ly_tuyen_dung";
 
 type SelectOptionType = { label: string, value: string }
 export interface TabEmployeeManagement {
@@ -31,6 +32,7 @@ export default function TabEmployeeManagement({ children }: any) {
     const [detailModal, setDetailModal] = useState(false)
     const [editModal, setEditmodal] = useState(false)
 
+    // -- đóng mở modal --
     const handleOpenDetailModal = () => {
         setDetailModal(!detailModal)
     }
@@ -44,9 +46,85 @@ export default function TabEmployeeManagement({ children }: any) {
         setEditmodal(false)
     }
 
+
+    // -- lấy dữ liệu và phân trang --
+
+    const handleChoose = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = parseInt(event.target.value);
+        setEmployeeCount(value)
+        setCurrentList(EmpData?.data.slice(0, value));
+        window.scrollTo(0, 0);
+    }
+
+    const [EmpData, setEmpData] = useState<any>(null)
+    const [isLoading, setIsLoading] = useState(true);
+
     useEffect(() => {
-        setCurrentList(listCandidates.slice(0, employeeCount));
-    }, [employeeCount]);
+        const fetchData = async () => {
+            try {
+                const response = await EmployeeListData()
+                setEmpData(response.data)
+            } catch (error) {
+                console.log({ error });
+            }
+        }
+        fetchData()
+    }, [])
+
+    useEffect(() => {
+        if (EmpData && EmpData.data) {
+            setInitialList(EmpData.data.slice(0, 10));
+            setCurrentList(EmpData.data.slice(0, 10));
+            setIsLoading(false);
+        }
+    }, [EmpData]);
+
+    useEffect(() => {
+        if (EmpData && EmpData.data) {
+            const startIndex = activeButton * employeeCount;
+            const endIndex = startIndex + employeeCount;
+            setCurrentList(EmpData.data.slice(startIndex, endIndex));
+        }
+    }, [activeButton]);
+
+
+
+    const totalPages = Math.ceil(EmpData?.data.length / employeeCount);
+    console.log({ totalPages });
+
+
+    const [currentList, setCurrentList] = useState<Employee[] | null>(null);
+    const [initialList, setInitialList] = useState<Employee[] | null>(null);
+
+    const handleClick = (buttonIndex: number) => {
+        setActiveButton(buttonIndex)
+    }
+
+    // -- di chuyển trái phải của bảng --
+    const tableContentRef = useRef<HTMLDivElement>(null);
+    const currentPositionRef = useRef(0);
+
+    const handleLeftClick = () => {
+        if (tableContentRef.current) {
+            const newPosition = currentPositionRef.current - 100;
+            if (newPosition >= 0) {
+                tableContentRef.current.scrollLeft = newPosition;
+                currentPositionRef.current = newPosition;
+            }
+        }
+    };
+
+    const handleRightClick = () => {
+        if (tableContentRef.current) {
+            const newPosition = currentPositionRef.current + 100;
+            if (newPosition <= tableContentRef.current.scrollWidth - tableContentRef.current.clientWidth) {
+                tableContentRef.current.scrollLeft = newPosition;
+                currentPositionRef.current = newPosition;
+            }
+        }
+    };
+
+    // -- set options cho thẻ select --
 
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
 
@@ -65,65 +143,6 @@ export default function TabEmployeeManagement({ children }: any) {
     const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
         if (option) {
             setSelectedOption(option)
-        }
-    };
-
-
-    function createArray(n: number): Employee[] {
-        const obj: Employee = {
-            id: 1,
-            name: 'nguyen van a',
-            phongban: 'bien tap',
-            gioitinh: 'nam',
-            tinhtranghonnhan: 'khac',
-            vitri: 'nhan vien chinh thuc',
-            bophan: 'bien tap',
-            chinhanh: 'Công ty cổ phần thanh toán Hưng Hà 2',
-            thongtinlienhe_diachi: 'so 1 dinh cong',
-            thongtinlienhe_sdt: 12356,
-            thongtinlienhe_email: 'nguyenvana@gmail.com',
-            ngayvaocongty: '30/05/2023'
-        };
-        return Array(n).fill(obj);
-    }
-    const listCandidates: Employee[] = createArray(50);
-
-    const handleChoose = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = parseInt(event.target.value);
-        setEmployeeCount(value)
-        setCurrentList(listCandidates.slice(0, value));
-        window.scrollTo(0, 0);
-    }
-
-    const totalPages = Math.ceil(listCandidates.length / employeeCount);
-
-    const [currentList, setCurrentList] = useState<Employee[] | null>(null);
-
-    const handleClick = (buttonIndex: number) => {
-        setActiveButton(buttonIndex)
-    }
-    const tableContentRef = useRef<HTMLDivElement>(null);
-    const currentPositionRef = useRef(0);
-
-    const handleLeftClick = () => {
-        if (tableContentRef.current) {
-            // Update the scroll position and currentPositionRef
-            const newPosition = currentPositionRef.current - 100;
-            if (newPosition >= 0) {
-                tableContentRef.current.scrollLeft = newPosition;
-                currentPositionRef.current = newPosition;
-            }
-        }
-    };
-
-    const handleRightClick = () => {
-        if (tableContentRef.current) {
-            // Update the scroll position and currentPositionRef
-            const newPosition = currentPositionRef.current + 100;
-            if (newPosition <= tableContentRef.current.scrollWidth - tableContentRef.current.clientWidth) {
-                tableContentRef.current.scrollLeft = newPosition;
-                currentPositionRef.current = newPosition;
-            }
         }
     };
 
@@ -236,10 +255,10 @@ export default function TabEmployeeManagement({ children }: any) {
                                         </tr>
                                     </thead>
                                     <tbody className={`${styles.filter_body}`}>
-                                        {currentList?.map((item, index) => (
+                                        {isLoading ? '' : currentList?.map((item: any, index: any) => (
                                             <tr key={index}>
-                                                <td>{item.id}</td>
-                                                <td>   <a href="">{item.name}</a></td>
+                                                <td>{item._id}</td>
+                                                <td>   <a href="">{item.userName}</a></td>
                                                 <td>{item.phongban}</td>
                                                 <td>{item.gioitinh}</td>
                                                 <td>{item.tinhtranghonnhan}</td>
@@ -247,8 +266,8 @@ export default function TabEmployeeManagement({ children }: any) {
                                                 <td>{item.bophan}</td>
                                                 <td>{item.chinhanh}</td>
                                                 <td>
-                                                    <p>Email:{item.thongtinlienhe_diachi}</p>
-                                                    <p>SDT: {item.thongtinlienhe_sdt}</p>
+                                                    <p>Email:{item.email}</p>
+                                                    <p>SDT: {item.phoneTK}</p>
                                                     <p>SDT: {item.thongtinlienhe_email}</p>
                                                 </td>
                                                 <td>{item.ngayvaocongty}</td>
@@ -278,7 +297,7 @@ export default function TabEmployeeManagement({ children }: any) {
                             <div className={`${styles.pagging}`} style={{ textAlign: 'center' }}>
                                 <nav>
                                     <ul className={`${styles.pagination}`}>
-                                        {Array(totalPages).fill(null).map((value, index) => {
+                                        {totalPages ? Array(totalPages).fill(null).map((value, index) => {
                                             if (index === 0) {
                                                 return (
                                                     <li
@@ -329,7 +348,7 @@ export default function TabEmployeeManagement({ children }: any) {
                                                     </li>
                                                 );
                                             }
-                                        })}
+                                        }) : ''}
                                     </ul>
                                 </nav>
                             </div>

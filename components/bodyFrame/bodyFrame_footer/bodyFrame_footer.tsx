@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./bodyFrame_footer.module.css";
+import lazyLoadVideos from "@/components/lazyloading";
 
-export interface BodyFrameFooter {}
-export default function BodyFrameFooter({ src, children }: any) {
+export interface BodyFrameFooterProps {
+  src: string;
+}
+export default function BodyFrameFooter({ src }: BodyFrameFooterProps) {
+  useEffect(() => {
+    lazyLoadVideos();
+  }, []);
   return (
     <>
       <div
@@ -12,11 +18,13 @@ export default function BodyFrameFooter({ src, children }: any) {
           margin: "35px 0",
           textAlign: "center",
           borderRadius: "20px",
-          display:"flex",
-         
+          display: "flex",
+
         }}
       >
         <iframe
+          loading="lazy"
+          data-src={src}
           className={`${styles.video}`}
           width="800"
           height="420"

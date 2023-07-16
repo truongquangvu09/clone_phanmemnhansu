@@ -124,6 +124,10 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                             ...baseStyles,
                                                             paddingRight: 15
                                                         }),
+                                                        menu: (baseStyles, state) => ({
+                                                            ...baseStyles,
+                                                            width: '97%'
+                                                        }),
                                                         control: (baseStyles, state) => ({
                                                             ...baseStyles,
                                                             borderRadius: 8,
@@ -184,6 +188,10 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                             ...baseStyles,
                                                             paddingRight: 15
                                                         }),
+                                                        menu: (baseStyles, state) => ({
+                                                            ...baseStyles,
+                                                            width: '97%'
+                                                        }),
                                                         control: (baseStyles, state) => ({
                                                             ...baseStyles,
                                                             borderRadius: 8,
@@ -231,6 +239,10 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                             ...baseStyles,
                                                             paddingRight: 15
                                                         }),
+                                                        menu: (baseStyles, state) => ({
+                                                            ...baseStyles,
+                                                            width: '97%'
+                                                        }),
                                                         control: (baseStyles, state) => ({
                                                             ...baseStyles,
                                                             borderRadius: 8,
@@ -271,6 +283,10 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                         container: (baseStyles) => ({
                                                             ...baseStyles,
                                                             paddingRight: 15
+                                                        }),
+                                                        menu: (baseStyles, state) => ({
+                                                            ...baseStyles,
+                                                            width: '97%'
                                                         }),
                                                         control: (baseStyles, state) => ({
                                                             ...baseStyles,
@@ -325,6 +341,10 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                             ...baseStyles,
                                                             paddingRight: 15
                                                         }),
+                                                        menu: (baseStyles, state) => ({
+                                                            ...baseStyles,
+                                                            width: '97%'
+                                                        }),
                                                         control: (baseStyles, state) => ({
                                                             ...baseStyles,
                                                             borderRadius: 8,
@@ -366,6 +386,10 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                             ...baseStyles,
                                                             paddingRight: 15
                                                         }),
+                                                        menu: (baseStyles, state) => ({
+                                                            ...baseStyles,
+                                                            width: '97%'
+                                                        }),
                                                         control: (baseStyles, state) => ({
                                                             ...baseStyles,
                                                             borderRadius: 8,
@@ -406,6 +430,10 @@ export default function CandidateAddModal({ onCancel }: any) {
                                                         container: (baseStyles) => ({
                                                             ...baseStyles,
                                                             paddingRight: 15
+                                                        }),
+                                                        menu: (baseStyles, state) => ({
+                                                            ...baseStyles,
+                                                            width: '97%'
                                                         }),
                                                         control: (baseStyles, state) => ({
                                                             ...baseStyles,

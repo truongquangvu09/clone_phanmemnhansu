@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
 import styles from '../../quy-dinh-lam-viec/addRegulationsModal/addRegulationsModal.module.css'
-
+import { AddPolicyByGroup } from "@/pages/api/quy_dinh_chinh_sach";
+import { PolicyList } from "@/pages/api/quy_dinh_chinh_sach";
 import MyEditor from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/components/Editor";
 
+interface InputTextareaProps {
+    onDescriptionChange: (data: any) => void
+}
 
-function Input_textarea() {
+interface AddEmployeePolicyModal2Props {
+    onCancel: () => void;
+}
+
+function Input_textarea({ onDescriptionChange }: InputTextareaProps) {
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [data, setData] = useState("");
 
@@ -18,17 +26,60 @@ function Input_textarea() {
                 name="Editor"
                 onChange={(data: React.SetStateAction<string>) => {
                     setData(data);
+                    onDescriptionChange(data)
                 }}
                 editorLoaded={editorLoaded}
                 value={data}
             />
-
-            {/* {JSON.stringify(data)} */}
         </div>
     );
 }
 
-export default function AddEmployeePolicyModal2({ onCancel }: any) {
+export default function AddEmployeePolicyModal2({ onCancel }: AddEmployeePolicyModal2Props) {
+    const [provisionFile, setProvisionFile] = useState<File | null>(null);
+    const [descriptions, setDescription] = useState("");
+    const [ListPolicyGroup, setListPolicyGroup] = useState<any | null>(null)
+    const [provisionId, setProvisionId] = useState<number | null>(null)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await PolicyList(50, 1)
+                setListPolicyGroup(response.data)
+            } catch (error) {
+                throw error
+            }
+        }
+        fetchData()
+    }, [])
+
+    const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        try {
+            const name = (document.getElementById('names') as HTMLInputElement)?.value
+            const provision_id = (document.getElementById('employe_policy_id') as HTMLInputElement)?.value
+            const time_start = (document.getElementById('time_start') as HTMLInputElement)?.value
+            const supervisor_name = (document.getElementById('supervisor_name') as HTMLInputElement)?.value
+            const apply_for = (document.getElementById('apply_for') as HTMLInputElement)?.value
+            const content = descriptions
+
+            const formData = new FormData()
+            formData.append('name', name)
+            formData.append('employe_policy_id', provision_id)
+            formData.append('time_start', time_start)
+            formData.append('supervisor_name', supervisor_name)
+            formData.append('apply_for', apply_for)
+            formData.append('content', content)
+            if (provisionFile) {
+                formData.append("file", provisionFile);
+            }
+
+            const response = await AddPolicyByGroup(formData)
+        } catch (error) {
+            throw error
+        }
+    }
+
     function handleUploadClick(event: React.MouseEvent<HTMLAnchorElement>) {
         event.preventDefault();
         const uploadInput = document.getElementById('upload_cv') as HTMLInputElement;
@@ -36,11 +87,21 @@ export default function AddEmployeePolicyModal2({ onCancel }: any) {
             uploadInput.click();
         }
     }
-    const [content, setContent] = useState('');
 
-    const handleContentChange = (value: string) => {
-        setContent(value);
+    const handleDescriptionChange = (data: string) => {
+        setDescription(data);
     };
+
+    const handleProvisionFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files && event.target.files[0]
+        setProvisionFile(file)
+
+    }
+    const handleProvisionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const selectedProvisionId = parseInt(event.target.value, 10);
+        setProvisionId(selectedProvisionId);
+    };
+
     return (
         <>
             <div className={`${styles.modal_open}`}>
@@ -61,11 +122,10 @@ export default function AddEmployeePolicyModal2({ onCancel }: any) {
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Chọn nhóm quy định <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <select name="" id="" className={`${styles.input_process}`}>
-                                                <option value="">-- Vui lòng chọn --</option>
-                                                <option value="">Nam</option>
-                                                <option value="">Nữ</option>
-                                                <option value="">Giới tính khác</option>
+                                            <select name="" id="employe_policy_id" className={`${styles.input_process}`}>
+                                                {ListPolicyGroup?.data?.map((item: any, index: any) => (
+                                                    <option value={item.id} key={index}>-- {item.name} --</option>
+                                                ))}
 
                                             </select>
                                         </div>
@@ -73,25 +133,25 @@ export default function AddEmployeePolicyModal2({ onCancel }: any) {
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Thời gian bắt đầu hiệu lực <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <input type="date" id="names" placeholder="dd/mm/yyyy" className={`${styles.input_process}`} />
+                                            <input type="date" id="time_start" placeholder="dd/mm/yyyy" className={`${styles.input_process}`} />
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Người giám sát <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <input type="text" id="names" placeholder="Người giám sát" className={`${styles.input_process}`} />
+                                            <input type="text" id="supervisor_name" placeholder="Người giám sát" className={`${styles.input_process}`} />
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Đối tượng thi hành <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <input type="text" id="names" placeholder="Đối tượng thi hành" className={`${styles.input_process}`} />
+                                            <input type="text" id="apply_for" placeholder="Đối tượng thi hành" className={`${styles.input_process}`} />
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups} ${styles.cke}`}>
                                         <label htmlFor="">Nội dung quy định <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.ckeditor}`}>
-                                            <Input_textarea />
+                                            <Input_textarea onDescriptionChange={handleDescriptionChange} />
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -99,7 +159,7 @@ export default function AddEmployeePolicyModal2({ onCancel }: any) {
                                         <div className={`${styles.input_right} ${styles.input_upload_t}`}>
                                             <input type="file" className={`${styles.upload_cv}`} id="upload_cv" accept="application/pdf, image/*" />
                                             <a href="" className={`${styles.t_ion_file}`} onClick={handleUploadClick} >
-                                                <img src={`/t_images/t-icon-file.svg`} alt="" />
+                                                <img src={`/t-icon-file.svg`} alt="" />
                                             </a>
                                         </div>
                                     </div>

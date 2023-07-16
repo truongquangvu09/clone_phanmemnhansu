@@ -128,6 +128,7 @@ export default function SealAndSignature({ children }: any) {
                                         placeholder="Chọn phòng ban"
                                         styles={{
                                             container: (baseStyles) => ({
+                                                ...baseStyles,
                                                 paddingRight: 50
                                             }),
                                             control: (baseStyles, state) => ({
@@ -139,6 +140,10 @@ export default function SealAndSignature({ children }: any) {
                                                 width: '100%',
                                                 fontWeight: state.isFocused ? 600 : 600,
                                                 minHeight: 20
+                                            }),
+                                            menu: (baseStyles, state) => ({
+                                                ...baseStyles,
+                                                width: '87%'
                                             }),
                                             valueContainer: (baseStyles) => ({
                                                 ...baseStyles,
@@ -208,6 +213,7 @@ export default function SealAndSignature({ children }: any) {
                                         placeholder="Chọn phòng ban"
                                         styles={{
                                             container: (baseStyles) => ({
+                                                ...baseStyles,
                                                 paddingRight: 50
                                             }),
                                             control: (baseStyles, state) => ({
@@ -219,6 +225,10 @@ export default function SealAndSignature({ children }: any) {
                                                 width: '100%',
                                                 fontWeight: state.isFocused ? 600 : 600,
                                                 minHeight: 20
+                                            }),
+                                            menu: (baseStyles, state) => ({
+                                                ...baseStyles,
+                                                width: '87%'
                                             }),
                                             valueContainer: (baseStyles) => ({
                                                 ...baseStyles,

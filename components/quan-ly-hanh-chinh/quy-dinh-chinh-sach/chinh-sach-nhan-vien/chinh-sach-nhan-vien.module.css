@@ -79,6 +79,95 @@
   color: #4c5bd4;
   border-left: 3px solid #4c5bd4;
 }
+.quydinh_item {
+  width: 100%;
+  display: inline-block;
+  border: 1px solid #d6d9f5;
+  border-radius: 8px;
+}
+.member_list {
+}
+
+.quydinh_item1 {
+  width: 100%;
+  display: inline-block;
+  border-radius: 6px 0;
+  padding: 10px;
+  border-left: 5px solid #4c5bd4;
+}
+.quydinh_item2 {
+  float: left;
+  width: 85%;
+}
+.quydinh_item2 a {
+  cursor: pointer;
+  color: black;
+  font-weight: 600;
+}
+.icondown {
+  cursor: pointer;
+  margin-left: 20px;
+}
+.table_none {
+  margin-bottom: 50px;
+}
+.tablenone table {
+  margin-bottom: 20px;
+  color: #474747;
+  font-weight: 500;
+  background-color: transparent;
+  border-spacing: 0;
+}
+.tablelist {
+  width: 100%;
+  max-width: unset;
+  border-collapse: collapse;
+  border-radius: 8px;
+  border: 1px solid rgba(102, 102, 102, 0.24);
+}
+.tablelist1 thead {
+  background-color: #d6d9f5 !important;
+  color: black !important;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+}
+.tablelist tr {
+  text-align: center;
+}
+.tablelist th {
+  border: 1px solid white;
+  font-weight: 500;
+}
+
+.tablelist thead tr th {
+  padding: 8px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  border-top: 1px solid #ddd;
+  border-bottom: 2px solid #ddd;
+}
+
+.fillter tr td {
+  padding: 8px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  border-top: 1px solid #ddd;
+}
+.tablelist td {
+  border: 1px solid rgba(102, 102, 102, 0.24);
+}
+
+.tablelist tbody tr {
+  background: white;
+}
+.pagination {
+  float: right;
+  margin-top: 10px;
+  border: #333333;
+  margin-right: 40px;
+}
 
 @media screen and (max-width: 670px) {
   .t_div_search input {

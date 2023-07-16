@@ -79,6 +79,10 @@ export default function CandidateListDetail() {
                                                 ...baseStyles,
                                                 paddingRight: 15
                                             }),
+                                            menu: (baseStyles, state) => ({
+                                                ...baseStyles,
+                                                width: '95%'
+                                            }),
                                             control: (baseStyles, state) => ({
                                                 ...baseStyles,
                                                 borderRadius: 4,
@@ -123,6 +127,10 @@ export default function CandidateListDetail() {
                                                 fontWeight: state.isFocused ? 600 : 600,
                                                 minHeight: 20
                                             }),
+                                            menu: (baseStyles, state) => ({
+                                                ...baseStyles,
+                                                width: '95%'
+                                            }),
                                             indicatorsContainer: (baseStyles) => ({
                                                 ...baseStyles,
                                                 height: 33,
@@ -144,6 +152,10 @@ export default function CandidateListDetail() {
                                             container: (baseStyles) => ({
                                                 ...baseStyles,
                                                 paddingRight: 15
+                                            }),
+                                            menu: (baseStyles, state) => ({
+                                                ...baseStyles,
+                                                width: '95%'
                                             }),
                                             control: (baseStyles, state) => ({
                                                 ...baseStyles,
@@ -176,6 +188,10 @@ export default function CandidateListDetail() {
                                             container: (baseStyles) => ({
                                                 ...baseStyles,
                                                 paddingRight: 15
+                                            }),
+                                            menu: (baseStyles, state) => ({
+                                                ...baseStyles,
+                                                width: '95%'
                                             }),
                                             control: (baseStyles, state) => ({
                                                 ...baseStyles,

@@ -7,6 +7,7 @@ import EditGroupModal from './group/editGroupModal';
 import DetailsRoomModal from './room/detailRoomModal/detailRoomModal';
 import DetailsNestModal from './nest/detailNestModal';
 import DetailsGroupModal from './group/detailGroupModal';
+import { OrganizationalStructureData } from '@/pages/api/co_cau_to_chuc';
 
 import dynamic from 'next/dynamic';
 
@@ -199,6 +200,23 @@ const StyledTreeExample = () => {
     const soluongnhanvien = 13;
     const mota: any = 'kĩ thuật';
 
+    const [data, setData] = useState<any>(null)
+    console.log(data?.infoCompany
+    );
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await OrganizationalStructureData()
+                setData(response.data)
+            } catch (error) {
+
+            }
+        }
+        fetchData()
+    }, [])
+
     return (
         <>
             {typeof window !== 'undefined' && (
@@ -209,12 +227,12 @@ const StyledTreeExample = () => {
                         lineBorderRadius={'10px'}
                         label={<StyledNode><div className={`${styles.member_view_box} ${styles.member_view_box_top}`}>
                             <div className={`${styles.member_detail}`}>
-                                <p className={`${styles.text_center}`}>Công ty Cổ phần Thanh toán Hưng Hà 2</p>
-                                <p>Giám đốc: Chưa cập nhật</p>
-                                <p>Phó giám đốc: Vũ Diệu Linh</p>
-                                <a href="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html" target="_blank" className={`${styles.link_a}`}>Tổng nhân viên: 32</a>
-                                <a href="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html" target="_blank" className={`${styles.link_a}`}>Tổng nhân viên đã điểm danh: 0</a>
-                                <a href="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html" target="_blank" className={`${styles.link_a}`}>Tổng nhân viên chưa điểm danh: 32</a>
+                                <p className={`${styles.text_center}`}>{data?.infoCompany.companyName}</p>
+                                <p>Giám đốc: {data?.infoCompany.parent_manager}</p>
+                                <p>Phó giám đốc: {data?.infoCompany.parent_deputy}</p>
+                                <a href="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html" target="_blank" className={`${styles.link_a}`}>Tổng nhân viên: {data?.infoCompany.tong_nv}</a>
+                                <a href="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html" target="_blank" className={`${styles.link_a}`}>Tổng nhân viên đã điểm danh: {data?.infoCompany.tong_nv_da_diem_danh}</a>
+                                <a href="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html" target="_blank" className={`${styles.link_a}`}>Tổng nhân viên chưa điểm danh: {data?.infoCompany.tong_nv - data?.infoCompany.tong_nv_da_diem_danh}</a>
                             </div>
                         </div></StyledNode>}
                     >

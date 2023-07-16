@@ -52,6 +52,10 @@ export default function StageAddModal({ onCancel }: any) {
                                                             ...baseStyles,
                                                             paddingRight: 16
                                                         }),
+                                                        menu: (baseStyles, state) => ({
+                                                            ...baseStyles,
+                                                            width: '97%'
+                                                        }),
                                                         control: (baseStyles, state) => ({
                                                             ...baseStyles,
                                                             borderRadius: 8,
