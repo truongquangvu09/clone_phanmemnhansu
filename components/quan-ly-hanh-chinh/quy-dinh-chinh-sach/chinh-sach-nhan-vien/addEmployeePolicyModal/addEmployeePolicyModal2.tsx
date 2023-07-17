@@ -39,12 +39,16 @@ export default function AddEmployeePolicyModal2({ onCancel }: AddEmployeePolicyM
     const [provisionFile, setProvisionFile] = useState<File | null>(null);
     const [descriptions, setDescription] = useState("");
     const [ListPolicyGroup, setListPolicyGroup] = useState<any | null>(null)
-    const [provisionId, setProvisionId] = useState<number | null>(null)
+    console.log({ provisionFile });
+
+
+    console.log({ ListPolicyGroup });
+
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await PolicyList(50, 1)
+                const response = await PolicyList(1, 50)
                 setListPolicyGroup(response.data)
             } catch (error) {
                 throw error
@@ -71,7 +75,7 @@ export default function AddEmployeePolicyModal2({ onCancel }: AddEmployeePolicyM
             formData.append('apply_for', apply_for)
             formData.append('content', content)
             if (provisionFile) {
-                formData.append("file", provisionFile);
+                formData.append("policy", provisionFile);
             }
 
             const response = await AddPolicyByGroup(formData)
@@ -97,10 +101,10 @@ export default function AddEmployeePolicyModal2({ onCancel }: AddEmployeePolicyM
         setProvisionFile(file)
 
     }
-    const handleProvisionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedProvisionId = parseInt(event.target.value, 10);
-        setProvisionId(selectedProvisionId);
-    };
+    // const handleProvisionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    //     const selectedProvisionId = parseInt(event.target.value, 10);
+    //     setProvisionId(selectedProvisionId);
+    // };
 
     return (
         <>
@@ -114,9 +118,9 @@ export default function AddEmployeePolicyModal2({ onCancel }: AddEmployeePolicyM
                             <form action="">
                                 <div className={`${styles.modal_body} ${styles.body_process}`}>
                                     <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Tên nhóm <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Tên chính sách <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <input type="text" id="names" placeholder="Nhập tên ứng viên" className={`${styles.input_process}`} />
+                                            <input type="text" id="names" placeholder="Nhập tên chính sách" className={`${styles.input_process}`} />
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -157,7 +161,7 @@ export default function AddEmployeePolicyModal2({ onCancel }: AddEmployeePolicyM
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Tải lên tệp CV </label>
                                         <div className={`${styles.input_right} ${styles.input_upload_t}`}>
-                                            <input type="file" className={`${styles.upload_cv}`} id="upload_cv" accept="application/pdf, image/*" />
+                                            <input type="file" className={`${styles.upload_cv}`} id="upload_cv" accept="application/pdf, image/*" onChange={handleProvisionFileChange} />
                                             <a href="" className={`${styles.t_ion_file}`} onClick={handleUploadClick} >
                                                 <img src={`/t-icon-file.svg`} alt="" />
                                             </a>
@@ -166,7 +170,7 @@ export default function AddEmployeePolicyModal2({ onCancel }: AddEmployeePolicyM
                                 </div>
                                 <div className={`${styles.modal_footer} ${styles.footer_process}`}>
                                     <button className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
-                                    <button className={`${styles.btn_add}`}>Thêm</button>
+                                    <button className={`${styles.btn_add}`} onClick={handleSubmit}>Thêm</button>
                                 </div>
                             </form>
                         </div>

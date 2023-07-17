@@ -38,11 +38,12 @@ export default function AddRegulationsModal2({ onCancel }: AddRegulationsModal2P
     const [descriptions, setDescription] = useState("");
     const [ListRegulationsGroup, setListRegulationsGroup] = useState<any | null>(null)
     const [provisionId, setProvisionId] = useState<number | null>(null)
+    const [keyWords, setKeyWords] = useState('')
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await SpecifiedGroupList(50, 1)
+                const response = await SpecifiedGroupList(50, 1, keyWords)
                 setListRegulationsGroup(response.data)
             } catch (error) {
                 throw error
@@ -115,9 +116,9 @@ export default function AddRegulationsModal2({ onCancel }: AddRegulationsModal2P
                             <form action="">
                                 <div className={`${styles.modal_body} ${styles.body_process}`}>
                                     <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Tên nhóm <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Tên quy định <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <input type="text" id="names" placeholder="Nhập tên ứng viên" className={`${styles.input_process}`} />
+                                            <input type="text" id="names" placeholder="Nhập tên quy định" className={`${styles.input_process}`} />
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>

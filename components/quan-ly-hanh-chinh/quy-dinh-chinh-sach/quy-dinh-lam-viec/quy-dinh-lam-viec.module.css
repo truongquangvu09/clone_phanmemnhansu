@@ -168,14 +168,35 @@
   border: #333333;
   margin-right: 40px;
 }
+@media screen and (min-width: 1024px) and (max-width: 1275px) {
+  .quydinh_item2 {
+    float: left;
+    width: 80%;
+  }
+}
 
-@media screen and (max-width: 670px) {
+@media screen and (max-width: 1024px) {
+  .quydinh_item2 {
+    float: left;
+    width: 80%;
+  }
+}
+
+@media screen and (max-width: 768px) {
   .t_div_search input {
     width: 75%;
   }
+  .quydinh_item2 {
+    float: left;
+    width: 75%;
+  }
 }
-@media screen and (max-width: 465px) {
+@media screen and (max-width: 585px) {
   .recruitment2 {
     display: block;
+  }
+  .quydinh_item2 {
+    float: left;
+    width: 100%;
   }
 }

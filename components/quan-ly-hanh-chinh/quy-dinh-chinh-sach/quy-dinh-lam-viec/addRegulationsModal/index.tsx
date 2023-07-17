@@ -95,7 +95,7 @@ export default function AddRegulationsModal({ onCancel }: AddRegulationsModalPro
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Tên nhóm <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <input type="text" id="names" placeholder="Nhập tên ứng viên" className={`${styles.input_process}`} />
+                                            <input type="text" id="names" placeholder="Nhập tên nhóm" className={`${styles.input_process}`} />
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>

@@ -28,6 +28,8 @@ export default function EmployeePolicy() {
         }
         fetchData()
     }, [currentPage])
+    console.log(data?.data);
+
 
     const setIdParent = async (itemId: number) => {
         const dataChildIndex = dataChildList.findIndex((item: any) => item.id === itemId);
@@ -107,7 +109,7 @@ export default function EmployeePolicy() {
                         </div>
                         <div className={`${styles.member_list} ${styles.regulation_item}`}>
                             {data != null ? (
-                                data?.data?.slice(0, data?.data?.length - 1).map((item: any, index: any) => (
+                                data?.data?.map((item: any, index: any) => (
                                     <div className={`${styles.quydinh_item} `} key={index}>
                                         <div className={`${styles.quydinh_item1}`}>
                                             <div className={`${styles.quydinh_item2}`} onClick={() => handleSeemore(item?.id)}>
@@ -169,7 +171,7 @@ export default function EmployeePolicy() {
                         <div className={`${styles.pagination}`} style={{ display: 'block' }}>
                             <MyPagination
                                 current={currentPage}
-                                total={data?.data && data?.data[data?.data?.length - 1].tongSoBanGhi}
+                                total={data?.tongSoBanGhi}
                                 pageSize={10}
                                 onChange={handlePageChange}
                             />
