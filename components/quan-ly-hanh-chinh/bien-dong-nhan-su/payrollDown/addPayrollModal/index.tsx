@@ -1,114 +1,247 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import styles from '../../planningAppointment/addPlanningModal/addPlanningModal.module.css'
 import Select from 'react-select';
-
 import MyEditor from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/components/Editor";
+import { FetchDataDep, FetchDataOrganizationalStructure, FetchDataEmployee, FetchDataPosition, FetchDataSpecifiedGroup } from "@/components/util/listAll";
+import { ShiftList, AddPayrollDown } from "@/pages/api/bien_dong_nhan_su";
+interface InputTextareaProps {
+    onDescriptionChange: (data: any) => void
+}
+type SelectOptionType = { label: string, value: string }
 
-
-function Input_textarea() {
+function Input_textarea({ onDescriptionChange }: InputTextareaProps) {
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [data, setData] = useState("");
 
     useEffect(() => {
         setEditorLoaded(true);
     }, []);
-    console.log(data);
+
+    const extractTextFromHTML = (htmlString) => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlString, "text/html");
+        const text = doc.querySelector("p")?.textContent || "";
+        return text;
+    };
+
+    const handleEditorChange = (data: string) => {
+        setData(data);
+        const extractedText = extractTextFromHTML(data); // Lấy chỉ văn bản từ chuỗi HTML
+        onDescriptionChange(extractedText);
+    };
+
     return (
         <div>
             <MyEditor
                 name="Editor"
-                onChange={(data: React.SetStateAction<string>) => {
-                    setData(data);
-                }}
+                onChange={handleEditorChange}
                 editorLoaded={editorLoaded}
                 value={data}
             />
-
-            {/* {JSON.stringify(data)} */}
         </div>
     );
 }
-type SelectOptionType = { label: string, value: string }
-
 export default function AddPayrollModal({ onCancel }: any) {
-    const [content, setContent] = useState('');
-
-    const handleContentChange = (value: string) => {
-        setContent(value);
-    };
 
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
+    const [isEmpList, setEmpList] = useState<any>(null)
+    const [isPositionList, setPositionList] = useState<any>(null)
+    const [isOrganizationalStructureList, setOrganizationalStructureList] = useState<any>(null)
+    const [isSpecifiedList, setSpecifiedList] = useState<any>(null)
+    const [isShiftList, setShiftList] = useState<any>(null)
+    const [isDepList, setDeptList] = useState<any>(null)
+    const [isReason, setReason] = useState<any>("")
 
-    const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
-        if (option) {
-            setSelectedOption(option)
+    const [isPosition_name, setPosition_name] = useState<any>(null)
+    const [isSpecified_id, setSpecified_id] = useState<any>(null)
+    const [isPosition_id, setPosition_id] = useState<any>(null)
+    const [isDep_name, setDep_name] = useState<any>(null)
+    const [infoList, setInfoList] = useState<any>(null)
+    const [isEmp_id, setEmp_id] = useState<any>(null)
+    const [isCom_id, setCom_id] = useState<any>(null)
+    const [isDep_id, setDep_id] = useState<any>(null)
+    const [isType_id, setType_id] = useState<any>(null)
+    const [isShift_id, setShift_id] = useState<any>(null)
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    async function fetchData() {
+        try {
+            const organizationStructure = await FetchDataOrganizationalStructure();
+            setOrganizationalStructureList(organizationStructure);
+
+            const empData = await FetchDataEmployee();
+            setEmpList(empData);
+
+            const position = await FetchDataPosition()
+            setPositionList(position)
+
+            const specifiedGroup = await FetchDataSpecifiedGroup()
+            setSpecifiedList(specifiedGroup)
+
+            const dep = await FetchDataDep()
+            setDeptList(dep)
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    useEffect(() => {
+        if (infoList) {
+            const valuesArray = infoList?.split(" ");
+            if (valuesArray.length >= 4) {
+                const depValue = valuesArray?.slice(3).join(" ");
+                setEmp_id(Number(valuesArray[0]));
+                setDep_id(Number(valuesArray[1]));
+                setPosition_id(Number(valuesArray[2]));
+                setDep_name(depValue);
+            }
+        }
+    }, [infoList]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const comid: any = 1664
+                const formData = new FormData();
+                formData.append('companyID', comid)
+                const response = await ShiftList(formData)
+                setShiftList(response.data)
+            } catch (error) {
+                throw error
+            }
+        }
+        fetchData()
+    }, [])
+
+    useEffect(() => {
+        if (isPositionList && Array.isArray(isPositionList.data)) {
+            const PositionList = isPositionList.data.flat();
+            if (PositionList && isPosition_id) {
+                const position = PositionList.find((pos: any) => pos?.positionId === isPosition_id);
+                if (position) {
+                    setPosition_name(position.positionName);
+                }
+            }
+        }
+    }, [isPositionList, isPosition_id]);
+
+    useEffect(() => {
+        const foundItem = isDepList?.data?.find((item: any) => item.dep_id === isDep_id);
+        if (foundItem) {
+            setCom_id(foundItem.com_id)
+        }
+    }, [isDep_id])
+
+    const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        try {
+            const created_at = (document.getElementById('created_at') as HTMLInputElement)?.value
+            const formData = new FormData();
+            formData.append('ep_id', isEmp_id)
+            formData.append('current_position', isPosition_id)
+            formData.append('current_dep_id', isDep_id)
+            formData.append('com_id', isCom_id)
+            formData.append('created_at', created_at)
+            formData.append('decision_id', isSpecified_id)
+            formData.append('note', isReason)
+            formData.append('type', isType_id)
+            formData.append('shift_id', isShift_id)
+
+            const response = await AddPayrollDown(formData)
+        } catch (error) {
+            throw error
+        }
+    }
+
+    const handleSelectChange = (selectedOption: SelectOptionType | null, setState: any) => {
+        setSelectedOption(selectedOption);
+        if (selectedOption) {
+            setState(selectedOption.value); // Set giá trị đã chọn vào state setIsDep_id
         }
     };
 
+    const handleInputAreaChange = (data: string) => {
+        setReason(data);
+    };
+
+    const chonnhanvienOptions = useMemo(
+        () =>
+            isEmpList &&
+            isEmpList?.data?.map((emp: any) => ({
+                value: `${emp.idQLC} ${emp.dep_id[0]} ${emp.position_id} ${emp.nameDeparment}`,
+                label: emp.userName
+            })),
+        [isEmpList]
+    );
+
+    const companyNames: any = [];
+    if (isCom_id && isOrganizationalStructureList?.infoCompany) {
+        if (
+            isOrganizationalStructureList?.infoCompany?.parent_com_id === isCom_id
+        ) {
+            companyNames.push({
+                key: isOrganizationalStructureList?.infoCompany?.companyName,
+                value: isOrganizationalStructureList?.infoCompany?.parent_com_id,
+            });
+        }
+        for (const company of isOrganizationalStructureList?.infoCompany
+            ?.infoChildCompany) {
+            if (company.com_id === isCom_id) {
+                companyNames.push({ key: company.com_name, value: company.com_id });
+            }
+        }
+    }
+
+    const chonchinhanhOptions = useMemo(
+        () =>
+            companyNames && companyNames?.map((organizational: any) => ({
+                value: organizational.value,
+                label: organizational.key,
+            })),
+        [companyNames]
+    );
+
+    const choncanghiOptions = useMemo(
+        () =>
+            isShiftList && isShiftList?.list?.map((shift: any) => ({
+                value: shift?.shift_id,
+                label: shift?.shift_name,
+            })),
+        [isShiftList]
+    );
+
+    const chonquydinhOptions = useMemo(
+        () =>
+            isSpecifiedList &&
+            isSpecifiedList?.data?.map((spe: any) => ({
+                value: spe.id,
+                label: spe.name
+            })),
+        [isSpecifiedList]
+    );
+
+
     const options = {
-        chonchinhanh: [
-            { value: 'PT shop', label: 'PT shop' },
-            { value: 'LT legend', label: 'LT legend' },
-            { value: 'LT pay 3', label: 'LT pay 3' },
-            { value: 'Công ty cổ phần Thanh toán Hưng Hà 2 ', label: 'Công ty cổ phần Thanh toán Hưng Hà 2 ' },
-        ],
+        chonchinhanh: chonchinhanhOptions,
         chonphongban: [
-            { value: '  BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
-            { value: 'KỸ THUẬT', label: 'KỸ THUẬT' },
-            { value: 'Biên tập', label: 'Biên tập' },
-            { value: 'Kinh Doanh', label: 'Kinh Doanh' },
-            { value: 'Đề án', label: 'Đề án' },
-            { value: 'Phòng SEO', label: 'Phòng SEO' },
-            { value: 'Phòng Đào tạo', label: 'Phòng Đào tạo' },
-            { value: 'Phòng sáng tạo', label: 'phòng sáng tạo' },
-            { value: 'Phòng tài vụ', label: 'Phòng tài vụ' },
+            { value: isDep_id && isDep_id, label: isDep_name ? isDep_name : 'Chọn phòng ban' },
         ],
-        chonnhanvien: [
-            { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
-            { value: 'Phan Mạnh Hùng', label: 'Phan Mạnh Hùng (SÁNG TẠO - ID:153846)' },
-        ],
+        chonnhanvien: chonnhanvienOptions && chonnhanvienOptions,
         chucvuhientai: [
-            { value: 'sinh viên thực tập', label: 'SINH VIÊN THỰC TẬP' },
-            { value: 'nhân viên part time', label: 'NHÂN VIÊN PART TIME' },
-            { value: 'nhân viên thử việc', label: 'NHÂN VIÊN THỬ VIỆC' },
-            { value: 'nhân viên chính thức', label: 'NHÂN VIÊN CHÍNH THỨC' },
-            { value: 'trưởng nhóm', label: 'TRƯỞNG NHÓM' },
-            { value: 'nhóm phó', label: 'NHÓM PHÓ' },
-            { value: 'tổ trưởng', label: 'TỔ TRƯỞNG' },
-            { value: 'phó tổ trưởng', label: 'PHÓ TỔ TRƯỞNG' },
-            { value: 'trưởng ban dự án', label: 'TRƯỞNG BAN DỰ ÁN   ' },
-            { value: 'phó ban dự án', label: 'PHÓ BAN DỰ ÁN' },
-            { value: 'trưởng phòng', label: 'TRƯỞNG PHÒNG' },
-            { value: 'phó trưởng phòng', label: 'PHÓ TRƯỞNG PHÒNG' },
-            { value: 'giám đốc', label: 'GIÁM ĐỐC' },
-            { value: 'phó giám đốc', label: 'PHÓ GIÁM ĐỐC   ' },
-            { value: 'tổng giám đốc', label: 'TỔNG GIÁM ĐỐC' },
-            { value: 'phó tổng giám đốc', label: 'PHÓ TỔNG GIÁM ĐỐC' },
-            { value: 'tổng giám đốc tập đoàn', label: 'TỔNG GIÁM ĐỐC TẬP ĐOÀN' },
-            { value: 'phó  tổng giám đốc tập đoàn', label: 'PHÓ TỔNG GIÁM ĐỐC TẬP ĐOÀN' },
-            { value: 'chủ tịch hội đồng quản trị', label: 'CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ' },
-            { value: 'phó chủ tịch hội đồng quản trị', label: 'PHÓ CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ' },
-            { value: 'thành viên hội đồng quản trị', label: 'THÀNH VIÊN HỘI ĐỒNG QUẢN TRỊ' },
+            { value: isPosition_id && isPosition_id, label: isPosition_name ? isPosition_name : 'Chọn chức vụ ' },
+
         ],
-        choncanghi: [
-            { value: 'ca sáng', label: 'Ca sáng' },
-            { value: 'ca trưa kinh doanh', label: 'Ca trưa kinh doanh' },
-            { value: 'ca hành chính', label: 'Ca hành chính' },
-            { value: 'partime buổi sáng', label: 'Partime buổi sáng' },
-            { value: 'ca chiều', label: 'Ca chiều' },
-            { value: 'ca gãy trưa', label: 'Ca gãy trưa' },
-            { value: 'ca gãy sáng', label: 'Ca gãy sáng' },
-            { value: 'ca 1', label: 'Ca 1' },
-            { value: 'ca ăn trưa', label: 'Ca ăn trưa' },
-        ],
+        choncanghi: choncanghiOptions,
         hinhthuc: [
-            { value: 'giảm biên chế', label: 'Giảm biên chế' },
-            { value: 'nghỉ việc', label: 'Nghỉ việc' },
+            { value: '1', label: 'Giảm biên chế' },
+            { value: '2', label: 'Nghỉ việc' },
+
         ],
-        chonquydinh: [
-            { value: '  BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
-            { value: 'KỸ THUẬT', label: 'KỸ THUẬT' },
-        ],
+        chonquydinh: chonquydinhOptions,
 
     };
 
@@ -128,7 +261,7 @@ export default function AddPayrollModal({ onCancel }: any) {
                                         <div className={`${styles.input_right}`}>
                                             <Select
                                                 defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.chonnhanvien)}
+                                                onChange={(option) => handleSelectChange(option, setInfoList)}
                                                 options={options.chonnhanvien}
                                                 placeholder="Chọn nhân viên"
                                                 styles={{
@@ -148,14 +281,12 @@ export default function AddPayrollModal({ onCancel }: any) {
                                             />
                                         </div>
                                     </div>
-
-
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Chức vụ hiện tại <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <Select
-                                                defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.chucvuhientai)}
+                                                value={options.chucvuhientai}
+                                                onChange={(option) => handleSelectChange(option, options.chucvuhientai)}
                                                 options={options.chucvuhientai}
                                                 placeholder="Chọn chức vụ"
                                                 styles={{
@@ -179,8 +310,8 @@ export default function AddPayrollModal({ onCancel }: any) {
                                         <label htmlFor="">Phòng ban hiện tại </label>
                                         <div className={`${styles.input_right}`}>
                                             <Select
-                                                defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.chonphongban)}
+                                                value={options.chonphongban}
+                                                onChange={(option) => handleSelectChange(option, options.chonphongban)}
                                                 options={options.chonphongban}
                                                 placeholder="Chọn phòng ban"
                                                 styles={{
@@ -204,8 +335,8 @@ export default function AddPayrollModal({ onCancel }: any) {
                                         <label htmlFor="">Đơn vị công tác hiện tại</label>
                                         <div className={`${styles.input_right}`}>
                                             <Select
-                                                defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.chonchinhanh)}
+                                                defaultValue={options.chonchinhanh}
+                                                onChange={(option) => handleSelectChange(option, setCom_id)}
                                                 options={options.chonchinhanh}
                                                 placeholder="Chọn chi nhánh"
                                                 styles={{
@@ -229,7 +360,32 @@ export default function AddPayrollModal({ onCancel }: any) {
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Thời gian bắt đầu nghỉ <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <input type="date" id="names" placeholder="dd/mm/yyyy" className={`${styles.input_process}`} />
+                                            <input type="date" id="created_at" placeholder="dd/mm/yyyy" className={`${styles.input_process}`} />
+                                        </div>
+                                    </div>
+                                    <div className={`${styles.form_groups}`}>
+                                        <label htmlFor="">Chọn cả nghỉ </label>
+                                        <div className={`${styles.input_right}`}>
+                                            <Select
+                                                defaultValue={selectedOption}
+                                                onChange={(option) => handleSelectChange(option, setShift_id)}
+                                                options={options.choncanghi}
+                                                placeholder="Chọn ca nghỉ"
+                                                styles={{
+                                                    control: (baseStyles, state) => ({
+                                                        ...baseStyles,
+                                                        borderRadius: 8,
+                                                        fontSize: state.isFocused ? 14 : 14,
+                                                        minHeight: state.isFocused ? 20 : 20,
+                                                        width: '100%',
+                                                        fontWeight: state.isFocused ? 600 : 600
+                                                    }),
+                                                    placeholder: (baseStyles) => ({
+                                                        ...baseStyles,
+                                                        color: "#444444",
+                                                    }),
+                                                }}
+                                            />
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -237,7 +393,7 @@ export default function AddPayrollModal({ onCancel }: any) {
                                         <div className={`${styles.input_right}`}>
                                             <Select
                                                 defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.hinhthuc)}
+                                                onChange={(option) => handleSelectChange(option, setType_id)}
                                                 options={options.hinhthuc}
                                                 placeholder="Chọn hình thức"
                                                 styles={{
@@ -262,7 +418,7 @@ export default function AddPayrollModal({ onCancel }: any) {
                                         <div className={`${styles.input_right}`}>
                                             <Select
                                                 defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.chonquydinh)}
+                                                onChange={(option) => handleSelectChange(option, setSpecified_id)}
                                                 options={options.chonquydinh}
                                                 placeholder="Chọn quy định"
                                                 styles={{
@@ -285,12 +441,12 @@ export default function AddPayrollModal({ onCancel }: any) {
                                     <div className={`${styles.form_groups} ${styles.cke}`}>
                                         <label htmlFor="">Lý do </label>
                                         <div className={`${styles.ckeditor}`}>
-                                            <Input_textarea />
+                                            <Input_textarea onDescriptionChange={handleInputAreaChange} />
                                         </div>
                                     </div>
                                     <div className={`${styles.modal_footer} ${styles.footer_process}`}>
                                         <button className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
-                                        <button className={`${styles.btn_add}`}>Thêm</button>
+                                        <button className={`${styles.btn_add}`} onClick={handleSubmit}>Thêm</button>
                                     </div>
                                 </form>
                             </div>

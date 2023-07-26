@@ -1,86 +1,116 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import styles from './editModal.module.css'
 import Select from 'react-select';
+import { EmployeeUpdate } from "@/pages/api/quan_ly_nhan_vien";
+import { PostionCharData } from '@/pages/api/co_cau_to_chuc';
 
 type SelectOptionType = { label: string, value: string }
 
-export default function EditCandidateList({ onCancel, id }: any) {
-    function handleUploadClick(event: React.MouseEvent<HTMLAnchorElement>) {
-        event.preventDefault();
-        const uploadInput = document.getElementById('upload_cv') as HTMLInputElement;
-        if (uploadInput) {
-            uploadInput.click();
-        }
-    }
-    const [content, setContent] = useState('');
-
-    const handleContentChange = (value: string) => {
-        setContent(value);
-    };
+export default function EditCandidateList({ onCancel, infoList }: any) {
 
 
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
+    const [isGender, setGender] = useState<any>(null)
+    const [isMaritalStatus, setMaritalStatus] = useState<any>(null)
+    const [isPosition_id, setPosition_id] = useState<any>(infoList?.positionId)
+    const [isExp, setExp] = useState<any>(null)
+    const [isEducation, setEducation] = useState<any>(null)
+    const [PostionCharDatas, setPosttionCharData] = useState<any>(null)
 
-    const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
-        if (option) {
-            setSelectedOption(option)
+    // -- lấy dữ liệu chức vụ --
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await PostionCharData()
+                setPosttionCharData(response.data)
+            } catch (error) {
+                console.log({ error });
+            }
+        }
+        fetchData()
+    }, [])
+
+    const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        try {
+            const formData = new FormData();
+            const role: any = 0
+            const comId: any = 1664
+            const names = (document.getElementById('names') as HTMLInputElement)?.value
+            const dateInCom = (document.getElementById('date_in_com') as HTMLInputElement)?.value
+            const birthday = (document.getElementById('birthday') as HTMLInputElement)?.value
+            const phoneNumber = (document.getElementById('phone') as HTMLInputElement)?.value
+            const address = (document.getElementById('address') as HTMLInputElement)?.value
+            formData.append('com_id', comId)
+            formData.append('dep_id', infoList?.depId)
+            formData.append('role', role)
+            formData.append('userName', names)
+            formData.append('idQLC', infoList?.id)
+            formData.append('birthday', birthday)
+            formData.append('phoneTk', phoneNumber)
+            formData.append('address', address)
+            formData.append('gender', isGender)
+            formData.append('email', infoList?.email)
+            formData.append('position_id', isPosition_id)
+            formData.append('exp', isExp)
+            formData.append('date_in_come', dateInCom)
+            formData.append('education', isEducation)
+
+            const response = await EmployeeUpdate(formData)
+        } catch (error) {
+            throw error
+        }
+    }
+
+    const handleSelectChange = (selectedOption: SelectOptionType | null, setState: any) => {
+        setSelectedOption(selectedOption);
+        if (selectedOption) {
+            setState(selectedOption.value); // Set giá trị đã chọn vào state setIsDep_id
         }
     };
 
+    const allPositions = PostionCharDatas?.data?.flat();
+    console.log(PostionCharDatas);
+
+
+    const chonpchưvuOptions = useMemo(
+        () =>
+            allPositions?.map((position: any) => ({
+                value: position.positionId,
+                label: position.positionName,
+            })),
+        [allPositions]
+    );
 
     const options = {
         tinhtranghonnhan: [
             { value: 'đã kết hôn', label: 'Đã kết hôn' },
-            { value: 'độc thân', label: 'Độc th' },
+            { value: 'độc thân', label: 'Độc thân' },
         ],
         chongioitinh: [
-            { value: 'Nam', label: 'Nam' },
-            { value: 'Nữ', label: 'Nữ' },
+            { value: '1', label: 'Nam' },
+            { value: '2', label: 'Nữ' },
         ],
-        chonchinhanh: [
-            { value: 'PT shop', label: 'PT shop' },
-            { value: 'LT legend', label: 'LT legend' },
-            { value: 'LT pay 3', label: 'LT pay 3' },
-            { value: 'Công ty cổ phần Thanh toán Hưng Hà 2 ', label: 'Công ty cổ phần Thanh toán Hưng Hà 2 ' },
+        kinhnghiemlamviec: [
+            { value: 'dưới 1 năm kinh nghiệm', label: 'Dưới 1 năm kinh nghiệm' },
+            { value: '1 năm', label: '1 năm' },
+            { value: '2 năm', label: '2 năm' },
+            { value: '3 năm', label: '3 năm' },
+            { value: '4 năm', label: '4 năm' },
+            { value: '5 năm', label: '5 năm' },
+            { value: 'trên 5 năm', label: 'trên 5 năm' },
         ],
-        chonphongban: [
-            { value: '  BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
-            { value: 'KỸ THUẬT', label: 'KỸ THUẬT' },
-            { value: 'Biên tập', label: 'Biên tập' },
-            { value: 'Kinh Doanh', label: 'Kinh Doanh' },
-            { value: 'Đề án', label: 'Đề án' },
-            { value: 'Phòng SEO', label: 'Phòng SEO' },
-            { value: 'Phòng Đào tạo', label: 'Phòng Đào tạo' },
-            { value: 'Phòng sáng tạo', label: 'phòng sáng tạo' },
-            { value: 'Phòng tài vụ', label: 'Phòng tài vụ' },
+        trinhdohocvan: [
+            { value: 'Trên đại học', label: 'Trên đại học' },
+            { value: 'Đại học', label: 'Đại học' },
+            { value: 'Cao đẳng', label: 'Cao đẳng' },
+            { value: 'Trung cấp', label: 'Trung cấp' },
+            { value: 'Đào tạo nghề', label: 'Đào tạo nghề' },
+            { value: 'Trung học phổ thông', label: 'Trung học phổ thông' },
+            { value: 'Trung học cơ sở', label: 'Trung học cơ sở' },
+            { value: 'Tiểu học', label: 'Tiểu học' },
         ],
-        chonnhanvien: [
-            { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
-            { value: 'Phan Mạnh Hùng', label: 'Phan Mạnh Hùng (SÁNG TẠO - ID:153846)' },
-        ],
-        chucvuhientai: [
-            { value: 'sinh viên thực tập', label: 'SINH VIÊN THỰC TẬP' },
-            { value: 'nhân viên part time', label: 'NHÂN VIÊN PART TIME' },
-            { value: 'nhân viên thử việc', label: 'NHÂN VIÊN THỬ VIỆC' },
-            { value: 'nhân viên chính thức', label: 'NHÂN VIÊN CHÍNH THỨC' },
-            { value: 'trưởng nhóm', label: 'TRƯỞNG NHÓM' },
-            { value: 'nhóm phó', label: 'NHÓM PHÓ' },
-            { value: 'tổ trưởng', label: 'TỔ TRƯỞNG' },
-            { value: 'phó tổ trưởng', label: 'PHÓ TỔ TRƯỞNG' },
-            { value: 'trưởng ban dự án', label: 'TRƯỞNG BAN DỰ ÁN   ' },
-            { value: 'phó ban dự án', label: 'PHÓ BAN DỰ ÁN' },
-            { value: 'trưởng phòng', label: 'TRƯỞNG PHÒNG' },
-            { value: 'phó trưởng phòng', label: 'PHÓ TRƯỞNG PHÒNG' },
-            { value: 'giám đốc', label: 'GIÁM ĐỐC' },
-            { value: 'phó giám đốc', label: 'PHÓ GIÁM ĐỐC   ' },
-            { value: 'tổng giám đốc', label: 'TỔNG GIÁM ĐỐC' },
-            { value: 'phó tổng giám đốc', label: 'PHÓ TỔNG GIÁM ĐỐC' },
-            { value: 'tổng giám đốc tập đoàn', label: 'TỔNG GIÁM ĐỐC TẬP ĐOÀN' },
-            { value: 'phó  tổng giám đốc tập đoàn', label: 'PHÓ TỔNG GIÁM ĐỐC TẬP ĐOÀN' },
-            { value: 'chủ tịch hội đồng quản trị', label: 'CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ' },
-            { value: 'phó chủ tịch hội đồng quản trị', label: 'PHÓ CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ' },
-            { value: 'thành viên hội đồng quản trị', label: 'THÀNH VIÊN HỘI ĐỒNG QUẢN TRỊ' },
-        ],
+        chucvuhientai: chonpchưvuOptions
 
     };
 
@@ -97,29 +127,29 @@ export default function EditCandidateList({ onCancel, id }: any) {
                                 <div className={`${styles.modal_body} ${styles.body_process}`}>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Tên nhân viên <span style={{ color: 'red' }}> * </span></label>
-                                        <input type="text" id="names" placeholder="" className={`${styles.form_control}`} />
+                                        <input type="text" defaultValue={infoList.userName} id="names" placeholder="" className={`${styles.form_control}`} />
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Mã ID nhân viên <span style={{ color: 'red' }}> * </span></label>
-                                        <input type="text" id="names" placeholder="" className={`${styles.form_control} ${styles.read_only}`} />
+                                        <input type="text" id="names" value={infoList.id} placeholder="" className={`${styles.form_control} ${styles.read_only}`} />
                                     </div>
                                     <div className={`${styles.form_groups} ${styles.form_groups2}`}>
                                         <div className={`${styles.content_left}`}>
                                             <div className={`${styles.form_groups} ${styles.form_groups3}`}>
                                                 <label htmlFor="">Ngày sinh </label>
-                                                <input style={{ height: 20 }} type="date" id="names" placeholder="" className={`${styles.form_control} `} />
+                                                <input style={{ height: 20 }} type="date" id="birthday" placeholder="" className={`${styles.form_control} `} />
                                             </div>
                                         </div>
                                         <div className={`${styles.content_right}`}>
                                             <div className={`${styles.form_groups} ${styles.form_groups5} ${styles.form_groups6}   `}>
                                                 <label htmlFor="">Điện thoại <span style={{ color: 'red' }}> * </span></label>
-                                                <input type="text" id="names" placeholder="" className={`${styles.form_control} `} />
+                                                <input type="text" id="phone" defaultValue={infoList.phoneTK} placeholder="" className={`${styles.form_control} `} />
                                             </div>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Địa chỉ</label>
-                                        <input type="text" id="names" placeholder="" className={`${styles.form_control}`} />
+                                        <input type="text" id="address" defaultValue={infoList.address} placeholder="" className={`${styles.form_control}`} />
                                     </div>
                                     <div className={`${styles.form_groups} ${styles.form_groups2}`}>
                                         <div className={`${styles.content_left}`}>
@@ -127,7 +157,7 @@ export default function EditCandidateList({ onCancel, id }: any) {
                                                 <label htmlFor="">Giới tính </label>
                                                 <Select
                                                     defaultValue={selectedOption}
-                                                    onChange={(option) => handleSelectionChange(option, options.chongioitinh)}
+                                                    onChange={(option) => handleSelectChange(option, setGender)}
                                                     options={options.chongioitinh}
                                                     placeholder="Chọn giới tính"
                                                     styles={{
@@ -161,7 +191,7 @@ export default function EditCandidateList({ onCancel, id }: any) {
                                                 <label htmlFor="">Tình trạng hôn nhân </label>
                                                 <Select
                                                     defaultValue={selectedOption}
-                                                    onChange={(option) => handleSelectionChange(option, options.tinhtranghonnhan)}
+                                                    onChange={(option) => handleSelectChange(option, setMaritalStatus)}
                                                     options={options.tinhtranghonnhan}
                                                     placeholder="Chọn tình trạng"
                                                     styles={{
@@ -193,13 +223,13 @@ export default function EditCandidateList({ onCancel, id }: any) {
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Email <span style={{ color: 'red' }}> * </span></label>
-                                        <input type="text" id="names" placeholder="" className={`${styles.form_control} ${styles.read_only}`} />
+                                        <input type="text" value={infoList.email} id="names" placeholder="" className={`${styles.form_control} ${styles.read_only}`} />
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Chức vụ </label>
                                         <Select
                                             defaultValue={selectedOption}
-                                            onChange={(option) => handleSelectionChange(option, options.chucvuhientai)}
+                                            onChange={(option) => handleSelectChange(option, setPosition_id)}
                                             options={options.chucvuhientai}
                                             placeholder="Chọn chức vụ"
                                             styles={{
@@ -231,8 +261,8 @@ export default function EditCandidateList({ onCancel, id }: any) {
                                         <label htmlFor="">Kinh nghiệm làm việc </label>
                                         <Select
                                             defaultValue={selectedOption}
-                                            onChange={(option) => handleSelectionChange(option, options.chucvuhientai)}
-                                            options={options.chucvuhientai}
+                                            onChange={(option) => handleSelectChange(option, setExp)}
+                                            options={options.kinhnghiemlamviec}
                                             placeholder=""
                                             styles={{
                                                 control: (baseStyles, state) => ({
@@ -261,14 +291,14 @@ export default function EditCandidateList({ onCancel, id }: any) {
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Ngày vào công ty </label>
-                                        <input type="date" id="names" placeholder="" className={`${styles.form_control}`} />
+                                        <input type="date" id="date_in_com" defaultValue={infoList.dateInCom} placeholder="" className={`${styles.form_control}`} />
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Trình độ học vấn </label>
                                         <Select
                                             defaultValue={selectedOption}
-                                            onChange={(option) => handleSelectionChange(option, options.chucvuhientai)}
-                                            options={options.chucvuhientai}
+                                            onChange={(option) => handleSelectChange(option, setEducation)}
+                                            options={options.trinhdohocvan}
                                             placeholder=""
                                             styles={{
                                                 control: (baseStyles, state) => ({
@@ -298,7 +328,7 @@ export default function EditCandidateList({ onCancel, id }: any) {
                                 </div>
                                 <div className={`${styles.modal_footer} ${styles.footer_process}`}>
                                     <button className={`${styles.btn_cancel}`} onClick={onCancel}>Đóng</button>
-                                    <button className={`${styles.btn_add}`}>Cập nhật</button>
+                                    <button className={`${styles.btn_add}`} onClick={handleSubmit}>Cập nhật</button>
                                 </div>
                             </form>
                         </div>

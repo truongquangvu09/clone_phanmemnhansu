@@ -28,6 +28,7 @@ const TreeNode = dynamic(() =>
 const StyledNode = styled.div`
 `;
 const MemberViewBoxRoom = ({
+    idRoom,
     text_part,
     describe,
     manager,
@@ -39,13 +40,26 @@ const MemberViewBoxRoom = ({
     registered,
     noAttendance,
     setOpenModalEdit,
+    handleDataUpdateRoom,
     setOpenModalDetails
 }: any) => (
-    <div className={`${styles.member_view_box} ${styles.member_view_box_top_3}`}>
-        <div className={`${styles.member_detail}`}>
+    <div className={`${styles.member_view_box} ${styles.member_view_box_top_3}`} style={{ display: 'flex', width: 'inherit' }}>
+        <div className={`${styles.member_detail}`} style={{ width: '100%' }}>
             <div className={`${styles.member_details_header}`}>
                 <span style={{ color: '#474747', fontWeight: 600 }}>{text_part}</span>
-                <button className={`${styles.edit_dep}`} onClick={() => setOpenModalEdit()}>
+                <button
+                    className={`${styles.edit_dep}`}
+                    onClick={() =>
+                        handleDataUpdateRoom({
+                            dep_id: idRoom,
+                            dep_name: text_part,
+                            manager,
+                            deputy,
+                            total_emp: employeeNumber,
+                            description: describe
+                        })
+                    }
+                >
                     <img src={`/vn_icon-edit.svg`} />
                 </button>
             </div>
@@ -62,7 +76,9 @@ const MemberViewBoxRoom = ({
 
 );
 const MemberViewBoxNest = ({
+    gr_id,
     text_part,
+    dep_name,
     describe,
     leader,
     deputy_leader,
@@ -73,13 +89,21 @@ const MemberViewBoxNest = ({
     registered,
     noAttendance,
     setOpenModalEditNest,
-    setOpenModalDetailsNest
+    setOpenModalDetailsNest,
+    handleDataUpdateNest
 }: any) => (
-    <div className={`${styles.member_view_box} ${styles.member_view_box_top_3}`}>
-        <div className={`${styles.member_detail}`}>
+    <div className={`${styles.member_view_box} ${styles.member_view_box_top_3}`} style={{ display: 'flex', width: 'inherit' }}>
+        <div className={`${styles.member_detail}`} style={{ width: '100%' }}>
             <div className={`${styles.member_details_header}`}>
                 <span style={{ color: '#474747', fontWeight: 600 }}>{text_part}</span>
-                <button className={`${styles.edit_dep}`} onClick={() => setOpenModalEditNest()}>
+                <button className={`${styles.edit_dep}`} onClick={() =>
+                    handleDataUpdateNest({
+                        dep_name: dep_name,
+                        gr_id: gr_id,
+                        gr_name: text_part,
+                        description: describe,
+                    })
+                }>
                     <img src={`/vn_icon-edit.svg`} />
                 </button>
             </div>
@@ -97,6 +121,9 @@ const MemberViewBoxNest = ({
 );
 
 const MemberViewBoxGroup = ({
+    dep_name,
+    nest_name,
+    gr_id,
     text_part,
     describe,
     group_captain,
@@ -108,13 +135,22 @@ const MemberViewBoxGroup = ({
     registered,
     noAttendance,
     setOpenModalEditGroup,
-    setOpenModalDetailsGroup
+    setOpenModalDetailsGroup,
+    handleDataUpdateGroup
 }: any) => (
-    <div className={`${styles.member_view_box} ${styles.member_view_box_top_3}`}>
-        <div className={`${styles.member_detail}`}>
+    <div className={`${styles.member_view_box} ${styles.member_view_box_top_3}`} style={{ display: 'flex', width: 'inherit' }}>
+        <div className={`${styles.member_detail}`} style={{ width: '100%' }}>
             <div className={`${styles.member_details_header}`}>
                 <span style={{ color: '#474747', fontWeight: 600 }}>{text_part}</span>
-                <button className={`${styles.edit_dep}`} onClick={() => setOpenModalEditGroup()}>
+                <button className={`${styles.edit_dep}`} onClick={() =>
+                    handleDataUpdateGroup({
+                        dep_name: dep_name,
+                        gr_id: gr_id,
+                        nest_name: nest_name,
+                        gr_name: text_part,
+                        description: describe,
+                    })
+                }>
                     <img src={`/vn_icon-edit.svg`} />
                 </button>
             </div>
@@ -142,8 +178,8 @@ const MemberViewBoxCompany = ({
     registered,
     noAttendance
 }: any) => (
-    <div className={`${styles.member_view_box} ${styles.member_view_box_top_2}`}>
-        <div className={`${styles.member_detail}`}>
+    <div className={`${styles.member_view_box} ${styles.member_view_box_top_2}`} style={{ display: 'flex', width: 'inherit' }}>
+        <div className={`${styles.member_detail}`} style={{ width: '100%' }}>
             <p>{text_part}</p>
             <span className={`${styles.text_ita}`}>({describe})</span>
             <p>Giám đốc: {CEO}</p>
@@ -158,51 +194,84 @@ const MemberViewBoxCompany = ({
 const defaultValue = { label: 'Default Option', value: 'default' };
 const StyledTreeExample = () => {
 
-    const [openModalEdit, setOpenModalEdit] = useState(false)
-    const [openModalDetails, setOpenModalDetails] = useState(false)
+    const [openModalEdit, setOpenModalEdit] = useState(0)
+    const [openModalDetails, setOpenModalDetails] = useState(0)
     const handleCloseModal = () => {
-        setOpenModalEdit(false);
-        setOpenModalDetails(false);
+        setOpenModalEdit(0);
+        setOpenModalDetails(0);
     }
 
-    const [openModalEditNest, setOpenModalEditNest] = useState(false)
-    const [openModalDetailsNest, setOpenModalDetailsNest] = useState(false)
+    const [openModalEditNest, setOpenModalEditNest] = useState(0)
+    const [openModalDetailsNest, setOpenModalDetailsNest] = useState(0)
     const handleCloseModalNest = () => {
-        setOpenModalEditNest(false);
-        setOpenModalDetailsNest(false);
+        setOpenModalEditNest(0);
+        setOpenModalDetailsNest(0);
     }
 
-    const [openModalEditGroup, setOpenModalEditGroup] = useState(false)
-    const [openModalDetailsGroup, setOpenModalDetailsGroup] = useState(false)
+    const [openModalEditGroup, setOpenModalEditGroup] = useState(0)
+    const [openModalDetailsGroup, setOpenModalDetailsGroup] = useState(0)
     const handleCloseModalGroup = () => {
-        setOpenModalEditGroup(false);
-        setOpenModalDetailsGroup(false);
+        setOpenModalEditGroup(0);
+        setOpenModalDetailsGroup(0);
     }
+
+    const [chonPhongBan, setChonPhongBan] = useState<any>("")
+    const [truongPhong, setTruongPhong] = useState<any>("")
+    const [tenTo, setTenTo] = useState<any>("")
+    const [tenNhom, setTenNhom] = useState<any>("")
+    const [phoTruongPhong, setPhoTruongPhong] = useState<any>("")
+    const [soluongnhanvien, setSoLuongNhanVien] = useState<any>("")
+    const [mota, setMota] = useState<any>("")
+
+    console.log({ tenTo, chonPhongBan });
+
+
+    const handleDataUpdateRoom = ({ dep_id, dep_name, manager, deputy, total_emp, description }: any) => {
+        setChonPhongBan(dep_name)
+        setTruongPhong(manager)
+        setPhoTruongPhong(deputy)
+        setSoLuongNhanVien(total_emp)
+        setMota(description)
+        setOpenModalEdit(dep_id)
+    }
+
+    const handleDataUpdateNest = ({ dep_name, gr_id, gr_name, description }: any) => {
+        setChonPhongBan(dep_name)
+        setTenTo(gr_name)
+        setMota(description)
+        setOpenModalEditNest(gr_id)
+    }
+
+    const handleDataUpdateGroup = ({ dep_name, nest_name, gr_id, gr_name, description }: any) => {
+        setChonPhongBan(dep_name)
+        setTenTo(nest_name)
+        setTenNhom(gr_name)
+        setMota(description)
+        setOpenModalEditGroup(gr_id)
+    }
+
 
     const options = {
         chonphongban: [
-            { value: 'BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
-            { value: 'Phó GIÁM ĐỐC', label: 'Phó GIÁM ĐỐC' },
+            { value: chonPhongBan, label: chonPhongBan },
         ],
         truongphong: [
-            { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
+            { value: truongPhong, label: truongPhong },
         ],
         photruongphong: [
-            { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
+            { value: phoTruongPhong, label: phoTruongPhong },
         ],
         tento: [
-            { value: 'tổ anh hiệp', label: 'Tổ anh Hiệp' },
+            { value: tenTo, label: tenTo },
         ],
         tennhom: [
-            { value: 'nhóm a', label: 'Nhóm A' },
+            { value: tenNhom, label: tenNhom },
         ],
     };
-    const soluongnhanvien = 13;
-    const mota: any = 'kĩ thuật';
 
     const [data, setData] = useState<any>(null)
-    console.log(data?.infoCompany
-    );
+
+
 
 
     useEffect(() => {
@@ -228,7 +297,7 @@ const StyledTreeExample = () => {
                         label={<StyledNode><div className={`${styles.member_view_box} ${styles.member_view_box_top}`}>
                             <div className={`${styles.member_detail}`}>
                                 <p className={`${styles.text_center}`}>{data?.infoCompany.companyName}</p>
-                                <p>Giám đốc: {data?.infoCompany.parent_manager}</p>
+                                <p>Giám đốc: {data?.infoCompany?.parent_manager}</p>
                                 <p>Phó giám đốc: {data?.infoCompany.parent_deputy}</p>
                                 <a href="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html" target="_blank" className={`${styles.link_a}`}>Tổng nhân viên: {data?.infoCompany.tong_nv}</a>
                                 <a href="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html" target="_blank" className={`${styles.link_a}`}>Tổng nhân viên đã điểm danh: {data?.infoCompany.tong_nv_da_diem_danh}</a>
@@ -236,293 +305,170 @@ const StyledTreeExample = () => {
                             </div>
                         </div></StyledNode>}
                     >
-                        <TreeNode label={<StyledNode><MemberViewBoxRoom
-                            text_part='KỸ THUẬT'
-                            title="kỹ thuật"
-                            manager="Uy Phùng Hiểu (Ken)"
-                            deputy="Chưa cập nhật"
-                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                            employeeNumber='10'
-                            registered='15'
-                            noAttendance='12'
-                            setOpenModalEdit={() => setOpenModalEdit(true)}
-                            setOpenModalDetails={() => setOpenModalDetails(true)}
+                        {data?.infoCompany?.infoDep?.map((dep: any) => {
+                            return (
+                                <TreeNode key={dep?.dep_id} label={<StyledNode><MemberViewBoxRoom
+                                    idRoom={dep?.dep_id}
+                                    text_part={dep?.dep_name}
+                                    describe={dep?.description}
+                                    manager={dep?.manager}
+                                    deputy={dep?.deputy}
+                                    employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                                    checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                                    absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                                    employeeNumber={dep?.total_emp}
+                                    registered={dep?.tong_nv_da_diem_danh}
+                                    noAttendance={dep?.total_emp - dep?.tong_nv_da_diem_danh}
+                                    setOpenModalEdit={() => setOpenModalEdit(dep?.dep_id)}
+                                    handleDataUpdateRoom={handleDataUpdateRoom}
+                                    setOpenModalDetails={() => setOpenModalDetails(dep?.dep_id)}
 
-                        /></StyledNode>}>
-                            <TreeNode label={<StyledNode><MemberViewBoxNest
-                                text_part='Tổ anh Hiệp'
-                                title="kỹ thuật"
-                                leader="Uy Phùng Hiểu (Ken)"
-                                deputy_leader="Chưa cập nhật"
-                                employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                                checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                                absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                                employeeNumber='10'
-                                registered='15'
-                                noAttendance='12'
-                                setOpenModalEditNest={() => setOpenModalEditNest(true)}
-                                setOpenModalDetailsNest={() => setOpenModalDetailsNest(true)}
-                            />
-                            </StyledNode>} />
-                            <TreeNode label={<StyledNode><MemberViewBoxNest text_part='Tổ 1'
-                                title="chưa cập nhật"
-                                leader="Uy Phùng Hiểu (Ken)"
-                                deputy_leader="Chưa cập nhật"
-                                employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                                checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                                absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                                employeeNumber='10'
-                                registered='15'
-                                noAttendance='12'
-                                setOpenModalEditNest={() => setOpenModalEditNest(true)}
-                                setOpenModalDetailsNest={() => setOpenModalDetailsNest(true)} />
-                            </StyledNode>}>
-                                <TreeNode label={<StyledNode><MemberViewBoxGroup text_part='Nhóm A'
-                                    title="chưa cập nhật"
-                                    group_captain="Uy Phùng Hiểu (Ken)"
-                                    deputy_group_captain="Chưa cập nhật"
+
+                                /></StyledNode>}>
+                                    {dep?.infoTeam?.map((team: any) => {
+                                        return (
+                                            <TreeNode key={team?.gr_id} label={<StyledNode><MemberViewBoxNest
+                                                gr_id={team?.gr_id}
+                                                dep_name={dep?.dep_name}
+                                                text_part={team?.gr_name}
+                                                describe={team?.description}
+                                                leader={team?.to_truong}
+                                                deputy_leader={team?.pho_to_truong}
+                                                employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                                                checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                                                absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                                                employeeNumber={team?.tong_nv}
+                                                registered='15'
+                                                noAttendance='12'
+                                                setOpenModalEditNest={() => setOpenModalEditNest(team?.gr_id)}
+                                                handleDataUpdateNest={handleDataUpdateNest}
+                                                setOpenModalDetailsNest={() => setOpenModalDetailsNest(team?.gr_id)} />
+                                            </StyledNode>}>
+                                                {team?.infoGroup?.filter((group: any, index: number, self: any[]) =>
+                                                    self.findIndex((g: any) => g.gr_id === group.gr_id) === index
+                                                ).map((group: any) => {
+                                                    return (
+                                                        <TreeNode key={group?.gr_id} label={<StyledNode><MemberViewBoxGroup
+                                                            dep_name={dep?.dep_name}
+                                                            nest_name={team?.gr_name}
+                                                            gr_id={group?.gr_id}
+                                                            text_part={group?.gr_name}
+                                                            describe={group?.description}
+                                                            group_captain={group?.truong_nhom}
+                                                            deputy_group_captain={group?.pho_truong_nhom}
+                                                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                                                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                                                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                                                            employeeNumber={group?.group_tong_nv}
+                                                            registered='15'
+                                                            noAttendance='12'
+                                                            setOpenModalEditGroup={() => setOpenModalEditGroup(group?.gr_id)}
+                                                            handleDataUpdateGroup={handleDataUpdateGroup}
+                                                            setOpenModalDetailsGroup={() => setOpenModalDetailsGroup(group?.gr_id)}
+                                                        /></StyledNode>} />
+                                                    )
+                                                })}
+                                            </TreeNode>
+                                        )
+                                    })}
+                                </TreeNode>
+                            )
+                        })}
+                        {data?.infoCompany?.infoChildCompany?.map((com: any) => {
+                            return (
+                                <TreeNode key={com?.com_id} label={<StyledNode><MemberViewBoxCompany
+                                    text_part={com?.com_name}
+                                    describe="Công ty con"
+                                    CEO={com?.manager}
+                                    deputy_CEO={com?.deputy}
                                     employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
                                     checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
                                     absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                                    employeeNumber='10'
-                                    registered='15'
-                                    noAttendance='12'
-                                    setOpenModalEditGroup={() => setOpenModalEditGroup(true)}
-                                    setOpenModalDetailsGroup={() => setOpenModalDetailsGroup(true)}
-                                /></StyledNode>} />
-                                <TreeNode label={<StyledNode><MemberViewBoxGroup text_part='Nhóm 13'
-                                    title="chưa cập nhật "
-                                    group_captain="Uy Phùng Hiểu (Ken)"
-                                    deputy_group_captain="Chưa cập nhật"
-                                    employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                                    checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                                    absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                                    employeeNumber='10'
-                                    registered='15'
-                                    noAttendance='12' setOpenModalEditGroup={() => setOpenModalEditGroup(true)}
-                                    setOpenModalDetailsGroup={() => setOpenModalDetailsGroup(true)} /></StyledNode>} />
-                                <TreeNode label={<StyledNode><MemberViewBoxGroup text_part='Nhóm 13'
-                                    title="chưa cập nhật"
-                                    group_captain="Uy Phùng Hiểu (Ken)"
-                                    deputy_group_captain="Chưa cập nhật"
-                                    employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                                    checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                                    absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                                    employeeNumber='10'
-                                    registered='15'
-                                    noAttendance='12' setOpenModalEditGroup={() => setOpenModalEditGroup(true)}
-                                    setOpenModalDetailsGroup={() => setOpenModalDetailsGroup(true)} /></StyledNode>} />
-                            </TreeNode>
-                        </TreeNode>
-                        <TreeNode label={<StyledNode><MemberViewBoxRoom
-                            text_part='PHÒNG NHÂN SỰ'
-                            title="kỹ thuật"
-                            manager="Uy Phùng Hiểu (Ken)"
-                            deputy="Chưa cập nhật"
-                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                            employeeNumber='10'
-                            registered='15'
-                            noAttendance='12'
-                            setOpenModalEdit={() => setOpenModalEdit(true)}
-                            setOpenModalDetails={() => setOpenModalDetails(true)}
-                        /></StyledNode>}>
-                        </TreeNode>
-                        <TreeNode label={<StyledNode><MemberViewBoxRoom
-                            text_part='PHÒNG TÀI VỤ'
-                            title="kỹ thuật"
-                            manager="Uy Phùng Hiểu (Ken)"
-                            deputy="Chưa cập nhật"
-                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                            employeeNumber='10'
-                            registered='15'
-                            noAttendance='12'
-                            setOpenModalEdit={() => setOpenModalEdit(true)}
-                            setOpenModalDetails={() => setOpenModalDetails(true)}
-                        /></StyledNode>}>
-                        </TreeNode>
-                        <TreeNode label={<StyledNode><MemberViewBoxRoom
-                            text_part='ĐỀ ÁN'
-                            title="kỹ thuật"
-                            manager="Uy Phùng Hiểu (Ken)"
-                            deputy="Chưa cập nhật"
-                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                            employeeNumber='10'
-                            registered='15'
-                            noAttendance='12'
-                            setOpenModalEdit={() => setOpenModalEdit(true)}
-                            setOpenModalDetails={() => setOpenModalDetails(true)}
-                        /></StyledNode>}>
-                        </TreeNode>
-                        <TreeNode label={<StyledNode><MemberViewBoxRoom
-                            text_part='PHÒNG SEO'
-                            title="kỹ thuật"
-                            manager="Uy Phùng Hiểu (Ken)"
-                            deputy="Chưa cập nhật"
-                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                            employeeNumber='10'
-                            registered='15'
-                            noAttendance='12'
-                            setOpenModalEdit={() => setOpenModalEdit(true)}
-                            setOpenModalDetails={() => setOpenModalDetails(true)}
-                        /></StyledNode>}>
-                        </TreeNode>
-                        <TreeNode label={<StyledNode><MemberViewBoxRoom
-                            text_part='PHÒNG ĐÀO TẠO'
-                            title="kỹ thuật"
-                            manager="Uy Phùng Hiểu (Ken)"
-                            deputy="Chưa cập nhật"
-                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                            employeeNumber='10'
-                            registered='15'
-                            noAttendance='12'
-                            setOpenModalEdit={() => setOpenModalEdit(true)}
-                            setOpenModalDetails={() => setOpenModalDetails(true)}
-                        /></StyledNode>}>
-                        </TreeNode>
-                        <TreeNode label={<StyledNode><MemberViewBoxRoom
-                            text_part='PHÒNG SÁNG TẠO'
-                            title="kỹ thuật"
-                            manager="Uy Phùng Hiểu (Ken)"
-                            deputy="Chưa cập nhật"
-                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                            employeeNumber='10'
-                            registered='15'
-                            noAttendance='12'
-                            setOpenModalEdit={() => setOpenModalEdit(true)}
-                            setOpenModalDetails={() => setOpenModalDetails(true)}
-                        /></StyledNode>}>
-                        </TreeNode>
-                        <TreeNode label={<StyledNode><MemberViewBoxRoom
-                            text_part='BIÊN TẬP'
-                            title="kỹ thuật"
-                            manager="Uy Phùng Hiểu (Ken)"
-                            deputy="Chưa cập nhật"
-                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                            employeeNumber='10'
-                            registered='15'
-                            noAttendance='12'
-                            setOpenModalEdit={() => setOpenModalEdit(true)}
-                            setOpenModalDetails={() => setOpenModalDetails(true)}
-                        /></StyledNode>}>
-                        </TreeNode>
-                        <TreeNode label={<StyledNode><MemberViewBoxRoom
-                            text_part='KINH DOANH'
-                            title="kỹ thuật"
-                            manager="Uy Phùng Hiểu (Ken)"
-                            deputy="Chưa cập nhật"
-                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                            employeeNumber='10'
-                            registered='15'
-                            noAttendance='12'
-                            setOpenModalEdit={() => setOpenModalEdit(true)}
-                            setOpenModalDetails={() => setOpenModalDetails(true)}
-                        /></StyledNode>}>
-                        </TreeNode>
-                        <TreeNode label={<StyledNode><MemberViewBoxCompany
-                            text_part='PT shop'
-                            describe="Công ty con"
-                            CEO="Uy Phùng Hiểu (Ken)"
-                            deputy_CEO="Chưa cập nhật"
-                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                            employeeNumber='10'
-                            registered='15'
-                            noAttendance='12'
-                            setOpenModalEdit={() => setOpenModalEdit(true)}
-                        /></StyledNode>}>
-                            <TreeNode label={<StyledNode><MemberViewBoxRoom
-                                text_part='KỸ THUẬT 2'
-                                title="kỹ thuật"
-                                manager="Uy Phùng Hiểu (Ken)"
-                                deputy="Chưa cập nhật"
-                                employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                                checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                                absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                                employeeNumber='10'
-                                registered='15'
-                                noAttendance='12'
-                                setOpenModalEdit={() => setOpenModalEdit(true)}
-                                setOpenModalDetails={() => setOpenModalDetails(true)}
-                            /></StyledNode>}>
-                            </TreeNode>
-                            <TreeNode label={<StyledNode><MemberViewBoxRoom
-                                text_part='KỸ THUẬT 2'
-                                title="kỹ thuật"
-                                manager="Uy Phùng Hiểu (Ken)"
-                                deputy="Chưa cập nhật"
-                                employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                                checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                                absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                                employeeNumber='10'
-                                registered='15'
-                                noAttendance='12'
-                                setOpenModalEdit={() => setOpenModalEdit(true)}
-                                setOpenModalDetails={() => setOpenModalDetails(true)}
-                            /></StyledNode>}>
-                            </TreeNode>
-                        </TreeNode>
-                        <TreeNode label={<StyledNode><MemberViewBoxCompany
-                            text_part='PT shop'
-                            describe="Công ty con"
-                            CEO="Uy Phùng Hiểu (Ken)"
-                            deputy_CEO="Chưa cập nhật"
-                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                            employeeNumber='10'
-                            registered='15'
-                            noAttendance='12'
-                            setOpenModalEdit={() => setOpenModalEdit(true)}
-                        /></StyledNode>}>
-                        </TreeNode>
-                        <TreeNode label={<StyledNode><MemberViewBoxCompany
-                            text_part='PT shop'
-                            describe="Công ty con"
-                            CEO="Uy Phùng Hiểu (Ken)"
-                            deputy_CEO="Chưa cập nhật"
-                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
-                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
-                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
-                            employeeNumber='10'
-                            registered='15'
-                            noAttendance='12'
-                            setOpenModalEdit={() => setOpenModalEdit(true)}
-                        /></StyledNode>}>
-                        </TreeNode>
+                                    employeeNumber={com?.tong_nv}
+                                    registered={com?.tong_nv_da_diem_danh}
+                                    noAttendance={com?.tong_nv - com?.tong_nv_da_diem_danh}
+                                // setOpenModalEdit={() => setOpenModalEdit(true)}
+                                /></StyledNode>}>
+                                    {com?.infoDep?.map((dep: any) => {
+                                        return (
+                                            <TreeNode key={dep?.dep_id} label={<StyledNode><MemberViewBoxRoom
+                                                text_part={dep?.dep_name}
+                                                describe={dep?.description}
+                                                manager={dep?.manager}
+                                                deputy={dep?.deputy}
+                                                employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                                                checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                                                absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                                                employeeNumber={dep?.total_emp}
+                                                registered={dep?.tong_nv_da_diem_danh}
+                                                noAttendance={dep?.total_emp - dep?.tong_nv_da_diem_danh}
+                                                setOpenModalEdit={() => setOpenModalEdit(dep?.dep_id)}
+                                                setOpenModalDetails={() => setOpenModalDetails(dep?.dep_id)}
+
+                                            /></StyledNode>}>
+                                                {dep?.infoTeam?.map((team: any) => {
+                                                    return (
+                                                        <TreeNode key={team?.gr_id} label={<StyledNode><MemberViewBoxNest
+                                                            text_part={team?.gr_name}
+                                                            describe={team?.description}
+                                                            leader={team?.to_truong}
+                                                            deputy_leader={team?.pho_to_truong}
+                                                            employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                                                            checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                                                            absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                                                            employeeNumber={team?.tong_nv}
+                                                            registered='15'
+                                                            noAttendance='12'
+                                                            setOpenModalEditNest={() => setOpenModalEditNest(team?.gr_id)}
+                                                            setOpenModalDetailsNest={() => setOpenModalDetailsNest(team?.gr_id)} />
+                                                        </StyledNode>}>
+                                                            {team?.infoGroup?.map((group: any) => {
+                                                                return (
+                                                                    <TreeNode key={group?.gr_id} label={<StyledNode><MemberViewBoxGroup
+                                                                        text_part={group?.gr_name}
+                                                                        describe={group?.description}
+                                                                        group_captain={group?.truong_nhom}
+                                                                        deputy_group_captain={group?.pho_truong_nhom}
+                                                                        employeeLink="/danh-sach-nhan-vien-cua-tong-cong-ty-c1664-t1.html"
+                                                                        checkInLink="/danh-sach-nhan-vien-cham-cong-tong-cong-ty-c1664-ty1-tk1.html"
+                                                                        absenceLink="/danh-sach-nhan-vien-chua-cham-cong-tong-cong-ty-c1664-ty1-tk2.html"
+                                                                        employeeNumber={group?.group_tong_nv}
+                                                                        registered='15'
+                                                                        noAttendance='12'
+                                                                        setOpenModalEditGroup={() => setOpenModalEditGroup(group?.gr_id)}
+                                                                        setOpenModalDetailsGroup={() => setOpenModalDetailsGroup(group?.gr_id)}
+                                                                    /></StyledNode>} />
+                                                                )
+                                                            })}
+                                                        </TreeNode>
+                                                    )
+                                                })}
+                                            </TreeNode>
+                                        )
+                                    })}
+                                </TreeNode>
+                            )
+                        })}
                     </Tree>
                     {openModalEdit && <EditRoomModal defaultValue={defaultValue}
+                        idRoom={openModalEdit}
                         options={options}
                         soluongnhanvien={soluongnhanvien}
                         mota={mota} onCancel={handleCloseModal}></EditRoomModal>}
-                    {openModalDetails && <DetailsRoomModal mota={mota} onCancel={handleCloseModal} />}
+                    {openModalDetails && <DetailsRoomModal depId={openModalDetails} onCancel={handleCloseModal} />}
 
-                    {openModalEditNest && <EditNestModal defaultValue={defaultValue}
+                    {openModalEditNest && <EditNestModal
+                        gr_id={openModalEditNest}
+                        defaultValue={defaultValue}
                         options={options} mota={mota} onCancel={handleCloseModalNest} />}
-                    {openModalDetailsNest && <DetailsNestModal mota={mota} onCancel={handleCloseModalNest} />}
+                    {openModalDetailsNest && <DetailsNestModal teamId={openModalDetailsNest} onCancel={handleCloseModalNest} />}
 
 
-                    {openModalEditGroup && <EditGroupModal defaultValue={defaultValue}
+                    {openModalEditGroup && <EditGroupModal
+                        gr_id={openModalEditGroup}
+                        defaultValue={defaultValue}
                         options={options} mota={mota} onCancel={handleCloseModalGroup} />}
-                    {openModalDetailsGroup && <DetailsGroupModal mota={mota} onCancel={handleCloseModalGroup} />}
+                    {openModalDetailsGroup && <DetailsGroupModal groupId={openModalDetailsGroup} onCancel={handleCloseModalGroup} />}
 
 
                 </div>

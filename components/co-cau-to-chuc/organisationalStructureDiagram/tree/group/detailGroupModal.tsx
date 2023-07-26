@@ -1,8 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from '../room/detailRoomModal/detailRoomModal.module.css'
 import Select from 'react-select';
+import { OrganizationalStructureDetail } from "@/pages/api/co_cau_to_chuc";
 
-export default function DetailsGroupModal({ mota, onCancel }: any) {
+export default function DetailsGroupModal({ groupId, onCancel }: any) {
+
+    const [isTitle, setIsTitle] = useState<any | null>(null)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const formData = new FormData()
+                formData.append('groupId', groupId)
+
+                const response = await OrganizationalStructureDetail(formData)
+                setIsTitle(response.data)
+            } catch (error) {
+                throw error
+            }
+        }
+        fetchData()
+    }, [])
+
 
     return (
         <>
@@ -15,15 +34,11 @@ export default function DetailsGroupModal({ mota, onCancel }: any) {
                             </div>
                             <div className={`${styles.modal_body}`}>
                                 <form action="">
-                                    <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Mô tả <span style={{ color: 'red' }}> * </span></label>
-                                        <div className={`${styles.input_right}`}>
-                                            <textarea defaultValue={mota} id="names" placeholder="" className={`${styles.input_process}`} />
-                                        </div>
+                                    <div style={{ padding: 20 }}>
+                                        <p style={{ textAlign: 'left' }}>{isTitle?.info?.description}</p>
                                     </div>
                                     <div className={`${styles.modal_footer} ${styles.footer_process}`}>
                                         <button className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
-                                        <button className={`${styles.btn_add}`}>Thêm</button>
                                     </div>
                                 </form>
                             </div>

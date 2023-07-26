@@ -121,7 +121,7 @@ export default function UpdateRegulationsGroupsModal({ onCancel, idGroup }: Upda
                     <div className={` ${styles.modal_dialog} ${styles.content_process}`}>
                         <div className={`${styles.modal_content}`}>
                             <div className={`${styles.modal_header} ${styles.header_process}`}>
-                                <h5 className={`${styles.modal_tittle}`}>THÊM NHÓM QUY ĐỊNH</h5>
+                                <h5 className={`${styles.modal_tittle}`}>CHỈNH SỬA NHÓM QUY ĐỊNH</h5>
                             </div>
                             <form action="">
                                 {DetailData?.data[0] &&

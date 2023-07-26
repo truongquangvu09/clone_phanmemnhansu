@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from "react";
-import styles from '../addRegulationsModal/addRegulationsModal.module.css'
+import styles from '../../quy-dinh-lam-viec/addRegulationsModal/addRegulationsModal.module.css'
 import MyEditor from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/components/Editor";
-import { SpecifiedGroupList } from "@/pages/api/quy_dinh_chinh_sach";
-import { UpdateRegulation } from "@/pages/api/quy_dinh_chinh_sach";
-import { RegulationsDetails } from "@/pages/api/quy_dinh_chinh_sach";
-import { format } from 'date-fns'
-
+import { GroupPolicyUpdate } from "@/pages/api/quy_dinh_chinh_sach";
+import { PolicyGroupDetail } from "@/pages/api/quy_dinh_chinh_sach";
+import { format } from 'date-fns';
 
 interface InputTextareaProps {
     onDescriptionChange: (data: any) => void;
-    content: string
+    content: any
 }
-interface UpdateRegulationsModal2Props {
+
+interface UpdatePolicyModalProps {
     onCancel: () => void;
     idGroup: any
 }
@@ -23,7 +22,6 @@ function Input_textarea({ onDescriptionChange, content }: InputTextareaProps) {
     useEffect(() => {
         setEditorLoaded(true);
     }, []);
-    console.log(data);
     return (
         <div>
             <MyEditor
@@ -39,33 +37,18 @@ function Input_textarea({ onDescriptionChange, content }: InputTextareaProps) {
     );
 }
 
-export default function UpdateRegulationsModal({ onCancel, idGroup }: UpdateRegulationsModal2Props) {
+export default function UpdatePolicyGroupsModal({ onCancel, idGroup }: UpdatePolicyModalProps) {
+
+
+    const [content, setContent] = useState('');
     const [provisionFile, setProvisionFile] = useState<File | null>(null);
     const [descriptions, setDescription] = useState("");
-    const [ListRegulationsGroup, setListRegulationsGroup] = useState<any | null>(null)
-    const [provisionId, setProvisionId] = useState<number | null>(null)
     const [DetailData, setDetailData] = useState<any | null>(null)
-    const [keyWords, setKeyWords] = useState('')
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await SpecifiedGroupList(10000, 1, keyWords)
-                setListRegulationsGroup(response.data)
-            } catch (error) {
-                throw error
-            }
-        }
-        fetchData()
-    }, [])
-
-
-
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await RegulationsDetails(idGroup)
+                const response = await PolicyGroupDetail(idGroup)
                 setDetailData(response.data)
             } catch (error) {
                 throw error
@@ -76,7 +59,7 @@ export default function UpdateRegulationsModal({ onCancel, idGroup }: UpdateRegu
 
     useEffect(() => {
         const timeStart = DetailData?.data[0]?.timeStart;
-        const inputElement = document.getElementById('time_start') as HTMLInputElement;
+        const inputElement = document.getElementById('time-start') as HTMLInputElement;
 
         if (timeStart && inputElement) {
             const formattedDate = format(new Date(timeStart), 'yyyy-MM-dd');
@@ -88,33 +71,35 @@ export default function UpdateRegulationsModal({ onCancel, idGroup }: UpdateRegu
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         try {
-            const name = (document.getElementById('names') as HTMLInputElement)?.value
-            const provision_id = (document.getElementById('provision_id') as HTMLInputElement)?.value
-            const time_start = (document.getElementById('time_start') as HTMLInputElement)?.value
-            const supervisor_name = (document.getElementById('supervisor_name') as HTMLInputElement)?.value
-            const apply_for = (document.getElementById('apply_for') as HTMLInputElement)?.value
-            const content = descriptions
+            // Lấy giá trị từ các trường input
+            const name = (document.getElementById('names') as HTMLInputElement)?.value;
+            const time_start = (document.getElementById('time-start') as HTMLInputElement)?.value;
+            const supervisor_name = (document.getElementById('supervisor-name') as HTMLInputElement)?.value;
+            const description = descriptions;
 
-            const formData = new FormData()
-            formData.append('provision_id', DetailData?.data[0]?.provisionId)
-            formData.append('name', name)
-            formData.append('id', DetailData?.data[0]?.id)
-            formData.append('time_start', time_start)
-            formData.append('supervisor_name', supervisor_name)
-            formData.append('apply_for', apply_for)
-            formData.append('content', content)
+
+            const formData = new FormData();
+            formData.append("name", name);
+            formData.append("time_start", time_start);
+            formData.append("supervisor_name", supervisor_name);
+            formData.append("id", idGroup);
+            if (description) {
+                formData.append("description", description);
+            }
+            else {
+                formData.append("description", DetailData?.data[0]?.description);
+            }
             if (provisionFile) {
-                formData.append("policy", provisionFile);
+                formData.append("employeePolicy", provisionFile);
             }
 
-            const response = await UpdateRegulation(formData)
+            // Gọi API AddSpecifiedGroup
+            const response = await GroupPolicyUpdate(formData);
+            onCancel()
         } catch (error) {
             throw error
         }
     }
-
-
-
     function handleUploadClick(event: React.MouseEvent<HTMLAnchorElement>) {
         event.preventDefault();
         const uploadInput = document.getElementById('upload_cv') as HTMLInputElement;
@@ -126,15 +111,9 @@ export default function UpdateRegulationsModal({ onCancel, idGroup }: UpdateRegu
     const handleDescriptionChange = (data: string) => {
         setDescription(data);
     };
-
     const handleProvisionFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files && event.target.files[0]
-        setProvisionFile(file)
-
-    }
-    const handleProvisionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedProvisionId = parseInt(event.target.value, 10);
-        setProvisionId(selectedProvisionId);
+        const file = event.target.files && event.target.files[0];
+        setProvisionFile(file);
     };
 
     return (
@@ -144,49 +123,33 @@ export default function UpdateRegulationsModal({ onCancel, idGroup }: UpdateRegu
                     <div className={` ${styles.modal_dialog} ${styles.content_process}`}>
                         <div className={`${styles.modal_content}`}>
                             <div className={`${styles.modal_header} ${styles.header_process}`}>
-                                <h5 className={`${styles.modal_tittle}`}>CHỈNH SỬA QUY ĐỊNH</h5>
+                                <h5 className={`${styles.modal_tittle}`}>CHỈNH SỬA NHÓM CHÍNH SÁCH</h5>
                             </div>
                             <form action="">
                                 {DetailData?.data[0] &&
                                     <div className={`${styles.modal_body} ${styles.body_process}`}>
                                         <div className={`${styles.form_groups}`}>
-                                            <label htmlFor="">Tên quy định <span style={{ color: 'red' }}> * </span></label>
+                                            <label htmlFor="">Tên nhóm <span style={{ color: 'red' }}> * </span></label>
                                             <div className={`${styles.input_right}`}>
-                                                <input type="text" defaultValue={DetailData?.data[0]?.name} id="names" placeholder="Nhập tên quy định" className={`${styles.input_process}`} />
-                                            </div>
-                                        </div>
-                                        <div className={`${styles.form_groups}`}>
-                                            <label htmlFor="">Chọn nhóm quy định <span style={{ color: 'red' }}> * </span></label>
-                                            <div className={`${styles.input_right}`}>
-                                                <select onChange={handleProvisionChange} name="" id="provision_id" className={`${styles.input_process}`}>
-                                                    {ListRegulationsGroup?.data?.map((item: any, index: any) => (
-                                                        <option selected={item.id === DetailData?.data[0]?.provisionId} value={item.id} key={index}>-- {item.name} --</option>
-                                                    ))}
-                                                </select>
+                                                <input type="text" id="names" defaultValue={DetailData?.data[0]?.name} placeholder="Nhập tên nhóm" className={`${styles.input_process}`} />
                                             </div>
                                         </div>
                                         <div className={`${styles.form_groups}`}>
                                             <label htmlFor="">Thời gian bắt đầu hiệu lực <span style={{ color: 'red' }}> * </span></label>
                                             <div className={`${styles.input_right}`}>
-                                                <input type="date" id="time_start" placeholder="dd/mm/yyyy" className={`${styles.input_process}`} />
+                                                <input type="date" id="time-start" placeholder="dd/mm/yyyy" className={`${styles.input_process}`} />
                                             </div>
                                         </div>
                                         <div className={`${styles.form_groups}`}>
                                             <label htmlFor="">Người giám sát <span style={{ color: 'red' }}> * </span></label>
                                             <div className={`${styles.input_right}`}>
-                                                <input type="text" value={DetailData?.data[0]?.supervisorName} id="supervisor_name" placeholder="Người giám sát" className={`${styles.input_process}`} />
-                                            </div>
-                                        </div>
-                                        <div className={`${styles.form_groups}`}>
-                                            <label htmlFor="">Đối tượng thi hành <span style={{ color: 'red' }}> * </span></label>
-                                            <div className={`${styles.input_right}`}>
-                                                <input type="text" value={DetailData?.data[0]?.applyFor} id="apply_for" placeholder="Đối tượng thi hành" className={`${styles.input_process}`} />
+                                                <input type="text" id="supervisor-name" placeholder="Người giám sát" defaultValue={DetailData?.data[0]?.supervisorName} className={`${styles.input_process}`} />
                                             </div>
                                         </div>
                                         <div className={`${styles.form_groups} ${styles.cke}`}>
-                                            <label htmlFor="">Nội dung quy định <span style={{ color: 'red' }}> * </span></label>
+                                            <label htmlFor="">Mô tả ngắn <span style={{ color: 'red' }}> * </span></label>
                                             <div className={`${styles.ckeditor}`}>
-                                                <Input_textarea onDescriptionChange={handleDescriptionChange} content={DetailData?.data[0]?.content} />
+                                                <Input_textarea content={DetailData?.data[0]?.description} onDescriptionChange={handleDescriptionChange} />
                                             </div>
                                         </div>
                                         <div className={`${styles.form_groups}`}>
@@ -202,7 +165,7 @@ export default function UpdateRegulationsModal({ onCancel, idGroup }: UpdateRegu
                                 }
                                 <div className={`${styles.modal_footer} ${styles.footer_process}`}>
                                     <button className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
-                                    <button className={`${styles.btn_add}`} onClick={handleSubmit}>Thêm</button>
+                                    <button className={`${styles.btn_add}`} onClick={handleSubmit} >Cập nhật</button>
                                 </div>
                             </form>
                         </div>

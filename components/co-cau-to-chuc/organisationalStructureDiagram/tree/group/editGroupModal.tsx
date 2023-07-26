@@ -1,27 +1,37 @@
 import React, { useEffect, useState } from "react";
 import styles from '../room/editRoomModal/editRoomModal.module.css'
 import Select from 'react-select';
+import { OrganizationalStructureUpdate } from "@/pages/api/co_cau_to_chuc";
 
-type SelectOptionType = { label: string, value: string }
+type SelectOptionType = { label: any, value: any }
 type EditGorupModalProps = {
+    gr_id: any,
     defaultValue: SelectOptionType | null;
     options: { [key: string]: SelectOptionType[] };
     mota: string;
     onCancel: any
 };
 
-export default function EditGroupModal({ defaultValue, options, mota, onCancel }: EditGorupModalProps) {
+export default function EditGroupModal({ gr_id, defaultValue, options, mota, onCancel }: EditGorupModalProps) {
 
-    useEffect(() => {
+    const handleSubmit = async () => {
 
+        try {
+            const description = (document.getElementById('description') as HTMLInputElement)?.value
+            const formData = new FormData()
 
-
-    })
+            formData.append('groupId', gr_id)
+            formData.append('description', description)
+            const response = await OrganizationalStructureUpdate(formData)
+        } catch (error) {
+            throw error
+        }
+    }
 
     const [selectedOptions, setSelectedOptions] = useState<{ [key: string]: SelectOptionType | null }>({
         chonphongban: options?.chonphongban ? options?.chonphongban[0] : null,
-        truongphong: options?.truongphong ? options?.truongphong[0] : null,
-        photruongphong: options?.photruongphong ? options?.photruongphong[0] : null
+        tento: options?.tento ? options?.tento[0] : null,
+        tennhom: options?.tennhom ? options?.tennhom[0] : null
     });
 
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
@@ -126,12 +136,12 @@ export default function EditGroupModal({ defaultValue, options, mota, onCancel }
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Mô tả <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <textarea defaultValue={mota} id="names" placeholder="" className={`${styles.input_process}`} />
+                                            <textarea style={{ height: 100 }} defaultValue={mota} id="description" placeholder="" className={`${styles.input_process}`} />
                                         </div>
                                     </div>
                                     <div className={`${styles.modal_footer} ${styles.footer_process}`}>
                                         <button className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
-                                        <button className={`${styles.btn_add}`}>Cập nhật</button>
+                                        <button className={`${styles.btn_add}`} onClick={handleSubmit}>Cập nhật</button>
                                     </div>
                                 </form>
                             </div>

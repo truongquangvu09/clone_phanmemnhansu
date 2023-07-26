@@ -4,20 +4,7 @@ import Select from 'react-select';
 
 type SelectOptionType = { label: string, value: string }
 
-export default function DetailCandidateList({ onCancel, id }: any) {
-    function handleUploadClick(event: React.MouseEvent<HTMLAnchorElement>) {
-        event.preventDefault();
-        const uploadInput = document.getElementById('upload_cv') as HTMLInputElement;
-        if (uploadInput) {
-            uploadInput.click();
-        }
-    }
-    const [content, setContent] = useState('');
-
-    const handleContentChange = (value: string) => {
-        setContent(value);
-    };
-
+export default function DetailCandidateList({ onCancel, infoList }: any) {
 
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
 
@@ -44,15 +31,8 @@ export default function DetailCandidateList({ onCancel, id }: any) {
             { value: 'Công ty cổ phần Thanh toán Hưng Hà 2 ', label: 'Công ty cổ phần Thanh toán Hưng Hà 2 ' },
         ],
         chonphongban: [
-            { value: '  BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
-            { value: 'KỸ THUẬT', label: 'KỸ THUẬT' },
-            { value: 'Biên tập', label: 'Biên tập' },
-            { value: 'Kinh Doanh', label: 'Kinh Doanh' },
-            { value: 'Đề án', label: 'Đề án' },
-            { value: 'Phòng SEO', label: 'Phòng SEO' },
-            { value: 'Phòng Đào tạo', label: 'Phòng Đào tạo' },
-            { value: 'Phòng sáng tạo', label: 'phòng sáng tạo' },
-            { value: 'Phòng tài vụ', label: 'Phòng tài vụ' },
+            { value: infoList?.nameDep, label: infoList?.nameDep },
+
         ],
         chonnhanvien: [
             { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
@@ -97,11 +77,11 @@ export default function DetailCandidateList({ onCancel, id }: any) {
                                 <div className={`${styles.modal_body} ${styles.body_process}`}>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Tên nhân viên <span style={{ color: 'red' }}> * </span></label>
-                                        <input type="text" id="names" placeholder="" className={`${styles.form_control}`} />
+                                        <input type="text" defaultValue={infoList.userName} id="names" placeholder="" className={`${styles.form_control}`} />
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Mã ID nhân viên <span style={{ color: 'red' }}> * </span></label>
-                                        <input type="text" id="names" placeholder="" className={`${styles.form_control} ${styles.read_only}`} />
+                                        <input type="text" id="names" value={infoList.id} placeholder="" className={`${styles.form_control} ${styles.read_only}`} />
                                     </div>
                                     <div className={`${styles.form_groups} ${styles.form_groups2}`}>
                                         <div className={`${styles.content_left}`}>
@@ -113,20 +93,20 @@ export default function DetailCandidateList({ onCancel, id }: any) {
                                         <div className={`${styles.content_right}`}>
                                             <div className={`${styles.form_groups}  ${styles.form_groups5} `}>
                                                 <label htmlFor="">Điện thoại <span style={{ color: 'red' }}> * </span></label>
-                                                <input type="text" id="names" placeholder="" className={`${styles.form_control} `} />
+                                                <input type="text" id="names" defaultValue={infoList.phoneTK} placeholder="" className={`${styles.form_control} `} />
                                             </div>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Địa chỉ</label>
-                                        <input type="text" id="names" placeholder="" className={`${styles.form_control}`} />
+                                        <input type="text" id="names" defaultValue={infoList.address} placeholder="" className={`${styles.form_control}`} />
                                     </div>
                                     <div className={`${styles.form_groups} ${styles.form_groups2}`}>
                                         <div className={`${styles.content_left}`}>
                                             <div className={`${styles.form_groups} ${styles.form_groups3} ${styles.form_groups5} `}>
                                                 <label htmlFor="">Giới tính </label>
                                                 <Select
-                                                    defaultValue={selectedOption}
+                                                    defaultValue={options.chongioitinh}
                                                     onChange={(option) => handleSelectionChange(option, options.chongioitinh)}
                                                     options={options.chongioitinh}
                                                     placeholder="Chọn giới tính"
@@ -193,7 +173,7 @@ export default function DetailCandidateList({ onCancel, id }: any) {
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Email <span style={{ color: 'red' }}> * </span></label>
-                                        <input type="text" id="names" placeholder="" className={`${styles.form_control} ${styles.read_only}`} />
+                                        <input type="text" value={infoList.email} id="names" placeholder="" className={`${styles.form_control} ${styles.read_only}`} />
                                     </div>
                                     <div className={`${styles.form_groups} ${styles.form_groups2}`}>
                                         <div className={`${styles.content_item}`}>
@@ -234,10 +214,10 @@ export default function DetailCandidateList({ onCancel, id }: any) {
                                             <div className={`${styles.form_groups} ${styles.form_groups5} `}>
                                                 <label htmlFor="">Bộ phận </label>
                                                 <Select
-                                                    defaultValue={selectedOption}
+                                                    defaultValue={infoList.nameDep}
                                                     onChange={(option) => handleSelectionChange(option, options.chonphongban)}
                                                     options={options.chonphongban}
-                                                    placeholder="Chọn bộ phận"
+                                                    placeholder={infoList.nameDep}
                                                     styles={{
                                                         control: (baseStyles, state) => ({
                                                             ...baseStyles,

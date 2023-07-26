@@ -19,7 +19,7 @@ function Input_textarea({ onDescriptionChange }: InputTextareaProps) {
     useEffect(() => {
         setEditorLoaded(true);
     }, []);
-    console.log(data);
+
     return (
         <div>
             <MyEditor
@@ -48,7 +48,7 @@ export default function AddEmployeePolicyModal2({ onCancel }: AddEmployeePolicyM
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await PolicyList(1, 50)
+                const response = await PolicyList(1, 50, "")
                 setListPolicyGroup(response.data)
             } catch (error) {
                 throw error
@@ -77,7 +77,6 @@ export default function AddEmployeePolicyModal2({ onCancel }: AddEmployeePolicyM
             if (provisionFile) {
                 formData.append("policy", provisionFile);
             }
-
             const response = await AddPolicyByGroup(formData)
         } catch (error) {
             throw error
@@ -101,10 +100,6 @@ export default function AddEmployeePolicyModal2({ onCancel }: AddEmployeePolicyM
         setProvisionFile(file)
 
     }
-    // const handleProvisionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    //     const selectedProvisionId = parseInt(event.target.value, 10);
-    //     setProvisionId(selectedProvisionId);
-    // };
 
     return (
         <>

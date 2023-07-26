@@ -7,6 +7,11 @@ import MyPagination from '@/components/pagination/Pagination';
 import { format } from 'date-fns';
 import { PolicyList } from '@/pages/api/quy_dinh_chinh_sach';
 import { PolicyByGroupList } from '@/pages/api/quy_dinh_chinh_sach';
+import PolicyGroupDetailModal from './detailPolicyModal/policyGroupDetail';
+import UpdatePolicyGroupsModal from './updatePolicyModal/policyGroupUpdate';
+import DeletePolicyGroup from './deletePolicyGroupModal/PolicyGroupDelete';
+import PolicyDetailModal from './detailPolicyModal/policyDetail';
+import DeletePolicys from './deletePolicyGroupModal/PolicyDelete';
 
 export default function EmployeePolicy() {
     const [click, setClick] = useState(false)
@@ -16,18 +21,24 @@ export default function EmployeePolicy() {
     const [dataChild, setDataChild] = useState<any>(!null)
     const [dataChildList, setDataChildList] = useState<any>([]);
     const [selectedItems, setSelectedItems] = useState<number[]>([]);
+    const [isOpenDetailGroup, setIsOpenDetailGroup] = useState(0)
+    const [isOpenUpdateGroup, setIsOpenUpdateGroup] = useState(0)
+    const [isOpenDeleteGroup, setIsOpenDeleteGroup] = useState(0)
+    const [isOpenDetail, setIsOpenDetail] = useState(0)
+    const [isOpenDeletePolicy, setIsOpenDeletePolicy] = useState(0)
+    const [isKey, setIsKey] = useState('')
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await PolicyList(currentPage, 5)
+                const response = await PolicyList(currentPage, 5, isKey)
                 setData(response.data)
             } catch (error) {
                 throw error
             }
         }
         fetchData()
-    }, [currentPage])
+    }, [currentPage, isKey])
     console.log(data?.data);
 
 
@@ -59,6 +70,31 @@ export default function EmployeePolicy() {
     }
     const handleCloseModal = () => {
         setOpenModal(0)
+        setIsOpenDetailGroup(0)
+        setIsOpenUpdateGroup(0)
+        setIsOpenDeleteGroup(0)
+        setIsOpenDetail(0)
+        setIsOpenDeletePolicy(0)
+    }
+
+    const handleOpenPolicyGroupDetail = (idGroup: number) => {
+        setIsOpenDetailGroup(idGroup)
+    }
+
+    const handleOpentPolicyGroupUpdate = (idGroup: number) => {
+        setIsOpenUpdateGroup(idGroup)
+    }
+
+    const handleOpentPolicyGroupDelete = (idGroup: number) => {
+        setIsOpenDeleteGroup(idGroup)
+    }
+
+    const handleOpentPolicyDelete = (idGroup: number) => {
+        setIsOpenDeletePolicy(idGroup)
+    }
+
+    const handleOpentPolicyDetail = (idGroup: number) => {
+        setIsOpenDetail(idGroup)
     }
 
     const handleSeemore = async (itemId: number) => {
@@ -93,11 +129,16 @@ export default function EmployeePolicy() {
                                 </div>)}
                                 {openModal === 1 && <AddEmployeePolicyModal onCancel={handleCloseModal}></AddEmployeePolicyModal>}
                                 {openModal === 2 && <AddEmployeePolicyModal2 onCancel={handleCloseModal}></AddEmployeePolicyModal2>}
+                                {isOpenDetailGroup !== 0 && <PolicyGroupDetailModal idGroup={isOpenDetailGroup} onCancel={handleCloseModal}></PolicyGroupDetailModal>}
+                                {isOpenUpdateGroup !== 0 && <UpdatePolicyGroupsModal idGroup={isOpenUpdateGroup} onCancel={handleCloseModal}></UpdatePolicyGroupsModal>}
+                                {isOpenDeleteGroup !== 0 && <DeletePolicyGroup idGroup={isOpenDeleteGroup} onCancel={handleCloseModal}></DeletePolicyGroup>}
+                                {isOpenDetail !== 0 && <PolicyDetailModal idGroup={isOpenDetail} onCancel={handleCloseModal}></PolicyDetailModal>}
+                                {isOpenDeletePolicy !== 0 && <DeletePolicys idGroup={isOpenDeletePolicy} onCancel={handleCloseModal}></DeletePolicys>}
                             </div>
                             <div className={`${styles.recruitment2_2}`}>
                                 <form action="" className={`${styles.t_form_search}`}>
                                     <div className={`${styles.t_div_search}`}>
-                                        <input style={{ verticalAlign: 'top' }} type="text" className={`${styles.keyword_qd}`} placeholder='Tìm kiếm' />
+                                        <input style={{ verticalAlign: 'top' }} onChange={(event) => setIsKey(event.target.value)} type="text" className={`${styles.keyword_qd}`} placeholder='Tìm kiếm' />
                                         <a href="">
                                             <picture>
                                                 <img src={`/t-icon-search.png`} alt="" />
@@ -108,18 +149,18 @@ export default function EmployeePolicy() {
                             </div>
                         </div>
                         <div className={`${styles.member_list} ${styles.regulation_item}`}>
-                            {data != null ? (
+                            {data?.tongSoBanGhi !== 0 ? (
                                 data?.data?.map((item: any, index: any) => (
                                     <div className={`${styles.quydinh_item} `} key={index}>
                                         <div className={`${styles.quydinh_item1}`}>
                                             <div className={`${styles.quydinh_item2}`} onClick={() => handleSeemore(item?.id)}>
-                                                <a>NQĐ - {item.name}</a>
+                                                <a>NCS - {item.name}</a>
                                                 <img className={`${styles.icondown}`} src="/down.png" />
                                             </div>
-                                            <a style={{ color: '#337ab7' }}  >Chi tiết/</a>
-                                            <a style={{ color: '#337ab7' }} >Sửa</a>
+                                            <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpenPolicyGroupDetail(item?.id)} >Chi tiết/</a>
+                                            <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpentPolicyGroupUpdate(item?.id)} >Sửa</a>
                                             <span>/</span>
-                                            <a style={{ color: '#337ab7' }} >Xóa</a>
+                                            <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpentPolicyGroupDelete(item?.id)}>Xóa</a>
                                         </div>
                                         <div className={`${styles.table_none}`} style={{ display: selectedItems.includes(item?.id) ? 'block' : 'none' }}>
                                             <table className={`${styles.tablelist}  ${styles.tablelist1}`}>
@@ -140,7 +181,7 @@ export default function EmployeePolicy() {
                                                                 <tr key={childIndex}>
                                                                     <td>{childIndex + 1}</td>
                                                                     <td>
-                                                                        <a href="" style={{ color: '#337ab7' }}>
+                                                                        <a style={{ color: '#337ab7', cursor: "pointer" }} onClick={() => handleOpentPolicyDetail(childItem?.id)}>
                                                                             {childItem.name} (Xem chi tiết)
                                                                         </a>
                                                                     </td>
@@ -148,7 +189,7 @@ export default function EmployeePolicy() {
                                                                     <td>{childItem.createdBy}</td>
                                                                     <td>{childItem.applyFor}</td>
                                                                     <td>
-                                                                        <a>
+                                                                        <a style={{ cursor: 'pointer' }} onClick={() => handleOpentPolicyDelete(childItem?.id)}>
                                                                             <img src="/trash.png" />
                                                                         </a>
                                                                     </td>
@@ -168,7 +209,7 @@ export default function EmployeePolicy() {
                                     <p className={`${styles.text_content}`}>Dữ liệu trống</p>
                                 )}
                         </div>
-                        <div className={`${styles.pagination}`} style={{ display: 'block' }}>
+                        <div className={`${styles.pagination}`} style={{ display: data?.tongSoBanGhi != 0 ? 'block' : 'none' }}>
                             <MyPagination
                                 current={currentPage}
                                 total={data?.tongSoBanGhi}

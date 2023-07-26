@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import styles from '../addRegulationsModal/addRegulationsModal.module.css'
+import styles from '../../quy-dinh-lam-viec/addRegulationsModal/addRegulationsModal.module.css'
 import MyEditor from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/components/Editor";
 import { SpecifiedGroupList } from "@/pages/api/quy_dinh_chinh_sach";
-import { UpdateRegulation } from "@/pages/api/quy_dinh_chinh_sach";
-import { RegulationsDetails } from "@/pages/api/quy_dinh_chinh_sach";
+import { UpdatePolicy } from "@/pages/api/quy_dinh_chinh_sach";
+import { PolicyDetails } from "@/pages/api/quy_dinh_chinh_sach";
 import { format } from 'date-fns'
 
 
@@ -11,7 +11,7 @@ interface InputTextareaProps {
     onDescriptionChange: (data: any) => void;
     content: string
 }
-interface UpdateRegulationsModal2Props {
+interface UpdatePolicyModal2Props {
     onCancel: () => void;
     idGroup: any
 }
@@ -39,7 +39,7 @@ function Input_textarea({ onDescriptionChange, content }: InputTextareaProps) {
     );
 }
 
-export default function UpdateRegulationsModal({ onCancel, idGroup }: UpdateRegulationsModal2Props) {
+export default function UpdatePolicyModal({ onCancel, idGroup }: UpdatePolicyModal2Props) {
     const [provisionFile, setProvisionFile] = useState<File | null>(null);
     const [descriptions, setDescription] = useState("");
     const [ListRegulationsGroup, setListRegulationsGroup] = useState<any | null>(null)
@@ -65,7 +65,7 @@ export default function UpdateRegulationsModal({ onCancel, idGroup }: UpdateRegu
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await RegulationsDetails(idGroup)
+                const response = await PolicyDetails(idGroup)
                 setDetailData(response.data)
             } catch (error) {
                 throw error
@@ -107,7 +107,7 @@ export default function UpdateRegulationsModal({ onCancel, idGroup }: UpdateRegu
                 formData.append("policy", provisionFile);
             }
 
-            const response = await UpdateRegulation(formData)
+            const response = await UpdatePolicy(formData)
         } catch (error) {
             throw error
         }
@@ -144,19 +144,19 @@ export default function UpdateRegulationsModal({ onCancel, idGroup }: UpdateRegu
                     <div className={` ${styles.modal_dialog} ${styles.content_process}`}>
                         <div className={`${styles.modal_content}`}>
                             <div className={`${styles.modal_header} ${styles.header_process}`}>
-                                <h5 className={`${styles.modal_tittle}`}>CHỈNH SỬA QUY ĐỊNH</h5>
+                                <h5 className={`${styles.modal_tittle}`}>CHỈNH SỬA CHÍNH SÁCH</h5>
                             </div>
                             <form action="">
                                 {DetailData?.data[0] &&
                                     <div className={`${styles.modal_body} ${styles.body_process}`}>
                                         <div className={`${styles.form_groups}`}>
-                                            <label htmlFor="">Tên quy định <span style={{ color: 'red' }}> * </span></label>
+                                            <label htmlFor="">Tên chính sách <span style={{ color: 'red' }}> * </span></label>
                                             <div className={`${styles.input_right}`}>
-                                                <input type="text" defaultValue={DetailData?.data[0]?.name} id="names" placeholder="Nhập tên quy định" className={`${styles.input_process}`} />
+                                                <input type="text" defaultValue={DetailData?.data[0]?.name} id="names" placeholder="Nhập tên chính sách" className={`${styles.input_process}`} />
                                             </div>
                                         </div>
                                         <div className={`${styles.form_groups}`}>
-                                            <label htmlFor="">Chọn nhóm quy định <span style={{ color: 'red' }}> * </span></label>
+                                            <label htmlFor="">Chọn nhóm chính sách <span style={{ color: 'red' }}> * </span></label>
                                             <div className={`${styles.input_right}`}>
                                                 <select onChange={handleProvisionChange} name="" id="provision_id" className={`${styles.input_process}`}>
                                                     {ListRegulationsGroup?.data?.map((item: any, index: any) => (
@@ -184,7 +184,7 @@ export default function UpdateRegulationsModal({ onCancel, idGroup }: UpdateRegu
                                             </div>
                                         </div>
                                         <div className={`${styles.form_groups} ${styles.cke}`}>
-                                            <label htmlFor="">Nội dung quy định <span style={{ color: 'red' }}> * </span></label>
+                                            <label htmlFor="">Nội dung chính sách <span style={{ color: 'red' }}> * </span></label>
                                             <div className={`${styles.ckeditor}`}>
                                                 <Input_textarea onDescriptionChange={handleDescriptionChange} content={DetailData?.data[0]?.content} />
                                             </div>

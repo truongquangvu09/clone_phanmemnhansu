@@ -1,41 +1,150 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import Select from 'react-select';
 import styles from '@/components/quan-ly-tuyen-dung/danh-sach-ung-vien/candidateAddModal/candidateAddModal.module.css'
-
+import { DepartmentList } from "@/pages/api/listPhongBan";
+import { EmployeeList } from "@/pages/api/listNhanVien";
+import { PostionCharData } from "@/pages/api/co_cau_to_chuc";
+import { AddUserSignature } from "@/pages/api/co_cau_to_chuc";
 
 type SelectOptionType = { label: string, value: string }
 
 export default function AddSealModal({ onCancel }: any) {
-    function handleUploadClick(event: React.MouseEvent<HTMLAnchorElement>) {
-        event.preventDefault();
-        const uploadInput = document.getElementById('upload_cv') as HTMLInputElement;
-        if (uploadInput) {
-            uploadInput.click();
+
+    const [departmentList, setDepartmentList] = useState<any>(null)
+    const [EmployeeLists, setEmployeeList] = useState<any>(null)
+    const [isDep_id, setIsDep_id] = useState<any>("")
+    const [isPosition_id, setIsPosition_id] = useState<any>("")
+    const [isEmp_id, setIsEmp_id] = useState<any>("")
+    const [PostionCharDatas, setPosttionCharData] = useState<any>(null)
+
+    // Fetch data for department
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const comid: any = 1664
+                const formData = new FormData()
+                formData.append('com_id', comid)
+                const response = await DepartmentList(formData)
+                setDepartmentList(response.data)
+            } catch (error) {
+                throw error
+            }
         }
+        fetchData()
+    }, [])
+
+    // Fetch data for Employee
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await EmployeeList()
+                setEmployeeList(response.data)
+            } catch (error) {
+                throw error
+            }
+        }
+        fetchData()
+    }, [])
+
+    // Fetch data for Position
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                console.log(1);
+                const response = await PostionCharData()
+                setPosttionCharData(response.data)
+            } catch (error) {
+                console.log({ error });
+            }
+        }
+        fetchData()
+    }, [])
+
+    const handleAddUserSignature = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        try {
+            const formData = new FormData();
+            formData.append('empId', isEmp_id)
+            const response = await AddUserSignature(formData)
+        } catch (error) {
+            throw error
+        }
+
     }
 
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
 
-    const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
-        if (option) {
-            setSelectedOption(option)
+    const handleSelectChangeDepartment = (selectedOption: SelectOptionType | null) => {
+        setSelectedOption(selectedOption);
+        if (selectedOption) {
+            setIsDep_id(selectedOption.value);
         }
     };
 
+    const handleSelectChangePosition = (selectedOption: SelectOptionType | null) => {
+        setSelectedOption(selectedOption);
+        if (selectedOption) {
+            setIsPosition_id(selectedOption.value);
+        }
+    };
+
+    const handleSelectChangeEmployee = (selectedOption: SelectOptionType | null) => {
+        setSelectedOption(selectedOption);
+        if (selectedOption) {
+            setIsEmp_id(selectedOption.value);
+        }
+    };
+
+    const chonphongbanOptions = useMemo(
+        () =>
+            departmentList?.data?.map((department: any) => ({
+                value: department.dep_id,
+                label: department.dep_name,
+            })),
+        [departmentList?.data]
+    );
+
+    const chonchucvuOptions = useMemo(
+        () =>
+            PostionCharDatas?.data?.flatMap((position: any) =>
+                Array.isArray(position)
+                    ? position.map((pos: any) => ({
+                        value: pos.positionId,
+                        label: pos.positionName,
+                    }))
+                    : {
+                        value: position.positionId,
+                        label: position.positionName,
+                    }
+            ).reverse(),
+        [PostionCharDatas?.data]
+    );
+
+    const filteredEmployees = useMemo(
+        () =>
+            EmployeeLists?.data?.filter(
+                (emp: any) => emp.dep_id[0] === isDep_id && emp.position_id === isPosition_id
+            ),
+        [EmployeeLists?.data, isDep_id, isPosition_id]
+    );
+
+    console.log({ filteredEmployees });
+
+
+    const chonnhanvienOptions = useMemo(
+        () =>
+            filteredEmployees?.map((emp: any) => ({
+                value: emp.idQLC,
+                label: emp.userName,
+            })),
+        [filteredEmployees]
+    );
+
     const options = {
 
-        chonnhanvien: [
-            { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
-            { value: 'Phan Mạnh Hùng', label: 'Phan Mạnh Hùng (SÁNG TẠO - ID:153846)' },
-        ],
-        chucvu: [
-            { value: 'sinh viên thực tập', label: 'SINH VIÊN THỰC TẬP' },
-            { value: 'nhân viên part time', label: 'NHÂN VIÊN PART TIME' },
-        ],
-        chonphongban: [
-            { value: '  BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
-            { value: 'KỸ THUẬT', label: 'KỸ THUẬT' },
-        ],
+        chonnhanvien: chonnhanvienOptions,
+        chucvu: chonchucvuOptions,
+        chonphongban: chonphongbanOptions
 
     };
 
@@ -56,7 +165,7 @@ export default function AddSealModal({ onCancel }: any) {
                                             <div className={`${styles.div_no_pad} `}>
                                                 <Select
                                                     defaultValue={selectedOption}
-                                                    onChange={(option) => handleSelectionChange(option, options.chonphongban)}
+                                                    onChange={handleSelectChangeDepartment}
                                                     options={options.chonphongban}
                                                     placeholder="Chọn phòng ban"
                                                     styles={{
@@ -83,7 +192,7 @@ export default function AddSealModal({ onCancel }: any) {
                                             <div className={`${styles.div_no_pad} `}>
                                                 <Select
                                                     defaultValue={selectedOption}
-                                                    onChange={(option) => handleSelectionChange(option, options.chucvu)}
+                                                    onChange={handleSelectChangePosition}
                                                     options={options.chucvu}
                                                     placeholder="Chọn chức vụ"
                                                     styles={{
@@ -110,7 +219,7 @@ export default function AddSealModal({ onCancel }: any) {
                                             <div className={`${styles.div_no_pad} `}>
                                                 <Select
                                                     defaultValue={selectedOption}
-                                                    onChange={(option) => handleSelectionChange(option, options.chonnhanvien)}
+                                                    onChange={handleSelectChangeEmployee}
                                                     options={options.chonnhanvien}
                                                     placeholder="Chọn phòng ban"
                                                     styles={{
@@ -134,7 +243,7 @@ export default function AddSealModal({ onCancel }: any) {
                                 </div>
                                 <div className={`${styles.modal_footer} ${styles.footer_process}`}>
                                     <button className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
-                                    <button className={`${styles.btn_add}`}>Thêm</button>
+                                    <button className={`${styles.btn_add}`} onClick={handleAddUserSignature}>Thêm</button>
                                 </div>
                             </form>
                         </div>

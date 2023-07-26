@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styles from './editRoomModal.module.css'
 import Select from 'react-select';
+import { OrganizationalStructureUpdate } from "@/pages/api/co_cau_to_chuc";
 
-type SelectOptionType = { label: string, value: string }
+type SelectOptionType = { label: any, value: any }
 type EditRoomModalProps = {
+    idRoom: any
     defaultValue: SelectOptionType | null;
     options: { [key: string]: SelectOptionType[] };
     soluongnhanvien: number;
@@ -11,13 +13,21 @@ type EditRoomModalProps = {
     onCancel: any
 };
 
-export default function EditRoomModal({ defaultValue, options, soluongnhanvien, mota, onCancel }: EditRoomModalProps) {
+export default function EditRoomModal({ idRoom, defaultValue, options, soluongnhanvien, mota, onCancel }: EditRoomModalProps) {
 
-    useEffect(() => {
+    const handleSubmit = async () => {
 
+        try {
+            const description = (document.getElementById('description') as HTMLInputElement)?.value
+            const formData = new FormData()
 
-
-    })
+            formData.append('depId', idRoom)
+            formData.append('description', description)
+            const response = await OrganizationalStructureUpdate(formData)
+        } catch (error) {
+            throw error
+        }
+    }
 
     const [selectedOptions, setSelectedOptions] = useState<{ [key: string]: SelectOptionType | null }>({
         chonphongban: options?.chonphongban ? options?.chonphongban[0] : null,
@@ -33,20 +43,6 @@ export default function EditRoomModal({ defaultValue, options, soluongnhanvien, 
             [field]: option
         }));
     };
-
-    const optionss = {
-        chonphongban: [
-            { value: 'BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
-            { value: 'Phó GIÁM ĐỐC', label: 'Phó GIÁM ĐỐC' },
-        ],
-        truongphong: [
-            { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
-        ],
-        photruongphong: [
-            { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
-        ]
-    };
-
 
     return (
         <>
@@ -105,7 +101,7 @@ export default function EditRoomModal({ defaultValue, options, soluongnhanvien, 
                                         <label htmlFor="">Phó trưởng phòng <span style={{ color: 'red' }}> * </span> </label>
                                         <div className={`${styles.input_right} ${styles.edit_right}`}>
                                             <Select
-                                                defaultValue={selectedOptions.photruongphong ? selectedOptions.photruong : selectedOption}
+                                                defaultValue={selectedOptions.photruongphong ? selectedOptions.photruongphong : selectedOption}
                                                 onChange={(option) => handleSelectionChange(option, 'photruongphong')}
                                                 options={options?.photruongphong}
                                                 placeholder="Cập nhật phó trưởng phòng"
@@ -131,12 +127,12 @@ export default function EditRoomModal({ defaultValue, options, soluongnhanvien, 
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Mô tả <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <textarea defaultValue={mota} id="names" placeholder="" className={`${styles.input_process}`} />
+                                            <textarea style={{ height: 100 }} defaultValue={mota} id="description" placeholder="" className={`${styles.input_process}`} />
                                         </div>
                                     </div>
                                     <div className={`${styles.modal_footer} ${styles.footer_process}`}>
                                         <button className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
-                                        <button className={`${styles.btn_add}`}>Cập nhật</button>
+                                        <button className={`${styles.btn_add}`} onClick={handleSubmit}>Cập nhật</button>
                                     </div>
                                 </form>
                             </div>

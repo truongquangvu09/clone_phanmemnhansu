@@ -1,43 +1,37 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './leaderBiography.module.css'
 import BodyFrameFooter from '@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer'
+import { LeaderBiographyList } from '@/pages/api/co_cau_to_chuc'
+import MyPagination from '@/components/pagination/Pagination';
+import { useRouter } from "next/router";
 
 export default function LeaderBiography() {
 
-    const Employee = [
-        {
-            img: '/app_Artboard 3900.png',
-            name: 'nguyen van a',
-            chucvu: 'PGD',
-            phongban: 'Biên tập',
-            to: 'chưa cập nhật',
-            nhom: 'chưa cập nhật'
-        },
-        {
-            img: '/app_Artboard 3900.png',
-            name: 'nguyen van a',
-            chucvu: 'PGD',
-            phongban: 'Biên tập',
-            to: 'chưa cập nhật',
-            nhom: 'chưa cập nhật'
-        },
-        {
-            img: '/app_Artboard 3900.png',
-            name: 'nguyen van a',
-            chucvu: 'PGD',
-            phongban: 'Biên tập',
-            to: 'chưa cập nhật',
-            nhom: 'chưa cập nhật'
-        },
-        {
-            img: '/app_Artboard 3900.png',
-            name: 'nguyen van a',
-            chucvu: 'PGD',
-            phongban: 'Biên tập',
-            to: 'chưa cập nhật',
-            nhom: 'chưa cập nhật'
+    const [currentPageSignature, setCurrentPageSignature] = useState<any>(1);
+    const [signaturelList, setSignatureList] = useState<any>(null)
+    const [isKeywords, setIsKeywords] = useState<any>("")
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const pagesize: any = 5
+                const formData = new FormData();
+                formData.append('keyword', isKeywords)
+                formData.append('page', currentPageSignature)
+                formData.append('pageSize', pagesize)
+                const response = await LeaderBiographyList(formData)
+                setSignatureList(response.data)
+            } catch (error) {
+                throw error
+            }
         }
-    ]
+        fetchData()
+    }, [currentPageSignature, isKeywords])
+
+    const handlePageChange = (page: number) => {
+        setCurrentPageSignature(page);
+    };
+
     return (
         <>
             <div className={`${styles.wrapper}`}>
@@ -46,7 +40,7 @@ export default function LeaderBiography() {
                         <div className={`${styles.header_search}`}>
                             <div className={`${styles.row_search_1}`}>
                                 <div className={`${styles.row_search_2}`}>
-                                    <input type="text" id="search_list" className={`${styles.ui_autocomplete_input}`} placeholder="Tìm kiếm theo họ tên lãnh đạo" />
+                                    <input type="text" onChange={(event) => setIsKeywords(event.target.value)} id="search_list" className={`${styles.ui_autocomplete_input}`} placeholder="Tìm kiếm theo họ tên lãnh đạo" />
                                     <a href="" className={`${styles.search_3}`}>
                                         <img style={{ verticalAlign: 'middle' }} src={`/search-gray.svg`} />
                                     </a>
@@ -69,21 +63,38 @@ export default function LeaderBiography() {
                                         </tr>
                                     </thead>
                                     <tbody className={`${styles.filter_body}`}>
-                                        {Employee?.map((item, index) => (
-                                            <tr key={index}>
-                                                <td><img className={`${styles.img_table}`} src={item.img} alt="" /></td>
-                                                <td>{item.name}</td>
-                                                <td>{item.chucvu}</td>
-                                                <td>{item.phongban}</td>
-                                                <td>{item.to}</td>
-                                                <td>{item.nhom}</td>
+                                        {signaturelList?.infoLeaderAfter?.length ? (
+                                            signaturelList?.infoLeaderAfter?.map((item: any, index: any) => (
+                                                <tr key={index}>
+                                                    <td><img className={`${styles.img_table}`} src={item?.avatarUser} alt="" /></td>
+                                                    <td style={{ color: '#4C5BD4', cursor: 'pointer' }}>
+                                                        <a target='blank ' href={`/co-cau-to-chuc/leaderBiography/chi-tiet-lanh-dao/${item._id}`} rel="noreferrer">{item?.userName} ( Xem chi tiết)</a>
+                                                    </td>
+                                                    <td>{item?.namePosition}</td>
+                                                    <td>{item?.dep_name}</td>
+                                                    <td>{item?.team_name}</td>
+                                                    <td>{item?.group_name}</td>
+                                                </tr>
+                                            )
+                                            )) : (
+                                            <tr>
+                                                <td colSpan={6} >Danh sách trống</td>
                                             </tr>
-                                        ))}
+                                        )
+                                        }
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div className={`${styles.paginations}`} style={{ display: 'block' }}>
+                    <MyPagination
+                        current={currentPageSignature}
+                        total={signaturelList?.total}
+                        pageSize={5}
+                        onChange={handlePageChange}
+                    />
                 </div>
                 <div className={`${styles.content_footer}`}>
                     <BodyFrameFooter src="https://www.youtube.com/embed/fp99RxHd_zM" />

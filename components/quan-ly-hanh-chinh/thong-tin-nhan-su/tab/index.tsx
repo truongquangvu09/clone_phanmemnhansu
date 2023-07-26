@@ -1,28 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import Select from 'react-select';
 import styles from './employeeManagement.module.css'
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 import DetailCandidateList from "../detailModal";
 import EditCandidateList from "../editModal";
-import { EmployeeListData } from "@/pages/api/quan_ly_tuyen_dung";
+import { EmployeeList } from "@/pages/api/quan_ly_nhan_vien";
+import { DepartmentList } from "@/pages/api/listPhongBan";
+import MyPagination from "@/components/pagination/Pagination";
+import { PostionCharData } from '@/pages/api/co_cau_to_chuc';
 
 type SelectOptionType = { label: string, value: string }
 export interface TabEmployeeManagement {
 
-}
-export interface Employee {
-    id: number;
-    name: string;
-    phongban: string;
-    gioitinh: string;
-    tinhtranghonnhan: string;
-    vitri: string;
-    bophan: string;
-    chinhanh: string;
-    thongtinlienhe_diachi: string;
-    thongtinlienhe_sdt: number;
-    thongtinlienhe_email: string;
-    ngayvaocongty: string;
 }
 
 export default function TabEmployeeManagement({ children }: any) {
@@ -31,6 +20,16 @@ export default function TabEmployeeManagement({ children }: any) {
     const [employeeCount, setEmployeeCount] = useState(10)
     const [detailModal, setDetailModal] = useState(false)
     const [editModal, setEditmodal] = useState(false)
+    const [EmpData, setEmpData] = useState<any>(null)
+    const [departmentList, setDepartmentList] = useState<any>(null)
+    const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
+    const [isDep_id, setIsDep_id] = useState<any>("")
+    const [isUserName, setIsUserName] = useState<any>("")
+    const [currentPage, setCurrentPage] = useState<any>(1);
+    const [PostionCharDatas, setPosttionCharData] = useState<any>(null)
+    const [isSeach, setSearch] = useState<any>(null)
+
+
 
     // -- đóng mở modal --
     const handleOpenDetailModal = () => {
@@ -46,24 +45,28 @@ export default function TabEmployeeManagement({ children }: any) {
         setEditmodal(false)
     }
 
-
-    // -- lấy dữ liệu và phân trang --
-
-    const handleChoose = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = parseInt(event.target.value);
-        setEmployeeCount(value)
-        setCurrentList(EmpData?.data.slice(0, value));
-        window.scrollTo(0, 0);
-    }
-
-    const [EmpData, setEmpData] = useState<any>(null)
-    const [isLoading, setIsLoading] = useState(true);
-
+    // -- lấy dữ liệu phòng ban --
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await EmployeeListData()
-                setEmpData(response.data)
+                const comid: any = 1664
+                const formData = new FormData()
+                formData.append('com_id', comid)
+                const response = await DepartmentList(formData)
+                setDepartmentList(response.data)
+            } catch (error) {
+                throw error
+            }
+        }
+        fetchData()
+    }, [])
+
+    // -- lấy dữ liệu chức vụ --
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await PostionCharData()
+                setPosttionCharData(response.data)
             } catch (error) {
                 console.log({ error });
             }
@@ -71,34 +74,26 @@ export default function TabEmployeeManagement({ children }: any) {
         fetchData()
     }, [])
 
-    useEffect(() => {
-        if (EmpData && EmpData.data) {
-            setInitialList(EmpData.data.slice(0, 10));
-            setCurrentList(EmpData.data.slice(0, 10));
-            setIsLoading(false);
-        }
-    }, [EmpData]);
+
+    // -- lấy dữ liệu và phân trang --
 
     useEffect(() => {
-        if (EmpData && EmpData.data) {
-            const startIndex = activeButton * employeeCount;
-            const endIndex = startIndex + employeeCount;
-            setCurrentList(EmpData.data.slice(startIndex, endIndex));
+        const fetchData = async () => {
+            try {
+                const formData = new FormData();
+                const comid: any = 1664
+                formData.append('dep_id', isDep_id)
+                formData.append('userName', isUserName)
+                formData.append('com_id', comid)
+                formData.append('pageNumber', currentPage)
+                const response = await EmployeeList(formData)
+                setEmpData(response.data)
+            } catch (error) {
+                console.log({ error });
+            }
         }
-    }, [activeButton]);
-
-
-
-    const totalPages = Math.ceil(EmpData?.data.length / employeeCount);
-    console.log({ totalPages });
-
-
-    const [currentList, setCurrentList] = useState<Employee[] | null>(null);
-    const [initialList, setInitialList] = useState<Employee[] | null>(null);
-
-    const handleClick = (buttonIndex: number) => {
-        setActiveButton(buttonIndex)
-    }
+        fetchData()
+    }, [currentPage, isSeach])
 
     // -- di chuyển trái phải của bảng --
     const tableContentRef = useRef<HTMLDivElement>(null);
@@ -126,26 +121,52 @@ export default function TabEmployeeManagement({ children }: any) {
 
     // -- set options cho thẻ select --
 
-    const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
 
-    const options = {
-        chonnhanvien: [
-            { value: 'Trần Văn Hưng', label: 'Trần Văn Hưng (KINH DOANH)' },
-            { value: 'Trần Văn Đức', label: 'Trần Văn Đức (BIÊN TẬP)' },
-        ],
-        chonphongban: [
-            { value: 'Ban giám đốc', label: 'BAN GIÁM ĐỐC' },
-            { value: 'Kỹ thuật', label: 'KỸ THUẬT' },
-            { value: 'Biên tập', label: 'BIÊN TẬP' },
-        ],
-    };
+    const chonphongbanOptions = useMemo(
+        () =>
+            departmentList?.data?.map((department: any) => ({
+                value: department.dep_id,
+                label: department.dep_name,
+            })),
+        [departmentList?.data]
+    );
 
-    const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
-        if (option) {
-            setSelectedOption(option)
+    const chonnhanvienOptions = useMemo(
+        () =>
+            EmpData?.data?.map((emp: any) => ({
+                value: emp.userName,
+                label: emp.userName,
+            })),
+        [EmpData?.data]
+    );
+
+    const handleSearch = useCallback(() => {
+        setSearch({ isDep_id, isUserName });
+    }, [isDep_id, isUserName]);
+
+
+    const handleSelectChangeDep = (selectedOption: SelectOptionType | null) => {
+        setSelectedOption(selectedOption); // Lưu giá trị đã chọn vào state selectedOption
+        if (selectedOption) {
+            setIsDep_id(selectedOption.value); // Set giá trị đã chọn vào state setIsDep_id
         }
     };
 
+    const handleSelectChangeEmp = (selectedOption: SelectOptionType | null) => {
+        setSelectedOption(selectedOption); // Lưu giá trị đã chọn vào state selectedOption
+        if (selectedOption) {
+            setIsUserName(selectedOption.value); // Set giá trị đã chọn vào state setIsDep_id
+        }
+    };
+
+    const options = {
+        chonnhanvien: chonnhanvienOptions,
+        chonphongban: chonphongbanOptions,
+    };
+
+    const handleSignaturePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
 
     return (
         <>
@@ -162,7 +183,7 @@ export default function TabEmployeeManagement({ children }: any) {
                                 <div className={`${styles.div_no_pad} `}>
                                     <Select
                                         defaultValue={selectedOption}
-                                        onChange={(option) => handleSelectionChange(option, options.chonnhanvien)}
+                                        onChange={handleSelectChangeEmp}
                                         options={options.chonnhanvien}
                                         placeholder="Chọn nhân viên"
                                         styles={{
@@ -190,7 +211,7 @@ export default function TabEmployeeManagement({ children }: any) {
                                 <div className={`${styles.div_no_pad} `}>
                                     <Select
                                         defaultValue={selectedOption}
-                                        onChange={(option) => handleSelectionChange(option, options.chonphongban)}
+                                        onChange={handleSelectChangeDep}
                                         options={options.chonphongban}
                                         placeholder="Chọn phòng ban"
                                         styles={{
@@ -216,7 +237,7 @@ export default function TabEmployeeManagement({ children }: any) {
                                     />
                                 </div>
                                 <div className={`${styles.div_no_pad_search} `}>
-                                    <a href="" className={`${styles.icon_search_top}`}>
+                                    <a className={`${styles.icon_search_top}`} onClick={handleSearch}>
                                         <img style={{ verticalAlign: '-webkit-baseline-middle' }} src={`/t-icon-search-n.svg`} alt="" />
                                     </a>
                                 </div>
@@ -255,104 +276,52 @@ export default function TabEmployeeManagement({ children }: any) {
                                         </tr>
                                     </thead>
                                     <tbody className={`${styles.filter_body}`}>
-                                        {isLoading ? '' : currentList?.map((item: any, index: any) => (
-                                            <tr key={index}>
-                                                <td>{item._id}</td>
-                                                <td>   <a href="">{item.userName}</a></td>
-                                                <td>{item.phongban}</td>
-                                                <td>{item.gioitinh}</td>
-                                                <td>{item.tinhtranghonnhan}</td>
-                                                <td>{item.vitri}</td>
-                                                <td>{item.bophan}</td>
-                                                <td>{item.chinhanh}</td>
-                                                <td>
-                                                    <p>Email:{item.email}</p>
-                                                    <p>SDT: {item.phoneTK}</p>
-                                                    <p>SDT: {item.thongtinlienhe_email}</p>
-                                                </td>
-                                                <td>{item.ngayvaocongty}</td>
-                                                <td className={`${styles.r_t_top_right}`} style={{ position: 'relative' }}>
-                                                    <img src={`	/icon-settting.png`} alt=" " />
-                                                    <div className={`${styles.settings}`} style={{ width: '100%' }}>
-                                                        <li onClick={handleOpenDetailModal}>Chi tiết</li>
-                                                        {detailModal && <DetailCandidateList onCancel={handleCloseModal} id={index} />}
-                                                        <li onClick={handleOpenEditModal}>Chỉnh sửa</li>
-                                                        {editModal && <EditCandidateList onCancel={handleCloseModal} id={index} />}
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        ))}
+                                        {EmpData?.data?.map((item: any, index: any) => {
+                                            const positionData = PostionCharDatas?.data?.find(
+                                                (position: any) => position?.positionId === item?.position_id
+                                            );
+                                            const positionNameToShow = positionData ? positionData.positionName : item.vitri;
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{item._id}</td>
+                                                    <td>   <a href="">{item.userName}</a></td>
+                                                    <td>{item.nameDeparment}</td>
+                                                    <td>{item.gioitinh}</td>
+                                                    <td>{item.tinhtranghonnhan}</td>
+                                                    <td>{positionNameToShow}</td>
+                                                    <td>{item.nameDeparment}</td>
+                                                    <td>{item.chinhanh}</td>
+                                                    <td>
+                                                        <p>Địa chỉ liên hệ:{item.email}</p>
+                                                        <p>SDT: {item.phoneTK}</p>
+                                                        <p>Email: {item.email}</p>
+                                                    </td>
+                                                    <td>{item.ngayvaocongty}</td>
+                                                    <td className={`${styles.r_t_top_right}`} style={{ position: 'relative' }}>
+                                                        <img src={`	/icon-settting.png`} alt=" " />
+                                                        <div className={`${styles.settings}`} style={{ width: '100%' }}>
+                                                            <li onClick={handleOpenDetailModal}>Chi tiết</li>
+                                                            {detailModal && <DetailCandidateList onCancel={handleCloseModal} infoList={{ id: item?.idQLC, userName: item?.userName, email: item.email, phoneTk: item.phoneTK, address: item.email, position: positionNameToShow, dateInCom: item.ngayvaocongty, positionId: item.position_id, depId: item.dep_id, nameDep: item.nameDeparment }} />}
+                                                            <li onClick={handleOpenEditModal}>Chỉnh sửa</li>
+                                                            {editModal && <EditCandidateList onCancel={handleCloseModal} infoList={{ id: item?.idQLC, userName: item?.userName, email: item.email, phoneTk: item.phoneTK, address: item.email, position: positionNameToShow, dateInCom: item.ngayvaocongty, positionId: item.position_id, depId: item.dep_id }} />}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        }
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div id="choose_limit" className={`${styles.pull_left}`}>
-                            <select name="" id="choose_limit_page" className={`${styles.form_control}`} onChange={(event) => handleChoose(event)}>
-                                <option value="10"  >10</option>
-                                <option value="20" >20</option>
-                                <option value="30">30</option>
-                            </select>
-                        </div>
-                        <div id="pagination" className={`${styles.pull_right}`}>
-                            <div className={`${styles.pagging}`} style={{ textAlign: 'center' }}>
-                                <nav>
-                                    <ul className={`${styles.pagination}`}>
-                                        {totalPages ? Array(totalPages).fill(null).map((value, index) => {
-                                            if (index === 0) {
-                                                return (
-                                                    <li
-                                                        className={styles.page_item}
-                                                        onClick={() => handleClick(0)}
-                                                        key={index}
-                                                    >
-                                                        <span
-                                                            className={`${activeButton === 0 ? styles.active : ''} ${styles.page_link
-                                                                }`}
-                                                        >
-                                                            1
-                                                        </span>
-                                                    </li>
-                                                );
-                                            } else if (index === totalPages - 1) {
-                                                return (
-                                                    <li
-                                                        className={styles.page_item}
-                                                        onClick={() => handleClick(totalPages - 1)}
-                                                        key={index}
-                                                    >
-                                                        <span
-                                                            className={`${activeButton === totalPages - 1 ? styles.active : ''} ${styles.page_link
-                                                                }`}
-                                                        >
-                                                            Cuối
-                                                        </span>
-                                                    </li>
-                                                );
-                                            } else if (
-                                                index === activeButton ||
-                                                index === activeButton - 1 ||
-                                                index === activeButton + 1
-                                            ) {
-                                                return (
-                                                    <li
-                                                        className={styles.page_item}
-                                                        onClick={() => handleClick(index)}
-                                                        key={index}
-                                                    >
-                                                        <span
-                                                            className={`${activeButton === index ? styles.active : ''} ${styles.page_link
-                                                                }`}
-                                                        >
-                                                            {index + 1}
-                                                        </span>
-                                                    </li>
-                                                );
-                                            }
-                                        }) : ''}
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
+                    </div>
+                    <div className={`${styles.paginations}`} style={{ display: 'block' }}>
+                        <MyPagination
+                            current={currentPage}
+                            total={EmpData?.count}
+                            pageSize={10}
+                            onChange={handleSignaturePageChange}
+                        />
                     </div>
                     <BodyFrameFooter src="https://www.youtube.com/embed/Z8qtJ75of3g"></BodyFrameFooter>
                 </div>

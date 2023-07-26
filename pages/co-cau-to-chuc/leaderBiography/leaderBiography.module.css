@@ -102,6 +102,13 @@
   border-radius: 50%;
   object-fit: cover;
 }
+.paginations {
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+  border: #333333;
+}
+
 @media screen and (max-width: 768px) {
   .row_search_2 {
     width: 100%;

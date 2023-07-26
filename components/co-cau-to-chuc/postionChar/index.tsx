@@ -25,6 +25,7 @@ const TreeNode = dynamic(() =>
 const StyledNode = styled.div`
 `;
 const MemberViewBox1 = ({
+    idPosition,
     text_part,
     position,
     name,
@@ -33,20 +34,23 @@ const MemberViewBox1 = ({
     name3,
     employee_number,
     mission,
-    setOpenModalEdit,
-    setOpenModalDetails
+    setOpenModalDetails,
+    handleUpdatePosition
 }: any) => (
     <div className={`${styles.member_view_box} ${styles.member_view_box_top_3}`} style={{ width: 330 }}>
         <div className={`${styles.member_detail}`}>
             <div className={`${styles.member_details_header}`}>
                 <span style={{ color: '#474747', fontWeight: 600 }}>{text_part}</span>
-                <button className={`${styles.hide_div_parent}`} style={{ fontWeight: 500, background: 'unset', fontFamily: 'Roboto', fontSize: 16 }} data-id="1">(Ẩn)</button>
-                <button className={`${styles.edit_dep}`} onClick={() => setOpenModalEdit()}>
+                <button className={`${styles.hide_div_parent}`} style={{ fontWeight: 500, background: 'unset', fontFamily: 'Roboto', fontSize: 16, display: name || name1 || name2 || name3 ? 'none' : 'inline' }} data-id="1">(Ẩn)</button>
+                <button className={`${styles.edit_dep}`} onClick={() => handleUpdatePosition({
+                    idPosition: idPosition,
+                    mission: mission
+                })}>
                     <img src={`/vn_icon-edit.svg`} />
                 </button>
             </div>
             <div className={`${styles.member_details_body}`}>
-                <p>{position ? position : 'Họ và tên'}: {employee_number ? employee_number : name}</p>
+                <p>{position ? position : 'Họ và tên'}: {employee_number ? employee_number : (name ? name : 'Chưa cập nhật')}</p>
                 {name1 && <p>Họ và tên: {name1}</p>}
                 {name2 && <p>Họ và tên: {name2}</p>}
                 {name3 && <p>Họ và tên: {name3}</p>}
@@ -60,31 +64,25 @@ const MemberViewBox1 = ({
 const defaultValue = { label: 'Default Option', value: 'default' };
 const PostionCharTree = () => {
 
-    const [openModalEdit, setOpenModalEdit] = useState(false)
-    const [openModalDetails, setOpenModalDetails] = useState(false)
-    // const {Tree} = useMemo(() => dynamic(() => import('react-organizational-chart'), { ssr: false }),[]);
+    const [openModalEdit, setOpenModalEdit] = useState<any>(null)
+    const [isMission, setIsMission] = useState<any>(null)
+    const [openModalDetails, setOpenModalDetails] = useState('')
+    console.log({ openModalDetails });
+
+
+    const handleUpdatePosition = ({ idPosition, mission }: any) => {
+        setOpenModalEdit(idPosition)
+        setIsMission(mission)
+    };
 
     const handleModalClose = () => {
-        setOpenModalEdit(false);
-        setOpenModalDetails(false)
+        setOpenModalEdit(0);
+        setOpenModalDetails('')
     };
-
-    const options = {
-        chonphongban: [
-            { value: 'BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
-        ],
-        truongphong: [
-            { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
-        ],
-        photruongphong: [
-            { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
-        ]
-    };
-    const soluongnhanvien = 13;
-    const mota = 'kĩ thuật';
-    const missions = 'không gì cả'
 
     const [PostionCharDatas, setPosttionCharData] = useState<any>(null)
+    console.log({ PostionCharDatas });
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -99,36 +97,6 @@ const PostionCharTree = () => {
         fetchData()
     }, [])
 
-    const renderTreeNode = (data: any, rootId: number) => {
-        const rootNode = data?.find((position: any) => position.positionId === rootId);
-
-        if (!rootNode) {
-            return null;
-        }
-
-        const childNodes = data?.filter((position: any) => position.parentId === rootId);
-
-        return (
-            <TreeNode
-                key={rootNode.positionId}
-                label={
-                    <StyledNode>
-                        <MemberViewBox1
-                            text_part={rootNode.positionName}
-                            name={rootNode.users}
-                            mission={rootNode.mission}
-                            setOpenModalEdit={() => setOpenModalEdit(true)}
-                            setOpenModalDetails={() => setOpenModalDetails(true)}
-                        />
-                    </StyledNode>
-                }
-            >
-                {childNodes.map((position: any) => renderTreeNode(data, position.positionId))}
-            </TreeNode>
-        );
-    };
-
-    const treeNode = renderTreeNode(PostionCharDatas?.listPosition, PostionCharDatas?.listPosition[0].positionId);
 
 
 
@@ -155,152 +123,208 @@ const PostionCharTree = () => {
                                     </div>
                                 </div></StyledNode>}
                             >
-                                <TreeNode label={<StyledNode><MemberViewBox1
-                                    text_part='Chủ tích hội đồng quản trị'
-                                    name='Chưa cập nhật'
-                                    mission='Chưa cập nhật'
-                                    setOpenModalEdit={() => setOpenModalEdit(true)}
-                                    setOpenModalDetails={() => setOpenModalDetails(true)}
-                                /></StyledNode>}>
+                                {PostionCharDatas?.data[0] &&
                                     <TreeNode label={<StyledNode><MemberViewBox1
-                                        text_part='Phó chủ tích hội đồng quản trị'
-                                        name='Chưa cập nhật'
-                                        mission='Chưa cập nhật'
-                                        setOpenModalEdit={() => setOpenModalEdit(true)}
-                                        setOpenModalDetails={() => setOpenModalDetails(true)}
+                                        idPosition={PostionCharDatas?.data[0]?.positionId}
+                                        text_part={PostionCharDatas?.data[0]?.positionName}
+                                        name={PostionCharDatas?.data[0]?.users[0]}
+                                        name1={PostionCharDatas?.data[0]?.users[1]}
+                                        name2={PostionCharDatas?.data[0]?.users[2]}
+                                        name3={PostionCharDatas?.data[0]?.users[3]}
+                                        mission={PostionCharDatas?.data[0]?.mission}
+                                        handleUpdatePosition={handleUpdatePosition}
+                                        setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[0]?.mission)}
                                     /></StyledNode>}>
-                                        <TreeNode label={<StyledNode><MemberViewBox1
-                                            text_part='Tv hội đồng quản trị'
-                                            position='Trưởng phòng'
-                                            name='Chưa cập nhật'
-                                            mission='Chưa cập nhật'
-                                            setOpenModalEdit={() => setOpenModalEdit(true)}
-                                            setOpenModalDetails={() => setOpenModalDetails(true)}
-                                        /></StyledNode>}>
+                                        {PostionCharDatas?.data[1] &&
                                             <TreeNode label={<StyledNode><MemberViewBox1
-                                                text_part='Tổng giám đốc'
-                                                name='Chưa cập nhật'
-                                                mission='Chưa cập nhật'
-                                                setOpenModalEdit={() => setOpenModalEdit(true)}
-                                                setOpenModalDetails={() => setOpenModalDetails(true)}
+                                                idPosition={PostionCharDatas?.data[1]?.positionId}
+                                                text_part={PostionCharDatas?.data[1]?.positionName}
+                                                name={PostionCharDatas?.data[1]?.users[0]}
+                                                name1={PostionCharDatas?.data[1]?.users[1]}
+                                                name2={PostionCharDatas?.data[1]?.users[2]}
+                                                name3={PostionCharDatas?.data[1]?.users[3]}
+                                                mission={PostionCharDatas?.data[1]?.mission}
+                                                handleUpdatePosition={handleUpdatePosition}
+                                                setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[1]?.mission)}
                                             /></StyledNode>}>
-                                                <TreeNode label={<StyledNode><MemberViewBox1
-                                                    text_part='Phó tổng giám đốc'
-                                                    name='Chưa cập nhật'
-                                                    mission='Chưa cập nhật'
-                                                    setOpenModalEdit={() => setOpenModalEdit(true)}
-                                                    setOpenModalDetails={() => setOpenModalDetails(true)}
-                                                /></StyledNode>}>
+                                                {PostionCharDatas?.data[2] &&
                                                     <TreeNode label={<StyledNode><MemberViewBox1
-                                                        text_part='Giám đốc'
-                                                        name='Chưa cập nhật'
-                                                        mission='Chưa cập nhật'
-                                                        setOpenModalEdit={() => setOpenModalEdit(true)}
-                                                        setOpenModalDetails={() => setOpenModalDetails(true)}
+
+                                                        text_part={PostionCharDatas?.data[2]?.positionName}
+                                                        position='Trưởng phòng'
+                                                        name={PostionCharDatas?.data[2]?.users[0]}
+                                                        name1={PostionCharDatas?.data[2]?.users[1]}
+                                                        name2={PostionCharDatas?.data[2]?.users[2]}
+                                                        name3={PostionCharDatas?.data[2]?.users[3]}
+                                                        idPosition={PostionCharDatas?.data[2]?.positionId}
+                                                        mission={PostionCharDatas?.data[2]?.mission}
+                                                        handleUpdatePosition={handleUpdatePosition}
+                                                        setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[2]?.mission)}
                                                     /></StyledNode>}>
-                                                        <TreeNode label={<StyledNode><MemberViewBox1
-                                                            text_part='Phó giám đốc'
-                                                            name='Chưa cập nhật'
-                                                            mission='Chưa cập nhật'
-                                                            setOpenModalEdit={() => setOpenModalEdit(true)}
-                                                            setOpenModalDetails={() => setOpenModalDetails(true)}
-                                                        /></StyledNode>}>
+                                                        {PostionCharDatas?.data[3] &&
                                                             <TreeNode label={<StyledNode><MemberViewBox1
-                                                                text_part='Trưởng phòng'
-                                                                name='I AM HULK'
-                                                                name1='Trần Văn Hưng'
-                                                                name2='Uy Phùng Hiểu (Ken)'
-                                                                name3='Vũ Hà My'
-                                                                mission='Chưa cập nhật'
-                                                                setOpenModalEdit={() => setOpenModalEdit(true)}
-                                                                setOpenModalDetails={() => setOpenModalDetails(true)}
+                                                                text_part={PostionCharDatas?.data[3]?.positionName}
+                                                                name={PostionCharDatas?.data[3]?.users[0]}
+                                                                name1={PostionCharDatas?.data[3]?.users[1]}
+                                                                name2={PostionCharDatas?.data[3]?.users[2]}
+                                                                name3={PostionCharDatas?.data[3]?.users[3]}
+                                                                idPosition={PostionCharDatas?.data[3]?.positionId}
+                                                                mission={PostionCharDatas?.data[3]?.mission}
+                                                                handleUpdatePosition={handleUpdatePosition}
+                                                                setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[3]?.mission)}
                                                             /></StyledNode>}>
-                                                                <TreeNode label={<StyledNode><MemberViewBox1
-                                                                    text_part='Phó trưởng phòng'
-                                                                    name='Chưa cập nhật'
-                                                                    mission='Chưa cập nhật'
-                                                                    setOpenModalEdit={() => setOpenModalEdit(true)}
-                                                                    setOpenModalDetails={() => setOpenModalDetails(true)}
-                                                                /></StyledNode>}>
+                                                                {PostionCharDatas?.data[4] &&
                                                                     <TreeNode label={<StyledNode><MemberViewBox1
-                                                                        text_part='Tổ trưởng'
-                                                                        name='Lê Nhật Minh'
-                                                                        mission='Chưa cập nhật'
-                                                                        setOpenModalEdit={() => setOpenModalEdit(true)}
-                                                                        setOpenModalDetails={() => setOpenModalDetails(true)}
+                                                                        text_part={PostionCharDatas?.data[4]?.positionName}
+                                                                        name={PostionCharDatas?.data[4]?.users[0]}
+                                                                        name1={PostionCharDatas?.data[4]?.users[1]}
+                                                                        name2={PostionCharDatas?.data[4]?.users[2]}
+                                                                        name3={PostionCharDatas?.data[4]?.users[3]}
+                                                                        idPosition={PostionCharDatas?.data[4]?.positionId}
+                                                                        mission={PostionCharDatas?.data[4]?.mission}
+                                                                        handleUpdatePosition={handleUpdatePosition}
+                                                                        setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[4]?.mission)}
                                                                     /></StyledNode>}>
-                                                                        <TreeNode label={<StyledNode><MemberViewBox1
-                                                                            text_part='Phó tổ trưởng'
-                                                                            name='Bùi Văn Bến'
-                                                                            mission='Chưa cập nhật'
-                                                                            setOpenModalEdit={() => setOpenModalEdit(true)}
-                                                                            setOpenModalDetails={() => setOpenModalDetails(true)}
-                                                                        /></StyledNode>}>
+                                                                        {PostionCharDatas?.data[5] &&
                                                                             <TreeNode label={<StyledNode><MemberViewBox1
-                                                                                text_part='Trưởng nhóm'
-                                                                                name='Lê Hồng Anh'
-                                                                                mission='Chưa cập nhật'
-                                                                                setOpenModalEdit={() => setOpenModalEdit(true)}
-                                                                                setOpenModalDetails={() => setOpenModalDetails(true)}
+                                                                                text_part={PostionCharDatas?.data[5]?.positionName}
+                                                                                name={PostionCharDatas?.data[5]?.users[0]}
+                                                                                name1={PostionCharDatas?.data[5]?.users[1]}
+                                                                                name2={PostionCharDatas?.data[5]?.users[2]}
+                                                                                name3={PostionCharDatas?.data[5]?.users[3]}
+                                                                                idPosition={PostionCharDatas?.data[5]?.positionId}
+                                                                                mission={PostionCharDatas?.data[5]?.mission}
+                                                                                handleUpdatePosition={handleUpdatePosition}
+                                                                                setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[5]?.mission)}
                                                                             /></StyledNode>}>
-                                                                                <TreeNode label={<StyledNode><MemberViewBox1
-                                                                                    text_part='Nhân viên chính thức'
-                                                                                    position='Tổng số nhân viên'
-                                                                                    employee_number='10'
-                                                                                    mission='Chưa cập nhật'
-                                                                                    setOpenModalEdit={() => setOpenModalEdit(true)}
-                                                                                    setOpenModalDetails={() => setOpenModalDetails(true)}
-                                                                                /></StyledNode>}>
-                                                                                </TreeNode>
-                                                                                <TreeNode label={<StyledNode><MemberViewBox1
-                                                                                    text_part='Nhân viên thử việc'
-                                                                                    position='Tổng số nhân viên'
-                                                                                    employee_number='10'
-                                                                                    mission='Chưa cập nhật'
-                                                                                    setOpenModalEdit={() => setOpenModalEdit(true)}
-                                                                                    setOpenModalDetails={() => setOpenModalDetails(true)}
-                                                                                /></StyledNode>}>
-                                                                                </TreeNode>
-                                                                                <TreeNode label={<StyledNode><MemberViewBox1
-                                                                                    text_part='Nhân viên Part time'
-                                                                                    position='Tổng số nhân viên'
-                                                                                    employee_number='10'
-                                                                                    mission='Chưa cập nhật'
-                                                                                    setOpenModalEdit={() => setOpenModalEdit(true)}
-                                                                                    setOpenModalDetails={() => setOpenModalDetails(true)}
-                                                                                /></StyledNode>}>
-                                                                                </TreeNode>
-                                                                                <TreeNode label={<StyledNode><MemberViewBox1
-                                                                                    text_part='Nhân viên thực tập'
-                                                                                    position='Tổng số nhân viên'
-                                                                                    employee_number='10'
-                                                                                    mission='Chưa cập nhật'
-                                                                                    setOpenModalEdit={() => setOpenModalEdit(true)}
-                                                                                    setOpenModalDetails={() => setOpenModalDetails(true)}
-                                                                                /></StyledNode>}>
-                                                                                </TreeNode>
+                                                                                {PostionCharDatas?.data[6] &&
+                                                                                    <TreeNode label={<StyledNode><MemberViewBox1
+                                                                                        text_part={PostionCharDatas?.data[6]?.positionName}
+                                                                                        name={PostionCharDatas?.data[6]?.users[0]}
+                                                                                        name1={PostionCharDatas?.data[6]?.users[1]}
+                                                                                        name2={PostionCharDatas?.data[6]?.users[2]}
+                                                                                        name3={PostionCharDatas?.data[6]?.users[3]}
+                                                                                        idPosition={PostionCharDatas?.data[6]?.positionId}
+                                                                                        mission={PostionCharDatas?.data[6]?.mission}
+                                                                                        handleUpdatePosition={handleUpdatePosition}
+                                                                                        setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[6]?.mission)}
+                                                                                    /></StyledNode>}>
+                                                                                        {PostionCharDatas?.data[7] &&
+                                                                                            <TreeNode label={<StyledNode><MemberViewBox1
+                                                                                                text_part={PostionCharDatas?.data[7]?.positionName}
+                                                                                                name={PostionCharDatas?.data[7]?.users[0]}
+                                                                                                name1={PostionCharDatas?.data[7]?.users[1]}
+                                                                                                name2={PostionCharDatas?.data[7]?.users[2]}
+                                                                                                name3={PostionCharDatas?.data[7]?.users[3]}
+                                                                                                idPosition={PostionCharDatas?.data[7]?.positionId}
+                                                                                                mission={PostionCharDatas?.data[7]?.mission}
+                                                                                                handleUpdatePosition={handleUpdatePosition}
+                                                                                                setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[7]?.mission)}
+                                                                                            /></StyledNode>}>
+                                                                                                {PostionCharDatas?.data[8] &&
+                                                                                                    <TreeNode label={<StyledNode><MemberViewBox1
+                                                                                                        text_part={PostionCharDatas?.data[8]?.positionName}
+                                                                                                        name={PostionCharDatas?.data[8]?.users[0]}
+                                                                                                        name1={PostionCharDatas?.data[8]?.users[1]}
+                                                                                                        name2={PostionCharDatas?.data[8]?.users[2]}
+                                                                                                        name3={PostionCharDatas?.data[8]?.users[3]}
+                                                                                                        idPosition={PostionCharDatas?.data[8]?.positionId}
+                                                                                                        mission={PostionCharDatas?.data[8]?.mission}
+                                                                                                        handleUpdatePosition={handleUpdatePosition}
+                                                                                                        setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[8]?.mission)}
+                                                                                                    /></StyledNode>}>
+                                                                                                        {PostionCharDatas?.data[9] &&
+                                                                                                            <TreeNode label={<StyledNode><MemberViewBox1
+                                                                                                                text_part={PostionCharDatas?.data[9]?.positionName}
+                                                                                                                name={PostionCharDatas?.data[9]?.users[0]}
+                                                                                                                name1={PostionCharDatas?.data[9]?.users[1]}
+                                                                                                                name2={PostionCharDatas?.data[9]?.users[2]}
+                                                                                                                name3={PostionCharDatas?.data[9]?.users[3]}
+                                                                                                                idPosition={PostionCharDatas?.data[9]?.positionId}
+                                                                                                                mission={PostionCharDatas?.data[9]?.mission}
+                                                                                                                handleUpdatePosition={handleUpdatePosition}
+                                                                                                                setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[9]?.mission)}
+                                                                                                            /></StyledNode>}>
+                                                                                                                {PostionCharDatas?.data[10] &&
+                                                                                                                    <TreeNode label={<StyledNode><MemberViewBox1
+                                                                                                                        text_part={PostionCharDatas?.data[10]?.positionName}
+                                                                                                                        name={PostionCharDatas?.data[10]?.users[0]}
+                                                                                                                        name1={PostionCharDatas?.data[10]?.users[1]}
+                                                                                                                        name2={PostionCharDatas?.data[10]?.users[2]}
+                                                                                                                        name3={PostionCharDatas?.data[10]?.users[3]}
+                                                                                                                        idPosition={PostionCharDatas?.data[10]?.positionId}
+                                                                                                                        mission={PostionCharDatas?.data[10]?.mission}
+                                                                                                                        handleUpdatePosition={handleUpdatePosition}
+                                                                                                                        setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[10]?.mission)}
+                                                                                                                    /></StyledNode>}>
+                                                                                                                        {PostionCharDatas?.data[11] &&
+                                                                                                                            <TreeNode label={<StyledNode><MemberViewBox1
+                                                                                                                                text_part={PostionCharDatas?.data[11]?.positionName}
+                                                                                                                                name={PostionCharDatas?.data[11]?.users[0]}
+                                                                                                                                name1={PostionCharDatas?.data[11]?.users[1]}
+                                                                                                                                name2={PostionCharDatas?.data[11]?.users[2]}
+                                                                                                                                name3={PostionCharDatas?.data[11]?.users[3]}
+                                                                                                                                idPosition={PostionCharDatas?.data[11]?.positionId}
+                                                                                                                                mission={PostionCharDatas?.data[11]?.mission}
+                                                                                                                                handleUpdatePosition={handleUpdatePosition}
+                                                                                                                                setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[11]?.mission)}
+                                                                                                                            /></StyledNode>}>
+                                                                                                                                {PostionCharDatas?.data[PostionCharDatas?.data?.length - 1]?.map((item: any, index: any) => {
+                                                                                                                                    return (
+                                                                                                                                        <TreeNode key={index} label={<StyledNode><MemberViewBox1
+                                                                                                                                            text_part={item?.positionName}
+                                                                                                                                            position='Tổng số nhân viên'
+                                                                                                                                            name='0'
+                                                                                                                                            employee_number={item?.tong_nv}
+                                                                                                                                            mission={item?.mission}
+                                                                                                                                            idPosition={item?.positionId}
+                                                                                                                                            handleUpdatePosition={handleUpdatePosition}
+                                                                                                                                            setOpenModalDetails={() => setOpenModalDetails(item?.mission)}
+                                                                                                                                        /></StyledNode>}>
+                                                                                                                                        </TreeNode>
+                                                                                                                                    )
+                                                                                                                                })}
+                                                                                                                            </TreeNode>
+                                                                                                                        }
+                                                                                                                    </TreeNode>
+                                                                                                                }
+                                                                                                            </TreeNode>
+                                                                                                        }
+                                                                                                    </TreeNode>
+                                                                                                }
+
+                                                                                            </TreeNode>
+                                                                                        }
+
+                                                                                    </TreeNode>
+                                                                                }
+
                                                                             </TreeNode>
-                                                                        </TreeNode>
+                                                                        }
+
                                                                     </TreeNode>
-                                                                </TreeNode>
+                                                                }
+
                                                             </TreeNode>
-                                                        </TreeNode>
+                                                        }
+
                                                     </TreeNode>
-                                                </TreeNode>
+                                                }
+
                                             </TreeNode>
-                                        </TreeNode>
+                                        }
+
                                     </TreeNode>
-                                </TreeNode>
-                                {treeNode}
+                                }
                             </Tree>
                         </div>
                     )}
                 </div>
             </div>
             {openModalEdit && <EditPositionCharModal
-                mission={missions} onCancel={handleModalClose} ></EditPositionCharModal>}
+                idPosition={openModalEdit} mission={isMission} onCancel={handleModalClose} ></EditPositionCharModal>}
             {openModalDetails && <DetailsPositionCharModal
-                mission={missions} onCancel={handleModalClose} ></DetailsPositionCharModal>}
+                mission={openModalDetails} onCancel={handleModalClose} ></DetailsPositionCharModal>}
             <BodyFrameFooter src="https://www.youtube.com/embed/_XzFBHXvNb8" />
         </div>
     )

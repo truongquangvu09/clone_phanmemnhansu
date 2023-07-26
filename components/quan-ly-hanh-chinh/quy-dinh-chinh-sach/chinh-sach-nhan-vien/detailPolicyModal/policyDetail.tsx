@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from "react";
-import styles from './detailRegulationModal.module.css'
+import styles from '../../quy-dinh-lam-viec/detailReguulationModal/detailRegulationModal.module.css'
 import MyEditor from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/components/Editor";
-import { AddSpecifiedGroup } from "@/pages/api/quy_dinh_chinh_sach";
-import { GroupDetails } from "@/pages/api/quy_dinh_chinh_sach";
+import { PolicyDetails } from "@/pages/api/quy_dinh_chinh_sach";
 import { format } from "date-fns";
+import UpdatePolicyModal from "../updatePolicyModal/policyUpdate";
 
-interface GroupDetailModalProps {
+interface PolicyDetailModalProps {
     onCancel: () => void;
-    idGroup: number
+    idGroup: number;
 }
 
-export default function GroupDetailModal({ onCancel, idGroup }: GroupDetailModalProps) {
-    console.log({ idGroup });
+export default function PolicyDetailModal({ onCancel, idGroup }: PolicyDetailModalProps) {
+
     const [DetailData, setDetailData] = useState<any | null>(null)
+    const [dataGroup, setDataGroup] = useState<any | null>(null)
+    const [openUpdate, setOpenUpdate] = useState(0)
+    const [keyWords, setKeyWords] = useState('')
+    console.log({ DetailData });
+
+
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await GroupDetails(idGroup)
+                const response = await PolicyDetails(idGroup)
                 setDetailData(response.data)
             } catch (error) {
                 throw error
@@ -26,7 +32,13 @@ export default function GroupDetailModal({ onCancel, idGroup }: GroupDetailModal
         fetchData()
     }, [])
 
-
+    const handleOpenUpdate = (idRegulation: number, event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault()
+        setOpenUpdate(idRegulation)
+    }
+    const handleCloseModal = () => {
+        setOpenUpdate(0)
+    }
 
     return (
         <>
@@ -35,15 +47,21 @@ export default function GroupDetailModal({ onCancel, idGroup }: GroupDetailModal
                     <div className={` ${styles.modal_dialog} ${styles.content_process}`}>
                         <div className={`${styles.modal_content}`}>
                             <div className={`${styles.modal_header} ${styles.header_process}`}>
-                                <h5 className={`${styles.modal_tittle}`}>CHI TIẾT NHÓM QUY ĐỊNH</h5>
+                                <h5 className={`${styles.modal_tittle}`}>CHI TIẾT CHÍNH SÁCH</h5>
                             </div>
+                            {openUpdate !== 0 && <UpdatePolicyModal idGroup={openUpdate} onCancel={handleCloseModal} />}
                             {DetailData?.data[0] &&
                                 <div className={`${styles.modal_body} ${styles.body_process}`}>
                                     <div className={`${styles.infors}`}>
+                                        <p style={{ marginBottom: 24 }} className={`${styles.qd_name}`}>{DetailData?.data[0]?.name}</p>
                                         <div className={`${styles.info_left}`}>
                                             <li>
                                                 <label>Nhóm quy định:</label>
-                                                <span className={`${styles.nqd_nqd}`}>{DetailData?.data[0]?.name}</span>
+                                                <span className={`${styles.nqd_nqd}`}>{DetailData?.data[0]?.EmployeePolicys[0]?.name}</span>
+                                            </li>
+                                            <li>
+                                                <label>Tạo bởi:</label>
+                                                <span className={`${styles.nqt_supervisor_name}`}>{DetailData?.data[0]?.createdBy}</span>
                                             </li>
                                             <li>
                                                 <label>Người giám sát:</label>
@@ -59,13 +77,17 @@ export default function GroupDetailModal({ onCancel, idGroup }: GroupDetailModal
                                                 <label>Có hiệu lực từ:</label>
                                                 <span className={`${styles.nqt_created_at}`}>{format(new Date(DetailData?.data[0]?.timeStart), 'dd/MM/yyyy')}</span>
                                             </li>
+                                            <li>
+                                                <label>Đối tượng thi hành:</label>
+                                                <span className={`${styles.nqt_created_at}`}>{DetailData?.data[0]?.applyFor}</span>
+                                            </li>
                                         </div>
                                     </div>
                                     <div className={`${styles.infors1}`}>
-                                        <p>Nội dung nhóm quy định</p>
+                                        <p>Nội dung quy định</p>
                                         <div className={`${styles.info_left}`} style={{ width: '100%' }}>
                                             <li className={`${styles.nqd_content}`}>
-                                                <p>{DetailData?.data[0]?.supervisorName}</p>
+                                                <p>{DetailData?.data[0]?.content}</p>
                                             </li>
                                         </div>
                                     </div>
@@ -75,8 +97,8 @@ export default function GroupDetailModal({ onCancel, idGroup }: GroupDetailModal
                                 </div>}
                             <div className={`${styles.modal_footer} ${styles.footer_process}`}>
                                 <button className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
+                                <button style={{ marginLeft: 10, backgroundColor: '#337ab7', color: '#fff' }} className={`${styles.btn_cancel}`} onClick={(event: any) => handleOpenUpdate(DetailData?.data[0]?.id, event)}>Sửa</button>
                             </div>
-
                         </div>
                     </div>
                 </div>

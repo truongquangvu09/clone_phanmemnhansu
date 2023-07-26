@@ -1,8 +1,21 @@
 import React, { useState } from "react";
 import styles from './editPositionModal.module.css'
 import Select from 'react-select';
+import { PostionCharUpdate } from "@/pages/api/co_cau_to_chuc";
 
-export default function EditPositionCharModal({ mission, onCancel }: any) {
+export default function EditPositionCharModal({ idPosition, mission, onCancel }: any) {
+
+    const handleSubmit = async () => {
+        try {
+            const description = (document.getElementById('mota_nhiemvu') as HTMLTextAreaElement)?.value
+            const formData = new FormData();
+            formData.append('positionId', idPosition)
+            formData.append('description', description)
+            const response = await PostionCharUpdate(formData)
+        } catch (error) {
+            throw error
+        }
+    }
 
     return (
         <>
@@ -23,7 +36,7 @@ export default function EditPositionCharModal({ mission, onCancel }: any) {
                                     </div>
                                     <div className={`${styles.modal_footer} ${styles.footer_process}`}>
                                         <button className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
-                                        <button className={`${styles.btn_add}`}>Cập nhật</button>
+                                        <button className={`${styles.btn_add}`} onClick={handleSubmit}>Cập nhật</button>
                                     </div>
                                 </form>
                             </div>

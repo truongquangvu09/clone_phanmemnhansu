@@ -233,6 +233,13 @@
   border: 1px solid #ddd;
   cursor: pointer;
 }
+.paginations {
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+  border: #333333;
+}
+
 /* -- salary --  */
 .member_list_salary {
   margin-top: -15px !important;
@@ -282,6 +289,7 @@
 .custom_file_upload a {
   color: #4c5bd4;
 }
+
 @media screen and (max-width: 768px) {
   .search_new_t {
     display: block;

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from '../editPositonCharModal/editPositionModal.module.css'
 import Select from 'react-select';
+import { PostionCharDetail } from "@/pages/api/co_cau_to_chuc";
 
 export default function DetailsPositionCharModal({ mission, onCancel }: any) {
 
@@ -11,7 +12,7 @@ export default function DetailsPositionCharModal({ mission, onCancel }: any) {
                     <div className={` ${styles.modal_dialog} ${styles.content_process}`}>
                         <div className={`${styles.modal_content}`}>
                             <div className={`${styles.modal_header} ${styles.header_process}`}>
-                                <h5 className={`${styles.modal_tittle}`}>CHI TIẾT MÔ TẢ PHÒNG BAN</h5>
+                                <h5 className={`${styles.modal_tittle}`}>CHI TIẾT MÔ TẢ NHIỆM VỤ</h5>
                             </div>
                             <div className={`${styles.modal_body}`}>
                                 <form action="">

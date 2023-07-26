@@ -1,50 +1,88 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import styles from '../../planningAppointment/addPlanningModal/addPlanningModal.module.css'
 import Select from 'react-select';
 import MyEditor from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/components/Editor";
+import { AddWorkingRotation } from "@/pages/api/bien_dong_nhan_su";
+import { FetchDataOrganizationalStructure, FetchDataEmployee, FetchDataPosition, FetchDataSpecifiedGroup } from "@/components/util/listAll";
 
+interface InputTextareaProps {
+    onDescriptionChange: (data: any) => void
+}
+type SelectOptionType = { label: string, value: string }
 
-function Input_textarea() {
+function Input_textarea({ onDescriptionChange }: InputTextareaProps) {
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [data, setData] = useState("");
 
     useEffect(() => {
         setEditorLoaded(true);
     }, []);
-    console.log(data);
+
+    const extractTextFromHTML = (htmlString) => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlString, "text/html");
+        const text = doc.querySelector("p")?.textContent || "";
+        return text;
+    };
+
+    const handleEditorChange = (data: string) => {
+        setData(data);
+        const extractedText = extractTextFromHTML(data); // Lấy chỉ văn bản từ chuỗi HTML
+        onDescriptionChange(extractedText);
+    };
+
     return (
         <div>
             <MyEditor
                 name="Editor"
-                onChange={(data: React.SetStateAction<string>) => {
-                    setData(data);
-                }}
+                onChange={handleEditorChange}
                 editorLoaded={editorLoaded}
                 value={data}
             />
-
-            {/* {JSON.stringify(data)} */}
         </div>
     );
 }
 
-type SelectOptionType = { label: string, value: string }
-
 export default function AddWorkingModal({ onCancel }: any) {
-    function handleUploadClick(event: React.MouseEvent<HTMLAnchorElement>) {
-        event.preventDefault();
-        const uploadInput = document.getElementById('upload_cv') as HTMLInputElement;
-        if (uploadInput) {
-            uploadInput.click();
-        }
-    }
-    const [content, setContent] = useState('');
-
-    const handleContentChange = (value: string) => {
-        setContent(value);
-    };
 
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
+    const [isEmpList, setEmpList] = useState<any>(null)
+    const [isOrganizationalStructureList, setOrganizationalStructureList] = useState<any>(null)
+    const [isPositionList, setPositionList] = useState<any>(null)
+    const [isSpecifiedList, setSpecifiedList] = useState<any>(null)
+    const [isMission, setMission] = useState("");
+    const [isNote, setNote] = useState("");
+
+    const [isCom_id, setCom_id] = useState<any>(null)
+    const [isCom_idNew, setCom_idNew] = useState<any>(null)
+    const [isDep_id, setDep_id] = useState<any>(null)
+    const [isDep_idNew, setDep_idNew] = useState<any>(null)
+    const [isEmp_id, setEmp_id] = useState<any>(null)
+    const [isPosition_id, setPosition_id] = useState<any>(null)
+    const [isPosition_idNew, setPosition_idNew] = useState<any>(null)
+    const [isSpecified_id, setSpecified_id] = useState<any>(null)
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    async function fetchData() {
+        try {
+            const organizationStructure = await FetchDataOrganizationalStructure();
+            setOrganizationalStructureList(organizationStructure);
+
+            const empData = await FetchDataEmployee();
+            setEmpList(empData);
+
+            const position = await FetchDataPosition()
+            setPositionList(position)
+
+            const specifiedGroup = await FetchDataSpecifiedGroup()
+            setSpecifiedList(specifiedGroup)
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
 
     const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
         if (option) {
@@ -52,65 +90,174 @@ export default function AddWorkingModal({ onCancel }: any) {
         }
     };
 
+    const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        try {
+            const created_at = (document.getElementById('created_at') as HTMLInputElement)?.value
+            const formData = new FormData();
+            formData.append('ep_id', isEmp_id)
+            formData.append('current_position', isPosition_id)
+            formData.append('current_dep_id', isDep_id)
+            formData.append('created_at', created_at)
+            formData.append('com_id', isCom_id)
+            formData.append('new_com_id', isCom_idNew)
+            formData.append('decision_id', isSpecified_id)
+            formData.append('update_position', isPosition_idNew)
+            formData.append('update_dep_id', isDep_idNew)
+            formData.append('mission', isMission)
+            formData.append('note', isNote)
+
+            const response = await AddWorkingRotation(formData)
+        } catch (error) {
+            throw error
+        }
+    }
+
+    const handleSelectChange = (selectedOption: SelectOptionType | null, setState: any) => {
+        setSelectedOption(selectedOption);
+        if (selectedOption) {
+            setState(selectedOption.value); // Set giá trị đã chọn vào state setIsDep_id
+        }
+    };
+
+    const handleInputAreaChange = (data: string, setState: any) => {
+        setState(data);
+    };
+
+    const companyNames: any = [];
+    const companyNamesNew: any = [];
+    if (isOrganizationalStructureList?.infoCompany) {
+        companyNames.push({ key: isOrganizationalStructureList?.infoCompany?.companyName, value: isOrganizationalStructureList?.infoCompany?.parent_com_id });
+        for (const company of isOrganizationalStructureList?.infoCompany?.infoChildCompany) {
+            companyNames.push({ key: company.com_name, value: company.com_id });
+            companyNamesNew.push({ key: company.com_name, value: company.com_id });
+        }
+    }
+
+    const depInfoArray: any = [];
+    const depInfoArrayNew: any = [];
+    function isValidComId(com_id: any) {
+        return isOrganizationalStructureList?.infoCompany?.parent_com_id === com_id ||
+            isOrganizationalStructureList?.infoChildCompany?.some(company => company.com_id === com_id);
+    }
+
+    if (isOrganizationalStructureList?.infoCompany) {
+        for (const infoDep of isOrganizationalStructureList?.infoCompany?.infoDep) {
+            if (isValidComId(isCom_id)) {
+                depInfoArray.push({
+                    dep_name: infoDep.dep_name,
+                    dep_id: infoDep.dep_id
+                });
+            }
+        }
+    }
+
+    if (isOrganizationalStructureList?.infoCompany) {
+        for (const infoDep of isOrganizationalStructureList?.infoCompany?.infoDep) {
+            if (isValidComId(isCom_idNew)) {
+                depInfoArrayNew.push({
+                    dep_name: infoDep.dep_name,
+                    dep_id: infoDep.dep_id
+                });
+            }
+        }
+    }
+
+    const chonchinhanhOptions = useMemo(
+        () =>
+            companyNames && companyNames?.map((organizational: any) => ({
+                value: organizational.value,
+                label: organizational.key,
+            })),
+        [companyNames]
+    );
+
+    const chonphongbanOptions = useMemo(
+        () =>
+            depInfoArray && depInfoArray?.map((dep: any) => ({
+                value: dep.dep_id,
+                label: dep.dep_name,
+            })),
+        [depInfoArray]
+    );
+
+    const chonphongbanmoiOptions = useMemo(
+        () =>
+            depInfoArrayNew && depInfoArrayNew?.map((dep: any) => ({
+                value: dep.dep_id,
+                label: dep.dep_name,
+            })),
+        [depInfoArrayNew]
+    );
+
+    const chonnhanvienOptions = useMemo(
+        () =>
+            isEmpList &&
+            isEmpList?.data
+                .filter((emp: any) => emp?.dep_id[0] === isDep_id)
+                .map((emp: any) => ({
+                    value: emp.idQLC,
+                    label: emp.userName
+                })),
+        [isEmpList, isDep_id]
+    );
+
+    const PositionList = isPositionList?.data?.flat();
+    const PositionInfoArray: any = [];
+
+    if (PositionList) {
+        const employee = isEmpList?.data?.find((emp: any) => emp.idQLC === isEmp_id);
+        if (employee && Array.isArray(PositionList)) {
+            const position_id = employee.position_id;
+            const position = PositionList.find((pos: any) => pos.positionId === position_id);
+            if (position) {
+                PositionInfoArray.push({
+                    pos_name: position.positionName,
+                    pos_id: position.positionId
+                });
+            }
+        }
+    }
+
+    const chonchucvuOptions = useMemo(
+        () =>
+            PositionInfoArray &&
+            PositionInfoArray?.map((pos: any) => ({
+                value: pos.pos_id,
+                label: pos.pos_name
+            })),
+        [PositionInfoArray]
+    );
+
+
+    const chonchucvumoiOptions = useMemo(
+        () =>
+            PositionList &&
+            PositionList?.map((pos: any) => ({
+                value: pos.positionId,
+                label: pos.positionName
+            })),
+        [PositionList]
+    );
+
+    const chonquydinhOptions = useMemo(
+        () =>
+            isSpecifiedList &&
+            isSpecifiedList?.data?.map((spe: any) => ({
+                value: spe.id,
+                label: spe.name
+            })),
+        [isSpecifiedList]
+    );
+
+
     const options = {
-        chonchinhanh: [
-            { value: 'PT shop', label: 'PT shop' },
-            { value: 'LT legend', label: 'LT legend' },
-            { value: 'LT pay 3', label: 'LT pay 3' },
-            { value: 'Công ty cổ phần Thanh toán Hưng Hà 2 ', label: 'Công ty cổ phần Thanh toán Hưng Hà 2 ' },
-        ],
-        chonphongban: [
-            { value: '  BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
-            { value: 'KỸ THUẬT', label: 'KỸ THUẬT' },
-            { value: 'Biên tập', label: 'Biên tập' },
-            { value: 'Kinh Doanh', label: 'Kinh Doanh' },
-            { value: 'Đề án', label: 'Đề án' },
-            { value: 'Phòng SEO', label: 'Phòng SEO' },
-            { value: 'Phòng Đào tạo', label: 'Phòng Đào tạo' },
-            { value: 'Phòng sáng tạo', label: 'phòng sáng tạo' },
-            { value: 'Phòng tài vụ', label: 'Phòng tài vụ' },
-        ],
-        chonnhanvien: [
-            { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
-            { value: 'Phan Mạnh Hùng', label: 'Phan Mạnh Hùng (SÁNG TẠO - ID:153846)' },
-        ],
-        chucvuhientai: [
-            { value: 'sinh viên thực tập', label: 'SINH VIÊN THỰC TẬP' },
-            { value: 'nhân viên part time', label: 'NHÂN VIÊN PART TIME' },
-            { value: 'nhân viên thử việc', label: 'NHÂN VIÊN THỬ VIỆC' },
-            { value: 'nhân viên chính thức', label: 'NHÂN VIÊN CHÍNH THỨC' },
-            { value: 'trưởng nhóm', label: 'TRƯỞNG NHÓM' },
-            { value: 'nhóm phó', label: 'NHÓM PHÓ' },
-            { value: 'tổ trưởng', label: 'TỔ TRƯỞNG' },
-            { value: 'phó tổ trưởng', label: 'PHÓ TỔ TRƯỞNG' },
-            { value: 'trưởng ban dự án', label: 'TRƯỞNG BAN DỰ ÁN   ' },
-            { value: 'phó ban dự án', label: 'PHÓ BAN DỰ ÁN' },
-            { value: 'trưởng phòng', label: 'TRƯỞNG PHÒNG' },
-            { value: 'phó trưởng phòng', label: 'PHÓ TRƯỞNG PHÒNG' },
-            { value: 'giám đốc', label: 'GIÁM ĐỐC' },
-            { value: 'phó giám đốc', label: 'PHÓ GIÁM ĐỐC   ' },
-            { value: 'tổng giám đốc', label: 'TỔNG GIÁM ĐỐC' },
-            { value: 'phó tổng giám đốc', label: 'PHÓ TỔNG GIÁM ĐỐC' },
-            { value: 'tổng giám đốc tập đoàn', label: 'TỔNG GIÁM ĐỐC TẬP ĐOÀN' },
-            { value: 'phó  tổng giám đốc tập đoàn', label: 'PHÓ TỔNG GIÁM ĐỐC TẬP ĐOÀN' },
-            { value: 'chủ tịch hội đồng quản trị', label: 'CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ' },
-            { value: 'phó chủ tịch hội đồng quản trị', label: 'PHÓ CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ' },
-            { value: 'thành viên hội đồng quản trị', label: 'THÀNH VIÊN HỘI ĐỒNG QUẢN TRỊ' },
-        ],
-        quyhoachbonhiem: [
-            { value: 'sinh viên thực tập', label: 'SINH VIÊN THỰC TẬP' },
-            { value: 'nhân viên part time', label: 'NHÂN VIÊN PART TIME' },
-        ],
-        donvicongtacmoi: [
-            { value: 'PT shop', label: 'PT shop' },
-            { value: 'LT legend', label: 'LT legend' },
-            { value: 'LT pay 3', label: 'LT pay 3' },
-            { value: 'Công ty cổ phần Thanh toán Hưng Hà 2 ', label: 'Công ty cổ phần Thanh toán Hưng Hà 2 ' },
-        ],
-        phongbanmoi: [
-            { value: '  BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
-            { value: 'KỸ THUẬT', label: 'KỸ THUẬT' },
-        ],
+        chonchinhanh: chonchinhanhOptions,
+        chonphongban: chonphongbanOptions,
+        chonnhanvien: chonnhanvienOptions,
+        chucvuhientai: chonchucvuOptions,
+        donvicongtacmoi: chonchinhanhOptions,
+        phongbanmoi: chonphongbanmoiOptions,
         to: [
             { value: '  BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
             { value: 'KỸ THUẬT', label: 'KỸ THUẬT' },
@@ -119,33 +266,8 @@ export default function AddWorkingModal({ onCancel }: any) {
             { value: '  BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
             { value: 'KỸ THUẬT', label: 'KỸ THUẬT' },
         ],
-        chucvumoi: [
-            { value: 'sinh viên thực tập', label: 'SINH VIÊN THỰC TẬP' },
-            { value: 'nhân viên part time', label: 'NHÂN VIÊN PART TIME' },
-            { value: 'nhân viên thử việc', label: 'NHÂN VIÊN THỬ VIỆC' },
-            { value: 'nhân viên chính thức', label: 'NHÂN VIÊN CHÍNH THỨC' },
-            { value: 'trưởng nhóm', label: 'TRƯỞNG NHÓM' },
-            { value: 'nhóm phó', label: 'NHÓM PHÓ' },
-            { value: 'tổ trưởng', label: 'TỔ TRƯỞNG' },
-            { value: 'phó tổ trưởng', label: 'PHÓ TỔ TRƯỞNG' },
-            { value: 'trưởng ban dự án', label: 'TRƯỞNG BAN DỰ ÁN   ' },
-            { value: 'phó ban dự án', label: 'PHÓ BAN DỰ ÁN' },
-            { value: 'trưởng phòng', label: 'TRƯỞNG PHÒNG' },
-            { value: 'phó trưởng phòng', label: 'PHÓ TRƯỞNG PHÒNG' },
-            { value: 'giám đốc', label: 'GIÁM ĐỐC' },
-            { value: 'phó giám đốc', label: 'PHÓ GIÁM ĐỐC   ' },
-            { value: 'tổng giám đốc', label: 'TỔNG GIÁM ĐỐC' },
-            { value: 'phó tổng giám đốc', label: 'PHÓ TỔNG GIÁM ĐỐC' },
-            { value: 'tổng giám đốc tập đoàn', label: 'TỔNG GIÁM ĐỐC TẬP ĐOÀN' },
-            { value: 'phó  tổng giám đốc tập đoàn', label: 'PHÓ TỔNG GIÁM ĐỐC TẬP ĐOÀN' },
-            { value: 'chủ tịch hội đồng quản trị', label: 'CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ' },
-            { value: 'phó chủ tịch hội đồng quản trị', label: 'PHÓ CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ' },
-            { value: 'thành viên hội đồng quản trị', label: 'THÀNH VIÊN HỘI ĐỒNG QUẢN TRỊ' },
-        ],
-        chonquydinh: [
-            { value: 'quy định bổ nhiệm số 003/HHP-P1', label: 'Quy định bổ nhiệm số 003/HHP-P1' },
-            { value: 'quy định bổ nhiệm số 003/HHP-P2', label: 'Quy định bổ nhiệm số 003/HHP-P2' },
-        ],
+        chucvumoi: chonchucvumoiOptions,
+        chonquydinh: chonquydinhOptions,
     };
 
     return (
@@ -164,7 +286,7 @@ export default function AddWorkingModal({ onCancel }: any) {
                                         <div className={`${styles.input_right}`}>
                                             <Select
                                                 defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.chonchinhanh)}
+                                                onChange={(option) => handleSelectChange(option, setCom_id)}
                                                 options={options.chonchinhanh}
                                                 placeholder="Chọn chi nhánh"
                                                 styles={{
@@ -190,7 +312,7 @@ export default function AddWorkingModal({ onCancel }: any) {
                                         <div className={`${styles.input_right}`}>
                                             <Select
                                                 defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.chonphongban)}
+                                                onChange={(option) => handleSelectChange(option, setDep_id)}
                                                 options={options.chonphongban}
                                                 placeholder="Chọn phòng ban"
                                                 styles={{
@@ -215,7 +337,7 @@ export default function AddWorkingModal({ onCancel }: any) {
                                         <div className={`${styles.input_right}`}>
                                             <Select
                                                 defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.chonnhanvien)}
+                                                onChange={(option) => handleSelectChange(option, setEmp_id)}
                                                 options={options.chonnhanvien}
                                                 placeholder="Chọn nhân viên"
                                                 styles={{
@@ -240,9 +362,10 @@ export default function AddWorkingModal({ onCancel }: any) {
                                         <div className={`${styles.input_right}`}>
                                             <Select
                                                 defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.chucvuhientai)}
+                                                onChange={(option) => handleSelectChange(option, setPosition_id)}
                                                 options={options.chucvuhientai}
                                                 placeholder="Chọn chức vụ"
+                                                value={options.chucvuhientai}
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
@@ -265,8 +388,8 @@ export default function AddWorkingModal({ onCancel }: any) {
                                         <div className={`${styles.input_right}`}>
                                             <Select
                                                 defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.donvicongtacmoi)}
-                                                options={options.donvicongtacmoi}
+                                                onChange={(option) => handleSelectChange(option, setCom_idNew)}
+                                                options={options.chonchinhanh}
                                                 placeholder="Chọn chi nhánh"
                                                 styles={{
                                                     control: (baseStyles, state) => ({
@@ -290,8 +413,8 @@ export default function AddWorkingModal({ onCancel }: any) {
                                         <div className={`${styles.input_right}`}>
                                             <Select
                                                 defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.phongbanmoi)}
-                                                options={options.phongbanmoi}
+                                                onChange={(option) => handleSelectChange(option, setDep_idNew)}
+                                                options={options.chonphongban}
                                                 placeholder="Chọn phòng ban"
                                                 styles={{
                                                     control: (baseStyles, state) => ({
@@ -365,7 +488,7 @@ export default function AddWorkingModal({ onCancel }: any) {
                                         <div className={`${styles.input_right}`}>
                                             <Select
                                                 defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.chucvumoi)}
+                                                onChange={(option) => handleSelectChange(option, setPosition_idNew)}
                                                 options={options.chucvumoi}
                                                 placeholder="Chọn chức vụ"
                                                 styles={{
@@ -389,7 +512,7 @@ export default function AddWorkingModal({ onCancel }: any) {
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Thời gian luân chuyển công tác <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <input type="date" id="names" placeholder="dd/mm/yyyy" className={`${styles.input_process}`} />
+                                            <input type="date" id="created_at" placeholder="dd/mm/yyyy" className={`${styles.input_process}`} />
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -397,7 +520,7 @@ export default function AddWorkingModal({ onCancel }: any) {
                                         <div className={`${styles.input_right}`}>
                                             <Select
                                                 defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.chonquydinh)}
+                                                onChange={(option) => handleSelectChange(option, setSpecified_id)}
                                                 options={options.chonquydinh}
                                                 placeholder="Chọn quy định"
                                                 styles={{
@@ -420,18 +543,18 @@ export default function AddWorkingModal({ onCancel }: any) {
                                     <div className={`${styles.form_groups} ${styles.cke}`}>
                                         <label htmlFor="">Nhiệm vụ công việc mới <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.ckeditor}`}>
-                                            <Input_textarea />
+                                            <Input_textarea onDescriptionChange={(data) => handleInputAreaChange(data, setMission)} />
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups} ${styles.cke}`}>
                                         <label htmlFor="">Ghi chú</label>
                                         <div className={`${styles.ckeditor}`}>
-                                            <Input_textarea />
+                                            <Input_textarea onDescriptionChange={(data) => handleInputAreaChange(data, setNote)} />
                                         </div>
                                     </div>
                                     <div className={`${styles.modal_footer} ${styles.footer_process}`}>
                                         <button className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
-                                        <button className={`${styles.btn_add}`}>Thêm</button>
+                                        <button className={`${styles.btn_add}`} onClick={handleSubmit}>Thêm</button>
                                     </div>
                                 </form>
                             </div>

@@ -1,105 +1,190 @@
-import React, { useState, useEffect, useRef, MouseEventHandler } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import Select from 'react-select'
 import styles from './sealAndSignature.module.css'
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 import AddSealModal from "./addSealModal";
+import { SealAndSignatureData } from "@/pages/api/co_cau_to_chuc";
+import { SignatureList } from "@/pages/api/co_cau_to_chuc";
+import { UploadSignature } from "@/pages/api/co_cau_to_chuc";
+import { DepartmentList } from "@/pages/api/listPhongBan";
+import DeleteSealUseList from "./deleteSealModal/useSealListDelete";
+import DeleteSignatures from "./deleteSealModal/signatureListDelete";
+import MyPagination from '@/components/pagination/Pagination';
 
 type SelectOptionType = { label: string, value: string }
-export interface TabPayrollDown {
-
-}
-export interface Employee {
-    stt: number;
-    id: number;
-    name: string;
-    chucvu: string;
-    phongban: string;
-    mauchuki: any
-}
 
 export default function SealAndSignature({ children }: any) {
 
-    const [activeButton, setActiveButton] = useState(0)
-    const [employeeCount, setEmployeeCount] = useState(10)
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
     const [openModal, setOpenModal] = useState(0)
-    const [openEditModal, setOpenEditModal] = useState(false)
+    const [currentPageSeal, setCurrentPageSeal] = useState<any>(1);
+    const [currentPageSignature, setCurrentPageSignature] = useState<any>(1);
+    const [useSealList, setUseSealList] = useState<any>(null)
+    const [signaturelList, setSignatureList] = useState<any>(null)
+    const [departmentList, setDepartmentList] = useState<any>(null)
+    const [openDeleteSealList, setOpenDeleteSealList] = useState(0)
+    const [openDeleteSignature, setOpenDeleteSignature] = useState(0)
+    const [isEmpId, setIsEmpId] = useState<any>(null)
+    const [isDep_idSeal, setIsDep_idSeal] = useState<any>("")
+    const [isDep_idSignature, setIsDep_idSignature] = useState<any>("")
+    const [isKeySeal, setKeySeal] = useState<any>("")
+    const [isKeySignature, setKeySignature] = useState<any>("")
+    const [isSeachSeal, setSearchSeal] = useState<any>(null)
+    const [isSeachSignature, setSearchSignature] = useState<any>(null)
 
-    function handleUploadClick(event: React.MouseEvent<HTMLAnchorElement>) {
+
+    // Fetch data for seal
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const pagesize: any = 5
+                const formData = new FormData();
+                formData.append('dep_id', isDep_idSeal)
+                formData.append('key', isKeySeal)
+                formData.append('page', currentPageSeal)
+                formData.append('pageSize', pagesize)
+                const response = await SealAndSignatureData(formData)
+                setUseSealList(response.data)
+            } catch (error) {
+                throw error
+            }
+        }
+        fetchData()
+    }, [isSeachSeal, currentPageSeal])
+
+
+    // Fetch data for signatures
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const pagesize: any = 5
+                const formData = new FormData();
+                formData.append('dep_id', isDep_idSignature)
+                formData.append('key', isKeySignature)
+                formData.append('page', currentPageSignature)
+                formData.append('pageSize', pagesize)
+                const response = await SignatureList(formData)
+                setSignatureList(response.data)
+                setIsEmpId(null)
+            } catch (error) {
+                throw error
+            }
+        }
+        fetchData()
+    }, [isSeachSignature, currentPageSignature])
+
+
+    // Fetch data for department
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const comid: any = 1664
+                const formData = new FormData()
+                formData.append('com_id', comid)
+                const response = await DepartmentList(formData)
+                setDepartmentList(response.data)
+            } catch (error) {
+                throw error
+            }
+        }
+        fetchData()
+    }, [])
+
+    // Handle search for seals
+    const handleSearchSeal = useCallback(() => {
+        setSearchSeal({ isKeySeal, isDep_idSeal });
+    }, [isKeySeal, isDep_idSeal]);
+
+    // Handle search for signatures
+    const handleSearchSignature = useCallback(() => {
+        setSearchSignature({ isKeySignature, isDep_idSignature });
+    }, [isKeySignature, isDep_idSignature]);
+
+    // Handle file upload for signatures
+    const handleUploadSignature = async (file: File) => {
+        try {
+            if (file) {
+                const formData = new FormData();
+                formData.append('empId', isEmpId);
+                formData.append('signature', file);
+                const response = await UploadSignature(formData);
+
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    // Handle file input change
+    const handleProvisionFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files && event.target.files[0];
+        if (file) {
+            handleUploadSignature(file);
+        }
+    };
+
+    function handleUploadClick(event: React.MouseEvent<HTMLAnchorElement>, empId: any) {
         event.preventDefault();
+        setIsEmpId(empId)
         const uploadInput = document.getElementById('upload_file') as HTMLInputElement;
         if (uploadInput) {
             uploadInput.click();
         }
     }
 
-    function handleEditClick(event: React.MouseEvent<HTMLAnchorElement>) {
+    function handleEditClick(event: React.MouseEvent<HTMLAnchorElement>, empId: any) {
         event.preventDefault();
+        setIsEmpId(empId)
         const uploadInput = document.getElementById('edit_file') as HTMLInputElement;
         if (uploadInput) {
             uploadInput.click();
         }
     }
 
-    const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
-        if (option) {
-            setSelectedOption(option)
+    const handleSelectChangeSeal = (selectedOption: SelectOptionType | null) => {
+        setSelectedOption(selectedOption); // Lưu giá trị đã chọn vào state selectedOption
+        if (selectedOption) {
+            setIsDep_idSeal(selectedOption.value); // Set giá trị đã chọn vào state setIsDep_id
+        }
+    };
+
+    const handleSelectChangeSignature = (selectedOption: SelectOptionType | null) => {
+        setSelectedOption(selectedOption); // Lưu giá trị đã chọn vào state selectedOption
+        if (selectedOption) {
+            setIsDep_idSignature(selectedOption.value); // Set giá trị đã chọn vào state setIsDep_id
         }
     };
 
     const handleCloseModal = () => {
         setOpenModal(0)
-        setOpenEditModal(false)
+        setOpenDeleteSealList(0)
+        setOpenDeleteSignature(0)
     }
+
+    const handleSealPageChange = (page: number) => {
+        setCurrentPageSeal(page);
+    };
+
+    const handleSignaturePageChange = (page: number) => {
+        setCurrentPageSignature(page);
+    };
+
+    const chonphongbanOptions = useMemo(
+        () =>
+            departmentList?.data?.map((department: any) => ({
+                value: department.dep_id,
+                label: department.dep_name,
+            })),
+        [departmentList?.data]
+    );
+
 
     const options = {
-        chonnhanvien: [
-            { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
-            { value: 'Phan Mạnh Hùng', label: 'Phan Mạnh Hùng (SÁNG TẠO - ID:153846)' },
-        ],
-        chonphongban: [
-            { value: '  BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
-            { value: 'KỸ THUẬT', label: 'KỸ THUẬT' },
-        ]
+        chonphongban: chonphongbanOptions
     };
-    useEffect(() => {
-        setCurrentList(listCandidates.slice(0, employeeCount));
-    }, [employeeCount]);
 
-
-    function createArray(n: number): Employee[] {
-        const obj: Employee = {
-            stt: 1,
-            id: 1,
-            name: 'nguyen van a',
-            chucvu: 'PGD',
-            phongban: '201',
-            mauchuki: ''
-        };
-        return Array(n).fill(obj);
-    }
-    const listCandidates: Employee[] = createArray(4);
-
-    const handleChoose = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = parseInt(event.target.value);
-        setEmployeeCount(value)
-        setCurrentList(listCandidates.slice(0, value));
-        window.scrollTo(0, 0);
-    }
-
-    const totalPages = Math.ceil(listCandidates.length / employeeCount);
-
-    const [currentList, setCurrentList] = useState<Employee[] | null>(null);
-
-    const handleClick = (buttonIndex: number) => {
-        setActiveButton(buttonIndex)
-    }
     const tableContentRef = useRef<HTMLDivElement>(null);
 
-    const handleOpenEdit: MouseEventHandler<HTMLAnchorElement> = (event) => {
-        event.preventDefault();
-        setOpenEditModal(true);
-    }
     return (
         <>
             <div className={`${styles.tab_content}`}>
@@ -114,16 +199,17 @@ export default function SealAndSignature({ children }: any) {
                                 </button></div>
                         </div>
                         {openModal === 1 && <AddSealModal onCancel={handleCloseModal}></AddSealModal>}
-
+                        {openDeleteSealList && <DeleteSealUseList empId={openDeleteSealList} onCancel={handleCloseModal} />}
+                        {openDeleteSignature && <DeleteSignatures empId={openDeleteSignature} onCancel={handleCloseModal} />}
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_new_t}`}>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning} `}>
-                                    <input type="text" className={`${styles.search_date} ${styles.form_control}`} placeholder='Nhập ID nhân viên' />
+                                    <input id="emp_id" type="text" onChange={(event) => setKeySeal(event.target.value)} className={`${styles.search_date} ${styles.form_control}`} placeholder='Nhập ID nhân viên' />
                                 </div>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning} `}>
                                     <Select
                                         defaultValue={selectedOption}
-                                        onChange={(option) => handleSelectionChange(option, options.chonphongban)}
+                                        onChange={handleSelectChangeSeal}
                                         options={options.chonphongban}
                                         placeholder="Chọn phòng ban"
                                         styles={{
@@ -161,7 +247,7 @@ export default function SealAndSignature({ children }: any) {
                                     />
                                 </div>
                                 <div className={`${styles.div_no_pad_search}   `}>
-                                    <a href="" className={`${styles.icon_search_top} ${styles.div_search_salary} `}>
+                                    <a className={`${styles.icon_search_top} ${styles.div_search_salary} `} onClick={handleSearchSeal}>
                                         <img style={{ verticalAlign: '-webkit-baseline-middle' }} src={`/t-icon-search-n.svg`} alt="" />
                                     </a>
                                 </div>
@@ -177,23 +263,48 @@ export default function SealAndSignature({ children }: any) {
                                             <th>Họ và tên</th>
                                             <th>Chức vụ</th>
                                             <th>Phòng ban</th>
+                                            <th></th>
 
                                         </tr>
                                     </thead>
                                     <tbody className={`${styles.filter_body}`}>
-                                        {currentList?.map((item, index) => (
-                                            <tr key={index}>
-                                                <td>{item.stt}</td>
-                                                <td>{item.id}</td>
-                                                <td>{item.name}</td>
-                                                <td>{item.chucvu}</td>
-                                                <td>{item.phongban}</td>
+                                        {useSealList?.listEmpUseSignature?.length ? (
+                                            useSealList?.listEmpUseSignature.map((item: any, index: any) => (
+                                                <tr key={index}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{item?._id}</td>
+                                                    <td>{item?.userName}</td>
+                                                    <td>{item?.namePosition}</td>
+                                                    <td>{item.dep_name}</td>
+                                                    <td>
+                                                        <a
+                                                            style={{ cursor: 'pointer' }}
+                                                            onClick={() => setOpenDeleteSealList(item?._id)}
+                                                            className={`${styles.btn_delete}`}
+                                                        >
+                                                            <img src={`/icon_delete.svg`} alt="" />
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+
+                                            <tr>
+                                                <td colSpan={6} >Danh sách trống</td>
                                             </tr>
-                                        ))}
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
                         </div>
+                    </div>
+                    <div className={`${styles.paginations}`} style={{ display: 'block' }}>
+                        <MyPagination
+                            current={currentPageSeal}
+                            total={useSealList?.total}
+                            pageSize={5}
+                            onChange={handleSealPageChange}
+                        />
                     </div>
                     <div className={`${styles.body} ${styles.body_planning}`}>
                         <div className={`${styles.recruitment}`}>
@@ -203,12 +314,12 @@ export default function SealAndSignature({ children }: any) {
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_new_t}`}>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning} `}>
-                                    <input type="text" className={`${styles.search_date} ${styles.form_control}`} placeholder='Nhập ID nhân viên' />
+                                    <input type="text" onChange={(event) => setKeySignature(event.target.value)} className={`${styles.search_date} ${styles.form_control}`} placeholder='Nhập ID nhân viên' />
                                 </div>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning} `}>
                                     <Select
                                         defaultValue={selectedOption}
-                                        onChange={(option) => handleSelectionChange(option, options.chonphongban)}
+                                        onChange={handleSelectChangeSignature}
                                         options={options.chonphongban}
                                         placeholder="Chọn phòng ban"
                                         styles={{
@@ -246,7 +357,7 @@ export default function SealAndSignature({ children }: any) {
                                     />
                                 </div>
                                 <div className={`${styles.div_no_pad_search}   `}>
-                                    <a href="" className={`${styles.icon_search_top} ${styles.div_search_salary} `}>
+                                    <a className={`${styles.icon_search_top} ${styles.div_search_salary} `} onClick={handleSearchSignature}>
                                         <img style={{ verticalAlign: '-webkit-baseline-middle' }} src={`/t-icon-search-n.svg`} alt="" />
                                     </a>
                                 </div>
@@ -267,101 +378,55 @@ export default function SealAndSignature({ children }: any) {
                                         </tr>
                                     </thead>
                                     <tbody className={`${styles.filter_body}`}>
-                                        {currentList?.map((item, index) => (
-                                            <tr key={index}>
-                                                <td>{item.stt}</td>
-                                                <td>{item.id}</td>
-                                                <td>{item.name}</td>
-                                                <td>{item.chucvu}</td>
-                                                <td>{item.phongban}</td>
-                                                <td>
-                                                    <label className={`${styles.custom_file_upload}`}><a href="" onClick={handleUploadClick}>Tải lên chữ ký</a></label>
-                                                    <input id="upload_file" data-id="284670" accept="image/*" className={`${styles.upload_file}`} type="file"></input>
-                                                </td>
-                                                <td>
-                                                    <label htmlFor="" className={`${styles.edit_stamp}`} >
-                                                        <a href="" onClick={handleEditClick} style={{ paddingRight: 10 }}>
-                                                            <img src={`/icon_edit.svg`} alt="" />
+                                        {signaturelList?.infoLeaderAfter?.length ? (
+                                            signaturelList?.infoLeaderAfter?.map((item: any, index: any) => (
+                                                <tr key={index}>
+                                                    <td>{index + 1}</td>
+                                                    <td>{item?._id}</td>
+                                                    <td>{item?.userName}</td>
+                                                    <td>{item?.namePosition}</td>
+                                                    <td>{item?.dep_name}</td>
+                                                    <td>
+                                                        <label className={`${styles.custom_file_upload}`}><a href="" onClick={(event) => handleUploadClick(event, item?._id)}>
+                                                            {item?.linkSignature === 'Chưa cập nhật' ? (
+                                                                <p>Tải lên chữ kí</p>
+                                                            ) : (
+                                                                <img src={item?.linkSignature} alt="" />
+                                                            )}
+                                                        </a></label>
+                                                        <input id="upload_file" data-id="284670" accept="image/*" className={`${styles.upload_file}`} type="file" onChange={(event) => handleProvisionFileChange(event)}></input>
+                                                    </td>
+                                                    <td>
+                                                        <label htmlFor="" className={`${styles.edit_stamp}`} >
+                                                            <a href="" onClick={(event) => handleEditClick(event, item?._id)} style={{ paddingRight: 10 }}>
+                                                                <img src={`/icon_edit.svg`} alt="" />
+                                                            </a>
+                                                        </label>
+                                                        <input type="file" className={`${styles.upload_file}`} id="edit_file" accept="application/pdf, image/*" onChange={(event) => handleProvisionFileChange(event)} />
+                                                        <a style={{ cursor: 'pointer' }} className={`${styles.btn_delete}`} onClick={() => setOpenDeleteSignature(item?._id)} >
+                                                            <img src={`/icon_delete.svg`} alt="" />
                                                         </a>
-                                                    </label>
-                                                    <input type="file" className={`${styles.upload_file}`} id="edit_file" accept="application/pdf, image/*" />
-                                                    <a href="" className={`${styles.btn_delete}`} >
-                                                        <img src={`/icon_delete.svg`} alt="" />
-                                                    </a>
-                                                </td>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+
+                                            <tr>
+                                                <td colSpan={6} >Danh sách trống</td>
                                             </tr>
-                                        ))}
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <div id="choose_limit" className={`${styles.pull_left}`}>
-                            <select name="" id="choose_limit_page" className={`${styles.form_control}`} onChange={(event) => handleChoose(event)}>
-                                <option value="10"  >10</option>
-                                <option value="20" >20</option>
-                                <option value="30">30</option>
-                            </select>
-                        </div>
-                        <div id="pagination" className={`${styles.pull_right}`}>
-                            <div className={`${styles.pagging}`} style={{ textAlign: 'center' }}>
-                                <nav>
-                                    <ul className={`${styles.pagination}`}>
-                                        {Array(totalPages).fill(null).map((value, index) => {
-                                            if (index === 0) {
-                                                return (
-                                                    <li
-                                                        className={styles.page_item}
-                                                        onClick={() => handleClick(0)}
-                                                        key={index}
-                                                    >
-                                                        <span
-                                                            className={`${activeButton === 0 ? styles.active : ''} ${styles.page_link
-                                                                }`}
-                                                        >
-                                                            1
-                                                        </span>
-                                                    </li>
-                                                );
-                                            } else if (index === totalPages - 1) {
-                                                return (
-                                                    <li
-                                                        className={styles.page_item}
-                                                        onClick={() => handleClick(totalPages - 1)}
-                                                        key={index}
-                                                    >
-                                                        <span
-                                                            className={`${activeButton === totalPages - 1 ? styles.active : ''} ${styles.page_link
-                                                                }`}
-                                                        >
-                                                            Cuối
-                                                        </span>
-                                                    </li>
-                                                );
-                                            } else if (
-                                                index === activeButton ||
-                                                index === activeButton - 1 ||
-                                                index === activeButton + 1
-                                            ) {
-                                                return (
-                                                    <li
-                                                        className={styles.page_item}
-                                                        onClick={() => handleClick(index)}
-                                                        key={index}
-                                                    >
-                                                        <span
-                                                            className={`${activeButton === index ? styles.active : ''} ${styles.page_link
-                                                                }`}
-                                                        >
-                                                            {index + 1}
-                                                        </span>
-                                                    </li>
-                                                );
-                                            }
-                                        })}
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
+                    </div>
+                    <div className={`${styles.paginations}`} style={{ display: 'block' }}>
+                        <MyPagination
+                            current={currentPageSignature}
+                            total={signaturelList?.total}
+                            pageSize={5}
+                            onChange={handleSignaturePageChange}
+                        />
                     </div>
                     <BodyFrameFooter src="https://www.youtube.com/embed/GWoAGsEzXWg"></BodyFrameFooter>
                 </div>

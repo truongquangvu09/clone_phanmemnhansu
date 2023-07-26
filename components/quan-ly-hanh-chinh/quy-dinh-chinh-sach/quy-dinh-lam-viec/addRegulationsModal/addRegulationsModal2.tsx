@@ -51,6 +51,9 @@ export default function AddRegulationsModal2({ onCancel }: AddRegulationsModal2P
         }
         fetchData()
     }, [])
+    const name = (document.getElementById('names') as HTMLInputElement)?.value
+    console.log(name);
+    console.log(1);
 
 
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -62,6 +65,9 @@ export default function AddRegulationsModal2({ onCancel }: AddRegulationsModal2P
             const supervisor_name = (document.getElementById('supervisor_name') as HTMLInputElement)?.value
             const apply_for = (document.getElementById('apply_for') as HTMLInputElement)?.value
             const content = descriptions
+
+            console.log(name);
+
 
             const formData = new FormData()
             formData.append('name', name)
