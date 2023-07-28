@@ -19,6 +19,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/chi-tiet-quy-trinh/addRecruitmentStage/main.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/danh-sach-quy-trinh/[idRecruitmentStage].tsx/addRecruitmentStage/main.js", "store/store.ts", "store/slice/recruitmentSlice.js", "store/slice/homeSlice.ts", "pages/api/quan-ly-tuyen-dung/RecruitmentManagerService.ts"],
   "exclude": ["node_modules"]
 }

@@ -1,16 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./ListRecruitmentStage.module.css";
 import EditRecruitmentStage from "../editRecruitmentStage/editRecruitmentStage";
 import DeleteRecruitmentStage from "../deleteRecruitmentStage/deleteRecruitmentStage";
+import { DataRecruitmentStage } from "@/pages/api/quan-ly-tuyen-dung/RecruitmentManagerService";
+import router from "next/router";
+import { InferGetServerSidePropsType } from "next";
 
-export interface ListRecruitmentStage { }
+export interface ListRecruitmentStage {}
 
-export default function ListRecruitmentStage({ item }: any) {
+export default function ListRecruitmentStage({
+  item,
+  recruitment,
+  index,
+  onDelete,
+  onEdit
+}) {
   const [animateModal, setAnimateModal] = useState(false);
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const [visible, setVisible] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const toggleExpansion = () => {
+    setIsExpanded(!isExpanded);
+  };
+  const getFirstSentence = (description) => {
+    if (!description || typeof description !== 'string') {
+      return '';
+    }
+    const sentences = description.split(".");
+    if (sentences.length > 0) {
+      return sentences[0] + ".";
+    }
+    return description;
+  };
+
+  const descriptionToShow = isExpanded
+    ? item?.description
+    : getFirstSentence(item?.description);
 
   const handleCloseModal = () => {
     setAnimateModal(false);
@@ -30,6 +58,7 @@ export default function ListRecruitmentStage({ item }: any) {
     setAnimateModal(true);
   };
 
+
   if (openModalEdit) {
     return (
       <>
@@ -37,6 +66,7 @@ export default function ListRecruitmentStage({ item }: any) {
           data={item}
           animation={animateModal}
           onCloseModal={handleCloseModal}
+          newDataEdit = {onEdit}
         />
       </>
     );
@@ -47,28 +77,26 @@ export default function ListRecruitmentStage({ item }: any) {
       <>
         <DeleteRecruitmentStage
           data={item}
+          recruitment={recruitment}
           animation={animateModal}
           onCloseModal={handleCloseModal}
+          newDataDelete = {onDelete}
         />
       </>
     );
   }
 
+
   return (
     <div key={item?.id}>
-      <div className={`${styles.title_giaidoans}`}>
-        <h5>
-          ({item?.magiaidoan}) {item?.title}
-        </h5>
-      </div>
       <div className={`${styles.all_giaidoans}`}>
         <div className={`${styles.giaidoans_item}`}>
           <div className={`${styles.giaidoans_item_1}`}>
-            <div className={`${styles.circle_blue}`}>{item?.id}</div>
+            <div className={`${styles.circle_blue}`}>{index + 1}</div>
             <div className={`${styles.giaidoans_item_2}`}>
               <div className={`${styles.row} ${styles.r_t_top}`}>
                 <div className={`${styles.row_top_right}`}>
-                  <p>Cillum numquam adipi</p>
+                  <p>{item.name}</p>
                 </div>
                 <div
                   className={`${styles.setting}`}
@@ -102,24 +130,24 @@ export default function ListRecruitmentStage({ item }: any) {
                   <picture>
                     <img src={`${"/right_blue.png"}`} alt=""></img>
                   </picture>
-                  Thành viên thực hiện: {item?.thanhvien}
-                  <span> {"Numquam pariatur Au"} </span>
+                  Thành viên thực hiện:
+                  <span> {item.positionAssumed} </span>
                 </li>
 
                 <li>
                   <picture>
                     <img src={`${"/right_blue.png"}`} alt=""></img>
                   </picture>
-                  Mục tiêu: {item?.muctieu}
-                  <span> </span>
+                  Mục tiêu:
+                  <span>{item.target} </span>
                 </li>
 
                 <li>
                   <picture>
                     <img src={`${"/right_blue.png"}`} alt=""></img>
                   </picture>
-                  Thời gian định lượng: {item?.thoigian}
-                  <span> {"Laboriosam eum natu"} </span>
+                  Thời gian định lượng:
+                  <span> {item?.completeTime} </span>
                 </li>
 
                 <li>
@@ -127,14 +155,14 @@ export default function ListRecruitmentStage({ item }: any) {
                     <img src={`${"/right_blue.png"}`} alt=""></img>
                   </picture>
                   Mô tả công việc:
-                  <span className={`${styles.view_detail_desc}`}>
+                  <span
+                    className={`${styles.view_detail_desc}`}
+                    onClick={toggleExpansion}
+                  >
                     (Xem chi tiết)
                   </span>
-                  <div
-                    className={`${styles.motacv}`}
-                    style={{ maxHeight: "200px" }}
-                  >
-                    <p>{item?.mota}</p>
+                  <div className={`${styles.motacv}`}>
+                    <p>{descriptionToShow}</p>
                   </div>
                 </li>
               </ul>
@@ -146,3 +174,4 @@ export default function ListRecruitmentStage({ item }: any) {
     </div>
   );
 }
+

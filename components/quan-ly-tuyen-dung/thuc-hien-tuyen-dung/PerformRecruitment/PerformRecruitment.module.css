@@ -71,6 +71,15 @@
     color: #333333; 
     font-weight: 700;
 }
+.tin_item1 span {
+    color: #4C5BD4;
+    font-family: Roboto;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    letter-spacing: 0em;
+}
 .tin_item2 {
     width: 77%;
     float: left;
@@ -205,8 +214,65 @@
     font-weight: 700;
 }
 
+.h_phongvan hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #eee;
+    height: 0;
+}
+.h_pv_item {
+    display: inline-block;
+    width: 100%;
+}
+.h_pvitem_1 {
+    float: left;
+    text-align: center;
+    border-radius: 8px;
+    border: 1px solid rgba(71, 71, 71, 0.24);
+}
+.yellow2 {
+    background: #FFA800;
+    color: white;
+}
+.h_pvitem_1 li {
+    padding: 5px 15px;
+    font-size: 14px;
+    font-weight: 600;
+}
+.h_pvitem_2 {
+    width: 72%;
+}
+.h_pvitem_2, .h_pvitem_3 {
+    float: left;
+    margin-left: 5%;
+}
+.h_pvitem_2 h4 {
+    color: #337ab7;
+    font-size: 18px;
+    font-weight: 600;
+}
 
-
+.h_pvitem_2 p {
+    margin-top: 8px;
+    font-family: Roboto;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 27px;
+    letter-spacing: 0em;
+    opacity: 0.9;
+}
+.data_empty {
+    margin-top: 20px;
+    font-weight: 600;
+}
+.pagination {
+    float: right;
+    margin-top: 10px;
+    border: #333333;
+    margin-right: 40px;
+}
 @media (max-width: 776px) {
     .tin_item4 li {
         margin-right: 10px;

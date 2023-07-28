@@ -1,29 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 import styles from "./Component.module.css";
+import { format } from 'date-fns';
 import ModalAddReward from "../personalReward/modalAddPersonalCompliments/ModalAddReward";
 import ModalEditPersonalCompliments from "../personalReward/modalEditPersonalCompliments/ModalEditPersonalCompliments";
 import ModalEditCommendationTeam from "../commendationTeam/modalEditCommendationTeam/ModalEditCommendationTeam";
 import ModalEditAchievementList from "../achievementList/modalEditAchievementList/ModalEditAchievementList";
-import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 import ModalAddTeamCompliments from "../commendationTeam/modalAddTeamCompliments/modalAddTeamCompliments";
-import MyPagination from "@/components/pagination/Pagination";
 
-function RewardTable({ display, data, model }: any) {
-  const [currentPage, setCurrentPage] = useState(1);
+function RewardTable({ display, data, model, keyWords }: any) {
   const [visible, setVisible] = useState(true);
   const [typeModal, setTypeModal] = useState(model);
   const [open, setOpen] = useState(false);
   const [modalEditType, setModalEditType] = useState('')
   const [animateModal, setAnimateModal] = useState(false);
- 
-
-  const handlePageChange = (page: any) => {
-    setCurrentPage(page);
-  };
+  const [dataEdit, setDataEdit] = useState<any>()
 
   const handleCloseModal = () => {
-   
     setAnimateModal(false);
     setTimeout(() => {
        setOpen(false);
@@ -31,6 +24,11 @@ function RewardTable({ display, data, model }: any) {
        setModalEditType('')
     }, 300);
   };
+
+  const handleEdit = (dataEdit) => {
+    setTypeModal("chitiet")
+    setDataEdit(dataEdit)
+  }
   
  useEffect(()=> {
   const modalEditTypes = () => {
@@ -50,6 +48,15 @@ function RewardTable({ display, data, model }: any) {
   modalEditTypes()
  },[modalEditType])
 
+ const hinhthuckhenthuong = {
+   1: "Huân Chương",
+   2: "Huy Chương",
+   3: "Giấy khen",
+   4: "Thăng chức",
+   5: "Kỉ niệm chương",
+   6: "Tiền mặt",
+ };
+  
   return (
     <>
       <div className={`${styles.tuyendung2}`} style={{ display: "block" }}>
@@ -78,14 +85,13 @@ function RewardTable({ display, data, model }: any) {
           ></ModalAddTeamCompliments>
         )}
         {typeModal === "chitiet" && modalEditType === 'canhan' && (
-          <ModalEditPersonalCompliments animation = {animateModal} onClose={handleCloseModal}></ModalEditPersonalCompliments>
+          <ModalEditPersonalCompliments animation = {animateModal} onClose={handleCloseModal} dataOld = {dataEdit}></ModalEditPersonalCompliments>
         )}
         {typeModal === "chitiet" && modalEditType === 'tapthe' && (
-          <ModalEditCommendationTeam animation = {animateModal} onClose={handleCloseModal}></ModalEditCommendationTeam>
+          <ModalEditCommendationTeam animation = {animateModal} onClose={handleCloseModal} dataOld = {dataEdit}></ModalEditCommendationTeam>
         )}
-
         {typeModal === "chitiet" && modalEditType === 'list' && (
-          <ModalEditAchievementList animation = {animateModal} onClose={handleCloseModal}></ModalEditAchievementList>
+          <ModalEditAchievementList animation = {animateModal} onClose={handleCloseModal}  dataOld = {dataEdit}></ModalEditAchievementList>
         )}
 
         <div className={`${styles.tuyendung2_2}`}>
@@ -98,6 +104,7 @@ function RewardTable({ display, data, model }: any) {
                 spellCheck="false"
                 autoComplete="off"
                 className={`${styles.search_text}`}
+                onChange={(e) => keyWords(e.target.value)}
               ></input>
               <button className={`${styles.search_button}`}>
                 <picture>
@@ -131,16 +138,23 @@ function RewardTable({ display, data, model }: any) {
               </tr>
             </thead>
             <tbody className={`${styles.filter}`}>
-              {data?.map((item: any) => (
-                <tr key={item.stt} style={{ height: "37px" }}>
-                  <td>{item.stt}</td>
-                  <td>{item.soquyetdinh}</td>
-                  <td>{item.noidungkhenthuong}</td>
-                  <td>{item.tendoituongnhan}</td>
-                  <td>{item.thoidiem}</td>
-                  <td>{item.hinhthuckhenthuong}</td>
-                  <td>{item.danhhieu}</td>
-                  <td>{item.capkhen}</td>
+              {data?.map((item: any) => {
+                  const formattedDate: string = format(new Date(item.createdAt), 'dd-MM-yyyy');
+                  const achievementType  = hinhthuckhenthuong[Number(item?.achievementType)]
+                return (
+                  <tr key={item.id} style={{ height: "37px" }}>
+                  <td>{item.id}</td>
+                  <td>{item.achievementId}</td>
+                  <td>{item.content}</td>
+                  <td style={{padding: " 0 20px", maxWidth: '2500px'}}>
+                    {item?.depName ? <span>{item.depName}</span> : item?.listUser.map((user, index) => (
+                        <span key={index} style={{ textAlign:'center'}}> {(user.name)} </span>
+                    ))}
+                  </td>
+                  <td>{formattedDate}</td>
+                  <td>{achievementType}</td>
+                  <td>{item.appellation}</td>
+                  <td>{item.achievementLevel}</td>
                   <td
                     className={`${styles.r_t_top_right}`}
                     style={{
@@ -160,30 +174,20 @@ function RewardTable({ display, data, model }: any) {
                     {visible && (
                       <div
                         className={styles.settings}
-                        onClick={() => setTypeModal("chitiet")}
+                        onClick={() => handleEdit(item)}
                       >
                         <li>Chỉnh sửa</li>
                       </div>
                     )}
                   </td>
                 </tr>
-              ))}
+                )
+              })}
             </tbody>
           </table>
         </div>
       </div>
-
-      <div className={`${styles.pagination}`}>
-        <MyPagination
-          current={currentPage}
-          total={50}
-          pageSize={10}
-          onChange={handlePageChange}
-        />
-      </div>
-      <BodyFrameFooter src="https://www.youtube.com/embed/qICTgD7Dt9w"></BodyFrameFooter>
     </>
   );
 }
-
 export default RewardTable;

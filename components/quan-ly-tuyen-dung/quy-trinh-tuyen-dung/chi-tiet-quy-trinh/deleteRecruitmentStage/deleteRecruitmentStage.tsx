@@ -1,10 +1,25 @@
 import React, { useState } from "react";
 
 import styles from "./deleteRecruitmentStage.module.css";
+import { DeleteDataRecruitmentStage } from "@/pages/api/quan-ly-tuyen-dung/RecruitmentManagerService";
 export interface DeleteRecruitmentStage {}
 
-export default function DeleteRecruitmentStage({ data, animation, onCloseModal}: any) {
-  
+export default function DeleteRecruitmentStage({ data, recruitment,animation, onCloseModal, newDataDelete}: any) {
+  const id = data.id
+
+  const handleDelete = async (id: number) => {
+      try {
+        const response = await DeleteDataRecruitmentStage(id)
+        if (response?.status !== 200){
+          alert('Xóa giai đoạn thất bại')
+        }else {
+          onCloseModal()
+          newDataDelete(response.data)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+  }
   const handleCancel = () => {
     onCloseModal();
   };
@@ -24,10 +39,9 @@ export default function DeleteRecruitmentStage({ data, animation, onCloseModal}:
 
             <div className={`${styles.modal_body} ${styles.bodyquytrinh}`}>
               <div className={`${styles.xoaquytrinh}`}>
-                Bạn có chắc muốn xóa giai đoạn
+                Bạn có chắc muốn xóa giai đoạn {` `}
                 <span className={`${styles.t_recruitment_name}`}>
-                  {" "}
-                  {"Arthur Barr "}?{" "}
+                  ({`QTTD ${data.id}`}) {recruitment}
                 </span>
               </div>
 
@@ -42,7 +56,9 @@ export default function DeleteRecruitmentStage({ data, animation, onCloseModal}:
               <button type="button" className={`${styles.btn_huy}`} onClick={handleCancel}>
                 <span>Hủy</span>
               </button>
-              <button type="button" className={`${styles.delete}`}>
+              <button type="button" className={`${styles.delete}`}
+              onClick={() => handleDelete(id)}
+              >
                 Xóa
               </button>
             </div>

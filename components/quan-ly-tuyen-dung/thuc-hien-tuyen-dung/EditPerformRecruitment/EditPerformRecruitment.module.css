@@ -162,7 +162,9 @@
     max-width: 100%;
     margin-bottom: 5px;
 }
-
+.form_groups label {
+    display: contents;
+}
 .bodyquytrinh span {
     font-size: 16px;
     font-style: normal;
@@ -240,7 +242,7 @@
 
 .small_left {
     float: left;
-    width: 30%;
+    width: 44%;
 }
 
 .float_right {
@@ -249,7 +251,7 @@
 
 .big_right {
     float: right;
-    width: 58%;
+    width: 53%;
 }
 
 .form_date,
@@ -258,8 +260,8 @@
 }
 
 .formto {
-    margin-left: 30px;
-    margin-right: 30px;
+    margin-left: 24px;
+    margin-right: 25px;
 }
 
 .footerquytrinh {

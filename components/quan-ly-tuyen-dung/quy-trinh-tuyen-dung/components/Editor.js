@@ -10,7 +10,12 @@ function MyEditor({ onChange, editorLoaded, name, value }) {
       Editor: require("ckeditor5/build/ckeditor.js"),
     };
   }, []);
-
+  const handleEditorChange = (event, editor) => {
+    const data = editor.getData();
+    const text = new DOMParser().parseFromString(data, "text/html")
+      .documentElement.textContent;
+    onChange({ name: name, value: text });
+  };
   return (
     <div>
       {editorLoaded ? (
@@ -19,10 +24,8 @@ function MyEditor({ onChange, editorLoaded, name, value }) {
           name={name}
           editor={Editor}
           data={value}
-          onChange={(event, editor) => {
-            const data = editor.getData();
-            onChange(data);
-          }}
+          value={value}
+          onChange={handleEditorChange}
         />
       ) : (
         <div>Editor loading</div>

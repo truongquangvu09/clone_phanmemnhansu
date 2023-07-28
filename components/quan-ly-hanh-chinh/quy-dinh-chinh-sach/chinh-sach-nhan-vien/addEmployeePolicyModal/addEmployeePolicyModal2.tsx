@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from '../../quy-dinh-lam-viec/addRegulationsModal/addRegulationsModal.module.css'
 import { AddPolicyByGroup } from "@/pages/api/quy_dinh_chinh_sach";
 import { PolicyList } from "@/pages/api/quy_dinh_chinh_sach";
-import MyEditor from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/components/Editor";
+import MyEditorNew from "@/components/myEditor";
 
 interface InputTextareaProps {
     onDescriptionChange: (data: any) => void
@@ -22,7 +22,7 @@ function Input_textarea({ onDescriptionChange }: InputTextareaProps) {
 
     return (
         <div>
-            <MyEditor
+            <MyEditorNew
                 name="Editor"
                 onChange={(data: React.SetStateAction<string>) => {
                     setData(data);

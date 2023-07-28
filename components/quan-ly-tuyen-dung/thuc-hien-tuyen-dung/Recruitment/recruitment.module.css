@@ -112,6 +112,10 @@
     justify-content: space-between;
     align-items: center;
 }
+.t_new_dom {
+    width: 70%;
+    width: 784px;
+}
 
 @media (max-width : 740px) {
     .t_div_search {
@@ -157,7 +161,17 @@
     float: right;
     width: 40%;
 }
+.data_empty {
+    margin-top: 20px;
+    font-weight: 600;
+}
 
+.pagination {
+    float: right;
+    margin-top: 10px;
+    border: #333333;
+    margin-right: 40px;
+}
 
 @media (max-width: 1024px) {
     .tuyendung2_2 {
@@ -168,5 +182,10 @@
 @media (max-width: 765px) {
     .t_new_dom {
         margin-right: 4%;
+    }
+}
+@media (max-width: 840px) {
+    .t_new_dom {
+        width: 96%;
     }
 }

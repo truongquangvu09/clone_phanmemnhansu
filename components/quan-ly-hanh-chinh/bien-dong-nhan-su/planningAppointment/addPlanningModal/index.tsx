@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import styles from './addPlanningModal.module.css'
 import Select from 'react-select';
-import MyEditor from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/components/Editor";
+import MyEditorNew from "@/components/myEditor";
 import * as Yup from "yup";
 import { FetchDataDep, FetchDataEmployee, FetchDataPosition, FetchDataSpecifiedGroup } from "@/components/util/listAll";
 import { AddPlanningAppointment } from "@/pages/api/bien_dong_nhan_su";
@@ -33,7 +33,7 @@ function Input_textarea({ onDescriptionChange }: InputTextareaProps) {
 
     return (
         <div>
-            <MyEditor
+            <MyEditorNew
                 name="Editor"
                 onChange={handleEditorChange}
                 editorLoaded={editorLoaded}

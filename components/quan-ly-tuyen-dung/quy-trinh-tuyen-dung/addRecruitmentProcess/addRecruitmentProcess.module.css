@@ -179,7 +179,7 @@
 .inputright input {
     font-size: 14px;
     font-weight: 500;
-    opacity: 0.9;
+    
     outline: none;
     margin: 0;
 }
@@ -219,6 +219,11 @@
     position: absolute;
     padding: 5px;
     right: 15%;
+}
+.icon_err {
+    position: absolute;
+    margin-left: -28px;
+    margin-top: 6px;
 }
 
 .list_process {

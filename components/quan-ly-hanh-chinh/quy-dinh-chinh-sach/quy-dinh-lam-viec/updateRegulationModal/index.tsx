@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from '../addRegulationsModal/addRegulationsModal.module.css'
-import MyEditor from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/components/Editor";
+import MyEditorNew from "@/components/myEditor";
 import { GroupUpdate } from "@/pages/api/quy_dinh_chinh_sach";
 import { GroupDetails } from "@/pages/api/quy_dinh_chinh_sach";
 import { format } from 'date-fns';
@@ -23,7 +23,7 @@ function Input_textarea({ onDescriptionChange }: InputTextareaProps) {
     }, []);
     return (
         <div>
-            <MyEditor
+            <MyEditorNew
                 name="Editor"
                 onChange={(data: React.SetStateAction<string>) => {
                     setData(data);

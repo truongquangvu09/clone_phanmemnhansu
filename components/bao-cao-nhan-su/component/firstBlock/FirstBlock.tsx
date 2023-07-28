@@ -1,7 +1,7 @@
 interface ItemCard {
   id: number;
   color: string;
-  num: number;
+  num: any;
   title: string;
 }
 

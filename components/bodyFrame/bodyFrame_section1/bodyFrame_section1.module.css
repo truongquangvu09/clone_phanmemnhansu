@@ -48,6 +48,15 @@
   justify-items: flex-end;
 }
 
+.item_right_weather {
+  height: 109px;
+  background: #ffffff;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  
+  width: 23%;
+  margin: 50px 10px 20px 12px;
+}
 .item_right {
   height: 109px;
   background: #ffffff;
@@ -101,6 +110,9 @@
 }
 @media only screen and (max-width: 767px) {
   .item_right {
+    display: none;
+  }
+  .item_right_weather {
     display: none;
   }
   .item_left {

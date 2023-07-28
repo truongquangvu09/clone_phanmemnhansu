@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import styles from "./recruitmentProcess.module.css";
 import AddRecruitmentProcess from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/addRecruitmentProcess/addRecruitmentProcess";
-import ListRecruitment from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/listRecruitmentProcess/listRecruitmentProcess";
+import ListRecruitmentProcess from "./danh-sach-quy-trinh";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 export interface RecruitmentProcess {}
 
 export default function RecruitmentProcess({ children }: any) {
   const [openModalAdd, setOpenModalAdd] = useState(false);
   const [animateModal, setAnimateModal] = useState(false);
+  const [key, setKey] = useState<any>('')
+  const [dataAdd, setDataAdd] = useState<any>('')
 
   const handleOpenModalAdd = () => {
     setOpenModalAdd(true);
@@ -21,9 +23,10 @@ export default function RecruitmentProcess({ children }: any) {
     }, 300);
   };
 
-  const handleSearch = () => {
-    alert("hdhdhdh");
-  };
+ const addRecruitmentProcess = (data: any) => {
+  setDataAdd(data)
+ }
+  
   return (
     <>
       <div className={`${styles.l_body} ${openModalAdd ? styles.scrollableModal  : ""}`}>
@@ -50,7 +53,7 @@ export default function RecruitmentProcess({ children }: any) {
                 </picture>
               </button>
               </div>
-                {openModalAdd && <AddRecruitmentProcess animation = {animateModal} handleCloseModalAdd = {handleCloseModalAdd}></AddRecruitmentProcess>}
+                {openModalAdd && <AddRecruitmentProcess animation = {animateModal} handleCloseModalAdd = {handleCloseModalAdd} addRecruitmentProcess = {addRecruitmentProcess}></AddRecruitmentProcess>}
               <div className={`${styles.search_quytrinh}`}>
               <form className={`${styles.t_form_search}`}>
                 <div className={`${styles.t_div_search}`}>
@@ -61,13 +64,13 @@ export default function RecruitmentProcess({ children }: any) {
                     name="search"
                     spellCheck={false}
                     autoComplete="off"
+                    onChange={(e) => setKey(e.target.value)}
                   ></input>
                   <button className={`${styles.button_search}`}>
                     <picture style={{paddingLeft: '12px'}}>
                       <img
                         src={`${'/icon-search.png'}`}
                         alt="search"
-                        onClick={() => handleSearch()}
                       ></img>
                     </picture>
                   </button>
@@ -76,7 +79,8 @@ export default function RecruitmentProcess({ children }: any) {
               </div>
           </div>
 
-        <ListRecruitment></ListRecruitment>
+        <ListRecruitmentProcess name = {key} dataAdd = {dataAdd}></ListRecruitmentProcess>
+      
         <BodyFrameFooter src="https://www.youtube.com/embed/J7JEoQkqarA"></BodyFrameFooter>
         </div>
         

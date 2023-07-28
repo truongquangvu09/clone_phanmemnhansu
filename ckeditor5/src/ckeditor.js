@@ -8,7 +8,6 @@ import AutoImage from '@ckeditor/ckeditor5-image/src/autoimage.js';
 import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat.js';
 import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote.js';
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold.js';
-import CKBox from '@ckeditor/ckeditor5-ckbox/src/ckbox.js';
 import CloudServices from '@ckeditor/ckeditor5-cloud-services/src/cloudservices.js';
 import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials.js';
 import ExportPdf from '@ckeditor/ckeditor5-export-pdf/src/exportpdf.js';
@@ -68,7 +67,6 @@ Editor.builtinPlugins = [
 	Autoformat,
 	BlockQuote,
 	Bold,
-	CKBox,
 	CloudServices,
 	Essentials,
 	ExportPdf,
@@ -120,6 +118,7 @@ Editor.builtinPlugins = [
 	WordCount
 ];
 
+
 // Editor configuration.
 Editor.defaultConfig = {
 	toolbar: {
@@ -144,7 +143,7 @@ Editor.defaultConfig = {
 			'|',
 			'exportWord',
 			'exportPdf',
-			'ckbox',
+			
 			'imageInsert',
 			'-',
 			'findAndReplace',
@@ -182,5 +181,7 @@ Editor.defaultConfig = {
 		]
 	}
 };
+
+
 
 export default Editor;

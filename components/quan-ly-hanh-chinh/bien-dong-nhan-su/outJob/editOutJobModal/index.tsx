@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from '../../planningAppointment/addPlanningModal/addPlanningModal.module.css'
 import Select from 'react-select';
-import MyEditor from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/components/Editor";
+import MyEditorNew from "@/components/myEditor";
 
 function Input_textarea() {
     const [editorLoaded, setEditorLoaded] = useState(false);
@@ -13,7 +13,7 @@ function Input_textarea() {
     console.log(data);
     return (
         <div>
-            <MyEditor
+            <MyEditorNew
                 name="Editor"
                 onChange={(data: React.SetStateAction<string>) => {
                     setData(data);

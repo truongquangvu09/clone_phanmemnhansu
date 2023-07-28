@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from './addRegulationsModal.module.css'
-import MyEditor from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/components/Editor";
+import MyEditorNew from "@/components/myEditor";
 import { AddRulesByGroupList } from "@/pages/api/quy_dinh_chinh_sach";
 import { SpecifiedGroupList } from "@/pages/api/quy_dinh_chinh_sach";
 interface InputTextareaProps {
@@ -20,7 +20,7 @@ function Input_textarea({ onDescriptionChange }: InputTextareaProps) {
     console.log(data);
     return (
         <div>
-            <MyEditor
+            <MyEditorNew
                 name="Editor"
                 onChange={(data: React.SetStateAction<string>) => {
                     setData(data);

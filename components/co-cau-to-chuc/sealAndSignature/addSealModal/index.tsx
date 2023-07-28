@@ -37,7 +37,10 @@ export default function AddSealModal({ onCancel }: any) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await EmployeeList()
+                const comid: any = 1664
+                const formData = new FormData()
+                formData.append('com_id', comid)
+                const response = await EmployeeList(formData)
                 setEmployeeList(response.data)
             } catch (error) {
                 throw error

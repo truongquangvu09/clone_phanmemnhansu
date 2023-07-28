@@ -1,19 +1,41 @@
 import React, { useState } from "react";
-
 import styles from "./DeleteRecruitmentProcess.module.css";
+import {
+  DeleteDataRecruitment,
+} from "@/pages/api/quan-ly-tuyen-dung/RecruitmentManagerService";
 export interface DeleteRecruitmentProcess {}
 
-export default function DeleteRecruitmentProcess({animation,onClose }: any) {
-  
+export default function DeleteRecruitmentProcess({
+  animation,
+  onClose,
+  data,
+  onDelete
+}: any) {
+
+  const [deleteStatus, setDeleteStatus] = useState(false);
   const handleCancel = () => {
     onClose();
   };
-
+  const handleDelete = async (recruitmentId) => {
+    const deleteRecruitmentProcess = await DeleteDataRecruitment(recruitmentId);
+    if (deleteRecruitmentProcess.status !== 200) {
+      alert('xóa thất bại');
+      setDeleteStatus(false)
+    } else {
+      setDeleteStatus(true);
+      onDelete()
+      onClose();
+    }
+  };
 
   return (
     <>
       <div className={`${styles.overlay}`}></div>
-      <div className={`${styles.modal} ${styles.modal_setting}  ${animation ? styles.fade_in : styles.fade_out }`}>
+      <div
+        className={`${styles.modal} ${styles.modal_setting}  ${
+          animation ? styles.fade_in : styles.fade_out
+        }`}
+      >
         <div className={`${styles.contentquytrinh}`}>
           <div className={`${styles.modal_content} ${styles.contentdel}`}>
             <div className={`${styles.modal_header} ${styles.headquytrinh}`}>
@@ -27,7 +49,7 @@ export default function DeleteRecruitmentProcess({animation,onClose }: any) {
                 Bạn có chắc muốn xóa quy trình
                 <span className={`${styles.t_recruitment_name}`}>
                   {" "}
-                  {"Arthur Barr "}?{" "}
+                  {data.name}
                 </span>
               </div>
 
@@ -39,10 +61,18 @@ export default function DeleteRecruitmentProcess({animation,onClose }: any) {
             </div>
 
             <div className={`${styles.modal_footer} ${styles.footerquytrinh}`}>
-              <button type="button" className={`${styles.btn_huy}`} onClick={handleCancel}>
+              <button
+                type="button"
+                className={`${styles.btn_huy}`}
+                onClick={handleCancel}
+              >
                 <span>Hủy</span>
               </button>
-              <button type="button" className={`${styles.delete}`}>
+              <button
+                type="button"
+                className={`${styles.delete}`}
+                onClick={() => handleDelete(data.id)}
+              >
                 Xóa
               </button>
             </div>

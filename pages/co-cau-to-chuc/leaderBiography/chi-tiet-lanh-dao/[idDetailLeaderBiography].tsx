@@ -4,7 +4,7 @@ import styles from "./idDetailLeaderBiography.module.css";
 import { useRouter } from "next/router";
 import { LeaderBiographyDetail } from "@/pages/api/co_cau_to_chuc";
 import { LeaderBiograpphyUpdate } from "@/pages/api/co_cau_to_chuc";
-import MyEditor from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/components/Editor";
+import MyEditorNew from "@/components/myEditor";
 
 export interface listRecruitmentProcess { }
 
@@ -44,7 +44,7 @@ function Input_textarea({ onDescriptionChange, initialValue }: InputTextareaProp
 
     return (
         <div>
-            <MyEditor
+            <MyEditorNew
                 name="Editor"
                 onChange={(editorData: string) => {
                     setData(editorData);
