@@ -1,87 +1,102 @@
-import React, { useState, useEffect, useRef, MouseEventHandler } from "react";
+import React, { useState, useEffect, useRef, MouseEventHandler, useMemo, useCallback } from "react";
 import Select from 'react-select'
 import styles from '../../thong-tin-nhan-su/tab/employeeManagement.module.css'
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 import AddPlanningModal from "./addPlanningModal";
 import EditPlanningModal from "./editPlanningModal";
+import { parseISO, format } from 'date-fns';
+import { PlanningAppointmentList } from "@/pages/api/bien_dong_nhan_su";
+import { EmployeeList } from "@/pages/api/listNhanVien";
+import { DepartmentList } from "@/pages/api/listPhongBan";
+import DeletePlanningAppointments from "./deletePlanningModal";
 
 type SelectOptionType = { label: string, value: string }
-export interface TabPlaningAppointment {
 
-}
-export interface Employee {
-    id: number;
-    name: string;
-    phongbancu: string;
-    chucvucu: string;
-    chucvuquyhoachbonhiem: string;
-    phongbanmoi: string;
-    thoigianquyhoachbonhiem: Date;
-    tuychinh: string;
-}
 
 export default function TabPlaningAppointment({ children }: any) {
 
-    const [activeButton, setActiveButton] = useState(0)
-    const [employeeCount, setEmployeeCount] = useState(10)
+    const [isPlanningAppointmentList, setPlanningAppointmentList] = useState<any>(null)
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
+    const [activeButton, setActiveButton] = useState(0)
+    const [openModal, setOpenModal] = useState(0)
+    const [openEditModal, setOpenEditModal] = useState(false)
+    const [openDeleteModal, setOpenDeleteModal] = useState(0)
+    const [isPageSize, setPageSize] = useState<any>(10)
+    const [EmpData, setEmpData] = useState<any>(null)
+    const [departmentList, setDepartmentList] = useState<any>(null)
+    const [isDep_id, setDep_id] = useState<any>("")
+    const [isEmp_id, setEmp_id] = useState<any>("")
+    const [isSeach, setSearch] = useState<any>(null)
+    const [infoList, setInfoList] = useState<any>(null)
 
-    const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
-        if (option) {
-            setSelectedOption(option)
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const formData = new FormData();
+                formData.append('pageSize', isPageSize)
+                const fromDate = (document.getElementById('from_date') as HTMLInputElement)?.value
+                const toDate = (document.getElementById('to_date') as HTMLInputElement)?.value
+                formData.append('ep_id', isEmp_id)
+                formData.append('update_dep_id', isDep_id)
+                formData.append('fromDate', fromDate)
+                formData.append('toDate', toDate)
+                const response = await PlanningAppointmentList(formData)
+                setPlanningAppointmentList(response.data)
+            } catch (error) {
+                throw error
+            }
+        }
+        fetchData()
+    }, [isPageSize, isSeach])
+
+
+    // -- lấy dữ liệu phòng ban --
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const comid: any = 1664
+                const formData = new FormData()
+                formData.append('com_id', comid)
+                const response = await DepartmentList(formData)
+                setDepartmentList(response.data)
+            } catch (error) {
+                throw error
+            }
+        }
+        fetchData()
+    }, [])
+
+    // -- lấy dữ liệu nhân viên --
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const formData = new FormData();
+                const comid: any = 1664
+                const response = await EmployeeList(formData)
+                setEmpData(response.data)
+            } catch (error) {
+                console.log({ error });
+            }
+        }
+        fetchData()
+    }, [])
+
+    const handleSelectChange = (selectedOption: SelectOptionType | null, setState: any) => {
+        setSelectedOption(selectedOption);
+        if (selectedOption) {
+            setState(selectedOption.value); // Set giá trị đã chọn vào state setIsDep_id
         }
     };
 
-    const options = {
-        chonnhanvien: [
-            { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
-            { value: 'Phan Mạnh Hùng', label: 'Phan Mạnh Hùng (SÁNG TẠO - ID:153846)' },
-        ],
-        chonphongban: [
-            { value: '  BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
-            { value: 'KỸ THUẬT', label: 'KỸ THUẬT' },
-        ]
-    };
-    useEffect(() => {
-        setCurrentList(listCandidates.slice(0, employeeCount));
-    }, [employeeCount]);
+    const handleSearch = useCallback(() => {
+        setSearch({ isDep_id, isEmp_id });
+    }, [isDep_id, isEmp_id]);
 
-
-    function createArray(n: number): Employee[] {
-        const obj: Employee = {
-            id: 1,
-            name: 'nguyen van a',
-            phongbancu: '201',
-            chucvucu: "PGĐ",
-            chucvuquyhoachbonhiem: 'GĐ',
-            phongbanmoi: '305',
-            thoigianquyhoachbonhiem: new Date(),
-            tuychinh: "no"
-        };
-        return Array(n).fill(obj);
-    }
-    const listCandidates: Employee[] = createArray(4);
-
-    const handleChoose = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = parseInt(event.target.value);
-        setEmployeeCount(value)
-        setCurrentList(listCandidates.slice(0, value));
-        window.scrollTo(0, 0);
-    }
-
-    const totalPages = Math.ceil(listCandidates.length / employeeCount);
-
-    const [currentList, setCurrentList] = useState<Employee[] | null>(null);
-
-    const handleClick = (buttonIndex: number) => {
-        setActiveButton(buttonIndex)
-    }
     const tableContentRef = useRef<HTMLDivElement>(null);
     const currentPositionRef = useRef(0);
 
     const handleLeftClick = () => {
         if (tableContentRef.current) {
-            // Update the scroll position and currentPositionRef
             const newPosition = currentPositionRef.current - 100;
             if (newPosition >= 0) {
                 tableContentRef.current.scrollLeft = newPosition;
@@ -92,7 +107,6 @@ export default function TabPlaningAppointment({ children }: any) {
 
     const handleRightClick = () => {
         if (tableContentRef.current) {
-            // Update the scroll position and currentPositionRef
             const newPosition = currentPositionRef.current + 100;
             if (newPosition <= tableContentRef.current.scrollWidth - tableContentRef.current.clientWidth) {
                 tableContentRef.current.scrollLeft = newPosition;
@@ -100,17 +114,48 @@ export default function TabPlaningAppointment({ children }: any) {
             }
         }
     };
-    const [openModal, setOpenModal] = useState(0)
+
+    const handleChoose = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = parseInt(event.target.value);
+        setPageSize(value)
+        window.scrollTo(0, 0);
+    }
+
     const handleCloseModal = () => {
         setOpenModal(0)
         setOpenEditModal(false)
+        setOpenDeleteModal(0)
     }
 
-    const [openEditModal, setOpenEditModal] = useState(false)
-    const handleOpenEdit: MouseEventHandler<HTMLAnchorElement> = (event) => {
-        event.preventDefault();
+    const handleOpenEdit = (item: any) => {
         setOpenEditModal(true);
+        setInfoList(item)
     }
+
+    const chonphongbanOptions = useMemo(
+        () =>
+            departmentList?.data?.map((department: any) => ({
+                value: department.dep_id,
+                label: department.dep_name,
+            })),
+        [departmentList?.data]
+    );
+
+    const chonnhanvienOptions = useMemo(
+        () =>
+            EmpData?.data?.map((emp: any) => ({
+                value: emp.idQLC,
+                label: emp.userName,
+            })),
+        [EmpData?.data]
+    );
+
+    const options = {
+        chonnhanvien: chonnhanvienOptions,
+        chonphongban: chonphongbanOptions
+    };
+
+
     return (
         <>
             <div className={`${styles.tab_content}`}>
@@ -122,13 +167,14 @@ export default function TabPlaningAppointment({ children }: any) {
                             </button>
                         </div>
                         {openModal === 1 && <AddPlanningModal onCancel={handleCloseModal}></AddPlanningModal>}
-                        {openEditModal === true ? <EditPlanningModal onCancel={handleCloseModal}></EditPlanningModal> : ''}
+                        {openEditModal === true ? <EditPlanningModal onCancel={handleCloseModal} infoList={infoList}></EditPlanningModal> : ''}
+                        {openDeleteModal !== 0 && <DeletePlanningAppointments onCancel={handleCloseModal} ep_id={openDeleteModal} />}
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_new_t}`}>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning} `}>
                                     <Select
                                         defaultValue={selectedOption}
-                                        onChange={(option) => handleSelectionChange(option, options.chonnhanvien)}
+                                        onChange={(option) => handleSelectChange(option, setEmp_id)}
                                         options={options.chonnhanvien}
                                         placeholder="Chọn nhân viên"
                                         styles={{
@@ -160,7 +206,7 @@ export default function TabPlaningAppointment({ children }: any) {
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning} `}>
                                     <Select
                                         defaultValue={selectedOption}
-                                        onChange={(option) => handleSelectionChange(option, options.chonphongban)}
+                                        onChange={(option) => handleSelectChange(option, setDep_id)}
                                         options={options.chonphongban}
                                         placeholder="Chọn phòng ban"
                                         styles={{
@@ -190,13 +236,13 @@ export default function TabPlaningAppointment({ children }: any) {
                                     />
                                 </div>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning} `}>
-                                    <input type="date" className={`${styles.search_date} ${styles.form_control}`} placeholder='Từ dd/mm/yyyy' />
+                                    <input type="date" id="from_date" className={`${styles.search_date} ${styles.form_control}`} placeholder='Từ dd/mm/yyyy' />
                                 </div>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning}`}>
-                                    <input type="date" className={`${styles.search_date} ${styles.form_control}`} placeholder='Từ dd/mm/yyyy' />
+                                    <input type="date" id="to_date" className={`${styles.search_date} ${styles.form_control}`} placeholder='Từ dd/mm/yyyy' />
                                 </div>
                                 <div className={`${styles.div_no_pad_search}   `}>
-                                    <a href="" className={`${styles.icon_search_top} ${styles.div_search_salary} `}>
+                                    <a onClick={handleSearch} className={`${styles.icon_search_top} ${styles.div_search_salary} `}>
                                         <img style={{ verticalAlign: '-webkit-baseline-middle' }} src={`/t-icon-search-n.svg`} alt="" />
                                     </a>
                                 </div>
@@ -226,18 +272,18 @@ export default function TabPlaningAppointment({ children }: any) {
                                         </tr>
                                     </thead>
                                     <tbody className={`${styles.filter_body}`}>
-                                        {currentList?.map((item, index) => (
+                                        {isPlanningAppointmentList?.data?.map((item: any, index: any) => (
                                             <tr key={index}>
-                                                <td>{item.id}</td>
-                                                <td>{item.name}</td>
-                                                <td>{item.phongbancu}</td>
-                                                <td>{item.chucvucu}</td>
-                                                <td>{item.chucvuquyhoachbonhiem}</td>
-                                                <td>{item.phongbanmoi}</td>
-                                                <td>{item.thoigianquyhoachbonhiem.toString().slice(0, 16)}</td>
+                                                <td>{item.ep_id}</td>
+                                                <td>{item.ep_name}</td>
+                                                <td>{item.old_dep_name}</td>
+                                                <td>{item.old_position_name}</td>
+                                                <td>{item.new_position_name}</td>
+                                                <td>{item.new_dep_name}</td>
+                                                <td>{format(parseISO(item?.time), 'dd/MM/yyyy')}</td>
                                                 <td>
-                                                    <a onClick={handleOpenEdit} href="" className={`${styles.btn_edit}`}><img src={`/icon_edit.svg`} alt="" /></a>
-                                                    <a href="" className={`${styles.btn_delete}`}><img src={`/icon_delete.svg`} alt="" /></a>
+                                                    <a onClick={() => handleOpenEdit(item)} className={`${styles.btn_edit}`} style={{ cursor: 'pointer' }}><img src={`/icon_edit.svg`} alt="" /></a>
+                                                    <a onClick={() => setOpenDeleteModal(item.ep_id)} className={`${styles.btn_delete}`} style={{ cursor: 'pointer' }}><img src={`/icon_delete.svg`} alt="" /></a>
                                                 </td>
                                             </tr>
                                         ))}
@@ -251,66 +297,6 @@ export default function TabPlaningAppointment({ children }: any) {
                                 <option value="20" >20</option>
                                 <option value="30">30</option>
                             </select>
-                        </div>
-                        <div id="pagination" className={`${styles.pull_right}`}>
-                            <div className={`${styles.pagging}`} style={{ textAlign: 'center' }}>
-                                <nav>
-                                    <ul className={`${styles.pagination}`}>
-                                        {Array(totalPages).fill(null).map((value, index) => {
-                                            if (index === 0) {
-                                                return (
-                                                    <li
-                                                        className={styles.page_item}
-                                                        onClick={() => handleClick(0)}
-                                                        key={index}
-                                                    >
-                                                        <span
-                                                            className={`${activeButton === 0 ? styles.active : ''} ${styles.page_link
-                                                                }`}
-                                                        >
-                                                            1
-                                                        </span>
-                                                    </li>
-                                                );
-                                            } else if (index === totalPages - 1) {
-                                                return (
-                                                    <li
-                                                        className={styles.page_item}
-                                                        onClick={() => handleClick(totalPages - 1)}
-                                                        key={index}
-                                                    >
-                                                        <span
-                                                            className={`${activeButton === totalPages - 1 ? styles.active : ''} ${styles.page_link
-                                                                }`}
-                                                        >
-                                                            Cuối
-                                                        </span>
-                                                    </li>
-                                                );
-                                            } else if (
-                                                index === activeButton ||
-                                                index === activeButton - 1 ||
-                                                index === activeButton + 1
-                                            ) {
-                                                return (
-                                                    <li
-                                                        className={styles.page_item}
-                                                        onClick={() => handleClick(index)}
-                                                        key={index}
-                                                    >
-                                                        <span
-                                                            className={`${activeButton === index ? styles.active : ''} ${styles.page_link
-                                                                }`}
-                                                        >
-                                                            {index + 1}
-                                                        </span>
-                                                    </li>
-                                                );
-                                            }
-                                        })}
-                                    </ul>
-                                </nav>
-                            </div>
                         </div>
                     </div>
                     <BodyFrameFooter src="https://www.youtube.com/embed/KcajsnqbFPQ"></BodyFrameFooter>

@@ -115,6 +115,9 @@ export default function EditWorkingModal({ onCancel, infoList }: any) {
             formData.append('note', isNote)
 
             const response = await AddWorkingRotation(formData)
+            setTimeout(() => {
+                onCancel()
+            }, 2000)
         } catch (error) {
             throw error
         }

@@ -37,7 +37,7 @@ export default function TabWorkingRotation({ children }: any) {
             try {
                 const pagesize: any = 20
                 const formData = new FormData();
-                const fromDate = (document.getElementById('form_date') as HTMLInputElement)?.value
+                const fromDate = (document.getElementById('from_date') as HTMLInputElement)?.value
                 const toDate = (document.getElementById('to_date') as HTMLInputElement)?.value
                 formData.append('ep_id', isEmp_id)
                 formData.append('update_dep_id', isDep_id)
@@ -229,7 +229,7 @@ export default function TabWorkingRotation({ children }: any) {
                                     />
                                 </div>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning} `}>
-                                    <input type="date" id="form_date" className={`${styles.search_date} ${styles.form_control}`} placeholder='Từ dd/mm/yyyy' />
+                                    <input type="date" id="from_date" className={`${styles.search_date} ${styles.form_control}`} placeholder='Từ dd/mm/yyyy' />
                                 </div>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning}`}>
                                     <input type="date" id="to_date" className={`${styles.search_date} ${styles.form_control}`} placeholder='Từ dd/mm/yyyy' />

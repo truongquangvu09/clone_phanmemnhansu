@@ -12,6 +12,9 @@ export default function DeletePayrollDowns({ onCancel, ep_id }: any) {
             const formData = new FormData();
             formData.append('ep_id', ep_id);
             const response = await DeletePayrollDown(formData)
+            setTimeout(() => {
+                onCancel()
+            }, 1500)
         } catch (error) {
             throw error
         }

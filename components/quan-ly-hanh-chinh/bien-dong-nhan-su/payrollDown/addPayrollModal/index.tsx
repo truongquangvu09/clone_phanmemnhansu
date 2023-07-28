@@ -152,6 +152,9 @@ export default function AddPayrollModal({ onCancel }: any) {
             formData.append('shift_id', isShift_id)
 
             const response = await AddPayrollDown(formData)
+            setTimeout(() => {
+                onCancel()
+            }, 2000)
         } catch (error) {
             throw error
         }
@@ -267,7 +270,7 @@ export default function AddPayrollModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -292,7 +295,7 @@ export default function AddPayrollModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -317,7 +320,7 @@ export default function AddPayrollModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -342,7 +345,7 @@ export default function AddPayrollModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -374,7 +377,7 @@ export default function AddPayrollModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -399,7 +402,7 @@ export default function AddPayrollModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -424,7 +427,7 @@ export default function AddPayrollModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',

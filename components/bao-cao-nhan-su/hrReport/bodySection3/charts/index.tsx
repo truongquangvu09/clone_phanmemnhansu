@@ -53,7 +53,6 @@ const getLineChartOptions = ({ categories, des, line_name1, line_name2, line_nam
                 style: {
                     color: '#333',
                     fontSize: '8'
-
                 }
             }
         },

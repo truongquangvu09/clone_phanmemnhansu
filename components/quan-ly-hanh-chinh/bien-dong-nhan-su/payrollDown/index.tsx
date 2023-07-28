@@ -23,13 +23,14 @@ export default function TabPayrollDown({ children }: any) {
     const [isDep_id, setDep_id] = useState<any>("")
     const [isEmp_id, setEmp_id] = useState<any>("")
     const [isSeach, setSearch] = useState<any>(null)
+    const [infoList, setInfoList] = useState<any>(null)
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const pagesize: any = 20
                 const formData = new FormData();
-                const fromDate = (document.getElementById('form_date') as HTMLInputElement)?.value
+                const fromDate = (document.getElementById('from_date') as HTMLInputElement)?.value
                 const toDate = (document.getElementById('to_date') as HTMLInputElement)?.value
                 formData.append('ep_id', isEmp_id)
                 formData.append('current_dep_id', isDep_id)
@@ -87,6 +88,12 @@ export default function TabPayrollDown({ children }: any) {
         setSearch({ isDep_id, isEmp_id });
     }, [isDep_id, isEmp_id]);
 
+    const handleOpenEdit = (item: any) => {
+        setOpenEditModal(true);
+        setInfoList(item)
+
+    }
+
     const handleCloseModal = () => {
         setOpenModal(0)
         setOpenEditModal(false)
@@ -139,10 +146,6 @@ export default function TabPayrollDown({ children }: any) {
         }
     };
 
-    const handleOpenEdit: MouseEventHandler<HTMLAnchorElement> = (event) => {
-        event.preventDefault();
-        setOpenEditModal(true);
-    }
     return (
         <>
             <div className={`${styles.tab_content}`}>
@@ -160,7 +163,7 @@ export default function TabPayrollDown({ children }: any) {
                             </div>
                         </div>
                         {openModal === 1 && <AddPayrollModal onCancel={handleCloseModal}></AddPayrollModal>}
-                        {openEditModal === true ? <EditPayroll onCancel={handleCloseModal}></EditPayroll> : ''}
+                        {openEditModal === true ? <EditPayroll onCancel={handleCloseModal} infoList={infoList}></EditPayroll> : ''}
                         {openDeleteModal !== 0 && <DeletePayrollDowns onCancel={handleCloseModal} ep_id={openDeleteModal} />}
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_new_t}`}>
@@ -229,7 +232,7 @@ export default function TabPayrollDown({ children }: any) {
                                     />
                                 </div>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning} `}>
-                                    <input type="date" id="form_date" className={`${styles.search_date} ${styles.form_control}`} placeholder='Từ dd/mm/yyyy' />
+                                    <input type="date" id="from_date" className={`${styles.search_date} ${styles.form_control}`} placeholder='Từ dd/mm/yyyy' />
                                 </div>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning}`}>
                                     <input type="date" id="to_date" className={`${styles.search_date} ${styles.form_control}`} placeholder='Từ dd/mm/yyyy' />
@@ -275,7 +278,7 @@ export default function TabPayrollDown({ children }: any) {
                                                 <td>{item.type === 2 ? 'Nghỉ việc' : 'Giảm biên chế'}</td>
                                                 <td>{format(parseISO(item.time), 'dd-MM-yyyy')}</td>
                                                 <td>
-                                                    <a onClick={handleOpenEdit} href="" className={`${styles.btn_edit}`}><img src={`/icon_edit.svg`} alt="" /></a>
+                                                    <a onClick={() => handleOpenEdit(item)} className={`${styles.btn_edit}`}><img src={`/icon_edit.svg`} alt="" /></a>
                                                     <a onClick={() => setOpenDeleteModal(item.ep_id)} className={`${styles.btn_delete}`}><img src={`/icon_delete.svg`} alt="" /></a>
                                                 </td>
                                             </tr>

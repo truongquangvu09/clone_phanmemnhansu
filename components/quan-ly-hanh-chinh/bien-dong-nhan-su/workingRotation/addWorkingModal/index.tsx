@@ -2,8 +2,9 @@ import React, { useState, useEffect, useMemo } from "react";
 import styles from '../../planningAppointment/addPlanningModal/addPlanningModal.module.css'
 import Select from 'react-select';
 import MyEditor from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/components/Editor";
+import * as Yup from "yup";
 import { AddWorkingRotation } from "@/pages/api/bien_dong_nhan_su";
-import { FetchDataOrganizationalStructure, FetchDataEmployee, FetchDataPosition, FetchDataSpecifiedGroup } from "@/components/util/listAll";
+import { FetchDataDep, FetchDataOrganizationalStructure, FetchDataEmployee, FetchDataPosition, FetchDataSpecifiedGroup } from "@/components/util/listAll";
 
 interface InputTextareaProps {
     onDescriptionChange: (data: any) => void
@@ -52,6 +53,8 @@ export default function AddWorkingModal({ onCancel }: any) {
     const [isSpecifiedList, setSpecifiedList] = useState<any>(null)
     const [isMission, setMission] = useState("");
     const [isNote, setNote] = useState("");
+    const [infoList, setInfoList] = useState<any>(null)
+    const [isDepList, setDeptList] = useState<any>(null)
 
     const [isCom_id, setCom_id] = useState<any>(null)
     const [isCom_idNew, setCom_idNew] = useState<any>(null)
@@ -61,6 +64,7 @@ export default function AddWorkingModal({ onCancel }: any) {
     const [isPosition_id, setPosition_id] = useState<any>(null)
     const [isPosition_idNew, setPosition_idNew] = useState<any>(null)
     const [isSpecified_id, setSpecified_id] = useState<any>(null)
+    const [errors, setErrors] = useState<any>({});
 
     useEffect(() => {
         fetchData();
@@ -73,6 +77,9 @@ export default function AddWorkingModal({ onCancel }: any) {
 
             const empData = await FetchDataEmployee();
             setEmpList(empData);
+
+            const dep = await FetchDataDep()
+            setDeptList(dep)
 
             const position = await FetchDataPosition()
             setPositionList(position)
@@ -90,9 +97,52 @@ export default function AddWorkingModal({ onCancel }: any) {
         }
     };
 
+    useEffect(() => {
+        if (infoList) {
+            const valuesArray = infoList?.split(" ");
+            if (valuesArray.length >= 4) {
+                const depValue = valuesArray?.slice(3).join(" ");
+                setEmp_id(Number(valuesArray[0]));
+                setDep_id(Number(valuesArray[1]));
+                setPosition_id(Number(valuesArray[2]));
+            }
+        }
+    }, [infoList]);
+
+    useEffect(() => {
+        const foundItem = isDepList?.data?.find((item: any) => item.dep_id === isDep_id);
+        if (foundItem) {
+            setCom_id(foundItem.com_id)
+        }
+    }, [isDep_id])
+
+    const validationSchema = Yup.object().shape({
+        chonnhanvien: Yup.string().required("Vui lòng chọn nhân viên"),
+        donvicongtacmoi: Yup.string().required("Vui lòng chọn đơn vị công tác mới"),
+        phongbanmoi: Yup.string().required("Vui lòng chọn phòng ban mới"),
+        chucvuhientai: Yup.string().required("Vui lòng chọn chức vụ hiện tại"),
+        chucvumoi: Yup.string().required("Vui lòng chọn chức vụ mới"),
+        created_at: Yup.string().required("Vui lòng chọn thời gian luân chuyển công tác"),
+        mission: Yup.string().required("Vui lòng nhập nhiệm vụ"),
+    });
+
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         try {
+            const formDatas = {
+                chonnhanvien: selectedOption?.value || "",
+                donvicongtacmoi: isCom_idNew || "",
+                phongbanmoi: isDep_idNew || "",
+                chucvuhientai: isPosition_id || "",
+                chucvumoi: isPosition_idNew || "",
+                created_at: (document.getElementById('created_at') as HTMLInputElement)?.value || "",
+                mission: isMission || "",
+            };
+
+            await validationSchema.validate(formDatas, {
+                abortEarly: false,
+            });
+
             const created_at = (document.getElementById('created_at') as HTMLInputElement)?.value
             const formData = new FormData();
             formData.append('ep_id', isEmp_id)
@@ -108,8 +158,19 @@ export default function AddWorkingModal({ onCancel }: any) {
             formData.append('note', isNote)
 
             const response = await AddWorkingRotation(formData)
+            setTimeout(() => {
+                onCancel()
+            }, 2000)
         } catch (error) {
-            throw error
+            if (error instanceof Yup.ValidationError) {
+                const yupErrors = {};
+                error.inner.forEach((yupError: any) => {
+                    yupErrors[yupError.path] = yupError.message;
+                });
+                setErrors(yupErrors);
+            } else {
+                console.error("Lỗi validate form:", error);
+            }
         }
     }
 
@@ -190,15 +251,25 @@ export default function AddWorkingModal({ onCancel }: any) {
         [depInfoArrayNew]
     );
 
-    const chonnhanvienOptions = useMemo(
+    const chonnhanvientheophongOptions = useMemo(
         () =>
             isEmpList &&
             isEmpList?.data
                 .filter((emp: any) => emp?.dep_id[0] === isDep_id)
                 .map((emp: any) => ({
-                    value: emp.idQLC,
+                    value: `${emp.idQLC} ${emp.dep_id[0]} ${emp.position_id} ${emp.nameDeparment}`,
                     label: emp.userName
                 })),
+        [isEmpList, isDep_id]
+    );
+
+    const chonnhanvienOptions = useMemo(
+        () =>
+            isEmpList &&
+            isEmpList?.data.map((emp: any) => ({
+                value: `${emp.idQLC} ${emp.dep_id[0]} ${emp.position_id} ${emp.nameDeparment}`,
+                label: emp.userName
+            })),
         [isEmpList, isDep_id]
     );
 
@@ -250,11 +321,15 @@ export default function AddWorkingModal({ onCancel }: any) {
         [isSpecifiedList]
     );
 
+    console.log(chonnhanvientheophongOptions);
+    console.log(chonnhanvienOptions);
+
+
 
     const options = {
         chonchinhanh: chonchinhanhOptions,
         chonphongban: chonphongbanOptions,
-        chonnhanvien: chonnhanvienOptions,
+        chonnhanvien: chonnhanvientheophongOptions?.length === 0 ? chonnhanvienOptions : chonnhanvientheophongOptions,
         chucvuhientai: chonchucvuOptions,
         donvicongtacmoi: chonchinhanhOptions,
         phongbanmoi: chonphongbanmoiOptions,
@@ -292,7 +367,7 @@ export default function AddWorkingModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -318,7 +393,7 @@ export default function AddWorkingModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -333,17 +408,19 @@ export default function AddWorkingModal({ onCancel }: any) {
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Tên nhân viên <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Tên nhân viên <span style={{ color: 'red' }}> *
+                                            <span> {errors.chonnhanvien && <div className={`${styles.t_require} `}>{errors.chonnhanvien}</div>}</span>
+                                        </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <Select
                                                 defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectChange(option, setEmp_id)}
+                                                onChange={(option) => handleSelectChange(option, setInfoList)}
                                                 options={options.chonnhanvien}
                                                 placeholder="Chọn nhân viên"
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -358,7 +435,9 @@ export default function AddWorkingModal({ onCancel }: any) {
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Chức vụ hiện tại <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Chức vụ hiện tại <span style={{ color: 'red' }}> *
+                                            <span> {errors.chucvuhientai && <div className={`${styles.t_require} `}>{errors.chucvuhientai}</div>}</span>
+                                        </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <Select
                                                 defaultValue={selectedOption}
@@ -369,7 +448,7 @@ export default function AddWorkingModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -384,7 +463,9 @@ export default function AddWorkingModal({ onCancel }: any) {
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Đơn vị công tác mới <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Đơn vị công tác mới <span style={{ color: 'red' }}> *
+                                            <span> {errors.donvicongtacmoi && <div className={`${styles.t_require} `}>{errors.donvicongtacmoi}</div>}</span>
+                                        </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <Select
                                                 defaultValue={selectedOption}
@@ -394,7 +475,7 @@ export default function AddWorkingModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -409,17 +490,19 @@ export default function AddWorkingModal({ onCancel }: any) {
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Phòng ban mới <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Phòng ban mới <span style={{ color: 'red' }}> *
+                                            <span> {errors.phongbanmoi && <div className={`${styles.t_require} `}>{errors.phongbanmoi}</div>}</span>
+                                        </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <Select
                                                 defaultValue={selectedOption}
                                                 onChange={(option) => handleSelectChange(option, setDep_idNew)}
-                                                options={options.chonphongban}
+                                                options={options.phongbanmoi}
                                                 placeholder="Chọn phòng ban"
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -444,7 +527,7 @@ export default function AddWorkingModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -469,7 +552,7 @@ export default function AddWorkingModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -484,7 +567,9 @@ export default function AddWorkingModal({ onCancel }: any) {
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Chức vụ mới <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Chức vụ mới <span style={{ color: 'red' }}> *
+                                            <span> {errors.chucvumoi && <div className={`${styles.t_require} `}>{errors.chucvumoi}</div>}</span>
+                                        </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <Select
                                                 defaultValue={selectedOption}
@@ -494,7 +579,7 @@ export default function AddWorkingModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -510,7 +595,9 @@ export default function AddWorkingModal({ onCancel }: any) {
                                     </div>
 
                                     <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Thời gian luân chuyển công tác <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Thời gian luân chuyển công tác <span style={{ color: 'red' }}> *
+                                            <span> {errors.created_at && <div className={`${styles.t_require} `}>{errors.created_at}</div>}</span>
+                                        </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="date" id="created_at" placeholder="dd/mm/yyyy" className={`${styles.input_process}`} />
                                         </div>
@@ -526,7 +613,7 @@ export default function AddWorkingModal({ onCancel }: any) {
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -541,7 +628,9 @@ export default function AddWorkingModal({ onCancel }: any) {
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups} ${styles.cke}`}>
-                                        <label htmlFor="">Nhiệm vụ công việc mới <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Nhiệm vụ công việc mới <span style={{ color: 'red' }}> *
+                                            <span> {errors.mission && <div className={`${styles.t_require} `}>{errors.mission}</div>}</span>
+                                        </span></label>
                                         <div className={`${styles.ckeditor}`}>
                                             <Input_textarea onDescriptionChange={(data) => handleInputAreaChange(data, setMission)} />
                                         </div>

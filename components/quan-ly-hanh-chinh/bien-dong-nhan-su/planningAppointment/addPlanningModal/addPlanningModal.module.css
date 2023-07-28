@@ -19,6 +19,13 @@
   overflow-y: auto !important;
   overflow-x: hidden;
 }
+.t_require {
+  color: red;
+  font-size: 14px;
+  margin-left: 5px;
+  margin-right: 5px;
+  display: inline-block;
+}
 .fade {
   transition: opacity 0.15s linear;
 }
@@ -104,7 +111,7 @@
   border: 1px solid rgba(71, 71, 71, 0.48);
   width: 99.5%;
   height: 30px;
-  border-radius: 8px;
+  border-radius: 4px;
   line-height: 45px;
   font-weight: 600;
 }

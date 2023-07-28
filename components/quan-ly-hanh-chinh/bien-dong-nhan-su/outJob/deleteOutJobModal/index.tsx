@@ -1,14 +1,16 @@
-import React, { useState, useEffect, useMemo } from "react";
-import styles from './deleteWorkingModal.module.css'
-import { DeleteWorkingRotation } from "@/pages/api/bien_dong_nhan_su";
+import React from "react";
+import styles from '../../workingRotation/deleteWorkingModal/deleteWorkingModal.module.css'
+import { DeleteOutJob } from "@/pages/api/bien_dong_nhan_su";
 
-export default function DeleteWorkingRotations({ onCancel, ep_id }: any) {
+export default function DeleteOutJobs({ onCancel, ep_id }: any) {
+
+    console.log(ep_id);
 
     const handleSubmit = async () => {
         try {
             const formData = new FormData();
             formData.append('ep_id', ep_id);
-            const response = await DeleteWorkingRotation(formData)
+            const response = await DeleteOutJob(formData)
             setTimeout(() => {
                 onCancel()
             }, 1500)
@@ -24,20 +26,19 @@ export default function DeleteWorkingRotations({ onCancel, ep_id }: any) {
                     <div className={` ${styles.modal_dialog} ${styles.content_process}`}>
                         <div className={`${styles.modal_content}`}>
                             <div className={`${styles.modal_header} ${styles.header_process}`}>
-                                <p className={`${styles.modal_title}`}>Luân chuyển công tác</p>
+                                <p className={`${styles.modal_title}`}>Giảm biên chế, nghỉ việc</p>
                             </div>
                             <div className={`${styles.modal_body}`}>
                                 <p style={{ textAlign: 'center' }}>Bạn có chắc muốn xóa bản ghi này không ? </p>
                             </div>
                             <div className={`${styles.modal_footer} ${styles.footer_process}`}>
-                                <button className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
-                                <button className={`${styles.btn_add}`} onClick={handleSubmit}>Xóa</button>
+                                <button style={{ cursor: 'pointer' }} className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
+                                <button style={{ cursor: 'pointer' }} className={`${styles.btn_add}`} onClick={handleSubmit}>Xóa</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </>
     )
 }

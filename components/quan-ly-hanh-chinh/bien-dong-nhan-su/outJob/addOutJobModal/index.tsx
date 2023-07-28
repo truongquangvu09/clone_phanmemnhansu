@@ -1,95 +1,222 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import styles from '../../planningAppointment/addPlanningModal/addPlanningModal.module.css'
 import Select from 'react-select';
 import MyEditor from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/components/Editor";
+import * as Yup from "yup";
+import { AddOutJob } from "@/pages/api/bien_dong_nhan_su";
+import { FetchDataDep, FetchDataOrganizationalStructure, FetchDataEmployee, FetchDataPosition } from "@/components/util/listAll";
 
-function Input_textarea() {
+interface InputTextareaProps {
+    onDescriptionChange: (data: any) => void
+}
+type SelectOptionType = { label: string, value: string }
+
+function Input_textarea({ onDescriptionChange }: InputTextareaProps) {
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [data, setData] = useState("");
 
     useEffect(() => {
         setEditorLoaded(true);
     }, []);
-    console.log(data);
+
+    const extractTextFromHTML = (htmlString) => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlString, "text/html");
+        const text = doc.querySelector("p")?.textContent || "";
+        return text;
+    };
+
+    const handleEditorChange = (data: string) => {
+        setData(data);
+        const extractedText = extractTextFromHTML(data); // Lấy chỉ văn bản từ chuỗi HTML
+        onDescriptionChange(extractedText);
+    };
+
     return (
         <div>
             <MyEditor
                 name="Editor"
-                onChange={(data: React.SetStateAction<string>) => {
-                    setData(data);
-                }}
+                onChange={handleEditorChange}
                 editorLoaded={editorLoaded}
                 value={data}
             />
-
-            {/* {JSON.stringify(data)} */}
         </div>
     );
 }
-
-type SelectOptionType = { label: string, value: string }
-
 export default function AddOutJobModal({ onCancel }: any) {
-    const [content, setContent] = useState('');
+    const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
+    const [isEmpList, setEmpList] = useState<any>(null)
+    const [isPositionList, setPositionList] = useState<any>(null)
+    const [isOrganizationalStructureList, setOrganizationalStructureList] = useState<any>(null)
+    const [isDepList, setDeptList] = useState<any>(null)
+    const [isReason, setReason] = useState<any>("")
 
-    const handleContentChange = (value: string) => {
-        setContent(value);
+    const [isPosition_name, setPosition_name] = useState<any>(null)
+    const [isPosition_id, setPosition_id] = useState<any>(null)
+    const [isDep_name, setDep_name] = useState<any>(null)
+    const [infoList, setInfoList] = useState<any>(null)
+    const [isEmp_id, setEmp_id] = useState<any>(null)
+    const [isCom_id, setCom_id] = useState<any>(null)
+    const [isDep_id, setDep_id] = useState<any>(null)
+    const [errors, setErrors] = useState<any>({});
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    async function fetchData() {
+        try {
+            const organizationStructure = await FetchDataOrganizationalStructure();
+            setOrganizationalStructureList(organizationStructure);
+
+            const empData = await FetchDataEmployee();
+            setEmpList(empData);
+
+            const position = await FetchDataPosition()
+            setPositionList(position)
+
+            const dep = await FetchDataDep()
+            setDeptList(dep)
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    useEffect(() => {
+        if (infoList) {
+            const valuesArray = infoList?.split(" ");
+            if (valuesArray.length >= 4) {
+                const depValue = valuesArray?.slice(3).join(" ");
+                setEmp_id(Number(valuesArray[0]));
+                setDep_id(Number(valuesArray[1]));
+                setPosition_id(Number(valuesArray[2]));
+                setDep_name(depValue);
+            }
+        }
+    }, [infoList]);
+
+    useEffect(() => {
+        if (isPositionList && Array.isArray(isPositionList.data)) {
+            const PositionList = isPositionList.data.flat();
+            if (PositionList && isPosition_id) {
+                const position = PositionList.find((pos: any) => pos?.positionId === isPosition_id);
+                if (position) {
+                    setPosition_name(position.positionName);
+                }
+            }
+        }
+    }, [isPositionList, isPosition_id]);
+
+    useEffect(() => {
+        const foundItem = isDepList?.data?.find((item: any) => item.dep_id === isDep_id);
+        if (foundItem) {
+            setCom_id(foundItem.com_id)
+        }
+    }, [isDep_id])
+
+    const validationSchema = Yup.object().shape({
+        chonnhanvien: Yup.string().required("Vui lòng chọn nhân viên"),
+        created_at: Yup.string().required("Vui lòng chọn thời gian luân chuyển công tác"),
+    });
+
+    const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        try {
+
+            const formDatas = {
+                chonnhanvien: selectedOption?.value || "",
+                created_at: (document.getElementById('created_at') as HTMLInputElement)?.value || "",
+            };
+
+            await validationSchema.validate(formDatas, {
+                abortEarly: false,
+            });
+
+            const created_at = (document.getElementById('created_at') as HTMLInputElement)?.value
+            const formData = new FormData();
+            formData.append('ep_id', isEmp_id)
+            formData.append('current_position', isPosition_id)
+            formData.append('current_dep_id', isDep_id)
+            formData.append('com_id', isCom_id)
+            formData.append('created_at', created_at)
+            formData.append('note', isReason)
+
+            const response = await AddOutJob(formData)
+            setTimeout(() => {
+                onCancel()
+            }, 2000)
+        } catch (error) {
+            if (error instanceof Yup.ValidationError) {
+                const yupErrors = {};
+                error.inner.forEach((yupError: any) => {
+                    yupErrors[yupError.path] = yupError.message;
+                });
+                setErrors(yupErrors);
+            } else {
+                console.error("Lỗi validate form:", error);
+            }
+        }
+    }
+
+    const handleInputAreaChange = (data: string) => {
+        setReason(data);
     };
 
-    const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
-
-    const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
-        if (option) {
-            setSelectedOption(option)
+    const handleSelectChange = (selectedOption: SelectOptionType | null, setState: any) => {
+        setSelectedOption(selectedOption);
+        if (selectedOption) {
+            setState(selectedOption.value); // Set giá trị đã chọn vào state setIsDep_id
         }
     };
 
-    const options = {
-        chonchinhanh: [
-            { value: 'PT shop', label: 'PT shop' },
-            { value: 'LT legend', label: 'LT legend' },
-            { value: 'LT pay 3', label: 'LT pay 3' },
-            { value: 'Công ty cổ phần Thanh toán Hưng Hà 2 ', label: 'Công ty cổ phần Thanh toán Hưng Hà 2 ' },
-        ],
-        chonphongban: [
-            { value: '  BAN GIÁM ĐỐC', label: 'BAN GIÁM ĐỐC' },
-            { value: 'KỸ THUẬT', label: 'KỸ THUẬT' },
-            { value: 'Biên tập', label: 'Biên tập' },
-            { value: 'Kinh Doanh', label: 'Kinh Doanh' },
-            { value: 'Đề án', label: 'Đề án' },
-            { value: 'Phòng SEO', label: 'Phòng SEO' },
-            { value: 'Phòng Đào tạo', label: 'Phòng Đào tạo' },
-            { value: 'Phòng sáng tạo', label: 'phòng sáng tạo' },
-            { value: 'Phòng tài vụ', label: 'Phòng tài vụ' },
-        ],
-        chonnhanvien: [
-            { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
-            { value: 'Phan Mạnh Hùng', label: 'Phan Mạnh Hùng (SÁNG TẠO - ID:153846)' },
-        ],
-        chucvuhientai: [
-            { value: 'sinh viên thực tập', label: 'SINH VIÊN THỰC TẬP' },
-            { value: 'nhân viên part time', label: 'NHÂN VIÊN PART TIME' },
-            { value: 'nhân viên thử việc', label: 'NHÂN VIÊN THỬ VIỆC' },
-            { value: 'nhân viên chính thức', label: 'NHÂN VIÊN CHÍNH THỨC' },
-            { value: 'trưởng nhóm', label: 'TRƯỞNG NHÓM' },
-            { value: 'nhóm phó', label: 'NHÓM PHÓ' },
-            { value: 'tổ trưởng', label: 'TỔ TRƯỞNG' },
-            { value: 'phó tổ trưởng', label: 'PHÓ TỔ TRƯỞNG' },
-            { value: 'trưởng ban dự án', label: 'TRƯỞNG BAN DỰ ÁN   ' },
-            { value: 'phó ban dự án', label: 'PHÓ BAN DỰ ÁN' },
-            { value: 'trưởng phòng', label: 'TRƯỞNG PHÒNG' },
-            { value: 'phó trưởng phòng', label: 'PHÓ TRƯỞNG PHÒNG' },
-            { value: 'giám đốc', label: 'GIÁM ĐỐC' },
-            { value: 'phó giám đốc', label: 'PHÓ GIÁM ĐỐC   ' },
-            { value: 'tổng giám đốc', label: 'TỔNG GIÁM ĐỐC' },
-            { value: 'phó tổng giám đốc', label: 'PHÓ TỔNG GIÁM ĐỐC' },
-            { value: 'tổng giám đốc tập đoàn', label: 'TỔNG GIÁM ĐỐC TẬP ĐOÀN' },
-            { value: 'phó  tổng giám đốc tập đoàn', label: 'PHÓ TỔNG GIÁM ĐỐC TẬP ĐOÀN' },
-            { value: 'chủ tịch hội đồng quản trị', label: 'CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ' },
-            { value: 'phó chủ tịch hội đồng quản trị', label: 'PHÓ CHỦ TỊCH HỘI ĐỒNG QUẢN TRỊ' },
-            { value: 'thành viên hội đồng quản trị', label: 'THÀNH VIÊN HỘI ĐỒNG QUẢN TRỊ' },
-        ],
+    const companyNames: any = [];
+    if (isCom_id && isOrganizationalStructureList?.infoCompany) {
+        if (
+            isOrganizationalStructureList?.infoCompany?.parent_com_id === isCom_id
+        ) {
+            companyNames.push({
+                key: isOrganizationalStructureList?.infoCompany?.companyName,
+                value: isOrganizationalStructureList?.infoCompany?.parent_com_id,
+            });
+        }
+        for (const company of isOrganizationalStructureList?.infoCompany
+            ?.infoChildCompany) {
+            if (company.com_id === isCom_id) {
+                companyNames.push({ key: company.com_name, value: company.com_id });
+            }
+        }
+    }
 
+    const chonchinhanhOptions = useMemo(
+        () =>
+            companyNames && companyNames?.map((organizational: any) => ({
+                value: organizational.value,
+                label: organizational.key,
+            })),
+        [companyNames]
+    );
+
+    const chonnhanvienOptions = useMemo(
+        () =>
+            isEmpList &&
+            isEmpList?.data?.map((emp: any) => ({
+                value: `${emp.idQLC} ${emp.dep_id[0]} ${emp.position_id} ${emp.nameDeparment}`,
+                label: emp.userName
+            })),
+        [isEmpList]
+    );
+
+
+    const options = {
+        chonchinhanh: chonchinhanhOptions,
+        chonphongban: [
+            { value: isDep_id && isDep_id, label: isDep_name ? isDep_name : 'Chọn phòng ban' },
+        ],
+        chonnhanvien: chonnhanvienOptions && chonnhanvienOptions,
+        chucvuhientai: [
+            { value: isPosition_id && isPosition_id, label: isPosition_name ? isPosition_name : 'Chọn chức vụ ' },
+        ],
     };
 
     return (
@@ -104,17 +231,19 @@ export default function AddOutJobModal({ onCancel }: any) {
                             <div className={`${styles.modal_body}`}>
                                 <form action="">
                                     <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Tên nhân viên <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Tên nhân viên <span style={{ color: 'red' }}> *
+                                            <span> {errors.chonnhanvien && <div className={`${styles.t_require} `}>{errors.chonnhanvien}</div>}</span>
+                                        </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <Select
                                                 defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.chonnhanvien)}
+                                                onChange={(option) => handleSelectChange(option, setInfoList)}
                                                 options={options.chonnhanvien}
                                                 placeholder="Chọn nhân viên"
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -132,14 +261,14 @@ export default function AddOutJobModal({ onCancel }: any) {
                                         <label htmlFor="">Chức vụ hiện tại </label>
                                         <div className={`${styles.input_right}`}>
                                             <Select
-                                                defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.chucvuhientai)}
+                                                value={options.chucvuhientai}
+                                                onChange={(option) => handleSelectChange(option, options.chucvuhientai)}
                                                 options={options.chucvuhientai}
                                                 placeholder="Chọn chức vụ"
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -157,14 +286,14 @@ export default function AddOutJobModal({ onCancel }: any) {
                                         <label htmlFor="">Phòng ban hiện tại </label>
                                         <div className={`${styles.input_right}`}>
                                             <Select
-                                                defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.chonphongban)}
+                                                value={options.chonphongban}
+                                                onChange={(option) => handleSelectChange(option, options.chonphongban)}
                                                 options={options.chonphongban}
                                                 placeholder="Chọn phòng ban"
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -182,14 +311,14 @@ export default function AddOutJobModal({ onCancel }: any) {
                                         <label htmlFor="">Đơn vị công tác hiện tại</label>
                                         <div className={`${styles.input_right}`}>
                                             <Select
-                                                defaultValue={selectedOption}
-                                                onChange={(option) => handleSelectionChange(option, options.chonchinhanh)}
+                                                value={options.chonchinhanh}
+                                                onChange={(option) => handleSelectChange(option, options.chonchinhanh)}
                                                 options={options.chonchinhanh}
                                                 placeholder="Chọn chi nhánh"
                                                 styles={{
                                                     control: (baseStyles, state) => ({
                                                         ...baseStyles,
-                                                        borderRadius: 8,
+                                                        borderRadius: 4,
                                                         fontSize: state.isFocused ? 14 : 14,
                                                         minHeight: state.isFocused ? 20 : 20,
                                                         width: '100%',
@@ -205,20 +334,22 @@ export default function AddOutJobModal({ onCancel }: any) {
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Thời gian bắt đầu nghỉ <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Thời gian bắt đầu nghỉ <span style={{ color: 'red' }}> *
+                                            <span> {errors.created_at && <div className={`${styles.t_require} `}>{errors.created_at}</div>}</span>
+                                        </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <input type="date" id="names" placeholder="dd/mm/yyyy" className={`${styles.input_process}`} />
+                                            <input type="date" id="created_at" placeholder="dd/mm/yyyy" className={`${styles.input_process}`} />
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups} ${styles.cke}`}>
                                         <label htmlFor="">Lý do </label>
                                         <div className={`${styles.ckeditor}`}>
-                                            <Input_textarea />
+                                            <Input_textarea onDescriptionChange={handleInputAreaChange} />
                                         </div>
                                     </div>
                                     <div className={`${styles.modal_footer} ${styles.footer_process}`}>
                                         <button className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
-                                        <button className={`${styles.btn_add}`}>Thêm</button>
+                                        <button className={`${styles.btn_add}`} onClick={handleSubmit}>Thêm</button>
                                     </div>
                                 </form>
                             </div>
