@@ -1,9 +1,57 @@
 import React, { useState } from "react";
 import styles from "./addRecruitmentStage.module.css";
+import * as Yup from "yup";
+import { AddDataRecruitmentStage } from "@/pages/api/quan-ly-tuyen-dung/RecruitmentManagerService";
 export interface AddRecruitmentStage {}
 
-export default function AddRecruitmentStage({ animation, onCloseModal }: any) {
-  const handleSubmit = () => {};
+export default function AddRecruitmentStage({recruitmentId, animation, onCloseModal, setData }: any) {
+
+  const [formData, setFormData] = useState({
+    nameStage: '',
+    posAssum: '',
+    target: '',
+    time: '',
+    des: ''
+  })
+  const [errors, setErrors] = useState<any>({});
+  
+  const schema = Yup.object().shape({
+    nameStage: Yup.string().required("Vui lòng nhập tên giai đoạn"),
+    posAssum: Yup.string().required("Vui lòng nhập bộ phận đảm nhận "),
+    target: Yup.string().required("Vui lòng nhập mục tiêu giai đoạn"),
+  });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: any, recruitId: number, formData: any) => {
+    try {
+      e.preventDefault();
+      await schema.validate(formData, { abortEarly: false });
+      const response = await AddDataRecruitmentStage(recruitId, formData)
+      if(response?.status !== 200) {
+        alert('Thêm giai đoạn không thành công')
+      }
+      else {
+        onCloseModal()
+        setData(response?.data)
+      }
+    }
+    catch (error: any) {
+      const validationErrors = {};
+      if (error?.inner) {
+        error.inner.forEach((err) => {
+          validationErrors[err.path] = err.message;
+        });
+      }
+      setErrors(validationErrors);
+    }
+  };
 
   return (
     <>
@@ -20,7 +68,7 @@ export default function AddRecruitmentStage({ animation, onCloseModal }: any) {
                 <h5 className={`${styles.modal_title}`}>THÊM GIAI ĐOẠN</h5>
               </div>
 
-              <form onSubmit={handleSubmit} className={`${styles.modal_form}`}>
+              <form  onSubmit={(e) => handleSubmit(e, recruitmentId, formData)} className={`${styles.modal_form}`}>
                 <div className={`${styles.modal_body} ${styles.bodyquytrinh}`}>
                   <div className={`${styles.form_groups}`}>
                     <label>
@@ -29,10 +77,26 @@ export default function AddRecruitmentStage({ animation, onCloseModal }: any) {
                     </label>
                     <div className={`${styles.inputright}`}>
                       <input
+                        name="nameStage"
                         type="text"
                         className={`${styles.inputquytrinh}`}
                         placeholder="Nhập tên giai đoạn"
+                        onChange={handleChange}
                       ></input>
+                      {errors.nameStage && (
+                      <>
+                        <picture>
+                          <img
+                            className={`${styles.icon_err}`}
+                            src={`${"/danger.png"}`}
+                            alt="Lỗi"
+                          ></img>
+                        </picture>
+                        <div className={`${styles.errors}`}>
+                          {errors.nameStage}
+                        </div>
+                      </>
+                    )}
                     </div>
                   </div>
 
@@ -43,10 +107,26 @@ export default function AddRecruitmentStage({ animation, onCloseModal }: any) {
                     </label>
                     <div className={`${styles.inputright}`}>
                       <input
+                        name= 'posAssum'
                         type="text"
                         className={`${styles.inputquytrinh}`}
                         placeholder="Nhập bộ phận đảm nhận công việc"
+                        onChange={handleChange}
                       ></input>
+                      {errors.posAssum && (
+                      <>
+                        <picture>
+                          <img
+                            className={`${styles.icon_err}`}
+                            src={`${"/danger.png"}`}
+                            alt="Lỗi"
+                          ></img>
+                        </picture>
+                        <div className={`${styles.errors}`}>
+                          {errors.posAssum}
+                        </div>
+                      </>
+                    )}
                     </div>
                   </div>
 
@@ -57,23 +137,41 @@ export default function AddRecruitmentStage({ animation, onCloseModal }: any) {
                     </label>
                     <div className={`${styles.inputright}`}>
                       <input
+                        name="target"
                         type="text"
                         className={`${styles.inputquytrinh}`}
                         placeholder="Nhập mục tiêu giai đoạn"
+                        onChange={handleChange}
                       ></input>
+                      {errors.target && (
+                      <>
+                        <picture>
+                          <img
+                            className={`${styles.icon_err}`}
+                            src={`${"/danger.png"}`}
+                            alt="Lỗi"
+                          ></img>
+                        </picture>
+                        <div className={`${styles.errors}`}>
+                          {errors.target}
+                        </div>
+                      </>
+                    )}
                     </div>
                   </div>
 
                   <div className={`${styles.form_groups}`}>
                     <label>
                       Thời gian định lượng
-                      <span className={`${styles.red}`}> *</span>
+                      <span className={`${styles.red}`}></span>
                     </label>
                     <div className={`${styles.inputright}`}>
                       <input
+                        name="time"
                         type="text"
                         className={`${styles.inputquytrinh}`}
                         placeholder="Nhập thời gian định lượng"
+                        onChange={handleChange}
                       ></input>
                     </div>
                   </div>
@@ -82,10 +180,12 @@ export default function AddRecruitmentStage({ animation, onCloseModal }: any) {
                     <label>Mô tả công việc</label>
                     <div>
                       <textarea
+                        name="des"
                         className={`${styles.inputquytrinh} ${styles.textarea}`}
                         placeholder="Nhập mô tả giai đoạn "
                         spellCheck="false"
                         style={{ height: "100px", marginTop: "10px" }}
+                        onChange={handleChange}
                       ></textarea>
                     </div>
                   </div>
@@ -101,7 +201,7 @@ export default function AddRecruitmentStage({ animation, onCloseModal }: any) {
                   >
                     <span>Hủy</span>
                   </button>
-                  <button type="button" className={`${styles.success}`}>
+                  <button type="submit" className={`${styles.success}`}>
                     Thêm
                   </button>
                 </div>

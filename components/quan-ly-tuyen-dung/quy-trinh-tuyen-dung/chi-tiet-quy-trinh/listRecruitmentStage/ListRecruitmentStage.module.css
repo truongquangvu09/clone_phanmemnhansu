@@ -136,9 +136,7 @@
 }
 
 .settings_hover li{
-    
     list-style: none;
-    
     border-left: 3px solid #ffffff;
     cursor: pointer;
     padding: 16px 40px 14px 13px;
@@ -196,7 +194,6 @@
 .giaidoans_item_2 .motacv {
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 3; /* Số dòng hiển thị ban đầu */
     -webkit-box-orient: vertical;
     line-height: 1.4;
     margin-top: 5px;

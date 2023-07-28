@@ -1,54 +1,142 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./ModalAddReward.module.css";
 import Select from "react-select";
+import * as Yup from "yup";
+import { getDataUser } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
+import { AddAchievement } from "@/pages/api/luong-thuong-phuc-loi/reward";
 
 type SelectOptionType = { label: string; value: string };
 function ModalAddReward({ animation, onClose }: any) {
+  const [user, setUser] = useState<any>();
+  const [content, setContent] = useState<any>();
+  const [listUser, setListUser] = useState<any>();
+  const [appellation, setAppellation] = useState<any>({});
+  const [hidden, setHidden] = useState(false);
+  const [errors, setErrors] = useState<any>({});
+
+  const mergedObject = { ...content, ...listUser, ...appellation };
+
+  const schema = Yup.object().shape({
+    achievement_id: Yup.string().required("Số quyết định không được để trống"),
+    content: Yup.string().required("Nội dung khen không được để trống"),
+    list_user: Yup.array().required("Chọn tên đối tượng"),
+    created_by: Yup.string().required("Người ký không được để trống"),
+    achievement_at: Yup.string().required("Thời điểm không được để trống"),
+    achievement_type: Yup.string().required("Chọn hình thức"),
+    appellation: Yup.string().required("Danh hiệu không được để trống"),
+    achievement_level: Yup.string().required("Cấp khen không được để trống"),
+    price: Yup.string().required("Hãy nhập số tiền"),
+    resion: Yup.string().required("Hãy nhập lý do khen thưởng"),
+  });
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await getDataUser();
+        setUser(
+          response?.data.data.data.map((item) => ({
+            name: "list_user",
+            value: item.idQLC,
+            label: `${item.userName} ${item.nameDeparment}`,
+          }))
+        );
+      } catch (err) {}
+    };
+    getData();
+  }, []);
+
   const options = {
-    tendoituong: [
-      { value: "Lê Hồng Anh", label: "Lê Hồng Anh" },
-      { value: "Lê Hồng Đào", label: "Lê Hồng Đào" },
-      { value: "Lê Hồng Bích", label: "Lê Hồng Bích" },
-      { value: "Lê Hồng Hạnh", label: "Lê Hồng Hạnh" },
-    ],
+    tendoituong: user,
+
     hinhthuckhenthuong: [
-      { value: "Huân Chương", label: "Huân Chương" },
-      { value: "Huy Chương", label: "Huy Chương" },
-      { value: "Giấy khen", label: "Giấy khen" },
-      { value: "Thăng chức", label: "Thăng chức" },
+      { name: "achievement_type", value: "1", label: "Huân Chương" },
+      { name: "achievement_type", value: "2", label: "Huy Chương" },
+      { name: "achievement_type", value: "3", label: "Giấy khen" },
+      { name: "achievement_type", value: "4", label: "Thăng chức" },
+      { name: "achievement_type", value: "5", label: "Kỉ niệm chương" },
+      { name: "achievement_type", value: "6", label: "Tiền mặt" },
     ],
   };
 
-  const [content, setContent] = useState("");
-
-  const handleContentChange = (value: string) => {
-    setContent(value);
+  const handleContentChange = (event) => {
+    const { name, value } = event.target;
+    setContent((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
-  const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(
-    null
-  );
+  const handleSelectionChange = (selectedOptions, actionMeta) => {
+    const selectedValues = selectedOptions.map((option) => option.value);
+    const selectedLabels = selectedOptions.map((option) => option.label);
 
-  const handleSubmit = () => {};
+    setListUser((prevSelectedOption) => ({
+      ...prevSelectedOption,
+      list_user: selectedValues,
+      list_user_name: selectedLabels,
+    }));
+  };
 
-  const handleCloseModalAdd = () => {};
+  const handleSelectionAchievementType = (
+    option: any | null,
+    optionsArray: any[]
+  ) => {
+    if (option) {
+      const { name, value } = option;
+      setAppellation((prevSelectedOption) => ({
+        ...prevSelectedOption,
+        [name]: value,
+      }));
+    }
+  };
+
+  useEffect(() => {
+    if (appellation.achievement_type === "6") {
+      setHidden(true);
+    } else {
+      setHidden(false);
+    }
+  }, [appellation.achievement_type]);
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    try {
+      // await schema.validate(mergedObject, { abortEarly: false });
+      const response = await AddAchievement(mergedObject);
+      if (response?.status === 200) {
+        onClose();
+      }
+    } catch (error: any) {
+      const validationErrors = {};
+      if (error?.inner) {
+        error.inner.forEach((err) => {
+          validationErrors[err.path] = err.message;
+        });
+      }
+      setErrors(validationErrors);
+    }
+  };
 
   return (
     <>
       <div className={`${styles.overlay}`}></div>
-      <div className={`${styles.modal} ${styles.modal_setting}  ${animation ? styles.fade_in : styles.fade_out }`} style={{display:'block'}}>
+      <div
+        className={`${styles.modal} ${styles.modal_setting}  ${
+          animation ? styles.fade_in : styles.fade_out
+        }`}
+        style={{ display: "block" }}
+      >
         <div className={`${styles.modal_dialog} ${styles.contentquytrinh}`}>
           <div className={`${styles.modal_content} `}>
             {/* header */}
             <div className={`${styles.modal_header} ${styles.headquytrinh}`}>
-              <h5 className={`${styles.modal_title}`}>
-                
-                THÊM THÀNH TÍCH
-                
-              </h5>
+              <h5 className={`${styles.modal_title}`}>THÊM THÀNH TÍCH</h5>
             </div>
             {/* body */}
-            <form onSubmit={handleSubmit} className={`${styles.modal_form}`}>
+            <form
+              onSubmit={(e) => handleSubmit(e)}
+              className={`${styles.modal_form}`}
+            >
               <div className={`${styles.modal_body} ${styles.bodyquytrinh}`}>
                 <div className={`${styles.form_groups}`}>
                   <label>
@@ -58,19 +146,25 @@ function ModalAddReward({ animation, onClose }: any) {
                   <div className={`${styles.inputright}`}>
                     <input
                       type="text"
+                      name="achievement_id"
                       className={`${styles.inputquytrinh}`}
                       placeholder="Nhập số quyết định"
+                      onChange={handleContentChange}
                     ></input>
-                    <picture style={{ display: "none" }}>
-                      <img
-                        src = {`${'/danger.png'}`}
-                        alt="Lỗi"
-                      ></img>
-                    </picture>
-                    <div
-                      className={`${styles.errors}`}
-                      style={{ display: "none" }}
-                    ></div>
+                    {errors.achievement_id && (
+                      <>
+                        <picture>
+                          <img
+                            className={`${styles.icon_err}`}
+                            src={`${"/danger.png"}`}
+                            alt="Lỗi"
+                          ></img>
+                        </picture>
+                        <div className={`${styles.errors}`}>
+                          {errors.achievement_id}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -82,36 +176,47 @@ function ModalAddReward({ animation, onClose }: any) {
                   <div className={`${styles.inputright}`}>
                     <input
                       type="text"
+                      name="content"
                       className={`${styles.inputquytrinh}`}
                       placeholder="Nhập nội dung khen thưởng"
+                      onChange={handleContentChange}
                     ></input>
-                    <picture style={{ display: "none" }}>
-                      <img
-                       src = {`${'/danger.png'}`}
-                        alt="Lỗi"
-                      ></img>
-                    </picture>
-                    <div
-                      className={`${styles.errors}`}
-                      style={{ display: "none" }}
-                    ></div>
+                    {errors.content && (
+                      <>
+                        <picture>
+                          <img
+                            className={`${styles.icon_err}`}
+                            src={`${"/danger.png"}`}
+                            alt="Lỗi"
+                          ></img>
+                        </picture>
+                        <div className={`${styles.errors}`}>
+                          {errors.content}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                  Tên đối tượng
+                    Tên đối tượng
                     <span className={`${styles.red}`}> *</span>
                     <div
                       className={`${styles.red} ${styles.float_right}`}
                     ></div>
                   </label>
-                  <div style={{ marginRight: "2%" }} className={`${styles.select}`}>
+                  <div
+                    style={{ marginRight: "2%" }}
+                    className={`${styles.select}`}
+                  >
                     <Select
                       isMulti
-                      defaultValue={selectedOption}
                       options={options.tendoituong}
                       placeholder="Chọn đối tượng"
+                      onChange={(option) =>
+                        handleSelectionChange(option, options.tendoituong)
+                      }
                       styles={{
                         control: (baseStyles, state) => ({
                           ...baseStyles,
@@ -119,8 +224,8 @@ function ModalAddReward({ animation, onClose }: any) {
                           borderColor: "#4747477a",
                           height: "auto",
                           fontSize: state.isFocused ? 14 : 14,
-                          minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? '100%' : baseStyles.width,
+                          minHeight: state.isFocused ? 15 : 15,
+                          width: state.isFocused ? "100%" : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
                         }),
                         valueContainer: (baseStyles) => ({
@@ -144,19 +249,25 @@ function ModalAddReward({ animation, onClose }: any) {
                   <div className={`${styles.inputright}`}>
                     <input
                       type="text"
+                      name="created_by"
                       className={`${styles.inputquytrinh}`}
                       placeholder="Người ký quyết định"
+                      onChange={handleContentChange}
                     ></input>
-                    <picture style={{ display: "none" }}>
-                      <img
-                      src = {`${'/danger.png'}`}
-                        alt="Lỗi"
-                      ></img>
-                    </picture>
-                    <div
-                      className={`${styles.errors}`}
-                      style={{ display: "none" }}
-                    ></div>
+                    {errors.created_by && (
+                      <>
+                        <picture>
+                          <img
+                            className={`${styles.icon_err}`}
+                            src={`${"/danger.png"}`}
+                            alt="Lỗi"
+                          ></img>
+                        </picture>
+                        <div className={`${styles.errors}`}>
+                          {errors.created_by}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -168,20 +279,26 @@ function ModalAddReward({ animation, onClose }: any) {
                   <div className={`${styles.inputright}`}>
                     <input
                       type="date"
+                      name="achievement_at"
                       className={`${styles.inputquytrinh}`}
-                      style={{height:'30.6px'}}
+                      style={{ height: "30.6px" }}
                       placeholder="Nhập tên giai đoạn"
+                      onChange={handleContentChange}
                     ></input>
-                    <picture style={{ display: "none" }}>
-                      <img
-                       src = {`${'/danger.png'}`}
-                        alt="Lỗi"
-                      ></img>
-                    </picture>
-                    <div
-                      className={`${styles.errors}`}
-                      style={{ display: "none" }}
-                    ></div>
+                    {errors.achievement_at && (
+                      <>
+                        <picture>
+                          <img
+                            className={`${styles.icon_err}`}
+                            src={`${"/danger.png"}`}
+                            alt="Lỗi"
+                          ></img>
+                        </picture>
+                        <div className={`${styles.errors}`}>
+                          {errors.achievement_at}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -193,12 +310,19 @@ function ModalAddReward({ animation, onClose }: any) {
                       className={`${styles.red} ${styles.float_right}`}
                     ></div>
                   </label>
-                  <div style={{ marginRight: "2%" }} className={`${styles.select}`}>
+                  <div
+                    style={{ marginRight: "2%" }}
+                    className={`${styles.select}`}
+                  >
                     <Select
-                      isMulti={true}
-                      defaultValue={selectedOption}
-                      options={options.hinhthuckhenthuong}
                       placeholder="-- Vui lòng chọn -- "
+                      onChange={(option) =>
+                        handleSelectionAchievementType(
+                          option,
+                          options.hinhthuckhenthuong
+                        )
+                      }
+                      options={options.hinhthuckhenthuong}
                       styles={{
                         control: (baseStyles, state) => ({
                           ...baseStyles,
@@ -207,7 +331,7 @@ function ModalAddReward({ animation, onClose }: any) {
                           height: "auto",
                           fontSize: state.isFocused ? 14 : 14,
                           minHeight: state.isFocused ? 20 : 20,
-                          width: state.isFocused ? '100%' : baseStyles.width,
+                          width: state.isFocused ? "100%" : baseStyles.width,
                           fontWeight: state.isFocused ? 600 : 600,
                         }),
                         valueContainer: (baseStyles) => ({
@@ -223,6 +347,69 @@ function ModalAddReward({ animation, onClose }: any) {
                   </div>
                 </div>
 
+                {hidden && (
+                  <>
+                    <div className={`${styles.form_groups}`}>
+                      <label>
+                        Số tiền
+                        <span className={`${styles.red}`}> *</span>
+                      </label>
+                      <div className={`${styles.inputright}`}>
+                        <input
+                          style={{ height: "28px" }}
+                          type="text"
+                          name="price"
+                          className={`${styles.inputquytrinh}`}
+                          placeholder="Số tiền"
+                          onChange={handleContentChange}
+                        ></input>
+                        {errors.price && (
+                          <>
+                            <picture>
+                              <img
+                                className={`${styles.icon_err}`}
+                                src={`${"/danger.png"}`}
+                                alt="Lỗi"
+                              ></img>
+                            </picture>
+                            <div className={`${styles.errors}`}>
+                              {errors.price}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className={`${styles.form_groups}`}>
+                      <label>
+                        Lý do
+                        <span className={`${styles.red}`}> *</span>
+                      </label>
+                      <div className={`${styles.inputright}`}>
+                        <textarea
+                          name="resion"
+                          className={`${styles.inputquytrinh}`}
+                          onChange={handleContentChange}
+                        ></textarea>
+                        {errors.resion && (
+                          <>
+                            <picture>
+                              <img
+                                className={`${styles.icon_err}`}
+                                src={`${"/danger.png"}`}
+                                alt="Lỗi"
+                              ></img>
+                            </picture>
+                            <div className={`${styles.errors}`}>
+                              {errors.resion}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </>
+                )}
+
                 <div className={`${styles.form_groups}`}>
                   <label>
                     Danh hiệu
@@ -231,19 +418,25 @@ function ModalAddReward({ animation, onClose }: any) {
                   <div className={`${styles.inputright}`}>
                     <input
                       type="text"
+                      name="appellation"
                       className={`${styles.inputquytrinh}`}
                       placeholder="Danh hiệu"
+                      onChange={handleContentChange}
                     ></input>
-                    <picture style={{ display: "none" }}>
-                      <img
-                       src = {`${'/danger.png'}`}
-                        alt="Lỗi"
-                      ></img>
-                    </picture>
-                    <div
-                      className={`${styles.errors}`}
-                      style={{ display: "none" }}
-                    ></div>
+                    {errors.appellation && (
+                      <>
+                        <picture>
+                          <img
+                            className={`${styles.icon_err}`}
+                            src={`${"/danger.png"}`}
+                            alt="Lỗi"
+                          ></img>
+                        </picture>
+                        <div className={`${styles.errors}`}>
+                          {errors.appellation}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -255,19 +448,25 @@ function ModalAddReward({ animation, onClose }: any) {
                   <div className={`${styles.inputright}`}>
                     <input
                       type="text"
+                      name="achievement_level"
                       className={`${styles.inputquytrinh}`}
                       placeholder="Cấp khen"
+                      onChange={handleContentChange}
                     ></input>
-                    <picture style={{ display: "none" }}>
-                      <img
-                       src = {`${'/danger.png'}`}
-                        alt="Lỗi"
-                      ></img>
-                    </picture>
-                    <div
-                      className={`${styles.errors}`}
-                      style={{ display: "none" }}
-                    ></div>
+                    {errors.achievement_level && (
+                      <>
+                        <picture>
+                          <img
+                            className={`${styles.icon_err}`}
+                            src={`${"/danger.png"}`}
+                            alt="Lỗi"
+                          ></img>
+                        </picture>
+                        <div className={`${styles.errors}`}>
+                          {errors.achievement_level}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -282,7 +481,7 @@ function ModalAddReward({ animation, onClose }: any) {
                 >
                   Hủy
                 </button>
-                <button type="button" className={`${styles.success}`}>
+                <button type="submit" className={`${styles.success}`}>
                   Thêm
                 </button>
               </div>

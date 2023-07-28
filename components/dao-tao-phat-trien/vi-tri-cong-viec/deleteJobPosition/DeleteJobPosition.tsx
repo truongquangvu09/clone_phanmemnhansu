@@ -1,13 +1,30 @@
 import React, { useState } from "react";
 
 import styles from "./DeleteJobPosition.module.css";
+import { deleteDataJobPosition } from "@/pages/api/dao-tao-phat-trien/JobPosition";
 export interface DeleteJobPosition {}
 
-export default function DeleteJobPosition({animation, closeModal }: any) {
-  
+export default function DeleteJobPosition({animation, closeModal,id, deleteData}: any) {
+  console.log(id)
   const handleCancel = () => {
     closeModal();
   };
+
+  const handleDelete = async(e: any) => {
+    e.preventDefault();
+    try {
+      const response = await deleteDataJobPosition(id)
+      if( response?.status !== 200) {
+        alert('Xóa dữ liệu thất bại')
+      }
+      else{
+        closeModal()
+        deleteData(response?.data)
+      }
+    }catch(error) {
+
+    }
+  }
 
 
   return (
@@ -34,14 +51,17 @@ export default function DeleteJobPosition({animation, closeModal }: any) {
               </div>
             </div>
 
+            <form onSubmit={(e) => handleDelete(e)}>
             <div className={`${styles.modal_footer} ${styles.footerquytrinh}`}>
               <button type="button" className={`${styles.btn_huy}`} onClick={handleCancel}>
                 <span>Hủy</span>
               </button>
-              <button type="button" className={`${styles.delete}`}>
+              <button type="submit" className={`${styles.delete}`}>
                 Xóa
               </button>
             </div>
+            </form>
+
           </div>
         </div>
       </div>

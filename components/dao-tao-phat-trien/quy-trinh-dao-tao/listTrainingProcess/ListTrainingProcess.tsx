@@ -6,11 +6,14 @@ import AddTrainingProcess from "../addTrainingProcess/AddTrainingProcess";
 import DeleteTrainingProcess from "../deleteTrainingProcess/DeleteTrainingProcess";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 import MyPagination from "@/components/pagination/Pagination";
+import { getDataListProcessTrain } from "@/pages/api/dao-tao-phat-trien/TrainingProcess";
 
 export default function ListTrainingProcess({ children }: any) {
   const [openModal, setOpenModal] = useState(0);
   const [animateModal, setAnimateModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [data, setData] = useState<any>();
+  const [newData, setNewData] = useState<any>()
   const router = useRouter();
 
   const handlePageChange = (page: any) => {
@@ -33,29 +36,21 @@ export default function ListTrainingProcess({ children }: any) {
       `/dao-tao-phat-trien/quy-trinh-dao-tao/chi-tiet-quy-trinh/${id}`
     );
   };
+  const handleSearch = () => {
+    
+  }
+  const handleNewData = (newData) => {
+    setNewData(newData)
+  }
 
-  const data = [
-    {
-      id: 1,
-      title: "(QTTD112) Dexter Watkins",
-      mota: "Quản lý",
-    },
-    {
-      id: 2,
-      title: "(QTTD112) Dexter Watkins",
-      mota: "Quản lý",
-    },
-    {
-      id: 3,
-      title: "(QTTD112) Dexter Watkins",
-      mota: "Quản lý",
-    },
-    {
-      id: 4,
-      title: "(QTTD112) Dexter Watkins",
-      mota: "Quản lý",
-    },
-  ];
+  useEffect(() => {
+    const getListProcessTrain = async () => {
+      const response = await getDataListProcessTrain(currentPage, 10)
+      setData(response?.data.data);
+    }
+    getListProcessTrain()
+  },[newData, currentPage])
+
   return (
     <>
       <div className={`${styles.tab_content}`}>
@@ -79,6 +74,7 @@ export default function ListTrainingProcess({ children }: any) {
                 <AddTrainingProcess
                   animation={animateModal}
                   closeModal={handleCloseModal}
+                  handleNewData = {handleNewData}
                 ></AddTrainingProcess>
               )}
               {openModal === 2 && (
@@ -101,7 +97,7 @@ export default function ListTrainingProcess({ children }: any) {
                         <img
                           src={`/icon-search.png`}
                           alt="search"
-                          // onClick={() => handleSearch()}
+                          onClick={() => handleSearch()}
                         ></img>
                       </picture>
                     </button>
@@ -111,19 +107,19 @@ export default function ListTrainingProcess({ children }: any) {
             </div>
 
             <div className={`${styles.all_quytrinh}`}>
-              {data?.map((item) => (
-                <>
-                  <div key={item.id} className={`${styles.quytrinh_item}`}>
+              {data?.data.map((item) => (
+               <div key={item.id}>
+                  <div className={`${styles.quytrinh_item}`}>
                     <div className={`${styles.quytrinh_item1}`}>
                       <div
                         onClick={() => handleButtonClick(item.id)}
                         className={`${styles.quytrinh_item11}`}
                         style={{ cursor: "pointer" }}
                       >
-                        <li>{item.title}</li>
+                        <li>(QTĐT{item.id}) {item.name}</li>
                       </div>
                       <div className={`${styles.quytrinh_item12}`}>
-                        <li>{item.mota}</li>
+                        <li>{item.description}</li>
                       </div>
                     </div>
 
@@ -136,7 +132,7 @@ export default function ListTrainingProcess({ children }: any) {
                     </div>
                   </div>
                   <hr className={`${styles.shr}`}></hr>
-                </>
+                </div>
               ))}
             </div>
           </div>

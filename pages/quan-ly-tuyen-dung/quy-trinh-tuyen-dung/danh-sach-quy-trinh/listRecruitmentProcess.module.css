@@ -94,10 +94,15 @@
 .shr {
   margin-top: 5px;
   border: 0.5px solid rgba(71, 71, 71, 0.24);
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   height: 0;
 }
-
+.pagination {
+    float: right;
+    margin-top: 10px;
+    border: #333333;
+    margin-right: 40px;
+}
 @media (max-width: 280px) {
   .quytrinh_item {
     display: flex;

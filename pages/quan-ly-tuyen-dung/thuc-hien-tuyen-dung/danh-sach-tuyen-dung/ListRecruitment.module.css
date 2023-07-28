@@ -53,8 +53,8 @@
     background: white;
     right: 15px;
     box-shadow: 0 4px 10px rgb(0 0 0 / 5%);
-    
 }
+
 
 .new_r_t_left {
     padding-left: 0px;
@@ -75,8 +75,7 @@
     width: 250px;
 }
 
-.new_r_t_left_link {
-    
+.new_r_t_left_link span {
     font-weight: 500;
     font-size: 14px;
     line-height: 16px;
@@ -87,7 +86,6 @@
 }
 .new_r_t_left_tin {
     display: inline-block;
-    background-color: #EB5757;
     color: #FFFFFF;
     font-size: 12px;
     font-weight: 600;
@@ -147,6 +145,12 @@
     cursor: pointer;
     background-color: transparent;
     border: none;
+}
+.detail_new li a{
+    color: #333333;
+}
+.detail_new li:hover a{
+    color: #4C5BD4;
 }
 
 .settings li:hover ,.edit_new:hover {

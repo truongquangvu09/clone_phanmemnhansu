@@ -1,108 +1,58 @@
-import React, { useState } from 'react';
-import RewardTable from '../component/Component'
-import ModalReward from './modalAddPersonalCompliments/ModalAddReward';
+import React, { useEffect, useState } from "react";
+import styles from "../component/Component.module.css";
+import RewardTable from "../component/Component";
+import ModalReward from "./modalAddPersonalCompliments/ModalAddReward";
+import { SignIn } from "@/pages/api/Home/HomeService";
+import { GetDataAchievement } from "@/pages/api/luong-thuong-phuc-loi/reward";
+import MyPagination from "@/components/pagination/Pagination";
+import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 
-export interface PersonalReward{}
-export default function PersonalReward ({children}: any){
 
+export interface PersonalReward {}
+export default function PersonalReward({ children }: any) {
+  const [data, setData] = useState<any>();
+  const [currentPage, setCurrentPage] = useState<any>(1);
+  const [keyWords, setKeyWords] = useState<any>('')
+  const newData = data?.data.slice(0, -1)
+  const myPagination = data?.data[data.data.length - 1];
+  useEffect(() => {
+    SignIn();
+  }, []);
 
-    const data = [
-        {
-            stt: '1',
-            soquyetdinh: '123qvb',
-            noidungkhenthuong:'test khen thưởng thành tích 1',
-            tendoituongnhan: 'Phan Mạnh Hùng (Phòng sáng tạo) , Vũ Hà My (Biên Tập)',
-            thoidiem: '22/08/2002',
-            hinhthuckhenthuong: 'Tiền mặt',
-            danhhieu:'Quibusdam aut conseq',
-            capkhen: 'Sunt labore est mini'
-        },
-        {
-            stt: "2",
-            soquyetdinh: 'Buckminster Randolph',
-            noidungkhenthuong:'kenovyxoho@mailinator.com',
-            tendoituongnhan: 'Phan Mạnh Hùng (Phòng sáng tạo) , Trang Anh (Chưa cập nhật) , Test Kiên (Chưa cập nhật) , I AM HULK (ĐỀ ÁN) , Phùng Sơn (KỸ THUẬT) , Lê Mạnh Linh (KỸ THUẬT) , trần văn hải (KỸ THUẬT) , trần văn an (KỸ THUẬT) , Trần Văn Đức (Biên Tập) , Uy Phùng Hiểu (Ken)',
-            thoidiem: '22/08/2002',
-            hinhthuckhenthuong: 'Tiền mặt',
-            danhhieu:'Quibusdam aut conseq',
-            capkhen: 'Sunt labore est mini'
-        },{
-            stt: "3",
-            soquyetdinh: '123qvb',
-            noidungkhenthuong:'test khen thưởng thành tích 1',
-            tendoituongnhan: 'Phạm Xuân Nguyên Khôi (KỸ THUẬT) , Phùng Ngọc Anh (KỸ THUẬT) , Bùi Văn Bến (phòng Đào tạo) , Lưu Khải An (KỸ THUẬT)',
-            thoidiem: '22/08/2002',
-            hinhthuckhenthuong: 'Tiền mặt',
-            danhhieu:'Quibusdam aut conseq',
-            capkhen: 'Sunt labore est mini'
-        },{
-            stt: "4",
-            soquyetdinh: '123qvb',
-            noidungkhenthuong:'test khen thưởng thành tích 1',
-            tendoituongnhan: 'Phan Mạnh Hùng (Phòng sáng tạo) , Vũ Hà My (Biên Tập)',
-            thoidiem: '22/08/2002',
-            hinhthuckhenthuong: 'Tiền mặt',
-            danhhieu:'Quibusdam aut conseq',
-            capkhen: 'Sunt labore est mini'
-        },{
-            stt: "5",
-            soquyetdinh: '123qvb',
-            noidungkhenthuong:'test khen thưởng thành tích 1',
-            tendoituongnhan: 'Phan Mạnh Hùng (Phòng sáng tạo) , Vũ Hà My (Biên Tập)',
-            thoidiem: '22/08/2002',
-            hinhthuckhenthuong: 'Tiền mặt',
-            danhhieu:'Quibusdam aut conseq',
-            capkhen: 'Sunt labore est mini'
-        },{
-            stt: "6",
-            soquyetdinh: '123qvb',
-            noidungkhenthuong:'test khen thưởng thành tích 1',
-            tendoituongnhan: 'Phan Mạnh Hùng (Phòng sáng tạo) , Vũ Hà My (Biên Tập)',
-            thoidiem: '22/08/2002',
-            hinhthuckhenthuong: 'Tiền mặt',
-            danhhieu:'Quibusdam aut conseq',
-            capkhen: 'Sunt labore est mini'
-        },{
-            stt: "7",
-            soquyetdinh: '123qvb',
-            noidungkhenthuong:'test khen thưởng thành tích 1',
-            tendoituongnhan: 'Phan Mạnh Hùng (Phòng sáng tạo) , Vũ Hà My (Biên Tập)',
-            thoidiem: '22/08/2002',
-            hinhthuckhenthuong: 'Tiền mặt',
-            danhhieu:'Quibusdam aut conseq',
-            capkhen: 'Sunt labore est mini'
-        },{
-            stt: "8",
-            soquyetdinh: '123qvb',
-            noidungkhenthuong:'test khen thưởng thành tích 1',
-            tendoituongnhan: 'Phan Mạnh Hùng (Phòng sáng tạo) , Vũ Hà My (Biên Tập)',
-            thoidiem: '22/08/2002',
-            hinhthuckhenthuong: 'Tiền mặt',
-            danhhieu:'Quibusdam aut conseq',
-            capkhen: 'Sunt labore est mini'
-        },{
-            stt: "9",
-            soquyetdinh: '123qvb',
-            noidungkhenthuong:'test khen thưởng thành tích 1',
-            tendoituongnhan: 'Phan Mạnh Hùng (Phòng sáng tạo) , Vũ Hà My (Biên Tập)',
-            thoidiem: '22/08/2002',
-            hinhthuckhenthuong: 'Tiền mặt',
-            danhhieu:'Quibusdam aut conseq',
-            capkhen: 'Sunt labore est mini'
-        },{
-            stt: "10",
-            soquyetdinh: '123qvb',
-            noidungkhenthuong:'test khen thưởng thành tích 1',
-            tendoituongnhan: 'Phan Mạnh Hùng (Phòng sáng tạo) , Vũ Hà My (Biên Tập)',
-            thoidiem: '22/08/2002',
-            hinhthuckhenthuong: 'Tiền mặt',
-            danhhieu:'Quibusdam aut conseq',
-            capkhen: 'Sunt labore est mini'
-        }
-    ]
-    return(
-        <>
-            <RewardTable model='canhan' display= 'block' data = {data} modal = {<ModalReward></ModalReward>}></RewardTable>
-        </>
-    )
+  const handlePageChange = (page: any) => {
+    setCurrentPage(page);
+  };
+  const handleSearch = (key) => {
+    setKeyWords(key)
+  }
+
+  useEffect(() => {
+    const GetDataPersonalReward = async () => {
+      const response = await GetDataAchievement(currentPage, 10, 1, keyWords);
+      setData(response?.data.data);
+    };
+    GetDataPersonalReward();
+  }, [currentPage, keyWords]);
+
+  return (
+    <>
+      <RewardTable
+        model="canhan"
+        display="block"
+        data={newData}
+        modal={<ModalReward></ModalReward>}
+        keyWords = {handleSearch}
+      ></RewardTable>
+      
+      <div className={`${styles.pagination}`}>
+        <MyPagination
+          current={currentPage}
+          total={myPagination?.tongSoBanGhi}
+          pageSize={10}
+          onChange={handlePageChange}
+        />
+      </div>
+      <BodyFrameFooter src="https://www.youtube.com/embed/qICTgD7Dt9w"></BodyFrameFooter>
+    </>
+  );
 }

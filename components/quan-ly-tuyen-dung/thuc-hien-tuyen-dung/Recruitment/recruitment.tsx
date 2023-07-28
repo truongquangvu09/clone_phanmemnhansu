@@ -1,18 +1,51 @@
-
-
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./recruitment.module.css";
 import AddPerformRecruitment from "../AddPerformRecruitment/AddPerformRecruitment";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 import ListRecruitmentPage from "@/pages/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/ListRecruitment";
+import { GetListNews } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
+import MyPagination from "@/components/pagination/Pagination";
 
 export interface Recruitment {}
 
 export default function Recruitment({ children }: any) {
-  
   const [animateModal, setAnimateModal] = useState(false);
-  const [openModalAdd, setOpenModalAdd] = useState(false)
-  
+  const [openModalAdd, setOpenModalAdd] = useState(false);
+  const [currentPage, setCurrenPage] = useState<any>(1);
+  const [dataListNews, setDataListNews] = useState<any>();
+  const [onDelete, setOnDelete] = useState<any>()
+  const [title, setTitle] = useState<any>("");
+  const [formDate, setFormDate] = useState<any>()
+  const [toDate, setToDate] = useState<any>()
+  const [addData, setAddData] = useState<any>()
+  const [editData, setEditData] = useState<any>()
+
+  useEffect(() => {
+    const GetDataListNews = async () => {
+      try {
+        const response = await GetListNews(currentPage, 4, title, formDate, toDate);
+        if (response?.status !== 200) {
+          alert("Lấy dữ liệu thất bại");
+        } else {
+          setDataListNews(response?.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    GetDataListNews();
+  }, [title, currentPage, onDelete, formDate, toDate, addData, editData]);
+
+  const handleDelete = async () => {
+    const itemsPerPage = dataListNews?.data.data.length;
+    const updatedPage = itemsPerPage > 1 ? currentPage : Math.max(currentPage - 1, 1);
+    const newData = await GetListNews(updatedPage, 5, '', '', '' );
+    if(newData) {
+      setDataListNews(newData?.data)
+    }
+  }
+  const dataMapping = dataListNews?.data;
+
   const handleCloseModalAdd = () => {
     setAnimateModal(false);
     setTimeout(() => {
@@ -23,76 +56,65 @@ export default function Recruitment({ children }: any) {
     setOpenModalAdd(true);
     setAnimateModal(true);
   };
-  const data = [
-    {
-      id: 1,
-      tieude: "(TD194)AUT VOLUPTATES EARUM",
-      company: "Công ty Cổ phần Thanh toán Hưng Hà 2",
-      loaihinhlamviec: "Bán thời gian",
-      luong: "10-15",
-      date: "19/02/1982 - 06/10/2020",
-      diachi: " Voluptas est veniam. Hải Dương (địa chỉ tuyển dụng)",
-      soluong: "73",
-      nguoiphutrach: "Phan Mạnh Hùng",
-      matuyendung: "QTTD0",
-    },
-    {
-      id: 2,
-      tieude: "(TD194)AUT VOLUPTATES EARUM",
-      company: "Công ty Cổ phần Thanh toán Hưng Hà 2",
-      loaihinhlamviec: "Bán thời gian",
-      luong: "10-15",
-      date: "19/02/1982 - 06/10/2020",
-      diachi: " Voluptas est veniam. Hải Dương (địa chỉ tuyển dụng)",
-      soluong: "73",
-      nguoiphutrach: "Phan Mạnh Hùng",
-      matuyendung: "QTTD0",
-    },
-    {
-      id: 3,
-      tieude: "(TD194)AUT VOLUPTATES EARUM",
-      company: "Công ty Cổ phần Thanh toán Hưng Hà 2",
-      loaihinhlamviec: "Bán thời gian",
-      luong: "10-15",
-      date: "19/02/1982 - 06/10/2020",
-      diachi: " Voluptas est veniam. Hải Dương (địa chỉ tuyển dụng)",
-      soluong: "73",
-      nguoiphutrach: "Phan Mạnh Hùng",
-      matuyendung: "QTTD0",
-    },
-  ];
 
+  const handlePageChange = (page: any) => {
+    setCurrenPage(page);
+  };
+
+  
+  const handleFormDateChange = (event) => {
+    const selectedFormDate = event.target.value;
+    setFormDate(selectedFormDate);
+  };
+  const handleToDateChange = (event) => {
+    const selectedToDate = event.target.value;
+    setToDate(selectedToDate);
+  };
+
+const addDataRecruitment = (data) => {
+  setAddData(data)
+}
+const EditDataRecruitment = (data) => {
+  setEditData(data)
+}
   return (
     <>
       <div className={`${styles.tintuyendung}`}>
         <div className={`${styles.tuyendung1}`}>
-          <button className={`${styles.adds}`} 
-          onClick={handleOpenModalAdd}
-          >
-            <picture style={{paddingLeft: '12px'}}>
-              <img
-                src={`/add.png`}
-                alt=""
-              ></img>
+          <button className={`${styles.adds}`} onClick={handleOpenModalAdd}>
+            <picture style={{ paddingLeft: "12px" }}>
+              <img src={`/add.png`} alt=""></img>
               <p>Thêm tin tuyển dụng</p>
             </picture>
           </button>
         </div>
-        {openModalAdd && <AddPerformRecruitment animation = {animateModal}  handleCloseModalAdd = {handleCloseModalAdd}></AddPerformRecruitment>}
+        {openModalAdd && (
+          <AddPerformRecruitment
+            animation={animateModal}
+            handleCloseModalAdd={handleCloseModalAdd}
+            addData = {addDataRecruitment}
+          ></AddPerformRecruitment>
+        )}
         <div className={`${styles.tuyendung2}`}>
           <div className={`${styles.tuyendung2_1}`}>
             <li>
               <span>Xem từ ngày</span>
               <input
                 type="date"
-                className={`${styles.search_from_date}`} 
-                style={{fontWeight: '600'}}
+                defaultValue={formDate}
+                className={`${styles.search_from_date}`}
+                style={{ fontWeight: "600" }}
+                onChange={handleFormDateChange}
               ></input>
             </li>
             <li>
               <span>Đến ngày</span>
-              <input type="date" className={`${styles.search_to_date}`}
-              style={{fontWeight: '600'}}
+              <input
+                defaultValue={toDate}
+                type="date"
+                className={`${styles.search_to_date}`}
+                style={{ fontWeight: "600" }}
+                onChange={handleToDateChange}
               ></input>
             </li>
           </div>
@@ -107,13 +129,11 @@ export default function Recruitment({ children }: any) {
                   name="search"
                   spellCheck={false}
                   autoComplete="off"
+                  onChange={(e) => setTitle(e.target.value)}
                 ></input>
                 <button className={`${styles.button_search}`}>
                   <picture>
-                    <img
-                      src={`/icon-search.png`}
-                      alt="search"
-                    ></img>
+                    <img src={`/icon-search.png`} alt="search"></img>
                   </picture>
                 </button>
               </div>
@@ -125,11 +145,21 @@ export default function Recruitment({ children }: any) {
           className={`${styles.new_r} ${styles.t_new_dom}`}
           style={{ display: "inline-block" }}
         >
-          {data.map((item) => (
+          {dataMapping?.data.length === 0 ? <p className={`${styles.data_empty}`}>Không có dữ liệu</p>  : dataMapping?.data.map((item: any) => (
             <div key={item.id}>
-             <ListRecruitmentPage data = {item} ></ListRecruitmentPage>
+              <ListRecruitmentPage data={item} onDelete = {handleDelete} editData = {EditDataRecruitment}></ListRecruitmentPage>
             </div>
           ))}
+          {dataListNews?.data.totalCount > 4 && (
+            <div className={`${styles.pagination}`}>
+              <MyPagination
+                current={currentPage}
+                total={dataListNews?.data.totalCount}
+                pageSize={4}
+                onChange={(page) => handlePageChange(page)}
+              />
+            </div>
+          )}
         </div>
       </div>
       <BodyFrameFooter src="https://www.youtube.com/embed/v8FmUlUI1bs"></BodyFrameFooter>

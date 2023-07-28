@@ -196,6 +196,7 @@
     width: 94%;
     height: 30px;
     border-radius: 8px;
+    line-height: 30px;
 }
 
 .inputright input::placeholder {
@@ -206,15 +207,6 @@
     opacity: 0.7;
 }
 
-
-.inputquytrinh {
-    background-color: white;
-    border: 1px solid rgba(71, 71, 71, 0.48);
-    width: 95%;
-    height: 30px;
-    border-radius: 8px;
-    line-height: 45px;
-}
 
 .form_groups textarea {
     outline: none;
@@ -257,6 +249,27 @@
 .file input[type="file"]::placeholder {
     color: #999999;
     opacity: 0.6;
+}
+
+.icon_err {
+    position: absolute;
+    margin-left: -28px;
+    margin-top: 6px;
+}
+
+.errors {
+    background: #FFFFFF;
+    box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 14px;
+    color: #EB5757;
+    position: absolute;
+    padding: 5px;
+    right: 15%;
+    z-index: 10;
 }
 
 .footerquytrinh {

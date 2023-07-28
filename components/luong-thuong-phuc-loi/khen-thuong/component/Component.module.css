@@ -179,6 +179,12 @@
     display: block;
     
 }
+.text_user {
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: center;
+    border: none; */
+}
 .settings {
     z-index: 1;
     width: 185px;

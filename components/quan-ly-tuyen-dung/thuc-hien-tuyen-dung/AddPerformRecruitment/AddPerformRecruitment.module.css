@@ -222,23 +222,26 @@
     float: right;
     width: 53%;
 }
+.form_groups label {
+    display: contents;
+}
 .small_left {
     float: left;
-    width: 30%;
+    width: 44%;
 }
 .float_right {
     float: right;
 }
 .big_right {
     float: right;
-    width: 58%;
+    width: 53%;
 }
 .form_date , .to_date {
     width: 35% !important;
 }
 .formto {
-    margin-left: 30px;
-    margin-right: 30px;
+    margin-left: 24px;
+    margin-right: 25px;
 }
 .footerquytrinh {
     margin-top: 2%;

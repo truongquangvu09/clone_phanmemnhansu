@@ -1,34 +1,100 @@
 import React, { useState } from "react";
-// import styles from "@/components/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/Recruitment/recruitment.module.css";
-import styles from "./ListRecruitment.module.css"
-import { useRouter } from "next/router";
+import styles from "./ListRecruitment.module.css";
 import EditPerformRecruitment from "@/components/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/EditPerformRecruitment/EditPerformRecruitment";
-export interface ListRecruitment { }
+import DeleteRecruitment from "@/components/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/DeletePerformRecruitment/DeleteRecruitment";
+import Link from "next/link";
+import { setAsTemplate } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
+export interface ListRecruitment {}
 
-export default function ListRecruitment({ data }: any) {
-  const router = useRouter();
+export default function ListRecruitment({ data, onDelete, editData }: any) {
+  const recruitmentNewsId = data?.id;
   const [openModalEdit, setOpenModalEdit] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
   const [visible, setVisible] = useState(false);
   const [animateModal, setAnimateModal] = useState(false);
 
-
-  const handleCloseModalAdd = () => {
+  const handleCloseModal = () => {
     setAnimateModal(false);
     setTimeout(() => {
       setOpenModalEdit(false);
+      setOpenModalDelete(false);
     }, 300);
   };
   const handleOpenModalEdit = () => {
     setOpenModalEdit(true);
     setAnimateModal(true);
   };
-
-  const handleClick = (id: any) => {
-    router.push(
-      "/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/[idRecruitment]",
-      `/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/${id}`
-    );
+  const handleOpenModalDelete = () => {
+    setOpenModalDelete(true);
+    setAnimateModal(true);
   };
+
+  const typeOfWork = {
+    1: "Toàn thời gian cố định",
+    2: "Toàn thời gian tạm thời",
+    3: "Bán thời gian",
+    4: "Bán thời gian tạm thời",
+    5: "Hợp đồng",
+    6: "Khác",
+  };
+
+  const salary = {
+    1: "Thỏa thuận",
+    2: "1 - 3 triệu",
+    3: "3 - 5 triệu",
+    4: "5 - 7 triệu",
+    5: "7 - 10 triệu",
+    6: "10 - 15 triệu",
+    7: "10 - 15 triệu",
+    8: "15 - 20 triệu",
+    9: "20 - 30 triệu",
+    10: "Trên 30 triệu",
+    11: "Trên 50 triệu",
+    12: "Trên 100 triệu",
+  };
+
+  const dateBelieveTime = (timeEnd: any) => {
+    const currentDate = new Date();
+    const endDate = new Date(timeEnd);
+    if (currentDate < endDate) {
+      return (
+        <>
+          <p
+            className={`${styles.new_r_t_left_tin}`}
+            style={{ backgroundColor: "#5cb85c" }}
+          >
+            Tin còn hạn
+          </p>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <p
+            className={`${styles.new_r_t_left_tin}`}
+            style={{ backgroundColor: " #EB5757" }}
+          >
+            Tin quá hạn
+          </p>
+        </>
+      );
+    }
+  };
+
+  const getFormattedDate = (timeString) => {
+    const date = new Date(timeString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Cần thêm 1 vì tháng bắt đầu từ 0
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${day}/${month}/${year}`;
+  };
+
+  const handleSetTemplate = async(e: any, recruitmentNewsId:number) => {
+    const response = await setAsTemplate(recruitmentNewsId)
+    if(response?.status !== 200) {
+      alert('Thiết lập tin mẫu không thành công')
+    }
+  }
 
   return (
     <div>
@@ -38,25 +104,39 @@ export default function ListRecruitment({ data }: any) {
             <div className={`${styles.new_r_t_header_content} `}>
               <h3 className={`${styles.new_r_t_left_h3}`}>
                 <button
-                  style={{ border: "none", backgroundColor: "transparent", padding: 0 }}
+                  style={{
+                    border: "none",
+                    backgroundColor: "transparent",
+                    padding: 0,
+                  }}
                 >
                   <p
                     style={{ cursor: "default" }}
                     className={`${styles.new_r_t_left_link}`}
-                    onClick={() => handleClick(data?.id)}
                   >
-                    {data?.tieude}
+                    <Link
+                      passHref
+                      href={{
+                        pathname:
+                          "/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/[idRecruitment]",
+                        query: { idRecruitment: recruitmentNewsId },
+                      }}
+                    >
+                      <span>
+                        (TD{data?.id}) {data?.title}
+                      </span>
+                    </Link>
                   </p>
                 </button>
               </h3>
             </div>
 
-            <div className={``}>
-              <p className={`${styles.t_ita}`}>Tạo bởi: {data?.company}</p>
+            <div>
+              <p className={`${styles.t_ita}`}>Tạo bởi: {data?.createdBy}</p>
             </div>
 
             <div className={`${styles.t_new_type}`}>
-              <p className={`${styles.new_r_t_left_tin}`}>Tin quá hạn tuyển</p>
+              {dateBelieveTime(data?.timeEnd)}
             </div>
 
             <div
@@ -71,73 +151,103 @@ export default function ListRecruitment({ data }: any) {
                 {visible && (
                   <div className={`${styles.settings}`}>
                     <button
-                      style={{ border: "none", backgroundColor: "transparent", padding: '0' }}
+                       className={`${styles.detail_new}`}
+                      style={{
+                        border: "none",
+                        backgroundColor: "transparent",
+                        padding: "0",
+                      }}
                     >
                       <li
-                        style={{ paddingRight: '102px' }}
+                        style={{ paddingRight: "102px" }}
                         className={`${styles.detail_new}`}
-                        onClick={() => handleClick(data?.id)}
                       >
-                        Chi tiết
+                        <Link 
+                          passHref
+                          href={{
+                            pathname:
+                              "/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/[idRecruitment]",
+                              query: { idRecruitment: recruitmentNewsId },
+                          }}
+                        >
+                          Chi tiết
+                        </Link>
                       </li>
                     </button>
 
                     <button
-                      style={{ paddingRight: '55px' }}
+                      style={{ paddingRight: "55px" }}
                       className={`${styles.edit_new}`}
                       onClick={handleOpenModalEdit}
                     >
                       Chỉnh sửa tin
                     </button>
                     <hr style={{ marginTop: "0", marginBottom: "0" }}></hr>
-                    <li>Gỡ tin tuyển dụng</li>
-                    <li>Thiết lập làm tin mẫu</li>
+                    <li onClick={handleOpenModalDelete}>Gỡ tin tuyển dụng</li>
+                    <li
+                     onClick = {(e) => handleSetTemplate(e, recruitmentNewsId)}
+                    >Thiết lập làm tin mẫu</li>
                   </div>
                 )}
               </div>
             </div>
           </div>
           {openModalEdit && (
-            <EditPerformRecruitment animation={animateModal}
-              handleCloseModalAdd={handleCloseModalAdd}
+            <EditPerformRecruitment
+              animation={animateModal}
+              handleCloseModal={handleCloseModal}
+              data={data}
+              editData = {editData}
             ></EditPerformRecruitment>
           )}
+          {openModalDelete && (
+            <DeleteRecruitment
+              animation={animateModal}
+              handleCloseModal={handleCloseModal}
+              newsId={data.id}
+              onDelete={onDelete}
+            ></DeleteRecruitment>
+          )}
+
           <div className={`${styles.new_r_t_body}`}>
             <ul className={`${styles.new_r_t_body_content}`}>
               <li>
                 <span className={`${styles.text}`}>
-                  {data?.loaihinhlamviec}. {data?.luong}
+                  {typeOfWork[data?.posApply]}. {salary[data?.salaryId]}
                 </span>
               </li>
               <li>
                 <picture className={`${styles.icon}`}>
                   <img src={`/calendar.png`} alt=""></img>
                 </picture>
-                <span className={`${styles.text}`}>{data?.date}</span>
+                <span className={`${styles.text}`}>
+                  {getFormattedDate(data?.timeStart)} -{" "}
+                  {getFormattedDate(data?.timeEnd)}
+                </span>
               </li>
               <li>
                 <picture className={`${styles.icon}`}>
                   <img src={`/house.png`} alt=""></img>
                 </picture>
-                <span className={`${styles.text}`}>{data?.diachi} </span>
+                <span className={`${styles.text}`}>{data?.address} </span>
               </li>
             </ul>
 
             <ul className={`${styles.new_r_t_body_content}`}>
               <li>
                 <span className={`${styles.text}`}>
-                  Cần tuyển: {data?.soluong}
+                  Cần tuyển: {data?.number}
                 </span>
               </li>
 
               <li>
                 <span className={`${styles.text}`}>
-                  Người phụ trách: {data?.nguoiphutrach}
+                  Người phụ trách: {data?.nameHR[0]?.userName}
                 </span>
               </li>
               <li>
                 <span className={`${styles.text}`}>
-                  Mã quy trình tuyển dụng áp dụng: {data?.matuyendung}
+                  Mã quy trình tuyển dụng áp dụng: QTTD{data?.recruitmentId}
                 </span>
               </li>
             </ul>

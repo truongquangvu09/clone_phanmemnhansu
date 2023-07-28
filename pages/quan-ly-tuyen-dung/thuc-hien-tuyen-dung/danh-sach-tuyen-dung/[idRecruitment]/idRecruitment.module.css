@@ -14,7 +14,7 @@
 
 .nav {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     padding-left: 0;
     margin-bottom: 0;
@@ -197,6 +197,14 @@
 
 
 .lst_uv_body__r p {
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    color: #474747;
+}
+.text_warring {
     font-weight: 500;
     font-size: 15px;
     line-height: 20px;

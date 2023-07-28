@@ -7,7 +7,7 @@ const MyPagination = ({
   pageSize,
   total,
   onChange,
-  onShowSizeChange,
+
 }: any) => {
   return (
     <Pagination
@@ -15,8 +15,7 @@ const MyPagination = ({
       total={total}
       pageSize={pageSize}
       onChange={onChange}
-      onShowSizeChange={onShowSizeChange}
-      showSizeChanger
+    
     />
   );
 };
