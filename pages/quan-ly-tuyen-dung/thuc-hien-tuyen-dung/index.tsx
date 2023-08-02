@@ -4,7 +4,6 @@ import styles from './headerForm.module.css'
 import PerformRecruitment from "@/components/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/PerformRecruitment/PerformRecruitment";
 import Recruitment from "@/components/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/Recruitment/recruitment";
 
-
 export interface HeaderForm {}
 
 export default function HeaderForm({ children }: any) {
@@ -20,9 +19,7 @@ export default function HeaderForm({ children }: any) {
       key: 2,
       header: "TIN TUYỂN DỤNG",
       component: <Recruitment></Recruitment>,
-      
     },
-    
   ]
   return (
     <>

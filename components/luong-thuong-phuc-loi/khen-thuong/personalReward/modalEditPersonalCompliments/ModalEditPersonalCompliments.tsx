@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "../modalAddPersonalCompliments/ModalAddReward.module.css";
 import Select from "react-select";
 import { format } from "date-fns";
+import * as Yup from "yup";
 import { getDataUser } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
 import { UpdateAchievement } from "@/pages/api/luong-thuong-phuc-loi/reward";
 
@@ -19,8 +20,9 @@ function ModalEditPersonalCompliments({animation, onClose, dataOld }: any) {
     new Date(dataOld.createdAt),
     "yyyy-MM-dd"
   );
-
+  const [errors, setErrors] = useState<any>({});
   const [user, setUser] = useState<any>();
+  const [listUser, setListUser] = useState<any>();
   const [content, setContent] = useState<any>({
     achievement_id: achievement_id,
     content: contentOld,
@@ -33,10 +35,20 @@ function ModalEditPersonalCompliments({animation, onClose, dataOld }: any) {
     achievementType: achievementTypeOld.toString(),
   });
 
-  const [listUser, setListUser] = useState<any>();
-
-  const mergedObject = {...content, ...achievementType, ...listUser}
  
+  const mergedObject = {...content, ...achievementType, ...listUser}
+
+  const schema = Yup.object().shape({
+    achievement_id: Yup.string().required("Số quyết định không được để trống"),
+    content: Yup.string().required("Nội dung khen không được để trống"),
+    list_user: Yup.array().required("Chọn tên đối tượng"),
+    created_by: Yup.string().required("Người ký không được để trống"),
+    achievement_at: Yup.string().required("Thời điểm không được để trống"),
+    achievement_type: Yup.string().required("Chọn hình thức"),
+    appellation: Yup.string().required("Danh hiệu không được để trống"),
+    achievement_level: Yup.string().required("Cấp khen không được để trống"),
+  });
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -52,6 +64,7 @@ function ModalEditPersonalCompliments({animation, onClose, dataOld }: any) {
     };
     getData();
   }, []);
+
   const options = {
     tendoituong: user,
 
@@ -65,7 +78,6 @@ function ModalEditPersonalCompliments({animation, onClose, dataOld }: any) {
     ],
   };
 
-  
   const handleContentChange = (event) => {
     const { name, value } = event.target;
     setContent((prevState) => ({
@@ -75,15 +87,16 @@ function ModalEditPersonalCompliments({animation, onClose, dataOld }: any) {
   };
 
   const handleSelectionChange = (selectedOptions, actionMeta) => {
-    const {value,label } = selectedOptions
+
+    const selectedValues = selectedOptions.map((option) => option.value);
+    const selectedLabels = selectedOptions.map((option) => option.label);
     setListUser((prevSelectedOption) => ({
       ...prevSelectedOption,
-      list_user: value,
-      list_user_name: label
+      list_user: selectedValues,
+      list_user_name: selectedLabels
     }));
   };
 
-  console.log(listUser)
   const handleSelectionChangeAppellation = (
     option: any | null,
     optionsArray: any[]
@@ -97,13 +110,12 @@ function ModalEditPersonalCompliments({animation, onClose, dataOld }: any) {
     }
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
   
     try {
+      await schema.validate(mergedObject, { abortEarly: false });
       const response = await UpdateAchievement(id, mergedObject);
-      console.log(response)
       if(response?.status !== 200) {
         alert('Sửa khen thưởng không thành công')
       }
@@ -112,13 +124,16 @@ function ModalEditPersonalCompliments({animation, onClose, dataOld }: any) {
       }
      
     } catch (error: any) {
+      const validationErrors = {};
+      if (error?.inner) {
+        error.inner.forEach((err) => {
+          validationErrors[err.path] = err.message;
+        });
+      }
+      setErrors(validationErrors);
     }
   };
   
-
-
-
-
   return (
     <>
       <div className={`${styles.overlay}`}></div>
@@ -132,7 +147,8 @@ function ModalEditPersonalCompliments({animation, onClose, dataOld }: any) {
             {/* body */}
             <form onSubmit={handleSubmit} className={`${styles.modal_form}`}>
               <div className={`${styles.modal_body} ${styles.bodyquytrinh}`}>
-                <div className={`${styles.form_groups}`}>
+
+              <div className={`${styles.form_groups}`}>
                   <label>
                     Số quyết định
                     <span className={`${styles.red}`}> *</span>
@@ -143,19 +159,23 @@ function ModalEditPersonalCompliments({animation, onClose, dataOld }: any) {
                       name="achievement_id"
                       defaultValue={dataOld.achievementId}
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Nhập số quyết định"
                       onChange={handleContentChange}
                     ></input>
-                    <picture style={{ display: "none" }}>
-                      <img
-                        src = {`${'/danger.png'}`}
-                        alt="Lỗi"
-                      ></img>
-                    </picture>
-                    <div
-                      className={`${styles.errors}`}
-                      style={{ display: "none" }}
-                    ></div>
+                    {errors.achievement_id && (
+                      <>
+                        <picture>
+                          <img
+                            className={`${styles.icon_err}`}
+                            src={`${"/danger.png"}`}
+                            alt="Lỗi"
+                          ></img>
+                        </picture>
+                        <div className={`${styles.errors}`}>
+                          {errors.achievement_id}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -170,19 +190,24 @@ function ModalEditPersonalCompliments({animation, onClose, dataOld }: any) {
                       name="content"
                       defaultValue={dataOld.content}
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Nhập nội dung khen thưởng"
                       onChange={handleContentChange}
                     ></input>
-                    <picture style={{ display: "none" }}>
-                      <img
-                        src = {`${'/danger.png'}`}
-                        alt="Lỗi"
-                      ></img>
-                    </picture>
-                    <div
-                      className={`${styles.errors}`}
-                      style={{ display: "none" }}
-                    ></div>
+
+                    {errors.content && (
+                      <>
+                        <picture>
+                          <img
+                            className={`${styles.icon_err}`}
+                            src={`${"/danger.png"}`}
+                            alt="Lỗi"
+                          ></img>
+                        </picture>
+                        <div className={`${styles.errors}`} >
+                          {errors.content}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -190,12 +215,20 @@ function ModalEditPersonalCompliments({animation, onClose, dataOld }: any) {
                   <label>
                   Tên đối tượng
                     <span className={`${styles.red}`}> *</span>
+                    {errors.list_user && (
+                      <>
+                        <div className={`${styles.errors}`} style={{marginTop: '6px'}}>
+                          {errors.list_user}
+                        </div>
+                      </>
+                    )}
                     <div
                       className={`${styles.red} ${styles.float_right}`}
                     ></div>
                   </label>
                   <div style={{ marginRight: "2%" }} className={`${styles.select}`}>
                     <Select
+                    isMulti
                     onChange={(option) =>
                       handleSelectionChange(option, options.tendoituong)
                     }
@@ -236,19 +269,23 @@ function ModalEditPersonalCompliments({animation, onClose, dataOld }: any) {
                       name="created_by"
                       defaultValue={dataOld.createdBy}
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Người ký quyết định"
                       onChange={handleContentChange}
                     ></input>
-                    <picture style={{ display: "none" }}>
-                      <img
-                        src = {`${'/danger.png'}`}
-                        alt="Lỗi"
-                      ></img>
-                    </picture>
-                    <div
-                      className={`${styles.errors}`}
-                      style={{ display: "none" }}
-                    ></div>
+                    {errors.created_by && (
+                      <>
+                        <picture>
+                          <img
+                            className={`${styles.icon_err}`}
+                            src={`${"/danger.png"}`}
+                            alt="Lỗi"
+                          ></img>
+                        </picture>
+                        <div className={`${styles.errors}`}>
+                          {errors.created_by}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -263,19 +300,23 @@ function ModalEditPersonalCompliments({animation, onClose, dataOld }: any) {
                       name="achievement_at"
                       defaultValue={formattedDate}
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Chọn thời điểm"
                       style={{height: '30.6px'}}
                     ></input>
-                    <picture style={{ display: "none" }}>
-                      <img
-                        src = {`${'/danger.png'}`}
-                        alt="Lỗi"
-                      ></img>
-                    </picture>
-                    <div
-                      className={`${styles.errors}`}
-                      style={{ display: "none" }}
-                    ></div>
+                    {errors.achievement_at && (
+                      <>
+                        <picture>
+                          <img
+                            className={`${styles.icon_err}`}
+                            src={`${"/danger.png"}`}
+                            alt="Lỗi"
+                          ></img>
+                        </picture>
+                        <div className={`${styles.errors}`}>
+                          {errors.achievement_at}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -283,6 +324,14 @@ function ModalEditPersonalCompliments({animation, onClose, dataOld }: any) {
                   <label>
                     Hình thức khen thưởng
                     <span className={`${styles.red}`}> *</span>
+                    {errors.achievement_type && (
+                      <>
+                      
+                        <div className={`${styles.errors}`} style={{marginTop: '6px'}}>
+                          {errors.achievement_type}
+                        </div>
+                      </>
+                    )}
                     <div
                       className={`${styles.red} ${styles.float_right}`}
                     ></div>
@@ -332,19 +381,23 @@ function ModalEditPersonalCompliments({animation, onClose, dataOld }: any) {
                       name="appellation"
                       defaultValue={dataOld.appellation}
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Danh hiệu"
                       onChange={handleContentChange}
                     ></input>
-                    <picture style={{ display: "none" }}>
-                      <img
-                        src = {`${'/danger.png'}`}
-                        alt="Lỗi"
-                      ></img>
-                    </picture>
-                    <div
-                      className={`${styles.errors}`}
-                      style={{ display: "none" }}
-                    ></div>
+                    {errors.appellation && (
+                      <>
+                        <picture>
+                          <img
+                            className={`${styles.icon_err}`}
+                            src={`${"/danger.png"}`}
+                            alt="Lỗi"
+                          ></img>
+                        </picture>
+                        <div className={`${styles.errors}`}>
+                          {errors.appellation}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -359,21 +412,26 @@ function ModalEditPersonalCompliments({animation, onClose, dataOld }: any) {
                       name="achievement_level"
                       defaultValue={dataOld.achievementLevel}
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Cấp khen"
                       onChange={handleContentChange}
                     ></input>
-                    <picture style={{ display: "none" }}>
-                      <img
-                        src = {`${'/danger.png'}`}
-                        alt="Lỗi"
-                      ></img>
-                    </picture>
-                    <div
-                      className={`${styles.errors}`}
-                      style={{ display: "none" }}
-                    ></div>
+                    {errors.achievement_level && (
+                      <>
+                        <picture>
+                          <img
+                            className={`${styles.icon_err}`}
+                            src={`${"/danger.png"}`}
+                            alt="Lỗi"
+                          ></img>
+                        </picture>
+                        <div className={`${styles.errors}`}>
+                          {errors.achievement_level}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
+
               </div>
 
               <div

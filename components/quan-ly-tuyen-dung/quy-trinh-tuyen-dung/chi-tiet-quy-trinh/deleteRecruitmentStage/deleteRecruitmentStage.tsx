@@ -14,7 +14,7 @@ export default function DeleteRecruitmentStage({ data, recruitment,animation, on
           alert('Xóa giai đoạn thất bại')
         }else {
           onCloseModal()
-          newDataDelete(response.data)
+          newDataDelete(response?.data)
         }
       } catch (error) {
         console.log(error)

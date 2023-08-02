@@ -9,43 +9,43 @@ import EditModalCollectiveDiscipline from "../collectiveDiscipline/editModalColl
 import EditModalListDiscipline from "../disciplineList/editModalListDiscipline/EditModalListDiscipline";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 import MyPagination from "@/components/pagination/Pagination";
+import { format } from "date-fns";
 
-function PunishmentTable({ display, data, violators, model }: any) {
-  const [currentPage, setCurrentPage] = useState(1);
+function PunishmentTable({ display, data, violators, model, keyWords, updateData }: any) {
+
   const [visible, setVisible] = useState(true);
   const [typeModal, setTypeModal] = useState(model);
   const [open, setOpen] = useState(false);
   const [modalEditType, setModalEditType] = useState("");
   const [animateModal, setAnimateModal] = useState(false);
+  const [dataEdit, setDataEdit] = useState<any>();
 
-  const handlePageChange = (page: any) => {
-    setCurrentPage(page);
-  };
-
-  
   const handleCloseModal = () => {
-   
     setAnimateModal(false);
     setTimeout(() => {
-       setOpen(false);
-       setTypeModal(model);
-       setModalEditType('')
+      setOpen(false);
+      setTypeModal(model);
+      setModalEditType("");
     }, 300);
   };
 
+  const handleEdit = (dataEdit) => {
+    setTypeModal("chitiet");
+    setDataEdit(dataEdit);
+  };
   useEffect(() => {
     const modalEditTypes = () => {
       if (typeModal === "canhan") {
         setModalEditType("canhan");
-        setAnimateModal(true)
+        setAnimateModal(true);
       }
       if (typeModal === "tapthe") {
         setModalEditType("tapthe");
-        setAnimateModal(true)
+        setAnimateModal(true);
       }
       if (typeModal === "list") {
         setModalEditType("list");
-        setAnimateModal(true)
+        setAnimateModal(true);
       }
     };
     modalEditTypes();
@@ -61,46 +61,48 @@ function PunishmentTable({ display, data, violators, model }: any) {
             onClick={() => setOpen(true)}
           >
             <picture>
-              <img
-                 src={`/add.png`}
-                alt="+"
-              ></img>
+              <img src={`/add.png`} alt="+"></img>
             </picture>
             Thêm mới
           </button>
         </div>
         {typeModal === "canhan" && open && (
           <AddModalPersonalDiscipline
-          animation = {animateModal}
+            animation={animateModal}
             onClose={handleCloseModal}
+            updateData = {updateData}
           ></AddModalPersonalDiscipline>
         )}
 
         {typeModal === "tapthe" && open && (
           <AddModalCollectiveDiscipline
-          animation = {animateModal}
+            animation={animateModal}
             onClose={handleCloseModal}
+            updateData = {updateData}
           ></AddModalCollectiveDiscipline>
         )}
 
         {typeModal === "chitiet" && modalEditType === "canhan" && (
           <EditModalPersonalDiscipline
-          animation = {animateModal}
+            animation={animateModal}
             onClose={handleCloseModal}
+            dataOld={dataEdit}
           ></EditModalPersonalDiscipline>
         )}
 
         {typeModal === "chitiet" && modalEditType === "tapthe" && (
           <EditModalCollectiveDiscipline
-          animation = {animateModal}
+            animation={animateModal}
             onClose={handleCloseModal}
+            dataOld={dataEdit}
           ></EditModalCollectiveDiscipline>
         )}
-        
+
         {typeModal === "chitiet" && modalEditType === "list" && (
           <EditModalListDiscipline
-          animation = {animateModal}
+            animation={animateModal}
             onClose={handleCloseModal}
+            dataOld={dataEdit}
           ></EditModalListDiscipline>
         )}
         <div className={`${styles.tuyendung2_2}`}>
@@ -113,15 +115,12 @@ function PunishmentTable({ display, data, violators, model }: any) {
                 spellCheck="false"
                 autoComplete="off"
                 className={`${styles.search_text}`}
+                onChange={(e) => keyWords(e.target.value)}
               ></input>
-              <button className={`${styles.search_button}`}>
-                <picture>
-                  <img
-                    src={`/icon-search.png`}
-                    alt="search"
-                  ></img>
-                </picture>
-              </button>
+
+              <picture className={`${styles.search_button}`}>
+                <img src={`/icon-search.png`} alt="search"></img>
+              </picture>
             </div>
           </form>
         </div>
@@ -146,52 +145,63 @@ function PunishmentTable({ display, data, violators, model }: any) {
               </tr>
             </thead>
             <tbody className={`${styles.filter}`}>
-              {data?.map((item: any) => (
-                <tr key={item.stt} style={{ height: "37px" }}>
-                  <td>{item.stt}</td>
-                  <td>{item.soquyetdinh}</td>
-                  <td>{item.noidungkhenthuong}</td>
-                  <td>{item.tendoituongnhan}</td>
-                  <td>{item.thoidiem}</td>
-                  <td>{item.hinhthuckhenthuong}</td>
-                  <td>{item.danhhieu}</td>
-                  <td>{item.capkhen}</td>
-                  <td
-                    className={`${styles.r_t_top_right}`}
-                    style={{ position: "relative", width: "110px" }}
-                    onMouseEnter={() => setVisible(true)}
-                    onMouseLeave={() => setVisible(false)}
-                  >
-                    <img
-                      src={`/3cham.png`}
-                      alt="Tùy chỉnh"
-                      style={{ paddingTop: "6px" }}
-                    />
-                    {visible && (
-                      <div
-                        className={styles.settings}
-                        onClick={() => setTypeModal("chitiet")}
+              {data?.length === 0 ? (
+                <p>Không có dư liệu</p>
+              ) : (
+                data?.map((item: any) => {
+                  const formattedDate: string = format(
+                    new Date(item.infringeAt),
+                    "dd-MM-yyyy"
+                  );
+                  return (
+                    <tr key={item.id} style={{ height: "37px" }}>
+                      <td>{item.id}</td>
+                      <td>{item.infringeName}</td>
+                      <td>{item.regulatoryBasis}</td>
+                      <td>{item.numberViolation}</td>
+                      <td>{formattedDate}</td>
+                      <td>{item.createdBy}</td>
+                      <td>{item.infringeType}</td>
+                      <td style={{ padding: " 0 20px", maxWidth: "2500px" }}>
+                        {item?.depName ? (
+                          <span>{item.depName}</span>
+                        ) : (
+                          item?.listUser.map((user, index) => (
+                            <span key={index} style={{ textAlign: "center" }}>
+                              {" "}
+                              {user.name}{" "}
+                            </span>
+                          ))
+                        )}
+                      </td>
+                      <td
+                        className={`${styles.r_t_top_right}`}
+                        style={{ position: "relative", width: "110px" }}
+                        onMouseEnter={() => setVisible(true)}
+                        onMouseLeave={() => setVisible(false)}
                       >
-                        <li>Chỉnh sửa</li>
-                      </div>
-                    )}
-                  </td>
-                </tr>
-              ))}
+                        <img
+                          src={`/3cham.png`}
+                          alt="Tùy chỉnh"
+                          style={{ paddingTop: "6px" }}
+                        />
+                        {visible && (
+                          <div
+                            className={styles.settings}
+                            onClick={() => handleEdit(item)}
+                          >
+                            <li>Chỉnh sửa</li>
+                          </div>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
             </tbody>
           </table>
         </div>
       </div>
-
-      <div className={`${styles.pagination}`}>
-        <MyPagination
-          current={currentPage}
-          total={50}
-          pageSize={10}
-          onChange={handlePageChange}
-        />
-      </div>
-      <BodyFrameFooter src="https://www.youtube.com/embed/kjiQgo3VtLo"></BodyFrameFooter>
     </>
   );
 }

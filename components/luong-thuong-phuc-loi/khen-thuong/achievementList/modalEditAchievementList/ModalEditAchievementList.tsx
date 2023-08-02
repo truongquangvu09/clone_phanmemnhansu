@@ -4,12 +4,10 @@ import Select from "react-select";
 import { GetDepartmentList, UpdateAchievement } from "@/pages/api/luong-thuong-phuc-loi/reward";
 import { getDataUser } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
 import { format } from "date-fns";
-
-type SelectOptionType = { label: string; value: string };
+import * as Yup from "yup";
 
 function ModalEditAchievementList({ animation, onClose, dataOld }: any) {
   const typeEdit= dataOld.depId 
-  
   const id = dataOld.id
   const achievement_id = dataOld.achievementId;
   const contentOld = dataOld.content;
@@ -22,8 +20,8 @@ function ModalEditAchievementList({ animation, onClose, dataOld }: any) {
     "yyyy-MM-dd"
   );
 
-  const [user, setUser] = useState<any>();
-
+  const [dep, setDep] = useState<any>();
+  const [user, setUser] = useState<any>()
   const [content, setContent] = useState<any>({
     achievement_id: achievement_id,
     content: contentOld,
@@ -36,11 +34,85 @@ function ModalEditAchievementList({ animation, onClose, dataOld }: any) {
     achievementType: achievementTypeOld.toString(),
   });
   const [listUser, setListUser] = useState<any>();
-  const [dep, setDep] = useState<any>()
-
+  const [errors, setErrors] = useState<any>({});
   const mergedObject = {...content, ...achievementType, ...listUser}
-  console.log(mergedObject)
- 
+
+  const schema = Yup.object().shape({
+    achievement_id: Yup.string().required("Số quyết định không được để trống"),
+    content: Yup.string().required("Nội dung khen không được để trống"),
+    list_user: Yup.array().required("Chọn tên đối tượng"),
+    created_by: Yup.string().required("Người ký không được để trống"),
+    achievement_at: Yup.string().required("Thời điểm không được để trống"),
+    achievement_type: Yup.string().required("Chọn hình thức"),
+    appellation: Yup.string().required("Danh hiệu không được để trống"),
+    achievement_level: Yup.string().required("Cấp khen không được để trống"),
+  });
+  
+  const handleContentChange = (event) => {
+    const { name, value } = event.target;
+    setContent((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
+
+  const handleSelectionChange = (selectedOptions, actionMeta) => {
+    if (Array.isArray(selectedOptions)) {
+      const selectedValues = selectedOptions.map((option) => option.value);
+      const selectedLabels = selectedOptions.map((option) => option.label);
+      setListUser((prevSelectedOption) => ({
+        ...prevSelectedOption,
+        list_user: selectedValues,
+        list_user_name: selectedLabels,
+      }));
+    }  
+    else {
+      const { value, label } = selectedOptions;
+      setListUser((prevState) => ({
+      ...prevState,
+      depId: value,
+      depName: label
+    }));
+    }
+  };
+
+  const handleSelectionChangeAppellation = (
+    option: any | null,
+    optionsArray: any[]
+  ) => {
+    if (option) {
+
+      const { name, value } = option;
+      setAchievementType(() => ({
+        [name]: String(value),
+      }));
+    }
+  };
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    try {
+      const response = await UpdateAchievement(id, mergedObject);
+      if(response?.status !== 200) {
+        alert('Sửa khen thưởng không thành công')
+      }
+      else {
+        onClose()
+      }
+     
+    } catch (error: any) {
+      const validationErrors = {};
+      if (error?.inner) {
+        error.inner.forEach((err) => {
+          validationErrors[err.path] = err.message;
+        });
+      }
+      setErrors(validationErrors);
+    }
+  };
+
   useEffect(() => {
     if( typeEdit === 0) {
       const getData1 = async () => {
@@ -63,13 +135,13 @@ function ModalEditAchievementList({ animation, onClose, dataOld }: any) {
           const response = await GetDepartmentList("1664")
           setDep(response?.data.data.data.map(item => ({name:"depId", value: item.dep_id, label : `${item.dep_name}`})))
         }catch(err) {
-          console.log(err)
+
         }
       }
       getData2()
     }
   }, []);
-  
+
   const options = {
     tendoituong: user,
 
@@ -85,65 +157,8 @@ function ModalEditAchievementList({ animation, onClose, dataOld }: any) {
     ],
   };
 
-  
-  const handleContentChange = (event) => {
-    const { name, value } = event.target;
-    setContent((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handleSelectionChangeDep = (selectedOptions, actionMeta) => {
-    const selectedValues = selectedOptions.map((option) => option.value);
-    const selectedLabels = selectedOptions.map((option) => option.label);
-    const selectedLabelsAsString = selectedLabels.join(", ");
-    setListUser((prevSelectedOption) => ({
-      ...prevSelectedOption,
-      list_user: selectedValues,
-      list_user_name: selectedLabelsAsString
-    }));
-  };
-  const handleSelectionChange = (selectedOptions, actionMeta) => {
-    const {value,label } = selectedOptions
-    setListUser((prevSelectedOption) => ({
-      ...prevSelectedOption,
-      list_user: value,
-      list_user_name: label
-    }));
-  };
-
-  const handleSelectionChangeAppellation = (
-    option: any | null,
-    optionsArray: any[]
-  ) => {
-    if (option) {
-
-      const { name, value } = option;
-      setAchievementType(() => ({
-        [name]: String(value),
-      }));
-    }
-  };
 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  
-    try {
-      const response = await UpdateAchievement(id, mergedObject);
-      console.log(response)
-      if(response?.status !== 200) {
-        alert('Sửa khen thưởng không thành công')
-      }
-      else {
-        onClose()
-      }
-     
-    } catch (error: any) {
-    }
-  };
-  
   return (
     <>
       <div className={`${styles.overlay}`}></div>
@@ -160,7 +175,7 @@ function ModalEditAchievementList({ animation, onClose, dataOld }: any) {
               <h5 className={`${styles.modal_title}`}>CẬP NHẬT THÀNH TÍCH</h5>
             </div>
             {/* body */}
-            <form onSubmit={handleSubmit} className={`${styles.modal_form}`}>
+            <form onSubmit={(e) => handleSubmit(e)} className={`${styles.modal_form}`}>
               <div className={`${styles.modal_body} ${styles.bodyquytrinh}`}>
                 <div className={`${styles.form_groups}`}>
                   <label>
@@ -170,10 +185,11 @@ function ModalEditAchievementList({ animation, onClose, dataOld }: any) {
                   <div className={`${styles.inputright}`}>
                     <input
                       type="text"
-                      className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      name="achievement_id"
                       defaultValue={dataOld.achievementId}
+                      className={`${styles.inputquytrinh}`}
                       onChange={handleContentChange}
+                      placeholder="Nhập tên giai đoạn"
                     ></input>
                     <picture style={{ display: "none" }}>
                       <img src={`${"/danger.png"}`} alt="Lỗi"></img>
@@ -193,9 +209,10 @@ function ModalEditAchievementList({ animation, onClose, dataOld }: any) {
                   <div className={`${styles.inputright}`}>
                     <input
                       type="text"
-                      className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      name="content"
                       defaultValue={dataOld.content}
+                      className={`${styles.inputquytrinh}`}
+                      placeholder="Nhập nội dung khen thưởng"
                       onChange={handleContentChange}
                     ></input>
                     <picture style={{ display: "none" }}>
@@ -208,7 +225,7 @@ function ModalEditAchievementList({ animation, onClose, dataOld }: any) {
                   </div>
                 </div>
 
-               {typeEdit === 0 && (
+                {typeEdit === 0 && (
                 <>
                    <div className={`${styles.form_groups}`}>
                   <label>
@@ -268,10 +285,9 @@ function ModalEditAchievementList({ animation, onClose, dataOld }: any) {
                     className={`${styles.select}`}
                   >
                     <Select
-                      isMulti
                       options={options.tenphongban}
                       placeholder="Chọn phòng ban"
-                      onChange={handleSelectionChangeDep}
+                      onChange={handleSelectionChange}
                       styles={{
                         control: (baseStyles, state) => ({
                           ...baseStyles,
@@ -309,7 +325,7 @@ function ModalEditAchievementList({ animation, onClose, dataOld }: any) {
                       name="created_by"
                       defaultValue={dataOld.createdBy}
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Người ký quyết định"
                       onChange={handleContentChange}
                     ></input>
                     <picture style={{ display: "none" }}>
@@ -333,7 +349,7 @@ function ModalEditAchievementList({ animation, onClose, dataOld }: any) {
                       name="achievement_at"
                       defaultValue={formattedDate}
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Chọn thời điểm"
                       style={{ height: "30.6px" }}
                       onChange={handleContentChange}
                     ></input>
@@ -403,7 +419,7 @@ function ModalEditAchievementList({ animation, onClose, dataOld }: any) {
                       name="appellation"
                       defaultValue={dataOld.appellation}
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Danh hiệu"
                       onChange={handleContentChange}
                     ></input>
                     <picture style={{ display: "none" }}>
@@ -427,7 +443,7 @@ function ModalEditAchievementList({ animation, onClose, dataOld }: any) {
                       name="achievement_level"
                       defaultValue={dataOld.achievementLevel}
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Cấp khen"
                       onChange={handleContentChange}
                     ></input>
                     <picture style={{ display: "none" }}>

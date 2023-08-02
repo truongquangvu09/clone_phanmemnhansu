@@ -21,6 +21,7 @@ function ModalEditCommendationTeam({ animation, onClose, dataOld }: any) {
   );
 
   const [dep, setDep] = useState<any>();
+  const [listUser, setListUser] = useState<any>();
   const [user, setUser] = useState<any>()
   const [content, setContent] = useState<any>({
     achievement_id: achievement_id,
@@ -33,8 +34,6 @@ function ModalEditCommendationTeam({ animation, onClose, dataOld }: any) {
   const [achievementType, setAchievementType] = useState<any>({
     achievementType: achievementTypeOld.toString(),
   });
-  const [listUser, setListUser] = useState<any>();
-  const mergedObject = {...content, ...achievementType, ...listUser}
 
   const handleContentChange = (event) => {
     const { name, value } = event.target;
@@ -44,28 +43,25 @@ function ModalEditCommendationTeam({ animation, onClose, dataOld }: any) {
     }));
   };
 
-
   const handleSelectionChange = (selectedOptions, actionMeta) => {
     if (Array.isArray(selectedOptions)) {
       const selectedValues = selectedOptions.map((option) => option.value);
       const selectedLabels = selectedOptions.map((option) => option.label);
-      const selectedLabelsAsString = selectedLabels.join(", ");
       setListUser((prevSelectedOption) => ({
         ...prevSelectedOption,
         list_user: selectedValues,
-        list_user_name: selectedLabelsAsString,
+        list_user_name: selectedLabels,
       }));
-    }
+    }  
     else {
       const { value, label } = selectedOptions;
       setListUser((prevState) => ({
       ...prevState,
-      list_user: value,
-      list_user_name: label
+      depId: value,
+      depName: label
     }));
     }
   };
-  console.log(listUser)
 
   const handleSelectionChangeAppellation = (
     option: any | null,
@@ -79,7 +75,7 @@ function ModalEditCommendationTeam({ animation, onClose, dataOld }: any) {
       }));
     }
   };
-  
+  const mergedObject = {...content, ...achievementType, ...listUser}
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -118,7 +114,7 @@ function ModalEditCommendationTeam({ animation, onClose, dataOld }: any) {
           const response = await GetDepartmentList("1664")
           setDep(response?.data.data.data.map(item => ({name:"depId", value: item.dep_id, label : `${item.dep_name}`})))
         }catch(err) {
-          console.log(err)
+
         }
       }
       getData2()
@@ -195,7 +191,7 @@ function ModalEditCommendationTeam({ animation, onClose, dataOld }: any) {
                       name="content"
                       defaultValue={dataOld.content}
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Nhập nội dung khen thưởng"
                       onChange={handleContentChange}
                     ></input>
                     <picture style={{ display: "none" }}>
@@ -208,7 +204,7 @@ function ModalEditCommendationTeam({ animation, onClose, dataOld }: any) {
                   </div>
                 </div>
 
-                {typeEdit === 0 && (
+              {typeEdit === 0 && (
                 <>
                    <div className={`${styles.form_groups}`}>
                   <label>
@@ -308,7 +304,7 @@ function ModalEditCommendationTeam({ animation, onClose, dataOld }: any) {
                       name="created_by"
                       defaultValue={dataOld.createdBy}
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Người ký quyết định"
                       onChange={handleContentChange}
                     ></input>
                     <picture style={{ display: "none" }}>
@@ -332,7 +328,7 @@ function ModalEditCommendationTeam({ animation, onClose, dataOld }: any) {
                       name="achievement_at"
                       defaultValue={formattedDate}
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Chọn thời điểm"
                       style={{ height: "30.6px" }}
                       onChange={handleContentChange}
                     ></input>
@@ -402,7 +398,7 @@ function ModalEditCommendationTeam({ animation, onClose, dataOld }: any) {
                       name="appellation"
                       defaultValue={dataOld.appellation}
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Danh hiệu"
                       onChange={handleContentChange}
                     ></input>
                     <picture style={{ display: "none" }}>
@@ -426,7 +422,7 @@ function ModalEditCommendationTeam({ animation, onClose, dataOld }: any) {
                       name="achievement_level"
                       defaultValue={dataOld.achievementLevel}
                       className={`${styles.inputquytrinh}`}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Cấp khen"
                       onChange={handleContentChange}
                     ></input>
                     <picture style={{ display: "none" }}>

@@ -136,6 +136,14 @@
     padding-top: 15px;
     cursor: pointer;
 }
+.quytrinh_item11_link {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 16px;
+  color: #474747;
+  cursor: default;
+}
 .quytrinh_item2 button {
     border: none;
     background-color: transparent;

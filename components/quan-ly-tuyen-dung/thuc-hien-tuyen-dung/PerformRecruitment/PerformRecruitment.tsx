@@ -11,8 +11,6 @@ import {
 } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
 import MyPagination from "@/components/pagination/Pagination";
 
-export interface PerformRecruitment {}
-
 export default function PerformRecruitment({ children }: any) {
   const [selectedButton, setSelectedButton] = useState("homnay");
   const [messIsOpen, setMessIsOpen] = useState<any>();
@@ -21,15 +19,10 @@ export default function PerformRecruitment({ children }: any) {
   const [currentPageListNewActive, setCurrentPageListNewActive] = useState(1);
   const [currentPageListSchedule, setCurrentPageLisSchedule] = useState(1);
 
-  
-
   useEffect(() => {
     const getDataRecruitmentOverview = async () => {
       try {
-        const responseListNewActive = await GetDataListNewActive(
-          currentPageListNewActive,
-          3
-        );
+        const responseListNewActive = await GetDataListNewActive(currentPageListNewActive, 3);
         setMessIsOpen(responseListNewActive?.data.data);
       } catch (err) {
         console.log("error", err);

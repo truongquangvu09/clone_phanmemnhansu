@@ -1,14 +1,14 @@
 import axios from "axios";
-
-export const getDataListProcessTrain = async (page: any, pageSize: any,) => {
-    const isToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTM5NiwiaWRUaW1WaWVjMzY1IjoyMzI0MTYsImlkUUxDIjoxNjY0LCJpZFJhb05oYW5oMzY1IjowLCJlbWFpbCI6InRyYW5nY2h1b2k0QGdtYWlsLmNvbSIsInBob25lVEsiOiIiLCJjcmVhdGVkQXQiOjE2NjM4MzY0MDUsInR5cGUiOjEsImNvbV9pZCI6MTY2NCwidXNlck5hbWUiOiJDw7RuZyB0eSBD4buVIHBo4bqnbiBUaGFuaCB0b8OhbiBIxrBuZyBIw6AgMiJ9LCJpYXQiOjE2OTA1MDg0NjksImV4cCI6MTY5MDU5NDg2OX0.r2vxwXjizwf-QoBOC1FRcwYK9plUKLkfRQEdDNprO-U";
+import { getToken } from "../token";
+const COOKIE_KEY = "user_365";
+export const getDataListProcessTrain = async (page: any, pageSize: any,name: any) => {
+      const isToken = getToken(COOKIE_KEY)
     const url = process.env.NEXT_PUBLIC_BASE_URL;
 
     try {
         const response = await axios.post(
-          `${url}/api/hr/training/listProcessTrain?page` + page + `pageSize` + pageSize ,
-          {page, pageSize},
+          `${url}api/hr/training/listProcessTrain?page` + page + `pageSize` + pageSize + `name` + name ,
+          {page, pageSize, name},
           {
             headers: {
               Authorization: `Bearer ${isToken}`,
@@ -25,13 +25,12 @@ export const getDataListProcessTrain = async (page: any, pageSize: any,) => {
 
 export const addDataListProcessTrain = async (formData: any) => {
     const {name , description } = formData
-    const isToken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTM5NiwiaWRUaW1WaWVjMzY1IjoyMzI0MTYsImlkUUxDIjoxNjY0LCJpZFJhb05oYW5oMzY1IjowLCJlbWFpbCI6InRyYW5nY2h1b2k0QGdtYWlsLmNvbSIsInBob25lVEsiOiIiLCJjcmVhdGVkQXQiOjE2NjM4MzY0MDUsInR5cGUiOjEsImNvbV9pZCI6MTY2NCwidXNlck5hbWUiOiJDw7RuZyB0eSBD4buVIHBo4bqnbiBUaGFuaCB0b8OhbiBIxrBuZyBIw6AgMiJ9LCJpYXQiOjE2OTA1MDg0NjksImV4cCI6MTY5MDU5NDg2OX0.r2vxwXjizwf-QoBOC1FRcwYK9plUKLkfRQEdDNprO-U";
+      const isToken = getToken(COOKIE_KEY)
     const url = process.env.NEXT_PUBLIC_BASE_URL;
 
     try {
         const response = await axios.post(
-          `${url}/api/hr/training/process` ,
+          `${url}api/hr/training/process`,
           {name, description},
           {
             headers: {
@@ -46,3 +45,104 @@ export const addDataListProcessTrain = async (formData: any) => {
         throw err;
       }
 }
+
+
+export const deleteDataTrainingPosition = async (processTrainId: number) => {
+  const isToken = getToken(COOKIE_KEY)
+  const url = process.env.NEXT_PUBLIC_BASE_URL;
+  try {
+    const response = await axios.post(
+      `${url}api/hr/training/softDeleteProcess`,
+      {processTrainId},
+      {
+        headers: {
+          Authorization: `Bearer ${isToken}`,
+        },
+      }
+    );
+
+    return response;
+  } catch (err) {
+    console.error("Error fetching home data:", err);
+    throw err;
+  }
+  }
+
+  export const DataDetailProcess= async (processTrainId: string) => {
+    const url = process.env.NEXT_PUBLIC_BASE_URL;
+  
+     const isToken = getToken(COOKIE_KEY)
+    try {
+      const response = await axios.post(
+        `${url}api/hr/training/detailProcess`,
+        { processTrainId },
+        {
+          headers: {
+            Authorization: `Bearer ${isToken}`,
+          },
+        }
+      );
+      return response;
+    } catch (error) {
+      
+    }
+  };
+
+  export const addDetailTrainingStage = async (trainingProcessId: string, formData: any) => {
+    const {name, objectTraining, content } = formData
+    const url = process.env.NEXT_PUBLIC_BASE_URL;
+     const isToken = getToken(COOKIE_KEY)
+    try {
+      const response = await axios.post(
+        `${url}api/hr/training/stage`,
+        {name, objectTraining,content, trainingProcessId },
+        {
+          headers: {
+            Authorization: `Bearer ${isToken}`,
+          },
+        }
+      );
+      return response;
+    } catch (error) {
+      
+    }
+  };
+
+  export const editDetailTrainingStage = async (stageProcessTrainingId: string, formData: any) => {
+    const {name, objectTraining, content } = formData
+    const url = process.env.NEXT_PUBLIC_BASE_URL;
+     const isToken = getToken(COOKIE_KEY)
+    try {
+      const response = await axios.post(
+        `${url}api/hr/training/updateStage`,
+        {name, objectTraining,content, stageProcessTrainingId },
+        {
+          headers: {
+            Authorization: `Bearer ${isToken}`,
+          },
+        }
+      );
+      return response;
+    } catch (error) {
+      
+    }
+  };
+
+  export const deleteDetailTrainingStage = async (stageProcessTrainingId: string) => {
+    const url = process.env.NEXT_PUBLIC_BASE_URL;
+     const isToken = getToken(COOKIE_KEY)
+    try {
+      const response = await axios.post(
+        `${url}api/hr/training/softDeleteStage`,
+        {stageProcessTrainingId },
+        {
+          headers: {
+            Authorization: `Bearer ${isToken}`,
+          },
+        }
+      );
+      return response;
+    } catch (error) {
+      
+    }
+  };

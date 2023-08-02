@@ -32,15 +32,13 @@ export default function BodyFrameSection1({ children }: any) {
             setLongitude(position.coords.longitude);
           },
           (error) => {
-            console.log(error);
           }
         );
       } else {
-        console.log("Geolocation is not supported by this browser.");
+
       }
     };
 
-    // Chỉ chạy lấy vị trí trên phía máy khách
     if (typeof window !== "undefined") {
       getLocation();
     }

@@ -1,12 +1,57 @@
 import React, { useEffect, useState } from "react";
-
 import styles from "./editRecruitmentStage.module.css";
+import * as Yup from "yup";
+import { editDetailTrainingStage } from "@/pages/api/dao-tao-phat-trien/TrainingProcess";
 
-export interface EditDetailTrainingProcess { }
+export default function EditDetailTrainingProcess({ data, animation, onCloseModal, newData }: any) {
 
-export default function EditDetailTrainingProcess({ data, animation, onCloseModal }: any) {
-  console.log(data);
-  const handleSubmit = () => { };
+  const name = data?.name
+  const objectTraining = data?.objectTraining
+  const content = data?.content
+  const stageProcessTrainingId = data?.id
+  const [errors, setErrors] = useState<any>({});
+  const [formData, setFormData] = useState<any>({
+    name: name,
+    objectTraining: objectTraining,
+    content: content
+  })
+
+  const schema = Yup.object().shape({
+    name: Yup.string().required("Tên không được để trống"),
+    objectTraining: Yup.string().required("Đối tượng đào tạo không được để trống"),
+    content: Yup.string().required("Nội dung không được để trống"),
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async(e) => {
+    e.preventDefault()
+    try {
+      await schema.validate(formData, { abortEarly: false });
+      const response = await editDetailTrainingStage(stageProcessTrainingId, formData)
+      if( response?.status !== 200) {
+        alert('Sửa quy trình thất bại')
+      }else {
+        onCloseModal();
+        newData(response?.data)
+      }
+
+    } catch (error:any) {
+      const validationErrors = {};
+      if (error?.inner) {
+        error.inner.forEach((err) => {
+          validationErrors[err.path] = err.message;
+        });
+      }
+      setErrors(validationErrors);
+    }
+   };
 
   const CloseModal = () => {
     onCloseModal();
@@ -26,7 +71,7 @@ export default function EditDetailTrainingProcess({ data, animation, onCloseModa
             </div>
 
             {/* body */}
-            <form onSubmit={handleSubmit} className={`${styles.modal_form}`}>
+            <form onSubmit={(e) => handleSubmit(e)} className={`${styles.modal_form}`}>
               <div className={`${styles.modal_body} ${styles.bodyquytrinh}`}>
                 <div className={`${styles.form_groups}`}>
                   <label>
@@ -35,21 +80,25 @@ export default function EditDetailTrainingProcess({ data, animation, onCloseModa
                   </label>
                   <div className={`${styles.inputright}`}>
                     <input
-                      defaultValue={data?.title}
+                      defaultValue={name}
                       type="text"
+                      name="name"
+                      onChange={handleChange}
                       className={`${styles.inputquytrinh}`}
                       placeholder="Giai đoạn đào tạo"
                     ></input>
-                    <picture style={{ display: "none" }}>
-                      <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
-                        alt="Lỗi"
-                      ></img>
-                    </picture>
-                    <div
-                      className={`${styles.errors}`}
-                      style={{ display: "none" }}
-                    ></div>
+                    {errors.name && (
+                      <>
+                        <picture>
+                          <img
+                            className={`${styles.icon_err}`}
+                            src={`${"/danger.png"}`}
+                            alt="Lỗi"
+                          ></img>
+                        </picture>
+                        <div className={`${styles.errors}`}>{errors.name}</div>
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -60,22 +109,25 @@ export default function EditDetailTrainingProcess({ data, animation, onCloseModa
                   </label>
                   <div className={`${styles.inputright}`}>
                     <input
-
-                      defaultValue={data?.doituong}
+                      defaultValue={objectTraining}
                       type="text"
+                      name="objectTraining"
+                      onChange={handleChange}
                       className={`${styles.inputquytrinh}`}
                       placeholder="Đối tượng đào tạo"
                     ></input>
-                    <picture style={{ display: "none" }}>
-                      <img
-                        src="	https://phanmemnhansu.timviec365.vn/assets/images/danger.png"
-                        alt="Lỗi"
-                      ></img>
-                    </picture>
-                    <div
-                      className={`${styles.errors}`}
-                      style={{ display: "none" }}
-                    ></div>
+                    {errors.objectTraining && (
+                      <>
+                        <picture>
+                          <img
+                            className={`${styles.icon_err}`}
+                            src={`${"/danger.png"}`}
+                            alt="Lỗi"
+                          ></img>
+                        </picture>
+                        <div className={`${styles.errors}`}>{errors.objectTraining}</div>
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -83,12 +135,20 @@ export default function EditDetailTrainingProcess({ data, animation, onCloseModa
                   <label>
                     Nội dung giai đoạn
                     <span className={`${styles.red}`}> *</span>
+                    {errors.content && (
+                      <>
+                        <div className={`${styles.errors}`}>{errors.content}</div>
+                      </>
+                    )}
                   </label>
                   <div className={`${styles.textarea}`}>
                     <textarea
                       className={`${styles.inputquytrinh} ${styles.textareapolicy}`}
                       placeholder="Nội dung giai đoạn "
+                      defaultValue={content}
                       spellCheck="false"
+                      name="content"
+                      onChange={handleChange}
                     ></textarea>
                   </div>
                 </div>
@@ -103,7 +163,7 @@ export default function EditDetailTrainingProcess({ data, animation, onCloseModa
                 >
                   <span>Hủy</span>
                 </button>
-                <button type="button" className={`${styles.success}`}>
+                <button type="submit" className={`${styles.success}`}>
                   Lưu
                 </button>
               </div>

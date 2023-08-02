@@ -14,9 +14,7 @@ export default function CommendationTeam({ children }: any) {
   const [keyWords, setKeyWords] = useState<any>('')
   const newData = data?.data.slice(0, -1);
   const myPagination = data?.data[data.data.length - 1];
-  useEffect(() => {
-    SignIn();
-  }, []);
+
 
   const handlePageChange = (page: any) => {
     setCurrentPage(page);

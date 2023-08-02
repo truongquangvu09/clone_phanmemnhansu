@@ -13,17 +13,18 @@ export default function PersonalReward({ children }: any) {
   const [data, setData] = useState<any>();
   const [currentPage, setCurrentPage] = useState<any>(1);
   const [keyWords, setKeyWords] = useState<any>('')
+  const [updateData, setUpdateData] = useState<any>()
   const newData = data?.data.slice(0, -1)
   const myPagination = data?.data[data.data.length - 1];
-  useEffect(() => {
-    SignIn();
-  }, []);
 
   const handlePageChange = (page: any) => {
     setCurrentPage(page);
   };
   const handleSearch = (key) => {
     setKeyWords(key)
+  }
+  const handleUpDateData = (newData) => {
+    setUpdateData(newData)
   }
 
   useEffect(() => {
@@ -42,6 +43,7 @@ export default function PersonalReward({ children }: any) {
         data={newData}
         modal={<ModalReward></ModalReward>}
         keyWords = {handleSearch}
+        updateData = {handleUpDateData}
       ></RewardTable>
       
       <div className={`${styles.pagination}`}>
