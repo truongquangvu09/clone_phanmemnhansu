@@ -2,6 +2,7 @@
 import axios from "axios";
 import { hasCookie, setCookie } from "cookies-next";
 import { getToken } from "../token";
+import jwt from "jsonwebtoken"
 const COOKIE_KEY = "user_365";
 
 export const getHomeData = async () => {
@@ -30,9 +31,9 @@ export const SignIn = async () => {
   const currentUrl = process.env.NEXT_PUBLIC_BASE_URL2;
   if (!currentCookie) {
     const body = {
-      account: "0989878668",
-      password: "123123a",
-      type: 2,
+      account: "0989878718",
+      password: "Shit23112001",
+      type: 1,
     };
     try {
       const res = await axios.post(
@@ -47,3 +48,25 @@ export const SignIn = async () => {
     } catch (error) {}
   }
 };
+
+export const getDataAuthentication = async () => {
+  try{
+    const url = process.env.NEXT_PUBLIC_BASE_URL;
+    const isToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTQyODExNCwiaWRUaW1WaWVjMzY1IjoxMTAxMjIsImlkUUxDIjoyMjcyLCJpZFJhb05oYW5oMzY1Ijo5LCJlbWFpbCI6bnVsbCwicGhvbmVUSyI6IjA5ODk4NzczMzQzIiwiY3JlYXRlZEF0IjoxNjkxMzk3MjkzLCJ0eXBlIjoyLCJjb21faWQiOjEyMTU5OCwidXNlck5hbWUiOiJuaGFudmllbmhvYW5nMyJ9LCJpYXQiOjE2OTEzOTg1ODEsImV4cCI6MTY5MTQ4NDk4MX0.4fZ-Wegoxh6HE2J8ibqm6uOYKCVQMbPVu-vEF6IAOGY'
+    // const isToken = getToken(COOKIE_KEY)
+    // const decodedToken = jwt.decode(isToken);
+
+    const response = await axios.post(
+      `${url}api/hr/setting/getListPermisionUserLogin`, {},
+      {
+        headers: {
+          Authorization: `Bearer ${isToken}`,
+        },
+      }
+    )
+    return response
+  }catch(error) {
+
+  }
+  
+}

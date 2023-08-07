@@ -24,13 +24,15 @@ export default function Recruitment({ children }: any) {
     const GetDataListNews = async () => {
       try {
         const response = await GetListNews(currentPage, 4, title, formDate, toDate);
+        if( response?.status === 403) {
+          alert('Bạn chưa được phân quyền trên phần mềm quản trị nhân sự 365. Vui lòng liên hệ quản trị viên để biết thêm chi tiết!')
+        }
         if (response?.status !== 200) {
           alert("Lấy dữ liệu thất bại");
         } else {
           setDataListNews(response?.data);
         }
       } catch (err) {
-        console.log(err);
       }
     };
     GetDataListNews();

@@ -15,8 +15,8 @@ export const GetDataAchievement = async (page: any, pageSize: any, type:any, key
         }
       );
       return response;
-  } catch (err) {
-   
+  } catch (err: any) {
+   return err.response
   }
 };
 

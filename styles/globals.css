@@ -26,6 +26,9 @@ a {
 a:hover {
   /* background: #f1f9fc; */
 }
+table {
+  width: 100%;
+}
 
 @font-face {
   font-family: Roboto;

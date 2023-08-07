@@ -9,16 +9,15 @@ import NotificationSetting from "./notification/Notification";
 import Remind from "./remind/Remind";
 import Decentralization from "./decentralization";
 
-
-
-export default function GeneralSettings() {
+export default function GeneralSettings({dataCompany}) {
+  
+  const dataDisplay = dataCompany?.data.data
 
   const componentObj2 = {
-    city: <PublicInformation />,
-    edit: <Edit onClickButton={(e) => handleButtonClick(e)} />,
+    city: <PublicInformation dataDisplay = {dataDisplay}/>,
+    edit: <Edit dataDisplay = {dataDisplay} onClickButton={(e) => handleButtonClick(e)} />,
   }
   const componentObj = {
-
     notification: <NotificationSetting />,
     remind: <Remind />,
   };
@@ -77,7 +76,6 @@ export default function GeneralSettings() {
                         <div
                           className={`${styles.content_1_right}`}
                           onClick={(e) => {
-                            // e.stopPropagation()
                             setComponent('edit')
                           }}
                         >

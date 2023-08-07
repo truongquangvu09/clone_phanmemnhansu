@@ -3,14 +3,12 @@ import React, { useEffect, useState } from "react";
 import styles from "./idRecruitment.module.css";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 import { DetailNews } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
-import { InferGetServerSidePropsType } from "next";
+import { getToken2 } from "@/pages/api/token";
+
 export interface IdRecruitment {}
 
-export default function IdRecruitment({
-  dataDetail,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function IdRecruitment({dataDetail}) {
   const router = useRouter();
-
   const getFormattedDate = (timeString) => {
     const date = new Date(timeString);
     const year = date.getFullYear();
@@ -30,7 +28,7 @@ export default function IdRecruitment({
   const [active, setActive] = useState(2);
   const handleClick = (item: any) => {
     router.back();
-    setActive(item.key);
+
   };
   const handleBack = () => {
     router.back();
@@ -60,6 +58,7 @@ export default function IdRecruitment({
     12: "Trên 100 triệu",
   };
   return (
+
     <>
       <div className={`${styles.l_body}`}>
         <ul className={`${styles.nav} ${styles.nav_tabs}`}>
@@ -118,7 +117,7 @@ export default function IdRecruitment({
               <p className={`${styles.text_center}`}>Ứng viên</p>
             </div>
             <div className={`${styles.list_uv_body}`}>
-              {listCandidate.length === 0 ? (
+              {listCandidate?.length === 0 ? (
                 <p className={`${styles.text_warring}`}>Dữ liệu trống</p>
               ) : (
                 listCandidate?.map((item, index) => (
@@ -142,7 +141,7 @@ export default function IdRecruitment({
               <p className={`${styles.text_center}`}>Ứng viên đủ tiêu chuẩn</p>
             </div>
             <div className={`${styles.list_uv_body}`}>
-              {listCandidate.length === 0 ? (
+              {listCandidate?.length === 0 ? (
                 <p className={`${styles.text_warring}`}>Dữ liệu trống</p>
               ) : (
                 listCandidate?.map((item, index) => (
@@ -165,7 +164,7 @@ export default function IdRecruitment({
               <p className={`${styles.text_center}`}>Ứng viên đến phỏng vấn</p>
             </div>
             <div className={`${styles.list_uv_body}`}>
-              {listInterview.length === 0 ? (
+              {listInterview?.length === 0 ? (
                 <p className={`${styles.text_warring}`}>Dữ liệu trống</p>
               ) : (
                 listInterview?.map((item, index) => (
@@ -188,7 +187,7 @@ export default function IdRecruitment({
               <p className={`${styles.text_center}`}>Ứng viên qua phỏng vấn</p>
             </div>
             <div className={`${styles.list_uv_body}`}>
-              {listInterviewPass.length === 0 ? (
+              {listInterviewPass?.length === 0 ? (
                 <p className={`${styles.text_warring}`}>Dữ liệu trống</p>
               ) : (
                 listInterviewPass?.map((item, index) => (
@@ -213,7 +212,7 @@ export default function IdRecruitment({
               </p>
             </div>
             <div className={`${styles.list_uv_body}`}>
-              {listInterviewFail.length === 0 ? (
+              {listInterviewFail?.length === 0 ? (
                 <p className={`${styles.text_warring}`}>Dữ liệu trống</p>
               ) : (
                 listInterviewPass?.map((item, index) => (
@@ -236,7 +235,7 @@ export default function IdRecruitment({
               <p className={`${styles.text_center}`}>Ứng viên hẹn đi làm</p>
             </div>
             <div className={`${styles.list_uv_body}`}>
-              {listOfferJob.length === 0 ? (
+              {listOfferJob?.length === 0 ? (
                 <p className={`${styles.text_warring}`}>Dữ liệu trống</p>
               ) : (
                 listOfferJob?.map((item, index) => (
@@ -260,19 +259,20 @@ export default function IdRecruitment({
   );
 }
 
-export const getServerSideProps = async ({ params }) => {
+export const getServerSideProps = async ({ params, req  }) => {
   const { idRecruitment } = params;
+  const isToken = getToken2(req.headers.cookie || '');
   try {
-    const response = await DetailNews(idRecruitment);
+    
+    const response = await DetailNews(idRecruitment, isToken);
     const dataDetail = response?.data; 
-
     return {
       props: {
         dataDetail, 
       },
     };
   } catch (error) {
-    console.error("Error fetching data from API:", error);
+    console.log("Error fetching data from API:", error);
     return { props: {} };
   }
 };

@@ -11,36 +11,37 @@ import {
 } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
 import MyPagination from "@/components/pagination/Pagination";
 
-export default function PerformRecruitment({ children }: any) {
+export interface PerformRecruitment {}
+
+export default function PerformRecruitment({ children, totalCandi }: any) {
   const [selectedButton, setSelectedButton] = useState("homnay");
   const [messIsOpen, setMessIsOpen] = useState<any>();
-  const [totalCandi, setTotalCandi] = useState<any>();
+
   const [listSchedule, setListSchedule] = useState<any>();
   const [currentPageListNewActive, setCurrentPageListNewActive] = useState(1);
   const [currentPageListSchedule, setCurrentPageLisSchedule] = useState(1);
 
+  
+
   useEffect(() => {
     const getDataRecruitmentOverview = async () => {
       try {
-        const responseListNewActive = await GetDataListNewActive(currentPageListNewActive, 3);
+        const responseListNewActive = await GetDataListNewActive(
+          currentPageListNewActive,
+          3
+        );
         setMessIsOpen(responseListNewActive?.data.data);
       } catch (err) {
-        console.log("error", err);
       }
     };
     getDataRecruitmentOverview();
   }, [currentPageListNewActive]);
 
-  useEffect(() => {
-    const GetDataTotalCandi = async () => {
-      const responseTotalCandi = await GetTotalCandi();
-      setTotalCandi(responseTotalCandi?.data.data);
-    };
-    GetDataTotalCandi();
-  }, []);
+
 
   useEffect(() => {
-    const GetDataListSchedule = async () => {
+    try {
+      const GetDataListSchedule = async () => {
       const responseListSchedule = await GetListSchedule(
         currentPageListSchedule,
         3
@@ -48,6 +49,10 @@ export default function PerformRecruitment({ children }: any) {
       setListSchedule(responseListSchedule?.data.data);
     };
     GetDataListSchedule();
+    }
+    catch (err) {
+      
+    }
   }, [currentPageListSchedule]);
 
   const currentTime = Date.now();

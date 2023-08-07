@@ -7,7 +7,7 @@ import { SettingPermission } from "@/pages/api/cai-dat/generalSettings";
 export default function Decentralization ({}) {
   const [user, setUser] = useState<any>();
   const [userId, setUserId] = useState<any>();
-  const [checkboxValue, setCheckboxValue] = useState<any>()
+  const [localListCheck, setLocalListCheck] = useState<any>([]);
 
   const handleSelectionChange = (selectedOptions, actionMeta) => {
     const selectedValues = selectedOptions.map((option) => option.value);
@@ -16,6 +16,144 @@ export default function Decentralization ({}) {
       ...prevSelectedOption,
       userId: selectedValuesString,
     }));
+  };
+  const handleClickCheckBox = (event: any) => {
+    const { name, checked, value } = event.target;
+    if (name === 'role_td') {
+      setLocalListCheck((prev) => {
+        const prevValueArray = prev[name] ? prev[name].split(',') : [];
+  
+        if (checked) {
+          if (!prevValueArray.includes(value)) {
+            prevValueArray.push(value);
+          }
+        } else {
+          const index = prevValueArray.indexOf(value);
+          if (index !== -1) {
+            prevValueArray.splice(index, 1);
+          }
+        }
+          return {
+          ...prev,
+          [name]: prevValueArray.join(','),
+        };
+      });
+    }
+    if (name === 'role_ttns') {
+      setLocalListCheck((prev) => {
+        const prevValueArray = prev[name] ? prev[name].split(',') : [];
+  
+        if (checked) {
+          if (!prevValueArray.includes(value)) {
+            prevValueArray.push(value);
+          }
+        } else {
+          const index = prevValueArray.indexOf(value);
+          if (index !== -1) {
+            prevValueArray.splice(index, 1);
+          }
+        }
+          return {
+          ...prev,
+          [name]: prevValueArray.join(','),
+        };
+      });
+    }if (name === 'role_ttvp') {
+      setLocalListCheck((prev) => {
+        const prevValueArray = prev[name] ? prev[name].split(',') : [];
+  
+        if (checked) {
+          if (!prevValueArray.includes(value)) {
+            prevValueArray.push(value);
+          }
+        } else {
+          const index = prevValueArray.indexOf(value);
+          if (index !== -1) {
+            prevValueArray.splice(index, 1);
+          }
+        }
+          return {
+          ...prev,
+          [name]: prevValueArray.join(','),
+        };
+      });
+    }if (name === 'role_dldx') {
+      setLocalListCheck((prev) => {
+        const prevValueArray = prev[name] ? prev[name].split(',') : [];
+  
+        if (checked) {
+          if (!prevValueArray.includes(value)) {
+            prevValueArray.push(value);
+          }
+        } else {
+          const index = prevValueArray.indexOf(value);
+          if (index !== -1) {
+            prevValueArray.splice(index, 1);
+          }
+        }
+          return {
+          ...prev,
+          [name]: prevValueArray.join(','),
+        };
+      });
+    }if (name === 'role_hnnv') {
+      setLocalListCheck((prev) => {
+        const prevValueArray = prev[name] ? prev[name].split(',') : [];
+  
+        if (checked) {
+          if (!prevValueArray.includes(value)) {
+            prevValueArray.push(value);
+          }
+        } else {
+          const index = prevValueArray.indexOf(value);
+          if (index !== -1) {
+            prevValueArray.splice(index, 1);
+          }
+        }
+          return {
+          ...prev,
+          [name]: prevValueArray.join(','),
+        };
+      });
+    }if (name === 'role_bcns') {
+      setLocalListCheck((prev) => {
+        const prevValueArray = prev[name] ? prev[name].split(',') : [];
+  
+        if (checked) {
+          if (!prevValueArray.includes(value)) {
+            prevValueArray.push(value);
+          }
+        } else {
+          const index = prevValueArray.indexOf(value);
+          if (index !== -1) {
+            prevValueArray.splice(index, 1);
+          }
+        }
+          return {
+          ...prev,
+          [name]: prevValueArray.join(','),
+        };
+      });
+    }if (name === 'role_tgl') {
+      setLocalListCheck((prev) => {
+        const prevValueArray = prev[name] ? prev[name].split(',') : [];
+  
+        if (checked) {
+          if (!prevValueArray.includes(value)) {
+            prevValueArray.push(value);
+          }
+        } else {
+          const index = prevValueArray.indexOf(value);
+          if (index !== -1) {
+            prevValueArray.splice(index, 1);
+          }
+        }
+          return {
+          ...prev,
+          [name]: prevValueArray.join(','),
+        };
+      });
+    }
   };
 
   useEffect(() => {
@@ -34,24 +172,15 @@ export default function Decentralization ({}) {
     getData();
   }, []);
 
+  const dataRes = {...userId, ...localListCheck}
   const handleUpdateRole = async (event: any) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    let roleData = {};
-    formData.forEach((value, name) => {
-      setCheckboxValue((prev: any) => ({
-        ...prev,
-        [name]: prev[name] ? `${prev[name]},${value}` : value,
-      }))
-  
-    });
-  
     try {
-      const response = await SettingPermission(userId, roleData);
+      const response = await SettingPermission(dataRes);
+      console.log(response)
       if (response?.status !== 200) {
         alert("Cấp Quyền Thất Bại");
       } else {
-   
+        
       }
     } catch (error) {
 
@@ -151,6 +280,7 @@ export default function Decentralization ({}) {
                       name="role_td"
                       type="checkbox"
                       value="1"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -162,6 +292,7 @@ export default function Decentralization ({}) {
                       name="role_td"
                       type="checkbox"
                       value="2"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -173,6 +304,7 @@ export default function Decentralization ({}) {
                       name="role_td"
                       type="checkbox"
                       value="3"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -184,6 +316,7 @@ export default function Decentralization ({}) {
                       name="role_td"
                       type="checkbox"
                       value="4"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
                 </div>
@@ -201,6 +334,7 @@ export default function Decentralization ({}) {
                       name="role_ttns"
                       type="checkbox"
                       value="1"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -212,6 +346,7 @@ export default function Decentralization ({}) {
                       name="role_ttns"
                       type="checkbox"
                       value="2"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -223,6 +358,7 @@ export default function Decentralization ({}) {
                       name="role_ttns"
                       type="checkbox"
                       value="3"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -234,6 +370,7 @@ export default function Decentralization ({}) {
                       name="role_ttns"
                       type="checkbox"
                       value="4"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -252,6 +389,7 @@ export default function Decentralization ({}) {
                       name="role_ttvp"
                       type="checkbox"
                       value="1"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -263,6 +401,7 @@ export default function Decentralization ({}) {
                       name="role_ttvp"
                       type="checkbox"
                       value="2"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -274,6 +413,7 @@ export default function Decentralization ({}) {
                       name="role_ttvp"
                       type="checkbox"
                       value="3"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -285,6 +425,7 @@ export default function Decentralization ({}) {
                       name="role_ttvp"
                       type="checkbox"
                       value="4"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -303,6 +444,7 @@ export default function Decentralization ({}) {
                       name="role_hnnv"
                       type="checkbox"
                       value="1"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -314,6 +456,7 @@ export default function Decentralization ({}) {
                       name="role_hnnv"
                       type="checkbox"
                       value="2"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -325,6 +468,7 @@ export default function Decentralization ({}) {
                       name="role_hnnv"
                       type="checkbox"
                       value="3"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -336,6 +480,7 @@ export default function Decentralization ({}) {
                       name="role_hnnv"
                       type="checkbox"
                       value="4"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -354,6 +499,7 @@ export default function Decentralization ({}) {
                       name="role_bcns"
                       type="checkbox"
                       value="1"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -365,6 +511,7 @@ export default function Decentralization ({}) {
                       name="role_bcns"
                       type="checkbox"
                       value="2"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -376,6 +523,7 @@ export default function Decentralization ({}) {
                       name="role_bcns"
                       type="checkbox"
                       value="3"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -387,6 +535,7 @@ export default function Decentralization ({}) {
                       name="role_bcns"
                       type="checkbox"
                       value="4"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -405,6 +554,7 @@ export default function Decentralization ({}) {
                       name="role_dldx"
                       type="checkbox"
                       value="1"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -416,6 +566,7 @@ export default function Decentralization ({}) {
                       name="role_dldx"
                       type="checkbox"
                       value="2"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -427,6 +578,7 @@ export default function Decentralization ({}) {
                       name="role_dldx"
                       type="checkbox"
                       value="3"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -438,6 +590,7 @@ export default function Decentralization ({}) {
                       name="role_dldx"
                       type="checkbox"
                       value="4"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -456,6 +609,7 @@ export default function Decentralization ({}) {
                       name="role_tgl"
                       type="checkbox"
                       value="1"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -467,6 +621,7 @@ export default function Decentralization ({}) {
                       name="role_tgl"
                       type="checkbox"
                       value="2"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -478,6 +633,7 @@ export default function Decentralization ({}) {
                       name="role_tgl"
                       type="checkbox"
                       value="3"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
 
@@ -489,6 +645,7 @@ export default function Decentralization ({}) {
                       name="role_tgl"
                       type="checkbox"
                       value="4"
+                      onClick={(e) => handleClickCheckBox(e)}
                     ></input>
                   </div>
                   

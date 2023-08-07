@@ -10,7 +10,10 @@ export default function DeleteRecruitmentStage({ data, recruitment,animation, on
   const handleDelete = async (id: number) => {
       try {
         const response = await DeleteDataRecruitmentStage(id)
-        if (response?.status !== 200){
+        if( response?.status === 403) {
+          alert('Bạn chưa được phân quyền trên phần mềm quản trị nhân sự 365. Vui lòng liên hệ quản trị viên để biết thêm chi tiết!')
+        }
+        else if (response?.status !== 200){
           alert('Xóa giai đoạn thất bại')
         }else {
           onCloseModal()

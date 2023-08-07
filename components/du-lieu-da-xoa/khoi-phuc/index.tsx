@@ -1,10 +1,26 @@
 import React, { useState } from "react";
 import styles from './Restore.module.css'
+import { restoreDelete } from "@/pages/api/du-lieu-da-xoa-gan-day/DeletedDataComPonentService";
 
 
-export default function Restore ({animation, handleClose}: any) {
+export default function Restore ({animation, handleClose, handleData}: any) {
   
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    
+    try {
+      const fetchData = async () => {
+        const response = await restoreDelete(handleData);
+        if (response?.status !== 200) {
+          alert("Khôi phục thất bại");
+        } else {
+          handleClose();
+        }
+      };
+      fetchData();
+    } catch (error) {
+
+    }
+  };
 
   return (
     <>
@@ -24,6 +40,7 @@ export default function Restore ({animation, handleClose}: any) {
                 </p>
             </div>
 
+            <form onSubmit={(e) => handleSubmit(e)}>
             <div className={`${styles.modal_footer}`}>
                 <button className={`${styles.l_btn_cancel}`}
                  onClick={handleClose}
@@ -31,10 +48,11 @@ export default function Restore ({animation, handleClose}: any) {
                     Đóng    
                 </button>
 
-                <button className={`${styles.btn_restore}`}>
+                <button type="submit" className={`${styles.btn_restore}`}>
                     Khôi phục
                 </button>
             </div>
+            </form>
           </div>
         </div>
       </div>

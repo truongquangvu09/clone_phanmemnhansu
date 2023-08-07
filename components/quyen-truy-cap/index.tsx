@@ -117,7 +117,7 @@ export default function PageAuthenticator() {
                   <picture>
                     <img
                       className={`${styles.weather_image}`}
-                      src={`public/icon_weather/${weatherData.weather[0].icon}.png`}
+                      src={`../icon_weather/${weatherData.weather[0].icon}.png`}
                       alt=""
                     />
                   </picture>
@@ -139,7 +139,7 @@ export default function PageAuthenticator() {
       </div>
 
     <div className={`${styles.body} `}>
-    <div className={`${styles.l_body_content} ${styles.t_role}`} style={{width: '69%'}}>
+    <div className={`${styles.l_body_content} ${styles.t_role}`} style={{width: '69%', margin: '22px 0 0 10px'}}>
         <picture>
           <img src={`${"/role_warning.svg"}`} alt="Quyền truy cập" />
         </picture>

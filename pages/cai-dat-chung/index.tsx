@@ -4,9 +4,22 @@ import Link from 'next/link';
 import SecurityInfomation from '@/components/cai-dat-chung/securityInformation';
 import GeneralSettings from '@/components/cai-dat-chung/generalSettings';
 import ActivityLog from '@/components/cai-dat-chung/activityLog';
+import { getDataCompany } from '../api/cai-dat/generalSettings';
 
 export default function Setting({ children }: any) {
     const [active, setActive] = useState(1)
+    const [dataCompany, setDataCompany] = useState<any>()
+
+    useEffect(() => {
+        try {
+            const fetchData = async () => {
+                const response = await getDataCompany()
+                setDataCompany(response)
+            }
+            fetchData()
+        } catch (error) {
+        }
+    }, [])
 
     return (
         <>
@@ -22,7 +35,7 @@ export default function Setting({ children }: any) {
                         <Link href=''>NHẬT KÍ HOẠT ĐỘNG</Link>
                     </li>
                 </ul>
-                {active === 1 && <GeneralSettings></GeneralSettings>}
+                {active === 1 && <GeneralSettings dataCompany = {dataCompany}></GeneralSettings>}
                 {active === 2 && <SecurityInfomation></SecurityInfomation>}
                 {active === 3 && <ActivityLog></ActivityLog>}
             </div>

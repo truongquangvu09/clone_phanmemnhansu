@@ -18,15 +18,14 @@ export const GetDataListNewActive = async (page: number, pageSize: number) => {
       }
     );
     return response;
-  } catch (err) {
-    console.log("Error: ", err);
+  } catch (err: any) {
+    return err.response
   }
 };
 
 export const GetTotalCandi = async () => {
   const url = process.env.NEXT_PUBLIC_BASE_URL;
     const isToken = getToken(COOKIE_KEY)
-
   try {
     const response = await axios.post(
       `${url}api/hr/recruitment/totalCandi`,
@@ -38,8 +37,8 @@ export const GetTotalCandi = async () => {
       }
     );
     return response;
-  } catch (error) {
-    console.log("Error:", error);
+  } catch (err: any) {
+    return err.response
   }
 };
 
@@ -60,8 +59,8 @@ export const GetListSchedule = async (page: number, pageSize: number) => {
       }
     );
     return response;
-  } catch (error) {
-    console.log("Error:", error);
+  } catch (err: any) {
+    return err.response
   }
 };
 
@@ -87,8 +86,8 @@ export const GetListNews = async (
       }
     );
     return response;
-  } catch (err) {
-    console.log("Error: ", err);
+  } catch (err: any) {
+    return err.response
   }
 };
 export const SoftDeleteNews = async (newsId: number) => {
@@ -105,14 +104,16 @@ export const SoftDeleteNews = async (newsId: number) => {
       }
     );
     return response;
-  } catch (err) {
-    console.log("Error: ", err);
+  } catch (err: any) {
+    return err.response
   }
 };
 
-export const DetailNews = async (recruitmentNewsId: any) => {
+export const DetailNews = async (recruitmentNewsId: any, isToken) => {
+  console.log(isToken)
   const url = process.env.NEXT_PUBLIC_BASE_URL;
-    const isToken = getToken(COOKIE_KEY)
+    // const isToken = getToken(COOKIE_KEY)
+    // const isToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTQxNzUzNSwiaWRUaW1WaWVjMzY1Ijo5NDM2OTAsImlkUUxDIjo5LCJpZFJhb05oYW5oMzY1Ijo5LCJlbWFpbCI6bnVsbCwicGhvbmVUSyI6IjA5ODk4Nzg2NjgiLCJjcmVhdGVkQXQiOjE2OTA5NDU3MTMsInR5cGUiOjIsImNvbV9pZCI6MTIxNTk3LCJ1c2VyTmFtZSI6Im5oYW52aWVucGhhbnF1eWVuIn0sImlhdCI6MTY5MDk2MTA3MSwiZXhwIjoxNjkxMDQ3NDcxfQ.kClWijmj-6-Pc_4-rUlwkSqPZA5NzR_di1Kizx_iQgg"
   try {
     const response = await axios.post(
       `${url}api/hr/recruitment/detailNews`,
@@ -124,8 +125,8 @@ export const DetailNews = async (recruitmentNewsId: any) => {
       }
     );
     return response;
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    return err.response
   }
 };
 
@@ -143,8 +144,8 @@ export const setAsTemplate = async (newsId: any) => {
       }
     );
     return response;
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    return err.response
   }
 };
 
@@ -162,14 +163,15 @@ export const getDataAddress = async () => {
       }
     );
     return response;
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    return err.response
   }
 };
 
 export const getDataUser = async () => {
   const url = process.env.NEXT_PUBLIC_BASE_URL2;
-    const isToken = getToken(COOKIE_KEY)
+    // const isToken = getToken(COOKIE_KEY)
+    const isToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTQxNzUzOCwiaWRUaW1WaWVjMzY1IjoyNDU1NTksImlkUUxDIjoxMjE1OTgsImlkUmFvTmhhbmgzNjUiOjIsImVtYWlsIjpudWxsLCJwaG9uZVRLIjoiMDM5NjY0NjA5MCIsImNyZWF0ZWRBdCI6MTY5MDk1OTYyNiwidHlwZSI6MSwiY29tX2lkIjoxMjE1OTgsInVzZXJOYW1lIjoiY29uZyB0eSB2dnZ2diJ9LCJpYXQiOjE2OTEzMzg1NjQsImV4cCI6MTY5MTQyNDk2NH0.kzprE0aFRBeONnVKgYyp8MJuM9zNsA_MVSQ2K8WHGgs'
   try {
     const response = await axios.post(
       `${url}api/qlc/managerUser/listAll`,
@@ -181,8 +183,8 @@ export const getDataUser = async () => {
       }
     );
     return response;
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    return err.response
   }
 };
 
@@ -200,8 +202,8 @@ export const GetDataCategory = async () => {
       }
     );
     return response;
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    return err.response
   }
 };
 
@@ -250,8 +252,8 @@ export const CreateNewsRecruitment = async (content, selectedOption) => {
       
     );
     return response;
-  } catch (err:any) {
-    console.log(err.message);
+  } catch (err: any) {
+    return err.response
   }
 };
 
@@ -301,7 +303,7 @@ export const EditNewsRecruitment = async(recruitmentNewsId,content, selectedOpti
       
     );
     return response;
-  } catch (err:any) {
-    console.log(err.message);
+  } catch (err: any) {
+    return err.response
   }
 }

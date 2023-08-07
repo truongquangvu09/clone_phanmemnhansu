@@ -8,6 +8,7 @@ import { DataRecruitmentStage } from "@/pages/api/quan-ly-tuyen-dung/Recruitment
 export interface listRecruitmentProcess {}
 
 export default function listRecruitmentProcess({dataDetail}) {
+  
   const router = useRouter();
   const { idRecruitmentStage } = router.query;
   const [openModalAdd, setOpenModalAdd] = useState(false);
@@ -109,7 +110,7 @@ export const getServerSideProps = async ({ params }) => {
       },
     };
   } catch (error) {
-    console.error('Error fetching data from API:', error);
+    console.log('Error fetching data from API:', error);
     return { props: {} };
   }
 };
