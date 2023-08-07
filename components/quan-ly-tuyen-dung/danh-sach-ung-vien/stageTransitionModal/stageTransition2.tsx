@@ -1,69 +1,42 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import Select from 'react-select';
 import styles from '../candidateAddModal/candidateAddModal.module.css'
-import { ProcessList } from '@/pages/api/quan-ly-tuyen-dung/candidateList';
 import { ProcessAdd } from '@/pages/api/quan-ly-tuyen-dung/candidateList';
 
 type SelectOptionType = { label: string, value: string }
 
-
-export default function StageAddModal({ onCancel }: any) {
+export default function StageTransition2({ onCancel, processId }: any) {
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
-    const [isProcessList, setProcessList] = useState<any>(null)
-    const [isProcess_id, setProcess_id] = useState<any>(null)
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const formData = new FormData();
-                if (formData) {
-                    const response = await ProcessList(formData)
-                    setProcessList(response.data)
-                }
-            } catch (error) {
-                throw error
-            }
-        }
-        fetchData()
-    }, [])
+    console.log(processId);
 
-    const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault()
+    const handleSubmit = async () => {
         try {
-            const formData = new FormData()
-            const processName = (document.getElementById('names') as HTMLInputElement)?.value
-            formData.append('name', processName)
-            formData.append('processBefore', isProcess_id)
-            const response = await ProcessAdd(formData)
-            if (response) {
-                setTimeout(() => {
-                    onCancel()
-                }, 1500)
+            if (processId) {
+                const formData = new FormData();
+                formData.append('processBefore', processId)
+                const response = await ProcessAdd(formData)
             }
         } catch (error) {
-
+            throw error
         }
     }
 
-    const handleSelectChange = (selectedOption: SelectOptionType | null, setState: any) => {
-        setSelectedOption(selectedOption);
-        if (selectedOption) {
-            setState(selectedOption.value);
+
+    const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
+        if (option) {
+            setSelectedOption(option)
         }
     };
 
-    const chongiaidoandungtruocOptions = useMemo(
-        () =>
-            isProcessList &&
-            isProcessList?.data?.map((process: any) => ({
-                value: process.id,
-                label: process.name
-            })),
-        [isProcessList]
-    );
-
     const options = {
-        chongiaidoandungtruoc: chongiaidoandungtruocOptions,
+        chongiaidoandungtruoc: [
+            { value: 'Nhận hồ sơ ứng viên', label: 'Nhận hồ sơ ứng viên' },
+            { value: 'Chờ xét duyệt', label: 'Chờ xét duyệt' },
+            { value: 'Nhận việc', label: 'Nhận việc' },
+            { value: 'Trượt', label: 'Trượt' },
+            { value: 'Hủy', label: 'Hủy' },
+        ],
     };
     return (
         <>
@@ -72,7 +45,7 @@ export default function StageAddModal({ onCancel }: any) {
                     <div className={` ${styles.modal_dialog} ${styles.content_process}`}>
                         <div className={`${styles.modal_content}`}>
                             <div className={`${styles.modal_header} ${styles.header_process}`}>
-                                <h5 className={`${styles.modal_tittle}`}>THÊM ỨNG VIÊN</h5>
+                                <h5 className={`${styles.modal_tittle}`}>THÊM GIAI ĐOẠN</h5>
                             </div>
                             <form action="">
                                 <div className={`${styles.modal_body} ${styles.body_process}`}>
@@ -88,7 +61,7 @@ export default function StageAddModal({ onCancel }: any) {
                                             <div className={`${styles.div_no_pad} `}>
                                                 <Select
                                                     defaultValue={selectedOption}
-                                                    onChange={(option) => handleSelectChange(option, setProcess_id)}
+                                                    onChange={(option) => handleSelectionChange(option, options.chongiaidoandungtruoc)}
                                                     options={options.chongiaidoandungtruoc}
                                                     placeholder="-- Vui lòng chọn --"
                                                     styles={{
@@ -130,7 +103,8 @@ export default function StageAddModal({ onCancel }: any) {
                                 </div>
                                 <div className={`${styles.modal_footer} ${styles.footer_process}`}>
                                     <button className={`${styles.btn_cancel}`} onClick={onCancel}>Hủy</button>
-                                    <button className={`${styles.btn_add}`} onClick={handleSubmit}>Thêm</button>
+                                    <button className={`${styles.btn_add}`} >Thêm</button>
+                                    <a onClick={handleSubmit}>ok</a>
                                 </div>
                             </form>
                         </div>

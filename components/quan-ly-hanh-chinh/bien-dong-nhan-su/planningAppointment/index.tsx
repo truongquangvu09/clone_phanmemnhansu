@@ -12,7 +12,6 @@ import DeletePlanningAppointments from "./deletePlanningModal";
 
 type SelectOptionType = { label: string, value: string }
 
-
 export default function TabPlaningAppointment({ children }: any) {
 
     const [isPlanningAppointmentList, setPlanningAppointmentList] = useState<any>(null)

@@ -6,7 +6,7 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5); /* Màu đen với độ trong suốt 50% */
-  z-index: 99;
+  z-index: 101;
 }
 .modal {
   position: fixed;
@@ -173,6 +173,7 @@
   border-radius: 4px;
   color: inherit;
   border: none;
+  color: #333333;
 }
 .btn_add {
   margin-left: 5px;

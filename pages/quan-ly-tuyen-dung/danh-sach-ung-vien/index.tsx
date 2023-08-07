@@ -25,8 +25,6 @@ export default function CandidateList({ children }: any) {
                 </ul>
                 {active === 1 ? <CandidateListDetail></CandidateListDetail> : <CandidateRepo></CandidateRepo>}
             </div>
-
-
         </>
     )
 }

@@ -2,15 +2,17 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Select from 'react-select';
 import styles from '../candidateAddModal/candidateAddModal.module.css'
 import { ProcessList } from '@/pages/api/quan-ly-tuyen-dung/candidateList';
-import { ProcessAdd } from '@/pages/api/quan-ly-tuyen-dung/candidateList';
+import { ProcessUpdate } from '@/pages/api/quan-ly-tuyen-dung/candidateList';
 
 type SelectOptionType = { label: string, value: string }
 
 
-export default function StageAddModal({ onCancel }: any) {
+export default function StageUpdateModal({ onCancel, infoList }: any) {
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
     const [isProcessList, setProcessList] = useState<any>(null)
-    const [isProcess_id, setProcess_id] = useState<any>(null)
+    const [isProcess_id, setProcess_id] = useState<any>(infoList?.processBefore)
+
+    console.log(infoList);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,7 +36,8 @@ export default function StageAddModal({ onCancel }: any) {
             const processName = (document.getElementById('names') as HTMLInputElement)?.value
             formData.append('name', processName)
             formData.append('processBefore', isProcess_id)
-            const response = await ProcessAdd(formData)
+            formData.append('processInterviewId', infoList?.processInterviewId)
+            const response = await ProcessUpdate(formData)
             if (response) {
                 setTimeout(() => {
                     onCancel()
@@ -55,7 +58,7 @@ export default function StageAddModal({ onCancel }: any) {
     const chongiaidoandungtruocOptions = useMemo(
         () =>
             isProcessList &&
-            isProcessList?.data?.map((process: any) => ({
+            isProcessList?.listProcess?.map((process: any) => ({
                 value: process.id,
                 label: process.name
             })),
@@ -64,6 +67,7 @@ export default function StageAddModal({ onCancel }: any) {
 
     const options = {
         chongiaidoandungtruoc: chongiaidoandungtruocOptions,
+        giaidoandungtruocbefore: [{ value: infoList?.processBefore, label: 'abc' }]
     };
     return (
         <>
@@ -72,14 +76,14 @@ export default function StageAddModal({ onCancel }: any) {
                     <div className={` ${styles.modal_dialog} ${styles.content_process}`}>
                         <div className={`${styles.modal_content}`}>
                             <div className={`${styles.modal_header} ${styles.header_process}`}>
-                                <h5 className={`${styles.modal_tittle}`}>THÊM ỨNG VIÊN</h5>
+                                <h5 className={`${styles.modal_tittle}`}>CẬP NHẬT GIAI ĐOẠN</h5>
                             </div>
                             <form action="">
                                 <div className={`${styles.modal_body} ${styles.body_process}`}>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Tên giai đoạn <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
-                                            <input type="text" id="names" placeholder="Nhập tên giai đoạn tuyển dụng" className={`${styles.input_process}`} />
+                                            <input defaultValue={infoList?.name} type="text" id="names" placeholder="Nhập tên giai đoạn tuyển dụng" className={`${styles.input_process}`} />
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -87,7 +91,7 @@ export default function StageAddModal({ onCancel }: any) {
                                         <div className={`${styles.input_right}`}>
                                             <div className={`${styles.div_no_pad} `}>
                                                 <Select
-                                                    defaultValue={selectedOption}
+                                                    defaultValue={options.giaidoandungtruocbefore}
                                                     onChange={(option) => handleSelectChange(option, setProcess_id)}
                                                     options={options.chongiaidoandungtruoc}
                                                     placeholder="-- Vui lòng chọn --"

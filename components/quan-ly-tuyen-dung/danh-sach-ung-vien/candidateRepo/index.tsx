@@ -18,8 +18,6 @@ export default function CandidateRepo({ children }: any) {
         }
     };
 
-
-
     const listCandidates = [
         {
             id: 1,
@@ -88,9 +86,6 @@ export default function CandidateRepo({ children }: any) {
             { value: 'Giới tính khác', label: 'Giới tính khác' },
         ],
     };
-
-
-
 
     return (
         <>

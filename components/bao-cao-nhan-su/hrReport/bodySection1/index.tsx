@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './bodySection1.module.css'
+import { GetDataHrReport } from '@/pages/api/bao-cao-nhan-su/HrReportService'
 
 const EmployeeForm = ({ title1, title2, img1, img2, img3, title_details1, title_details2, title_details3,
     number1, number2, number3, color_boder, background_color }: any) => (
@@ -41,11 +42,11 @@ const EmployeeForm = ({ title1, title2, img1, img2, img3, title_details1, title_
                 <div className={`${number2 ? styles.body_row_number : styles.body_row_number2}`}>
                     <p style={{ color: '#4C5BD4' }} className={`${styles.total_ep}`}>{number1}</p>
                 </div>
-                {number2 ? (
-                    <div className={`${number2 ? styles.body_row_number : styles.body_row_number2}`}>
-                        <p style={{ color: '#4CD4B4', }} className={`${styles.total_ep}`}>{number2}</p>
-                    </div>
-                ) : ''}
+
+                <div className={`${number2 ? styles.body_row_number : styles.body_row_number2}`}>
+                    <p style={{ color: '#4CD4B4', }} className={`${styles.total_ep}`}>{number2}</p>
+                </div>
+
                 <div className={`${number2 ? styles.body_row_number : styles.body_row_number2}`}>
                     <p style={{ color: '#D44C4C' }} className={`${styles.total_ep}`}>{number3}</p>
                 </div>
@@ -54,6 +55,26 @@ const EmployeeForm = ({ title1, title2, img1, img2, img3, title_details1, title_
     </div>
 )
 export default function EmployeeInformation() {
+
+    const [hrReportList, setHrReportList] = useState<any>(null)
+    console.log(hrReportList);
+    console.log(hrReportList?.data?.luanChuyenNam);
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const formData = new FormData();
+                const response = await GetDataHrReport(formData)
+                if (response) {
+                    setHrReportList(response.data)
+                }
+            } catch (error) {
+
+            }
+        }
+        fetchData()
+    }, [])
 
     return (
         <>
@@ -69,9 +90,9 @@ export default function EmployeeInformation() {
                             title_details1='Tổng số'
                             title_details2='Nam'
                             title_details3='Nữ'
-                            number1='32'
-                            number2='30'
-                            number3='2'
+                            number1={hrReportList?.data?.Employee}
+                            number2={hrReportList?.data?.EmployeeNam}
+                            number3={hrReportList?.data?.EmployeeNu}
                             color_boder='7px solid #4c5bd4'
                             background_color='#f1f9fc'
                         />
@@ -86,9 +107,9 @@ export default function EmployeeInformation() {
                             title_details1='Tổng số'
                             title_details2='Giảm biên chế'
                             title_details3='Nghỉ việc'
-                            number1='32'
-                            number2='30'
-                            number3='2'
+                            number1={hrReportList?.data?.tongSoNghiViec}
+                            number2={hrReportList?.data?.giamBienChe}
+                            number3={hrReportList?.data?.nghiViec}
                             color_boder='7px solid #4CD4B4'
                             background_color='#f1f9fc'
                         />
@@ -103,9 +124,9 @@ export default function EmployeeInformation() {
                             title_details1='Tổng số'
                             title_details2='Nam'
                             title_details3='Nữ'
-                            number1='32'
-                            number2='30'
-                            number3='2'
+                            number1={hrReportList?.data?.boNhiem}
+                            number2={hrReportList?.data?.boNhiemNam}
+                            number3={hrReportList?.data?.boNhiemNu}
                             color_boder='7px solid #D44C4C'
                             background_color='#FFF4F4'
                         />
@@ -121,9 +142,9 @@ export default function EmployeeInformation() {
                             title_details1='Tổng số'
                             title_details2='Tăng lương'
                             title_details3='Giảm lương'
-                            number1='32'
-                            number2='30'
-                            number3='2'
+                            number1={hrReportList?.data?.tangGiamLuong}
+                            number2={hrReportList?.data?.tangLuong}
+                            number3={hrReportList?.data?.giamLuong}
                             color_boder='7px solid #4c5bd4'
                             background_color='#f1f9fc'
                         />
@@ -137,9 +158,9 @@ export default function EmployeeInformation() {
                             title_details1='Tổng số'
                             title_details2='Nam'
                             title_details3='Nữ'
-                            number1='32'
-                            number2='30'
-                            number3='2'
+                            number1={hrReportList?.data?.luanChuyen}
+                            number2={hrReportList?.data?.luanChuyenNam}
+                            number3={hrReportList?.data?.luanChuyenNu}
                             color_boder='7px solid #4CD4B4'
                             background_color='#f1f9fc'
                         />
@@ -151,8 +172,8 @@ export default function EmployeeInformation() {
                             img3='/icon-alone.svg	'
                             title_details1='Đã lập gia đình'
                             title_details3='Độc thân'
-                            number1='32'
-                            number3='2'
+                            number1={hrReportList?.data?.boNhiem}
+                            number3={hrReportList?.data?.boNhiem}
                             color_boder='7px solid #D44C4C'
                             background_color='#FFF4F4'
                         />
