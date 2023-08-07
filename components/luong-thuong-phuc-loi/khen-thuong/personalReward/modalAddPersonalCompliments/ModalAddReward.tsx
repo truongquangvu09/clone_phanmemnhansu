@@ -5,8 +5,7 @@ import * as Yup from "yup";
 import { getDataUser } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
 import { AddAchievement } from "@/pages/api/luong-thuong-phuc-loi/reward";
 
-type SelectOptionType = { label: string; value: string };
-function ModalAddReward({ animation, onClose }: any) {
+function ModalAddReward({ animation, onClose,updateData }: any) {
   const [user, setUser] = useState<any>();
   const [content, setContent] = useState<any>();
   const [listUser, setListUser] = useState<any>();
@@ -25,8 +24,6 @@ function ModalAddReward({ animation, onClose }: any) {
     achievement_type: Yup.string().required("Chọn hình thức"),
     appellation: Yup.string().required("Danh hiệu không được để trống"),
     achievement_level: Yup.string().required("Cấp khen không được để trống"),
-    price: Yup.string().required("Hãy nhập số tiền"),
-    resion: Yup.string().required("Hãy nhập lý do khen thưởng"),
   });
 
   useEffect(() => {
@@ -101,10 +98,11 @@ function ModalAddReward({ animation, onClose }: any) {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
-      // await schema.validate(mergedObject, { abortEarly: false });
+      await schema.validate(mergedObject, { abortEarly: false });
       const response = await AddAchievement(mergedObject);
       if (response?.status === 200) {
         onClose();
+        updateData(response?.data)
       }
     } catch (error: any) {
       const validationErrors = {};
@@ -202,6 +200,13 @@ function ModalAddReward({ animation, onClose }: any) {
                   <label>
                     Tên đối tượng
                     <span className={`${styles.red}`}> *</span>
+                    {errors.list_user && (
+                      <>
+                        <div className={`${styles.errors}`} style={{marginTop: '6px'}}>
+                          {errors.list_user}
+                        </div>
+                      </>
+                    )}
                     <div
                       className={`${styles.red} ${styles.float_right}`}
                     ></div>
@@ -282,18 +287,12 @@ function ModalAddReward({ animation, onClose }: any) {
                       name="achievement_at"
                       className={`${styles.inputquytrinh}`}
                       style={{ height: "30.6px" }}
-                      placeholder="Nhập tên giai đoạn"
+                      placeholder="Chọn thời điểm"
                       onChange={handleContentChange}
                     ></input>
                     {errors.achievement_at && (
                       <>
-                        <picture>
-                          <img
-                            className={`${styles.icon_err}`}
-                            src={`${"/danger.png"}`}
-                            alt="Lỗi"
-                          ></img>
-                        </picture>
+                        
                         <div className={`${styles.errors}`}>
                           {errors.achievement_at}
                         </div>
@@ -306,6 +305,13 @@ function ModalAddReward({ animation, onClose }: any) {
                   <label>
                     Hình thức khen thưởng
                     <span className={`${styles.red}`}> *</span>
+                    {errors.achievement_type && (
+                      <>
+                        <div className={`${styles.errors}`} style={{marginTop: '6px'}}>
+                          {errors.achievement_type}
+                        </div>
+                      </>
+                    )}
                     <div
                       className={`${styles.red} ${styles.float_right}`}
                     ></div>

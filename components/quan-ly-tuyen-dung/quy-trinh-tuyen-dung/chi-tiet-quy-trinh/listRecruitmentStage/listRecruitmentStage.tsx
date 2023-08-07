@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 import styles from "./ListRecruitmentStage.module.css";
 import EditRecruitmentStage from "../editRecruitmentStage/editRecruitmentStage";
 import DeleteRecruitmentStage from "../deleteRecruitmentStage/deleteRecruitmentStage";
-import { DataRecruitmentStage } from "@/pages/api/quan-ly-tuyen-dung/RecruitmentManagerService";
-import router from "next/router";
-import { InferGetServerSidePropsType } from "next";
 
 export interface ListRecruitmentStage {}
 

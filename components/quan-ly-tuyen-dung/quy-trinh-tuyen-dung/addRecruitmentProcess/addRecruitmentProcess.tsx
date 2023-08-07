@@ -103,7 +103,10 @@ export default function AddRecruitmentProcess({
     try {
       await schema.validate(formData, { abortEarly: false });
       const response = await AddDataRecruitment(formData);
-      if (response?.status !== 200) {
+      if( response?.status === 403) {
+        alert('Bạn chưa được phân quyền trên phần mềm quản trị nhân sự 365. Vui lòng liên hệ quản trị viên để biết thêm chi tiết!')
+      }
+      else if (response?.status !== 200) {
         alert("Thêm giai đoạn không thành công");
       } else {
         addRecruitmentProcess(response?.data);

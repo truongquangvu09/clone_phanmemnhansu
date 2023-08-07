@@ -5,7 +5,6 @@ import { deleteDataJobPosition } from "@/pages/api/dao-tao-phat-trien/JobPositio
 export interface DeleteJobPosition {}
 
 export default function DeleteJobPosition({animation, closeModal,id, deleteData}: any) {
-  console.log(id)
   const handleCancel = () => {
     closeModal();
   };

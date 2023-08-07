@@ -28,7 +28,8 @@ export default function RecruitmentReport() {
 
   useEffect(() => {
     const GetDataRecruitment = async () => {
-      const response = await GetDataHrReport();
+      const formData= new FormData()
+      const response = await GetDataHrReport(formData);
       setDataResponse(response?.data.data);
     };
     GetDataRecruitment();

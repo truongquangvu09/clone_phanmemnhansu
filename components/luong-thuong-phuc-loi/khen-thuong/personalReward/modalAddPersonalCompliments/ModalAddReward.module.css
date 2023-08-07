@@ -196,6 +196,9 @@
     font-weight: 600;
     opacity: 0.8;
 }
+.inputright editor-squiggler {
+    display: none !important;
+}
 
 .inputright input::placeholder {
     background-color: #FFFFFF;
@@ -209,7 +212,6 @@
     margin-left: -28px;
     margin-top: 6px;
 }
-
 .errors {
     background: #FFFFFF;
     box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.12);

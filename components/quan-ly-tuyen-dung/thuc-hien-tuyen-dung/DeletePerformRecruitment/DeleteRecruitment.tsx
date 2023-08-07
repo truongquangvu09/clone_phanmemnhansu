@@ -7,7 +7,10 @@ export default function DeleteRecruitment({ animation, handleCloseModal,newsId, 
 
   const handleDelete = async (newsId) => {
     const deleteRecruitment = await SoftDeleteNews(newsId);
-    if( deleteRecruitment?.status !== 200) {
+    if(deleteRecruitment?.status === 403 ) {
+      alert('Bạn chưa được phân quyền trên phần mềm quản trị nhân sự 365. Vui lòng liên hệ quản trị viên để biết thêm chi tiết!')
+    }
+    else if( deleteRecruitment?.status !== 200) {
       alert(' Gỡ tin tuyển dụng thất bại')
     }
     else{

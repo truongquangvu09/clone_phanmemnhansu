@@ -4,14 +4,34 @@ import TableData from "./table/table";
 import BodyFrameFooter from "../bodyFrame/bodyFrame_footer/bodyFrame_footer";
 import Restore from "./khoi-phuc";
 import DeleteData from "./xoa-du-lieu";
+import { getDataDeleteComponent } from "@/pages/api/du-lieu-da-xoa-gan-day/DeletedDataComPonentService";
 
 export default function DeletedDataComPonent() {
 
   const [openModal, setOpenModal] = useState(0)
   const [animation, setAnimation] = useState(false)
+  const [data, setData] = useState<any>()
+  const [ handleData, setHandleData] = useState<any>()
+  const [listCheck, setListCheck] = useState([]);
+  const [newData, setNewData] = useState<any>()
+  const [search, setSearch] = useState<any>('')
 
-
-
+  const handleDataCheckChange = (newListCheck) => {
+    setListCheck(newListCheck);
+  };
+ 
+  const handleNewData = (newData) => {
+    setNewData(newData)
+  }
+  const handleSearch = (keyword) => {
+    setSearch(keyword)
+  }
+  const dataCheck = (data) => {
+    setHandleData((prev) => ({
+      ...prev,...{...data},
+    }))
+  }
+  
   const handleClose = () => {
     setAnimation(false);
     setTimeout(() => {
@@ -21,12 +41,24 @@ export default function DeletedDataComPonent() {
   const handleOpen = (number: any) => {
     setOpenModal(number)
     setAnimation(true)
-    
   }
+
+  useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const response = await getDataDeleteComponent(search)
+        setData(response?.data)
+      }
+      fetchData()
+    } catch (error: any) {
+      
+    }
+  }, [newData, search])
+
   return (
     <>
-     {openModal === 1 && <Restore  animation = {animation} handleClose = {handleClose}></Restore>}
-     {openModal === 2 && <DeleteData  animation = {animation} handleClose = {handleClose}></DeleteData>}
+     {openModal === 1 && <Restore  animation = {animation} handleClose = {handleClose} handleData = {handleData} ></Restore>}
+     {openModal === 2 && <DeleteData  animation = {animation} handleClose = {handleClose} handleData = {handleData} ></DeleteData>}
       <div className={`${styles.l_body}`}>
         <div className={`${styles.t_delete_head}`}>
           <div className={`${styles.header_left}`}>
@@ -49,8 +81,6 @@ export default function DeletedDataComPonent() {
             </div>
           </div>
 
-         
-
           <div className={`${styles.right}`}>
             <form className={`${styles.form}`}>
               <div className={`${styles.t_div_search}`}>
@@ -59,6 +89,7 @@ export default function DeletedDataComPonent() {
                   placeholder="Tìm kiếm"
                   name="search"
                   spellCheck={false}
+                  onChange={(e) => handleSearch(e.target.value)}
                 ></input>
                 <picture>
                   <img src={`${"/t-icon-search.png"}`} alt=""></img>
@@ -67,9 +98,11 @@ export default function DeletedDataComPonent() {
             </form>
           </div>
         </div>
-        <TableData></TableData>
+        <TableData data = {data} dataCheck = {dataCheck} listCheck={listCheck}></TableData>
         <BodyFrameFooter src="https://www.youtube.com/embed/XEAFwQRkBfQ"></BodyFrameFooter>
       </div>
     </>
   );
 }
+
+

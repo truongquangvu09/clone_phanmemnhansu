@@ -1,54 +1,22 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { format } from "date-fns";
 import styles from "./listRecruitmentProcess.module.css";
 import EditRecruitmentProcess from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/editRecruitmentProcess/EditRecruitmentProcess";
 import DeleteRecruitmentProcess from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/deleteRecruitmentProcess/DeleteRecruitmentProcess";
-import { GetDataRecruitment } from "@/pages/api/quan-ly-tuyen-dung/RecruitmentManagerService";
+
 import MyPagination from "@/components/pagination/Pagination";
 import Link from "next/link";
 export interface listRecruitmentProcess {}
 
-export default function ListRecruitmentProcess({ name, dataAdd }: any) {
-  
+export default function ListRecruitmentProcess({ dataRecruitment , handlePage, currentPage, handleDelete, setData}: any) {
   const [openModal, setOpenModal] = useState(0);
   const [animateModal, setAnimateModal] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [dataRecruitment, setDataRecruitment] = useState<any>([]);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [dataUpdate, setDataUpDate] = useState(null);
 
-  const handleDelete = async () => {
-    const itemsPerPage = dataRecruitment.length;
-    const updatedPage =
-      itemsPerPage > 1 ? currentPage : Math.max(currentPage - 1, 1);
-    const newData = await GetDataRecruitment(updatedPage, 5, name);
-    if (newData) {
-      setDataRecruitment(newData?.data.data);
-    }
-  };
-
-  useEffect(() => {
-    const getNewData = async () => {
-      const newData = await GetDataRecruitment(currentPage, 5, name);
-      setDataRecruitment(newData?.data.data);
-      
-    };
-    getNewData();
-  }, [dataUpdate, name, currentPage]);
-
-
-  useEffect(() => {
-    const getNewData = async () => {
-      const newData = await GetDataRecruitment(currentPage, 5, '');
-      setDataRecruitment(newData?.data.data);
-    };
-    getNewData();
-  }, [dataAdd]);
-
-
+  
   const handlePageChange = (page: any) => {
-    setCurrentPage(page);
+    handlePage(page);
   };
 
   const handleOpenModal = (type: any, item: any) => {
@@ -76,8 +44,7 @@ export default function ListRecruitmentProcess({ name, dataAdd }: any) {
                     <Link
                       passHref
                       href={{
-                        pathname:
-                          `/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/danh-sach-quy-trinh/${item.id}`,
+                        pathname: `/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/danh-sach-quy-trinh/${item.id}`,
                       }}
                     >
                       <div className={`${styles.quytrinh_item11_link}`}>
@@ -98,11 +65,10 @@ export default function ListRecruitmentProcess({ name, dataAdd }: any) {
                   <Link
                     passHref
                     href={{
-                      pathname:
-                      `/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/danh-sach-quy-trinh/${item.id}`,
+                      pathname: `/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/danh-sach-quy-trinh/${item.id}`,
                     }}
                   >
-                     <picture>
+                    <picture>
                       <img src={`${"/detail-quytrinh.svg"}`} alt=""></img>
                     </picture>
                     <span
@@ -144,7 +110,7 @@ export default function ListRecruitmentProcess({ name, dataAdd }: any) {
             animation={animateModal}
             onClose={handleCloseModal}
             data={selectedItem}
-            setData={setDataUpDate}
+            setData={setData}
           />
         )}
         {openModal === 2 && (
@@ -156,11 +122,11 @@ export default function ListRecruitmentProcess({ name, dataAdd }: any) {
           />
         )}
       </div>
-      {dataRecruitment.totalCount > 5 && (
+      {dataRecruitment?.totalCount > 5 && (
         <div className={`${styles.pagination}`}>
           <MyPagination
             current={currentPage}
-            total={dataRecruitment.totalCount}
+            total={dataRecruitment?.totalCount}
             pageSize={5}
             onChange={(page) => handlePageChange(page)}
           />

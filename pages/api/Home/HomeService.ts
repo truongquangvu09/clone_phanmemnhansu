@@ -1,14 +1,16 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import axios from "axios";
 import { hasCookie, setCookie } from "cookies-next";
-export const COOKIE_KEY = "user_365";
+import { getToken } from "../token";
+import jwt from "jsonwebtoken"
+const COOKIE_KEY = "user_365";
+
 export const getHomeData = async () => {
-  const isToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTM5NiwiaWRUaW1WaWVjMzY1IjoyMzI0MTYsImlkUUxDIjoxNjY0LCJpZFJhb05oYW5oMzY1IjowLCJlbWFpbCI6InRyYW5nY2h1b2k0QGdtYWlsLmNvbSIsInBob25lVEsiOiIiLCJjcmVhdGVkQXQiOjE2NjM4MzY0MDUsInR5cGUiOjEsImNvbV9pZCI6MTY2NCwidXNlck5hbWUiOiJDw7RuZyB0eSBD4buVIHBo4bqnbiBUaGFuaCB0b8OhbiBIxrBuZyBIw6AgMiJ9LCJpYXQiOjE2OTAxNjE5MDgsImV4cCI6MTY5MDI0ODMwOH0.7S5qlZdQi3-Y410Xb3ggdKOuTrcBqtXcaK__mxeJ8J0";
+  const isToken = getToken(COOKIE_KEY)
   const url = process.env.NEXT_PUBLIC_BASE_URL;
   try {
     const response = await axios.post(
-      `${url}/api/hr/home/getListInfo`,
+      `${url}api/hr/home/getListInfo`,
       {},
       {
         headers: {
@@ -27,16 +29,15 @@ export const getHomeData = async () => {
 export const SignIn = async () => {
   const currentCookie = hasCookie(COOKIE_KEY);
   const currentUrl = process.env.NEXT_PUBLIC_BASE_URL2;
-
   if (!currentCookie) {
     const body = {
-      account: "trangchuoi4@gmail.com",
-      password: "trang677199",
+      account: "0989878718",
+      password: "Shit23112001",
       type: 1,
     };
     try {
       const res = await axios.post(
-        `${currentUrl}/api/qlc/employee/login`,
+        `${currentUrl}api/qlc/employee/login`,
         body
       );
 
@@ -47,3 +48,25 @@ export const SignIn = async () => {
     } catch (error) {}
   }
 };
+
+export const getDataAuthentication = async () => {
+  try{
+    const url = process.env.NEXT_PUBLIC_BASE_URL;
+    const isToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTQyODExNCwiaWRUaW1WaWVjMzY1IjoxMTAxMjIsImlkUUxDIjoyMjcyLCJpZFJhb05oYW5oMzY1Ijo5LCJlbWFpbCI6bnVsbCwicGhvbmVUSyI6IjA5ODk4NzczMzQzIiwiY3JlYXRlZEF0IjoxNjkxMzk3MjkzLCJ0eXBlIjoyLCJjb21faWQiOjEyMTU5OCwidXNlck5hbWUiOiJuaGFudmllbmhvYW5nMyJ9LCJpYXQiOjE2OTEzOTg1ODEsImV4cCI6MTY5MTQ4NDk4MX0.4fZ-Wegoxh6HE2J8ibqm6uOYKCVQMbPVu-vEF6IAOGY'
+    // const isToken = getToken(COOKIE_KEY)
+    // const decodedToken = jwt.decode(isToken);
+
+    const response = await axios.post(
+      `${url}api/hr/setting/getListPermisionUserLogin`, {},
+      {
+        headers: {
+          Authorization: `Bearer ${isToken}`,
+        },
+      }
+    )
+    return response
+  }catch(error) {
+
+  }
+  
+}

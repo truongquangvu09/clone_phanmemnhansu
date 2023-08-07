@@ -8,14 +8,10 @@ export default function NotificationSetting() {
   
     const handleFollowNotificationChange = () => {
       setIsFollowNotificationEnabled(!isFollowNotificationEnabled);
-      console.log (isFollowNotificationEnabled, 'isFollowNotificationEnabled')
-      // Thực hiện các hành động khi nút switch của thông báo theo dõi thay đổi
     };
   
     const handleContentNotificationChange = () => {
       setIsContentNotificationEnabled(!isContentNotificationEnabled);
-      console.log(isContentNotificationEnabled, 'isContentNotificationEnabled')
-      // Thực hiện các hành động khi nút switch của thông báo nội dung thay đổi
     };
   return (
     <>

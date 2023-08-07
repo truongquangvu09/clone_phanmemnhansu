@@ -17,8 +17,11 @@ export default function DeleteRecruitmentProcess({
     onClose();
   };
   const handleDelete = async (recruitmentId) => {
-    const deleteRecruitmentProcess = await DeleteDataRecruitment(recruitmentId);
-    if (deleteRecruitmentProcess.status !== 200) {
+    const response = await DeleteDataRecruitment(recruitmentId);
+    if(response?.status === 403) {
+      alert('Bạn chưa được phân quyền trên phần mềm quản trị nhân sự 365. Vui lòng liên hệ quản trị viên để biết thêm chi tiết!')
+    }
+    else if (response?.status !== 200) {
       alert('xóa thất bại');
       setDeleteStatus(false)
     } else {

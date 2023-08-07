@@ -7,15 +7,16 @@ import ListRecruitmentStage from "@/components/quan-ly-tuyen-dung/quy-trinh-tuye
 import { DataRecruitmentStage } from "@/pages/api/quan-ly-tuyen-dung/RecruitmentManagerService";
 export interface listRecruitmentProcess {}
 
-export default function listRecruitmentProcess({}) {
+export default function listRecruitmentProcess({dataDetail}) {
+  
   const router = useRouter();
   const { idRecruitmentStage } = router.query;
   const [openModalAdd, setOpenModalAdd] = useState(false);
   const [animateModal, setAnimateModal] = useState(false);
-  const [recruitmentStage, setRecruitmentStage] = useState<any>();  
+  const [recruitmentStage, setRecruitmentStage] = useState<any>(dataDetail)
   const [newData, setNewData] = useState<any>();
+  const recruitment = recruitmentStage?.data.recruitment
 
-  console.log(recruitmentStage)
   useEffect(() => {
     const fetchDataRecruitmentStage = async (idRecruitmentStage: any) => {
       try {
@@ -31,7 +32,7 @@ export default function listRecruitmentProcess({}) {
   const handleBack = () => {
     router.back();
   };
-
+  
   const handleOpenModalAdd = () => {
     setOpenModalAdd(true);
     setAnimateModal(true);
@@ -77,14 +78,14 @@ export default function listRecruitmentProcess({}) {
         <div className={`${styles.giaidoans}`}>
         <div className={`${styles.title_giaidoans}`}>
         <h4>
-          ({`QTTD ${idRecruitmentStage}`}) {recruitmentStage?.data.recruitment}
+          ({`QTTD ${idRecruitmentStage}`}) {recruitment}
         </h4>
       </div>
           {recruitmentStage?.data?.listStage?.map((item, index) => (
             <div key={index}>
               <ListRecruitmentStage
                 item={item}
-                recruitment={recruitmentStage?.data.recruitment}
+                recruitment={dataDetail?.data.recruitment}
                 index={index}
                 onDelete = {setNewData}
                 onEdit = {setNewData}
@@ -100,17 +101,16 @@ export default function listRecruitmentProcess({}) {
 
 export const getServerSideProps = async ({ params }) => {
   const { idRecruitmentStage } = params;
-
   try {
     const response = await DataRecruitmentStage(idRecruitmentStage)
-    const dataDetail = response?.data; 
+    const dataDetail = response?.data.data; 
     return {
       props: {
         dataDetail, 
       },
     };
   } catch (error) {
-    console.error('Error fetching data from API:', error);
+    console.log('Error fetching data from API:', error);
     return { props: {} };
   }
 };

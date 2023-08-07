@@ -162,12 +162,11 @@ export default function ListRecruitment({ data, onDelete, editData }: any) {
                         style={{ paddingRight: "102px" }}
                         className={`${styles.detail_new}`}
                       >
+                        
                         <Link 
                           passHref
                           href={{
-                            pathname:
-                              "/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/[idRecruitment]",
-                              query: { idRecruitment: recruitmentNewsId },
+                            pathname: `/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/${data.id}`,
                           }}
                         >
                           Chi tiết
@@ -242,7 +241,7 @@ export default function ListRecruitment({ data, onDelete, editData }: any) {
 
               <li>
                 <span className={`${styles.text}`}>
-                  Người phụ trách: {data?.nameHR[0]?.userName}
+                  Người phụ trách: {data?.nameHR[0]}
                 </span>
               </li>
               <li>

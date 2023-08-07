@@ -5,7 +5,7 @@ import Select from "react-select";
 import * as Yup from "yup";
 import { AddAchievementGroup, GetDepartmentList } from "@/pages/api/luong-thuong-phuc-loi/reward";
 
-function ModalAddTeamCompliments({ animation,onClose }: any) {
+function ModalAddTeamCompliments({ animation,onClose, updateData }: any) {
   const [dep, setDep] = useState<any>()
   const [content, setContent] = useState<any>();
   const [listUser, setListUser] = useState<any>()
@@ -17,14 +17,12 @@ function ModalAddTeamCompliments({ animation,onClose }: any) {
   const schema = Yup.object().shape({
     achievement_id: Yup.string().required("Số quyết định không được để trống"),
     content: Yup.string().required("Nội dung khen không được để trống"),
-    // depId: Yup.array().required("Chọn phòng ban"),
+    depId: Yup.array().required("Chọn phòng ban"),
     created_by: Yup.string().required("Người ký không được để trống"),
     achievement_at: Yup.string().required("Thời điểm không được để trống"),
     achievement_type: Yup.string().required("Chọn hình thức"),
     appellation: Yup.string().required("Danh hiệu không được để trống"),
     achievement_level: Yup.string().required("Cấp khen không được để trống"),
-    price: Yup.string().required("Hãy nhập số tiền"),
-    resion: Yup.string().required("Hãy nhập lý do khen thưởng"),
   });
   
   useEffect(() => {
@@ -93,9 +91,8 @@ function ModalAddTeamCompliments({ animation,onClose }: any) {
   const handleSubmit = async (e: any) => {    
     e.preventDefault();
     try {
-      // await schema.validate(mergedObject, { abortEarly: false });
+      await schema.validate(mergedObject, { abortEarly: false });
       const response = await AddAchievementGroup(mergedObject)
-      console.log(response)
       if(response?.status !== 200){
         alert('Thêm mới khen thưởng không thành công')
       }
@@ -104,6 +101,7 @@ function ModalAddTeamCompliments({ animation,onClose }: any) {
       }
       if( response?.status === 200) {
         onClose()
+        updateData(response?.data)
       }
 
     }catch (error: any) {
@@ -141,9 +139,10 @@ function ModalAddTeamCompliments({ animation,onClose }: any) {
                     <input
                       type="text"
                       name="achievement_id"
+                       onChange={handleContentChange}
                       className={`${styles.inputquytrinh}`}
                       placeholder="Nhập số quyết định"
-                      onChange={handleContentChange}
+                     
                     ></input>
                     {errors.achievement_id && (
                       <>
@@ -196,6 +195,13 @@ function ModalAddTeamCompliments({ animation,onClose }: any) {
                   <label>
                   Tên phòng ban 
                     <span className={`${styles.red}`}> *</span>
+                     {errors.depId && (
+                      <>
+                        <div className={`${styles.errors}`} style={{marginTop: '6px'}}>
+                          {errors.depId}
+                        </div>
+                      </>
+                    )}
                     <div
                       className={`${styles.red} ${styles.float_right}`}
                     ></div>
@@ -226,20 +232,7 @@ function ModalAddTeamCompliments({ animation,onClose }: any) {
                         }),
                       }}
                     />
-                    {/* {errors.depId && (
-                      <>
-                        <picture style={{display:'none'}}>
-                          <img
-                            className={`${styles.icon_err}`}
-                            src={`${"/danger.png"}`}
-                            alt="Lỗi"
-                          ></img>
-                        </picture>
-                        <div className={`${styles.errors}`}>
-                          {errors.depId}
-                        </div>
-                      </>
-                    )} */}
+                   
                   </div>
                 </div>
 

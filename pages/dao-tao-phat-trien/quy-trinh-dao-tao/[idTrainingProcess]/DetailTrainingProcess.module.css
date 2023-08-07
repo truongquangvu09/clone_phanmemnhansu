@@ -80,7 +80,15 @@
 .back_quytrinh picture {
     margin-right: 4px;
 }
-
+.giaidoans {
+    margin-top: 35px;
+    border-radius: 8px;
+}
+.title_giaidoans {
+    background: #4C5BD4;
+    padding: 14px 0 14px 14px;
+    color: white;
+}
 .add_quytrinh1 {
     float: left;
     width: 50%;

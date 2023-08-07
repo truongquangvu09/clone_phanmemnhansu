@@ -1,71 +1,69 @@
 import axios from "axios";
-
+import { getToken } from "../token";
+const COOKIE_KEY = "user_365";
 export const GetDataRecruitment = async (
   page: number,
   pageSize: number,
   name: string
 ) => {
   const url = process.env.NEXT_PUBLIC_BASE_URL;
-  const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTM5NiwiaWRUaW1WaWVjMzY1IjoyMzI0MTYsImlkUUxDIjoxNjY0LCJpZFJhb05oYW5oMzY1IjowLCJlbWFpbCI6InRyYW5nY2h1b2k0QGdtYWlsLmNvbSIsInBob25lVEsiOiIiLCJjcmVhdGVkQXQiOjE2NjM4MzY0MDUsInR5cGUiOjEsImNvbV9pZCI6MTY2NCwidXNlck5hbWUiOiJDw7RuZyB0eSBD4buVIHBo4bqnbiBUaGFuaCB0b8OhbiBIxrBuZyBIw6AgMiJ9LCJpYXQiOjE2OTA1MDYyOTAsImV4cCI6MTY5MDU5MjY5MH0.fg7JLbu8-6O9xbN5P7CpnlCEtTVAYdNTPYlfnC4mbWk";
+  const isToken = getToken(COOKIE_KEY)
   try {
     const response = await axios.post(
-      `${url}/api/hr/recruitment/getRecruitment?page` +
+      `${url}api/hr/recruitment/getRecruitment?page` +
         page +
         `pageSize = ${pageSize}`,
       { page, pageSize, name },
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${isToken}`,
         },
       }
     );
     return response;
-  } catch (err) {
-    
+  } catch (err: any) {
+    return err.response
   }
 };
 
 export const AddDataRecruitment = async (formData: any) => {
   const { nameProcess, applyFor,  listStage} = formData
   const url = process.env.NEXT_PUBLIC_BASE_URL;
-  const token =
-   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTM5NiwiaWRUaW1WaWVjMzY1IjoyMzI0MTYsImlkUUxDIjoxNjY0LCJpZFJhb05oYW5oMzY1IjowLCJlbWFpbCI6InRyYW5nY2h1b2k0QGdtYWlsLmNvbSIsInBob25lVEsiOiIiLCJjcmVhdGVkQXQiOjE2NjM4MzY0MDUsInR5cGUiOjEsImNvbV9pZCI6MTY2NCwidXNlck5hbWUiOiJDw7RuZyB0eSBD4buVIHBo4bqnbiBUaGFuaCB0b8OhbiBIxrBuZyBIw6AgMiJ9LCJpYXQiOjE2OTA1MDYyOTAsImV4cCI6MTY5MDU5MjY5MH0.fg7JLbu8-6O9xbN5P7CpnlCEtTVAYdNTPYlfnC4mbWk"
+  const isToken = getToken(COOKIE_KEY)
 
    try {
       const response = await axios.post(
-        `${url}/api/hr/recruitment/createRecruitment`,
+        `${url}api/hr/recruitment/createRecruitment`,
         {nameProcess, applyFor, listStage},
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${isToken}`,
           },
         }
       )
       return response
-   } catch (error) {
-   
+   } catch (error: any) {
+    return error.response
    }
 }
 
 export const DeleteDataRecruitment = async (recruitmentId: number) => {
   const url = process.env.NEXT_PUBLIC_BASE_URL;
-  const token =
-   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTM5NiwiaWRUaW1WaWVjMzY1IjoyMzI0MTYsImlkUUxDIjoxNjY0LCJpZFJhb05oYW5oMzY1IjowLCJlbWFpbCI6InRyYW5nY2h1b2k0QGdtYWlsLmNvbSIsInBob25lVEsiOiIiLCJjcmVhdGVkQXQiOjE2NjM4MzY0MDUsInR5cGUiOjEsImNvbV9pZCI6MTY2NCwidXNlck5hbWUiOiJDw7RuZyB0eSBD4buVIHBo4bqnbiBUaGFuaCB0b8OhbiBIxrBuZyBIw6AgMiJ9LCJpYXQiOjE2OTA1MDYyOTAsImV4cCI6MTY5MDU5MjY5MH0.fg7JLbu8-6O9xbN5P7CpnlCEtTVAYdNTPYlfnC4mbWk"
+  const isToken = getToken(COOKIE_KEY)
 
   try {
     const response = await axios.post(
-      `${url}/api/hr/recruitment/softDelete`,
+      `${url}api/hr/recruitment/softDelete`,
       { recruitmentId },
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${isToken}`,
         },
       }
     );
     return response;
-  } catch (err) {
-   
+  } catch (error: any) {
+    return error.response
   }
 };
 
@@ -75,42 +73,39 @@ export const UpdateDataRecruitment = async (
 ) => {
   const { nameProcess, applyFor } = formData;
   const url = process.env.NEXT_PUBLIC_BASE_URL;
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTM5NiwiaWRUaW1WaWVjMzY1IjoyMzI0MTYsImlkUUxDIjoxNjY0LCJpZFJhb05oYW5oMzY1IjowLCJlbWFpbCI6InRyYW5nY2h1b2k0QGdtYWlsLmNvbSIsInBob25lVEsiOiIiLCJjcmVhdGVkQXQiOjE2NjM4MzY0MDUsInR5cGUiOjEsImNvbV9pZCI6MTY2NCwidXNlck5hbWUiOiJDw7RuZyB0eSBD4buVIHBo4bqnbiBUaGFuaCB0b8OhbiBIxrBuZyBIw6AgMiJ9LCJpYXQiOjE2OTA1MDYyOTAsImV4cCI6MTY5MDU5MjY5MH0.fg7JLbu8-6O9xbN5P7CpnlCEtTVAYdNTPYlfnC4mbWk";
+  const isToken = getToken(COOKIE_KEY)
   try {
     const response = await axios.post(
-      `${url}/api/hr/recruitment/updateRecruitment`,
+      `${url}api/hr/recruitment/updateRecruitment`,
       { recruitId, nameProcess, applyFor },
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${isToken}`,
         },
       }
     );
     return response;
-  } catch (err) {
-    
+  } catch (err: any) {
+    return err.response
   }
 };
 
 export const DataRecruitmentStage = async (recruitmentId: string) => {
   const url = process.env.NEXT_PUBLIC_BASE_URL;
-
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTM5NiwiaWRUaW1WaWVjMzY1IjoyMzI0MTYsImlkUUxDIjoxNjY0LCJpZFJhb05oYW5oMzY1IjowLCJlbWFpbCI6InRyYW5nY2h1b2k0QGdtYWlsLmNvbSIsInBob25lVEsiOiIiLCJjcmVhdGVkQXQiOjE2NjM4MzY0MDUsInR5cGUiOjEsImNvbV9pZCI6MTY2NCwidXNlck5hbWUiOiJDw7RuZyB0eSBD4buVIHBo4bqnbiBUaGFuaCB0b8OhbiBIxrBuZyBIw6AgMiJ9LCJpYXQiOjE2OTA1MDYyOTAsImV4cCI6MTY5MDU5MjY5MH0.fg7JLbu8-6O9xbN5P7CpnlCEtTVAYdNTPYlfnC4mbWk"
+ const isToken = getToken(COOKIE_KEY)
   try {
     const response = await axios.post(
-      `${url}/api/hr/recruitment/getStage`,
+      `${url}api/hr/recruitment/getStage`,
       { recruitmentId },
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${isToken}`,
         },
       }
     );
     return response;
-  } catch (error) {
-    
+  } catch (error: any) {
+    return error.response
   }
 };
 
@@ -121,21 +116,20 @@ export const AddDataRecruitmentStage = async (
   const url = process.env.NEXT_PUBLIC_BASE_URL;
   const { nameStage, posAssum, target, time, des } = formData;
 
-  const token =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTM5NiwiaWRUaW1WaWVjMzY1IjoyMzI0MTYsImlkUUxDIjoxNjY0LCJpZFJhb05oYW5oMzY1IjowLCJlbWFpbCI6InRyYW5nY2h1b2k0QGdtYWlsLmNvbSIsInBob25lVEsiOiIiLCJjcmVhdGVkQXQiOjE2NjM4MzY0MDUsInR5cGUiOjEsImNvbV9pZCI6MTY2NCwidXNlck5hbWUiOiJDw7RuZyB0eSBD4buVIHBo4bqnbiBUaGFuaCB0b8OhbiBIxrBuZyBIw6AgMiJ9LCJpYXQiOjE2OTA1MDYyOTAsImV4cCI6MTY5MDU5MjY5MH0.fg7JLbu8-6O9xbN5P7CpnlCEtTVAYdNTPYlfnC4mbWk"
+ const isToken = getToken(COOKIE_KEY)
   try {
     const response = await axios.post(
-      `${url}/api/hr/recruitment/createStage`,
+      `${url}api/hr/recruitment/createStage`,
       { recruitmentId, nameStage, posAssum, target, time, des },
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${isToken}`,
         },
       }
     );
     return response;
-  } catch (err) {
-   
+  } catch (err: any) {
+   return err.response
   }
 };
 
@@ -143,22 +137,21 @@ export const DeleteDataRecruitmentStage = async (
   stageRecruitmentId: number
 ) => {
   const url = process.env.NEXT_PUBLIC_BASE_URL;
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTM5NiwiaWRUaW1WaWVjMzY1IjoyMzI0MTYsImlkUUxDIjoxNjY0LCJpZFJhb05oYW5oMzY1IjowLCJlbWFpbCI6InRyYW5nY2h1b2k0QGdtYWlsLmNvbSIsInBob25lVEsiOiIiLCJjcmVhdGVkQXQiOjE2NjM4MzY0MDUsInR5cGUiOjEsImNvbV9pZCI6MTY2NCwidXNlck5hbWUiOiJDw7RuZyB0eSBD4buVIHBo4bqnbiBUaGFuaCB0b8OhbiBIxrBuZyBIw6AgMiJ9LCJpYXQiOjE2OTA1MDYyOTAsImV4cCI6MTY5MDU5MjY5MH0.fg7JLbu8-6O9xbN5P7CpnlCEtTVAYdNTPYlfnC4mbWk"
+ const isToken = getToken(COOKIE_KEY)
   try {
     const response = await axios.post(
-      `${url}/api/hr/recruitment/softDeleteStage`,
+      `${url}api/hr/recruitment/softDeleteStage`,
       { stageRecruitmentId },
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${isToken}`,
         },
       }
     );
     return response;
-  } catch (err) {
-   
-  }
+  } catch (err: any) {
+    return err.response
+   }
 };
 
 export const EditDataRecruitmentStage = async (
@@ -168,20 +161,19 @@ export const EditDataRecruitmentStage = async (
   const { nameStage, posAssum, target, time, des } = formData
  
   const url = process.env.NEXT_PUBLIC_BASE_URL;
-  const token =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTM5NiwiaWRUaW1WaWVjMzY1IjoyMzI0MTYsImlkUUxDIjoxNjY0LCJpZFJhb05oYW5oMzY1IjowLCJlbWFpbCI6InRyYW5nY2h1b2k0QGdtYWlsLmNvbSIsInBob25lVEsiOiIiLCJjcmVhdGVkQXQiOjE2NjM4MzY0MDUsInR5cGUiOjEsImNvbV9pZCI6MTY2NCwidXNlck5hbWUiOiJDw7RuZyB0eSBD4buVIHBo4bqnbiBUaGFuaCB0b8OhbiBIxrBuZyBIw6AgMiJ9LCJpYXQiOjE2OTA1MDYyOTAsImV4cCI6MTY5MDU5MjY5MH0.fg7JLbu8-6O9xbN5P7CpnlCEtTVAYdNTPYlfnC4mbWk"
+ const isToken = getToken(COOKIE_KEY)
   try {
     const response = await axios.post(
-      `${url}/api/hr/recruitment/updateStage`,
+      `${url}api/hr/recruitment/updateStage`,
       {stageRecruitmentId, nameStage, posAssum, target, time, des},
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${isToken}`,
         },
       }
     );
     return response;
-  } catch (err) {
-    
-  }
+  } catch (err: any) {
+    return err.response
+   }
 };

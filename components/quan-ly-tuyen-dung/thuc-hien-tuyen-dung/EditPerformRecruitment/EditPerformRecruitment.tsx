@@ -204,7 +204,11 @@ export default function EditPerformRecruitment({ animation, handleCloseModal,dat
     try{
       await schema.validate(formData, { abortEarly: false });
       const response = await EditNewsRecruitment(recruitmentNewsId, content, selectedOption)
-      if( response?.status !== 200) {
+      console.log(response)
+      if(response?.status === 403) {
+        alert('Bạn chưa được phân quyền trên phần mềm quản trị nhân sự 365. Vui lòng liên hệ quản trị viên để biết thêm chi tiết!')
+      }
+      else if( response?.status !== 200) {
         alert('Sửa tin tuyển dụng không thành công')
       }
       else {

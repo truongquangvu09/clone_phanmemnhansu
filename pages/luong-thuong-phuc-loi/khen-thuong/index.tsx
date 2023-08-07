@@ -1,12 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import PersonalReward from "@/components/luong-thuong-phuc-loi/khen-thuong/personalReward/PersonalReward";
 import CommendationTeam from "@/components/luong-thuong-phuc-loi/khen-thuong/commendationTeam/CommendationTeam";
 import AchievementList from "@/components/luong-thuong-phuc-loi/khen-thuong/achievementList/AchievementList";
+import { GetDataAchievement } from "@/pages/api/luong-thuong-phuc-loi/reward";
 
 export default function NavBar({ children }: any) {
   const [active, setActive] = useState(1);
+  const [keyWords, setKeyWords] = useState<any>('')
+  const [updateData, setUpdateData] = useState<any>()
+  const [data, setData] = useState<any>();
+  const [currentPage, setCurrentPage] = useState<any>(1);
 
+  const newData = data?.data.slice(0, -1)
+  const myPagination = data?.data[data.data.length - 1];
+  useEffect(() => {
+    const GetDataPersonalReward = async () => {
+      const response = await GetDataAchievement(currentPage, 10, 1, keyWords);
+      console.log(response)
+      setData(response?.data.data);
+    };
+    GetDataPersonalReward();
+  }, [currentPage, keyWords]);
+
+
+  const handlePageChange = (page: any) => {
+    setCurrentPage(page);
+  };
+  const handleSearch = (key) => {
+    setKeyWords(key)
+  }
+  const handleUpDateData = (newData) => {
+    setUpdateData(newData)
+  }
   const NavBarList = [
     {
       key: 1,

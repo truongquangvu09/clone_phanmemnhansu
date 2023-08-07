@@ -33,5 +33,4 @@ function MyEditor({ onChange, editorLoaded, name, value }) {
     </div>
   );
 }
-
 export default MyEditor;
