@@ -11,6 +11,8 @@ export default function ItemCandidate3({ listCandidate, type, data, currentCol, 
 
     const [isOpenOption, setOpenOption] = useState(0)
     const [isDelete, setDelete] = useState(0)
+    const [animateModal, setAnimateModal] = useState(true);
+
     const [{ isDragging }, drag] = useDrag({
         type: ItemTypes.INTERVIEW,
         item: { data, currentCol },
@@ -29,19 +31,28 @@ export default function ItemCandidate3({ listCandidate, type, data, currentCol, 
         }),
     });
 
+    useEffect(() => {
+        if (isDelete === 0) {
+            setAnimateModal(true)
+        }
+    }, [isDelete])
+
+
     const handleToggleOption = (itemId: number) => {
         setOpenOption(prevState => prevState === itemId ? 0 : itemId);
     }
 
     const handleClosemodal = () => {
         setDelete(0)
+        setAnimateModal(false)
+
     }
 
     const router = useRouter()
     const handleClickDetail = (item: number) => {
         if (typeof item === "number" && !isNaN(item)) {
             router.push(
-                `/quan-ly-tuyen-dung/danh-sach-ung-vien/chi-tiet-ung-vien/${type}-${item}`
+                `/quan-ly-tuyen-dung/danh-sach-ung-vien/chi-tiet-ung-vien/${type}${item}`
             );
         }
     };
@@ -73,7 +84,7 @@ export default function ItemCandidate3({ listCandidate, type, data, currentCol, 
                                     <ul style={{ marginBottom: 0, marginTop: 0 }}>
                                         <li onClick={() => handleClickDetail(data?.canId)}>Xem chi tiết</li>
                                         <li onClick={() => setDelete(data?.canId)}>Xóa hồ sơ</li>
-                                        {isDelete !== 0 && <DeleteCandidate onCancel={handleClosemodal} idCandidate={isDelete} />}
+                                        {isDelete !== 0 && <DeleteCandidate animation={animateModal} onCancel={handleClosemodal} idCandidate={isDelete} />}
                                     </ul>
                                 </div>
                             </a>

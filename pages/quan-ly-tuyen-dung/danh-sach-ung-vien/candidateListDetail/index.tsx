@@ -10,13 +10,16 @@ import { GetListNews } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
 import Selects from "@/components/select";
 import DropableColumn from "./columnAble";
 import StageGetJob from "@/components/quan-ly-tuyen-dung/danh-sach-ung-vien/stageTransitionModal/stageGetJob";
+import StageFailJob from "@/components/quan-ly-tuyen-dung/danh-sach-ung-vien/stageTransitionModal/stageFailJob";
+import StageCancelJob from "@/components/quan-ly-tuyen-dung/danh-sach-ung-vien/stageTransitionModal/stageCancelJob";
+import StageContactJob from "@/components/quan-ly-tuyen-dung/danh-sach-ung-vien/stageTransitionModal/stateContactJob";
 
 type SelectOptionType = { label: string; value: any };
 export default function CandidateListDetail() {
-    const [openModal, setOpenModal] = useState(0);
+    const [openModal, setOpenModal] = useState<any>(null);
     const [isOpenModal, setModalOpen] = useState(false);
     const [isUpdateProcess, setUpdateProcess] = useState<any>(null);
-    const [isDeleteProcess, setDeleteProcess] = useState(0);
+    const [isDeleteProcess, setDeleteProcess] = useState<any>(null);
     const [isProcessList, setProcessList] = useState<any>(null);
     const [isNewList, setNewsList] = useState<any>(null);
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
@@ -29,10 +32,7 @@ export default function CandidateListDetail() {
     const [isDragItem, setDragItem] = useState<any>(null);
     const [isDropCol, setDropCol] = useState<any>(null);
     const [isProcess_id, setProcess_id] = useState<any>(null);
-    console.log(isDragItem);
-    console.log(isOpenModal);
-    console.log(isDropCol);
-    console.log(isProcess_id);
+    const [animateModal, setAnimateModal] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -92,11 +92,20 @@ export default function CandidateListDetail() {
         fetchData();
     }, []);
 
+    useEffect(() => {
+        if (openModal === null || isUpdateProcess === null || isDeleteProcess === null) {
+            setAnimateModal(true)
+        }
+    }, [openModal, isUpdateProcess, isDeleteProcess])
+
     const handleCloseModal = () => {
-        setOpenModal(0);
-        setUpdateProcess(0);
-        setDeleteProcess(0);
+        setAnimateModal(false)
+        setUpdateProcess(null);
+        setDeleteProcess(null);
         setModalOpen(false);
+        setOpenModal(null)
+
+
     };
 
     const handleSearch = useCallback(() => {
@@ -185,23 +194,23 @@ export default function CandidateListDetail() {
                                 Thêm giai đoạn
                             </button>
                         </div>
-                        {openModal === 1 ? (<CandidateAddModal onCancel={handleCloseModal}></CandidateAddModal>) : ("")}
-                        {openModal === 2 ? (<StageAddModal onCancel={handleCloseModal}></StageAddModal>) : ("")}
-                        {isUpdateProcess && (
-                            <StageUpdateModal
-                                onCancel={handleCloseModal}
-                                infoList={isUpdateProcess}
-                            />
-                        )}
-                        {isDeleteProcess !== 0 && (
-                            <DeleteStage
-                                onCancel={handleCloseModal}
-                                process_id={isDeleteProcess}
-                            />
-                        )}
+                        {openModal === 1 ? (<CandidateAddModal animation={animateModal} onCancel={handleCloseModal}></CandidateAddModal>) : ("")}
+                        {openModal === 2 ? (<StageAddModal animation={animateModal} onCancel={handleCloseModal}></StageAddModal>) : ("")}
+                        {isUpdateProcess && (<StageUpdateModal animation={animateModal} onCancel={handleCloseModal} infoList={isUpdateProcess} />)}
+                        {isDeleteProcess !== null ? (<DeleteStage animation={animateModal} onCancel={handleCloseModal} process_id={isDeleteProcess} />) : ''}
                         {isOpenModal && isDropCol?.id !== 0 && isDropCol?.id !== 2 && isDropCol?.id !== 3 && isDropCol?.id !== 4
-                            && <StageGetJob data={isDragItem} onCancel={handleCloseModal}
+                            && <StageGetJob data={isDragItem} process_id_from={isProcess_id} process_id={isDropCol?.id} onCancel={handleCloseModal}
                             />}
+                        {isOpenModal && isDropCol?.id === 2
+                            && <StageFailJob data={isDragItem} process_id_from={isProcess_id} process_id={isDropCol?.id} onCancel={handleCloseModal}
+                            />}
+                        {isOpenModal && isDropCol?.id === 3
+                            && <StageCancelJob data={isDragItem} process_id_from={isProcess_id} process_id={isDropCol?.id} onCancel={handleCloseModal}
+                            />}
+                        {isOpenModal && isDropCol?.id === 4
+                            && <StageContactJob data={isDragItem} process_id_from={isProcess_id} process_id={isDropCol?.id} onCancel={handleCloseModal}
+                            />}
+
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_top}`}>
                                 <div

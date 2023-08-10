@@ -6,16 +6,16 @@ import { ItemTypes } from "./ItemType";
 import DeleteCandidate from "../candidateDeleteModal";
 import { useRouter } from "next/router";
 
-export default function ItemCandidate1({ data, setProcess_id, process_id, currentCol, setDragItem, setDropCol, setModalOpen }: any) {
+export default function ItemCandidate1({ data, listCandidate, setProcess_id, process_id, currentCol, setDragItem, setDropCol, setModalOpen }: any) {
     const [isOpenOption, setOpenOption] = useState(0)
     const [isDelete, setDelete] = useState(0)
+    const [animateModal, setAnimateModal] = useState(true);
+
     const [{ isDragging }, drag] = useDrag({
         type: ItemTypes.INTERVIEW,
         item: { data, process_id, currentCol },
         end: (item, monitor) => {
             const dropResult = monitor.getDropResult()
-            console.log(dropResult);
-
             if (dropResult && item) {
                 setDragItem(item?.data)
                 setDropCol(dropResult)
@@ -28,12 +28,20 @@ export default function ItemCandidate1({ data, setProcess_id, process_id, curren
         }),
     });
 
+    useEffect(() => {
+        if (isDelete === 0) {
+            setAnimateModal(true)
+        }
+    }, [isDelete])
+
+
     const handleToggleOption = (itemId: number) => {
         setOpenOption(prevState => prevState === itemId ? 0 : itemId);
     }
 
     const handleClosemodal = () => {
         setDelete(0)
+        setAnimateModal(false)
     }
 
     const router = useRouter()
@@ -72,7 +80,7 @@ export default function ItemCandidate1({ data, setProcess_id, process_id, curren
                                     <ul style={{ marginBottom: 0, marginTop: 0 }}>
                                         <li onClick={() => handleClickDetail(data?.id)} >Xem chi tiết</li>
                                         <li onClick={() => setDelete(data?.id)}>Xóa hồ sơ</li>
-                                        {isDelete !== 0 && <DeleteCandidate onCancel={handleClosemodal} idCandidate={isDelete} />}
+                                        {isDelete !== 0 && <DeleteCandidate animation={animateModal} onCancel={handleClosemodal} idCandidate={isDelete} />}
                                     </ul>
                                 </div>
                             </a>

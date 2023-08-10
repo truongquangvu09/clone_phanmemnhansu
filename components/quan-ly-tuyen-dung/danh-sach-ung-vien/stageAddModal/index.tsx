@@ -7,7 +7,7 @@ import { ProcessAdd } from '@/pages/api/quan-ly-tuyen-dung/candidateList';
 type SelectOptionType = { label: string, value: string }
 
 
-export default function StageAddModal({ onCancel }: any) {
+export default function StageAddModal({ onCancel, animation }: any) {
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
     const [isProcessList, setProcessList] = useState<any>(null)
     const [isProcess_id, setProcess_id] = useState<any>(null)
@@ -68,7 +68,8 @@ export default function StageAddModal({ onCancel }: any) {
     return (
         <>
             <div className={`${styles.modal_open}`}>
-                <div className={`${styles.modal} ${styles.fade} ${styles.in}`}>
+                <div className={`${styles.modal} ${styles.modal_setting} ${animation ? styles.fade_in : styles.fade_out
+                    }`}>
                     <div className={` ${styles.modal_dialog} ${styles.content_process}`}>
                         <div className={`${styles.modal_content}`}>
                             <div className={`${styles.modal_header} ${styles.header_process}`}>

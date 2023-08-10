@@ -5,7 +5,7 @@ interface ApiResponse {
     error:string
 }
 const url = process.env.NEXT_PUBLIC_BASE_URL
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTM5NiwiaWRUaW1WaWVjMzY1IjoyMzI0MTYsImlkUUxDIjoxNjY0LCJpZFJhb05oYW5oMzY1IjowLCJlbWFpbCI6InRyYW5nY2h1b2k0QGdtYWlsLmNvbSIsInBob25lVEsiOiIiLCJjcmVhdGVkQXQiOjE2NjM4MzY0MDUsInR5cGUiOjEsImNvbV9pZCI6MTY2NCwidXNlck5hbWUiOiJWYW4gdmFuIn0sImlhdCI6MTY5MDc2NTQzNiwiZXhwIjoxNjkwODUxODM2fQ.oBb-hppRmlgqSsv-x9HAr3D3mU8y5LZlZgXxuXvV8yo'
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTM3NzQ0OSwiaWRUaW1WaWVjMzY1IjoyMzI0MTYsImlkUUxDIjoxNjY0LCJpZFJhb05oYW5oMzY1IjowLCJlbWFpbCI6InRyYW5nY2h1b2k0QGdtYWlsLmNvbSIsInBob25lVEsiOiIiLCJjcmVhdGVkQXQiOjE2NjM4MzY0MDUsInR5cGUiOjEsImNvbV9pZCI6MTY2NCwidXNlck5hbWUiOiJNdG4gQ29tcGFueSJ9LCJpYXQiOjE2OTE2Mjk3ODUsImV4cCI6MTY5MTcxNjE4NX0.z5kf45dGeXcOTDqlmcC5fl8PZd6IjhcY-joEORqte94'
 
 /* -------------------------------------- LIST ----------------------------------------------*/
 export const SpecifiedGroupList = async (pageSize:number,page:number,keyWords:any):Promise<ApiResponse> => {

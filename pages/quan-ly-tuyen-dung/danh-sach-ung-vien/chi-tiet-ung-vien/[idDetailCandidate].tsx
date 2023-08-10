@@ -17,7 +17,6 @@ import { GetJobDetails } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 import { FailJobDetails } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 import { CancelJobDetails } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 
-
 interface Option {
     value: number;
     label: string;
@@ -39,6 +38,9 @@ export default function DetailCandidate({ onCancel }: any) {
     const [isCandidateProcess, setCandidateProcess] = useState<any>(null)
     const [isProcessName, setProcessName] = useState<any>(null);
 
+    console.log(isCandidateProcess);
+
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -55,16 +57,18 @@ export default function DetailCandidate({ onCancel }: any) {
                                 matches.push(match[1]);
 
                             }
-
                             const item = data?.data?.find((item: any) => item.id = Number(matches[0]))
                             setCandidate(item)
-
                         }
                         else {
-                            const item = data?.data?.find((item: any) => item.id = Number(id?.slice(2, id?.length)))
+                            console.log(data?.data);
+
+                            const item = data?.data?.find((item: any) => item.id = Number(id?.slice(1, id?.length)))
+                            console.log(Number(id?.slice(1, id?.length)));
+                            console.log(item);
+
                             setCandidate(item)
                         }
-
                     }
                 }
             } catch (error) {
@@ -124,7 +128,7 @@ export default function DetailCandidate({ onCancel }: any) {
             try {
                 if (id?.charAt(0) === 'g') {
                     const formData = new FormData();
-                    const candidate_id: any = Number(id?.slice(2, id?.length))
+                    const candidate_id: any = Number(id?.slice(1, id?.length))
                     formData.append('canId', candidate_id)
                     const response = await GetJobDetails(formData);
                     if (response) {
@@ -133,7 +137,7 @@ export default function DetailCandidate({ onCancel }: any) {
                 }
                 if (id?.charAt(0) === 'f') {
                     const formData = new FormData();
-                    const candidate_id: any = Number(id?.slice(2, id?.length))
+                    const candidate_id: any = Number(id?.slice(1, id?.length))
                     formData.append('canId', candidate_id)
                     const response = await FailJobDetails(formData);
                     if (response) {
@@ -142,7 +146,7 @@ export default function DetailCandidate({ onCancel }: any) {
                 }
                 if (id?.charAt(0) === 'c') {
                     const formData = new FormData();
-                    const candidate_id: any = Number(id?.slice(2, id?.length))
+                    const candidate_id: any = Number(id?.slice(1, id?.length))
                     formData.append('canId', candidate_id)
                     const response = await CancelJobDetails(formData);
                     if (response) {
@@ -151,7 +155,7 @@ export default function DetailCandidate({ onCancel }: any) {
                 }
                 if (id?.charAt(0) === 's') {
                     const formData = new FormData();
-                    const candidate_id: any = Number(id?.slice(2, id?.length))
+                    const candidate_id: any = Number(id?.slice(1, id?.length))
                     formData.append('canId', candidate_id)
                     const response = await ContactJobDetails(formData);
                     if (response) {
@@ -165,6 +169,13 @@ export default function DetailCandidate({ onCancel }: any) {
         };
         fetchData();
     }, [id]);
+
+    // useEffect(() => {
+    //     if (isDelete === 0) {
+    //         setAnimateModal(true)
+    //     }
+    // }, [isDelete])
+
 
     const handleBack = () => {
         router.back()
@@ -228,7 +239,6 @@ export default function DetailCandidate({ onCancel }: any) {
     const selectedEducation: any = options.trinhdohocvan.find((item) => item.value === isCandidate?.education);
     const selectedExp: any = options.kinhnghiemlamviec.find((item) => item.value === isCandidate?.exp);
     const selectedMarried: any = options.tinhtranghonnhan.find((item) => item.value === isCandidate?.isMarried);
-
 
     return (
         <>
@@ -297,8 +307,8 @@ export default function DetailCandidate({ onCancel }: any) {
                                 return (
                                     <div key={index} className={`${styles.another_add_uv_1}`} style={{ marginLeft: 95, marginBottom: 15 }}>
                                         <div className={`${styles.another_skill}`} style={{ marginTop: 10 }}>
-                                            <p style={{ display: 'inline-block', paddingRight: 20 }}>Ut anim aut reprehen: </p>
-                                            <Rating size={27} disableFillHover initialValue={isCandidate?.starVote} className={`${styles.star_rating}`} />
+                                            <p style={{ display: 'inline-block', paddingRight: 20 }}>{item?.skillName}: </p>
+                                            <Rating size={27} disableFillHover initialValue={item?.skillVote} className={`${styles.star_rating}`} />
                                         </div>
                                     </div>
                                 )

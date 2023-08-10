@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import styles from './bodySection1.module.css'
-import { GetDataHrReport } from '@/pages/api/bao-cao-nhan-su/HrReportService'
+import { useRouter } from "next/router";
 
 const EmployeeForm = ({ title1, title2, img1, img2, img3, title_details1, title_details2, title_details3,
-    number1, number2, number3, color_boder, background_color }: any) => (
+    number1, number2, number3, color_boder, background_color, link_title1, link_title2, link_title3, handleClickDetail }: any) => (
     <div className={`${styles.t_rp}`}>
         <div className={`${styles.t_exp_header}`} style={{ borderLeft: color_boder, background: background_color }}>
             <p>{title1}</p>
@@ -24,17 +24,17 @@ const EmployeeForm = ({ title1, title2, img1, img2, img3, title_details1, title_
             <div className={`${styles.body_row}`}>
                 <div className={`${title_details2 ? styles.body_row_title : styles.body_row_title2}`}>
                     <p>
-                        <a href="">{title_details1}</a>
+                        <a href="" onClick={(event) => handleClickDetail(link_title1, event)}>{title_details1}</a>
                     </p>
                 </div>
                 {title_details2 ? (<div className={`${title_details2 ? styles.body_row_title : styles.body_row_title2}`}>
                     <p>
-                        <a href="">{title_details2}</a>
+                        <a href="" onClick={(event) => handleClickDetail(link_title2, event)}>{title_details2}</a>
                     </p>
                 </div>) : ''}
                 <div className={`${title_details2 ? styles.body_row_title : styles.body_row_title2}`}>
                     <p>
-                        <a href="">{title_details3}</a>
+                        <a href="" onClick={(event) => handleClickDetail(link_title3, event)}>{title_details3}</a>
                     </p>
                 </div>
             </div>
@@ -54,27 +54,36 @@ const EmployeeForm = ({ title1, title2, img1, img2, img3, title_details1, title_
         </div>
     </div>
 )
-export default function EmployeeInformation() {
 
-    const [hrReportList, setHrReportList] = useState<any>(null)
-    console.log(hrReportList);
-    console.log(hrReportList?.data?.luanChuyenNam);
+export const countMaritalStatus = (employees: any[]): { married1: number; married2: number } => {
+    let married1 = 0;
+    let married2 = 0;
 
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const formData = new FormData();
-                const response = await GetDataHrReport(formData)
-                if (response) {
-                    setHrReportList(response.data)
-                }
-            } catch (error) {
-
-            }
+    employees?.forEach((employee) => {
+        if (employee.married === 1) {
+            married1++;
+        } else if (employee.married === 2) {
+            married2++;
         }
-        fetchData()
-    }, [])
+    });
+
+    return { married1, married2 };
+};
+
+export default function EmployeeInformation({ hrReportList }: any) {
+
+    const { married1, married2 } = countMaritalStatus(hrReportList?.data?.countEmployee);
+
+    const router = useRouter()
+    const handleClickDetail = (link: any, event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        if (typeof link === "string") {
+            const link_slice: any = link.slice(0, -5)
+            router.push(
+                `/${link_slice}`
+            );
+        }
+    };
 
     return (
         <>
@@ -95,6 +104,10 @@ export default function EmployeeInformation() {
                             number3={hrReportList?.data?.EmployeeNu}
                             color_boder='7px solid #4c5bd4'
                             background_color='#f1f9fc'
+                            handleClickDetail={handleClickDetail}
+                            link_title1="/bieu-do-danh-sach-nhan-vien.html"
+                            link_title2="/bieu-do-danh-sach-nhan-vien?gender=1.html"
+                            link_title3="/bieu-do-danh-sach-nhan-vien?gender=2.html"
                         />
                     </div>
                     <div className={`${styles.row_top_item}`}>
@@ -107,11 +120,15 @@ export default function EmployeeInformation() {
                             title_details1='Tổng số'
                             title_details2='Giảm biên chế'
                             title_details3='Nghỉ việc'
-                            number1={hrReportList?.data?.tongSoNghiViec}
+                            number1={hrReportList?.data?.tongNghiViec}
                             number2={hrReportList?.data?.giamBienChe}
                             number3={hrReportList?.data?.nghiViec}
                             color_boder='7px solid #4CD4B4'
                             background_color='#f1f9fc'
+                            handleClickDetail={handleClickDetail}
+                            link_title1="/bieu-do-danh-sach-nhan-vien-nghi-viec.html"
+                            link_title2="/bieu-do-danh-sach-nhan-vien-nghi-viec?type=2.html"
+                            link_title3="/bieu-do-danh-sach-nhan-vien-nghi-viec?type=1.html"
                         />
                     </div>
                     <div className={`${styles.row_top_item}`}>
@@ -129,6 +146,10 @@ export default function EmployeeInformation() {
                             number3={hrReportList?.data?.boNhiemNu}
                             color_boder='7px solid #D44C4C'
                             background_color='#FFF4F4'
+                            handleClickDetail={handleClickDetail}
+                            link_title1="/bieu-do-danh-sach-nhan-vien-bo-nhiem.html"
+                            link_title2="/bieu-do-danh-sach-nhan-vien-bo-nhiem?gender=1.html"
+                            link_title3="/bieu-do-danh-sach-nhan-vien-bo-nhiem?gender=2.html"
                         />
                     </div>
                 </div>
@@ -147,6 +168,10 @@ export default function EmployeeInformation() {
                             number3={hrReportList?.data?.giamLuong}
                             color_boder='7px solid #4c5bd4'
                             background_color='#f1f9fc'
+                            handleClickDetail={handleClickDetail}
+                            link_title1="/bieu-do-danh-sach-nhan-vien-tang-giam-luong.html"
+                            link_title2="/bieu-do-danh-sach-nhan-vien-tang-giam-luong?type=1.html"
+                            link_title3="/bieu-do-danh-sach-nhan-vien-tang-giam-luong?type=2.html"
                         />
                     </div>
                     <div className={`${styles.row_top_item}`}>
@@ -163,6 +188,10 @@ export default function EmployeeInformation() {
                             number3={hrReportList?.data?.luanChuyenNu}
                             color_boder='7px solid #4CD4B4'
                             background_color='#f1f9fc'
+                            handleClickDetail={handleClickDetail}
+                            link_title1="/bieu-do-danh-sach-nhan-vien-chuyen-cong-tac.html"
+                            link_title2="/bieu-do-danh-sach-nhan-vien-chuyen-cong-tac?gender=1.html"
+                            link_title3="/bieu-do-danh-sach-nhan-vien-chuyen-cong-tac?gender=2.html"
                         />
                     </div>
                     <div className={`${styles.row_top_item}`}>
@@ -172,14 +201,17 @@ export default function EmployeeInformation() {
                             img3='/icon-alone.svg	'
                             title_details1='Đã lập gia đình'
                             title_details3='Độc thân'
-                            number1={hrReportList?.data?.boNhiem}
-                            number3={hrReportList?.data?.boNhiem}
+                            number1={married1}
+                            number3={married2}
                             color_boder='7px solid #D44C4C'
                             background_color='#FFF4F4'
+                            handleClickDetail={handleClickDetail}
+                            link_title1="/bieu-do-danh-sach-nhan-vien-theo-trang-hon-nhan?type=1.html"
+                            // link_title2="/bieu-do-danh-sach-nhan-vien-theo-trang-hon-nhan?type=1.html"
+                            link_title3="/bieu-do-danh-sach-nhan-vien-theo-trang-hon-nhan?type=2.html"
                         />
                     </div>
                 </div>
-
             </div>
         </>
     )

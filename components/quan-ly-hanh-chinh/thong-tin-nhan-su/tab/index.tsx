@@ -8,6 +8,7 @@ import { EmployeeList } from "@/pages/api/quan_ly_nhan_vien";
 import { DepartmentList } from "@/pages/api/listPhongBan";
 import MyPagination from "@/components/pagination/Pagination";
 import { PostionCharData } from '@/pages/api/co_cau_to_chuc';
+import { format, parseISO } from "date-fns";
 
 type SelectOptionType = { label: string, value: string }
 export interface TabEmployeeManagement {
@@ -120,7 +121,6 @@ export default function TabEmployeeManagement({ children }: any) {
     };
 
     // -- set options cho thẻ select --
-
 
     const chonphongbanOptions = useMemo(
         () =>
@@ -292,18 +292,21 @@ export default function TabEmployeeManagement({ children }: any) {
                                                     <td>{item.nameDeparment}</td>
                                                     <td>{item.chinhanh}</td>
                                                     <td>
-                                                        <p>Địa chỉ liên hệ:{item.email}</p>
-                                                        <p>SDT: {item.phoneTK}</p>
+                                                        <p>Địa chỉ liên hệ:{item.address}</p>
+                                                        <p>SDT: {item?.phoneTK}</p>
                                                         <p>Email: {item.email}</p>
                                                     </td>
-                                                    <td>{item.ngayvaocongty}</td>
+                                                    <td>{format(
+                                                        parseISO(new Date(item?.start_working_time * 1000).toISOString()),
+                                                        "yyyy-MM-dd"
+                                                    )}</td>
                                                     <td className={`${styles.r_t_top_right}`} style={{ position: 'relative' }}>
                                                         <img src={`	/icon-settting.png`} alt=" " />
                                                         <div className={`${styles.settings}`} style={{ width: '100%' }}>
                                                             <li onClick={handleOpenDetailModal}>Chi tiết</li>
-                                                            {detailModal && <DetailCandidateList onCancel={handleCloseModal} infoList={{ id: item?.idQLC, userName: item?.userName, email: item.email, phoneTk: item.phoneTK, address: item.email, position: positionNameToShow, dateInCom: item.ngayvaocongty, positionId: item.position_id, depId: item.dep_id, nameDep: item.nameDeparment }} />}
+                                                            {detailModal && <DetailCandidateList onCancel={handleCloseModal} infoList={{ infoList: item, position: positionNameToShow }} />}
                                                             <li onClick={handleOpenEditModal}>Chỉnh sửa</li>
-                                                            {editModal && <EditCandidateList onCancel={handleCloseModal} infoList={{ id: item?.idQLC, userName: item?.userName, email: item.email, phoneTk: item.phoneTK, address: item.email, position: positionNameToShow, dateInCom: item.ngayvaocongty, positionId: item.position_id, depId: item.dep_id }} />}
+                                                            {editModal && <EditCandidateList onCancel={handleCloseModal} infoList={{ infoList: item, position: positionNameToShow }} />}
                                                         </div>
                                                     </td>
                                                 </tr>

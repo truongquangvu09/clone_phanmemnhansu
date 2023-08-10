@@ -96,7 +96,115 @@ const BodySection2 = ({ title, img1, img2, img3, img4, img5, img6, details_title
     </div>
 )
 
-export default function InformationSection2() {
+export const countWorkingSeniorityStatus = (employees: any[]): { less3m: number; to3m_1y: number, to1y_3y: number; to3y_5y: number; to5y: number } => {
+    let less3m = 0;
+    let to3m_1y = 0;
+    let to1y_3y = 0;
+    let to3y_5y = 0;
+    let to5y = 0;
+
+    employees.forEach((employee) => {
+        if (employee.start_working_time === 1) {
+            less3m++;
+        } else if (employee.married === 2) {
+            to3m_1y++;
+        }
+    });
+
+    return { less3m, to3m_1y, to1y_3y, to3y_5y, to5y };
+};
+
+const calculateWorkDuration = (employees: any[], referenceTime: number): number => {
+    const currentTime = Math.floor(Date.now() / 1000);
+    let count = 0;
+    employees?.forEach((employee) => {
+        if (employee.start_working_time !== null && employee.start_working_time <= referenceTime) {
+            count++;
+        }
+    });
+    return count;
+};
+
+const calculateYearOld = (employees: any[], referenceTime: number): number => {
+    const currentTime = Math.floor(Date.now() / 1000);
+    let count = 0;
+    employees?.forEach((employee) => {
+        if (employee.birthday !== null && employee.birthday <= referenceTime) {
+            count++;
+        }
+    });
+    return count;
+};
+
+const calculatePosition = (employees: any[], position_id: number): number => {
+    let count = 0;
+    employees?.forEach((employee) => {
+        if (employee.chucvu !== null && employee.chucvu === position_id) {
+            count++;
+        }
+    });
+    return count;
+
+};
+
+const calculateWorkDurationByIntervals = (employees: any[]): number[] => {
+    const currentTime = Math.floor(Date.now() / 1000);
+    const intervals = [
+        currentTime - 90 * 24 * 60 * 60,  // Bé hơn 3 tháng
+        currentTime - 365 * 24 * 60 * 60, // Từ 3 tháng đến 1 năm
+        currentTime - 3 * 365 * 24 * 60 * 60,  // Từ 1 năm đến 3 năm
+        currentTime - 5 * 365 * 24 * 60 * 60,  // Từ 3 năm đến 5 năm
+        currentTime - 5 * 365 * 24 * 60 * 60 - 1 // Trên 5 năm
+    ];
+    const counts = intervals?.map(interval => calculateWorkDuration(employees, interval));
+    return counts;
+};
+
+const calculateYearOldByIntervals = (employees: any[]): number[] => {
+    const currentTime = Math.floor(Date.now() / 1000);
+    const intervals = [
+        currentTime - 30 * 365 * 24 * 60 * 60,  // Dưới 30 tuổi
+        currentTime - 44 * 365 * 24 * 60 * 60, // 30-44 tuổi
+        currentTime - 59 * 365 * 24 * 60 * 60,  // 45-59 tuổi
+        currentTime - 60 * 365 * 24 * 60 * 60 - 1,  // trên 60 tuổi
+
+    ];
+
+    const counts = intervals?.map(interval => calculateYearOld(employees, interval));
+    return counts;
+};
+
+function countEmployeesByChucVu(countEmployee: any, chucvu: any) {
+    let count = 0;
+    countEmployee?.forEach((employee: any) => {
+        if (employee.chucvu === chucvu) {
+            count++;
+        }
+    });
+    return count;
+}
+
+export default function InformationSection2({ hrReportList }: any) {
+
+    const employees = hrReportList?.data || [];
+    const workDurationCounts = calculateWorkDurationByIntervals(employees?.countEmployee);
+    const YearOlwCounts = calculateYearOldByIntervals(employees?.countEmployee);
+
+    let sum: number = 0;
+    let sum1: number = 0;
+    for (let i = 0; i < workDurationCounts.length; i++) {
+        sum += workDurationCounts[i];
+    }
+    for (let i = 0; i < YearOlwCounts.length; i++) {
+        sum1 += YearOlwCounts[i];
+    }
+
+    const thuctap = countEmployeesByChucVu(employees?.countEmployee, 1);
+    const thuviec = countEmployeesByChucVu(employees?.countEmployee, 2);
+    const chinhthuc = countEmployeesByChucVu(employees?.countEmployee, 3);
+    const partime = countEmployeesByChucVu(employees?.countEmployee, 9);
+    let sum2: number = thuctap + thuviec + partime + chinhthuc;
+
     return (
         <>
             <div className={`${styles.wrapper}`}>
@@ -116,12 +224,12 @@ export default function InformationSection2() {
                             details_title4='1 năm - 3 năm'
                             details_title5='3 năm - 5 năm'
                             details_title6='Trên 5 năm'
-                            number1='1'
-                            number2='2'
-                            number3='3'
-                            number4='4'
-                            number5='5'
-                            number6='6'
+                            number1={sum}
+                            number2={workDurationCounts[0]}
+                            number3={workDurationCounts[1]}
+                            number4={workDurationCounts[2]}
+                            number5={workDurationCounts[3]}
+                            number6={workDurationCounts[4]}
                         />
                     </div>
                 </div>
@@ -139,11 +247,11 @@ export default function InformationSection2() {
                             details_title3='30 tuổi - 44 tuổi'
                             details_title4='45 tuổi - 59 tuổi'
                             details_title5='Trên 60 tuổi'
-                            number1='1'
-                            number2='2'
-                            number3='3'
-                            number4='4'
-                            number5='5'
+                            number1={sum1}
+                            number2={YearOlwCounts[0]}
+                            number3={YearOlwCounts[1]}
+                            number4={YearOlwCounts[2]}
+                            number5={YearOlwCounts[3]}
                         />
                     </div>
                 </div>
@@ -161,11 +269,11 @@ export default function InformationSection2() {
                             details_title3='Nhân viên parttime'
                             details_title4='Nhân viên thử việc'
                             details_title5='Nhân viên chính thức'
-                            number1='1'
-                            number2='2'
-                            number3='3'
-                            number4='4'
-                            number5='5'
+                            number1={sum2}
+                            number2={thuctap}
+                            number3={partime}
+                            number4={thuviec}
+                            number5={chinhthuc}
                         />
                     </div>
                 </div>

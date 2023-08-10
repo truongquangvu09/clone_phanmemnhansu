@@ -4,10 +4,11 @@ import LineChart from "./charts";
 
 export default function InfomationSection3({
     dateInRange,
-    data_line1,
-    data_line2,
+    hrReportList
 }: any) {
     const categorie = dateInRange;
+
+    console.log(dateInRange);
 
     return (
         <div className={`${styles.wrapper}`}>
@@ -17,7 +18,7 @@ export default function InfomationSection3({
                 </p>
                 <LineChart
                     categories={categorie}
-                    data_line1={data_line1}
+                    data_line1={hrReportList?.data?.chartEmployee}
                     line_name1="Nhân viên mới"
                     line_name2=""
                     des="Biểu đồ nhân viên mới"
@@ -29,8 +30,8 @@ export default function InfomationSection3({
                 </p>
                 <LineChart
                     categories={categorie}
-                    data_line1={data_line1}
-                    data_line2={data_line2}
+                    data_line1={hrReportList?.data?.chartNghiViec}
+                    data_line2={hrReportList?.data?.chartGiamBienChe}
                     line_name1="Nghỉ việc"
                     line_name2="Giảm biên chế"
                     des="Biểu đồ giảm biên chế nghỉ việc"
@@ -42,7 +43,7 @@ export default function InfomationSection3({
                 </p>
                 <LineChart
                     categories={categorie}
-                    data_line1={data_line1}
+                    data_line1={hrReportList?.data?.chartBoNhiem}
                     line_name1="Bổ nhiệm quy hoạch"
                     des="Biểu đồ bổ nhiệm quy hoạch"
                 />
@@ -53,7 +54,7 @@ export default function InfomationSection3({
                 </p>
                 <LineChart
                     categories={categorie}
-                    data_line1={data_line1}
+                    data_line1={hrReportList?.data?.chartTangGiamLuong}
                     line_name1="Tăng, giảm lương"
                     des="Biểu đồ thông kê tăng giảm lương"
                 />
@@ -64,7 +65,7 @@ export default function InfomationSection3({
                 </p>
                 <LineChart
                     categories={categorie}
-                    data_line1={data_line1}
+                    data_line1={hrReportList?.data?.chartLuanChuyen}
                     line_name1="Nghỉ việc"
                     des="Biểu đồ thống kê luân chuyển công tác"
                 />
@@ -75,8 +76,8 @@ export default function InfomationSection3({
                 </p>
                 <LineChart
                     categories={categorie}
-                    data_line1={data_line1}
-                    data_line2={data_line2}
+                    data_line1={hrReportList?.data?.chartDaketHon}
+                    data_line2={hrReportList?.data?.chartDocThan}
                     line_name1="Đã kết hôn"
                     line_name2="Độc thân"
                     des="Biểu đồ thống  kê tình trạng hôn nhân"
@@ -88,12 +89,12 @@ export default function InfomationSection3({
                 </p>
                 <LineChart
                     categories={categorie}
-                    data_line1={data_line1}
-                    data_line2={data_line2}
-                    data_line3={data_line1}
-                    data_line4={data_line1}
-                    data_line5={data_line1}
-                    data_line6={data_line1}
+                    data_line1={hrReportList?.data?.chartHocVanTrenDH}
+                    data_line2={hrReportList?.data?.chartHocVanDH}
+                    data_line3={hrReportList?.data?.chartHocVanCD}
+                    data_line4={hrReportList?.data?.chartHocVanTC}
+                    data_line5={hrReportList?.data?.chartHocVanNghe}
+                    data_line6={hrReportList?.data?.chartHocVanDuoiTHPT}
                     line_name1="Trên đại học"
                     line_name2="Đại học"
                     line_name3="Cao đẳng"
@@ -107,10 +108,10 @@ export default function InfomationSection3({
                 <p className={`${styles.chart_title}`}>Biểu đồ thống kê độ tuổi</p>
                 <LineChart
                     categories={categorie}
-                    data_line1={data_line1}
-                    data_line2={data_line2}
-                    data_line3={data_line1}
-                    data_line4={data_line1}
+                    data_line1={hrReportList?.data?.chartDuoi30tuoi}
+                    data_line2={hrReportList?.data?.chart30den44tuoi}
+                    data_line3={hrReportList?.data?.chart45den59tuoi}
+                    data_line4={hrReportList?.data?.chartTren60tuoi}
                     line_name1="Dưới 30 tuổi"
                     line_name2="30 - 44 tuổi"
                     line_name3="45 - 59 tuổi"

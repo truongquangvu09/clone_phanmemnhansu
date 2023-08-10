@@ -114,7 +114,7 @@ export default function DropableColumn({
                         return (
                             <ItemCandidate3
                                 key={index}
-                                type="g"
+                                type="f"
                                 listCandidate={isProcessList?.listCandidateFailJob}
                                 data={item}
                                 setModalOpen={setModalOpen}
@@ -127,7 +127,7 @@ export default function DropableColumn({
                         return (
                             <ItemCandidate3
                                 key={index}
-                                type="g"
+                                type="c"
                                 listCandidate={isProcessList?.listCandidateCancelJob}
                                 data={item}
                                 setModalOpen={setModalOpen}
@@ -140,7 +140,7 @@ export default function DropableColumn({
                         return (
                             <ItemCandidate3
                                 key={index}
-                                type="g"
+                                type="s"
                                 listCandidate={isProcessList?.listCandidateContactJob}
                                 data={item}
                                 setModalOpen={setModalOpen}

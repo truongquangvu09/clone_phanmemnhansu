@@ -616,7 +616,7 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
                                             />
                                         </div>
                                     </div>
-                                    <div className={`${styles.form_groups}`}>
+                                    <div className={`${styles.form_groupss}`}>
                                         <label htmlFor="">
                                             Đánh giá hồ sơ <span style={{ color: "red" }}> * </span>
                                         </label>
@@ -640,7 +640,7 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
                                             </a>
                                         </div>
                                     </div>
-                                    <div className={`${styles.form_groups}`}>
+                                    <div className={`${styles.form_groupss}`}>
                                         <label htmlFor="">Tải lên tệp CV </label>
                                         <div
                                             className={`${styles.input_right} ${styles.input_upload_t}`}

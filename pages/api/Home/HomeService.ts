@@ -2,7 +2,7 @@
 import axios from "axios";
 import { hasCookie, setCookie } from "cookies-next";
 import { getToken } from "../token";
-import jwt from "jsonwebtoken"
+// import jwt from "jsonwebtoken"
 const COOKIE_KEY = "user_365";
 
 export const getHomeData = async () => {
@@ -31,8 +31,8 @@ export const SignIn = async () => {
   const currentUrl = process.env.NEXT_PUBLIC_BASE_URL2;
   if (!currentCookie) {
     const body = {
-      account: "0989878718",
-      password: "Shit23112001",
+      account: "trangchuoi4@gmail.com",
+      password: "trang677199",
       type: 1,
     };
     try {

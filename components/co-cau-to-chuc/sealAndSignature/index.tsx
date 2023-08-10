@@ -199,8 +199,8 @@ export default function SealAndSignature({ children }: any) {
                                 </button></div>
                         </div>
                         {openModal === 1 && <AddSealModal onCancel={handleCloseModal}></AddSealModal>}
-                        {openDeleteSealList && <DeleteSealUseList empId={openDeleteSealList} onCancel={handleCloseModal} />}
-                        {openDeleteSignature && <DeleteSignatures empId={openDeleteSignature} onCancel={handleCloseModal} />}
+                        {openDeleteSealList !== 0 && <DeleteSealUseList empId={openDeleteSealList} onCancel={handleCloseModal} />}
+                        {openDeleteSignature !== 0 && <DeleteSignatures empId={openDeleteSignature} onCancel={handleCloseModal} />}
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_new_t}`}>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_planning} `}>
