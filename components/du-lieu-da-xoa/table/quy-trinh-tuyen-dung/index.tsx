@@ -12,7 +12,7 @@ export default function DataQTTD({ list_recuitment, dataCheckBox, localListCheck
       : [...listCheck, id];
   
     setListCheck(newListCheck);
-    const checkBox = newListCheck.join(',');
+    const checkBox = newListCheck.join(', ');
     const dataObject = {
         list_recuitment: checkBox,
       };
@@ -21,7 +21,7 @@ export default function DataQTTD({ list_recuitment, dataCheckBox, localListCheck
   };
 
   const data = list_recuitment?.data;
-  
+   
   useEffect(() => {
     setListCheck(localListCheck.list_recuitment || []);
   }, [localListCheck]);

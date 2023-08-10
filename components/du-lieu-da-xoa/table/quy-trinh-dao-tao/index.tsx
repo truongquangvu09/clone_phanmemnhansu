@@ -13,7 +13,7 @@ export default function DataQTDT({ list_training_process , dataCheckBox, localLi
       : [...listCheck, id];
   
     setListCheck(newListCheck);
-    const checkBox = newListCheck.join(',');
+    const checkBox = newListCheck.join(', ');
     const dataObject = {
       list_training_process: checkBox,
       };

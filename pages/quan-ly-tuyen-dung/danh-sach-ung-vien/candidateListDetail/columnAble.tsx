@@ -7,7 +7,7 @@ import { useDrop } from "react-dnd"
 import { ItemTypes } from "@/components/quan-ly-tuyen-dung/danh-sach-ung-vien/item/ItemType";
 
 export default function DropableColumn({
-    item, isProcessList, handleUpdateProcess, setDeleteProcess, setModalOpen, setDragItem, setDropCol, setProcess_id
+    item, isProcessList, handleUpdateProcess, setDeleteProcess, setModalOpen, setDragItem, setDropCol, setProcess_id, iconEdit, iconDelete
 }: any) {
 
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
@@ -79,6 +79,7 @@ export default function DropableColumn({
                                 setModalOpen={setModalOpen}
                                 setDragItem={setDragItem}
                                 setDropCol={setDropCol}
+                                iconDelete = {iconDelete}
                             />
                         )
                     })}
@@ -93,6 +94,7 @@ export default function DropableColumn({
                                 setDragItem={setDragItem}
                                 setDropCol={setDropCol}
                                 setProcess_id={setProcess_id}
+                                iconDelete = {iconDelete}
                             />
                         )
                     })
@@ -107,6 +109,7 @@ export default function DropableColumn({
                                 setModalOpen={setModalOpen}
                                 setDragItem={setDragItem}
                                 setDropCol={setDropCol}
+                                iconDelete = {iconDelete}
                             />
                         )
                     })}
@@ -120,6 +123,7 @@ export default function DropableColumn({
                                 setModalOpen={setModalOpen}
                                 setDragItem={setDragItem}
                                 setDropCol={setDropCol}
+                                iconDelete = {iconDelete}
                             />
                         )
                     })}
@@ -133,6 +137,7 @@ export default function DropableColumn({
                                 setModalOpen={setModalOpen}
                                 setDragItem={setDragItem}
                                 setDropCol={setDropCol}
+                                iconDelete = {iconDelete}
                             />
                         )
                     })}
@@ -146,10 +151,10 @@ export default function DropableColumn({
                                 setModalOpen={setModalOpen}
                                 setDragItem={setDragItem}
                                 setDropCol={setDropCol}
+                                iconDelete = {iconDelete}
                             />
                         )
                     })}
-
                 </div>
             </div>
         </>

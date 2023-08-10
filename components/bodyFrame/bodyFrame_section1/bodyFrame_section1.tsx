@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 import styles from "./bodyFrame_section1.module.css";
+import { getDataCompany } from "@/pages/api/cai-dat/generalSettings";
+import { getCookie } from "cookies-next";
 export interface BodyFrameSection1 {}
 
 interface WeatherData {
@@ -18,11 +20,13 @@ interface WeatherData {
     humidity: number;
   };
 }
-export default function BodyFrameSection1({ children }: any) {
+export default function BodyFrameSection1({  }: any) {
   const [latitude, setLatitude] = useState<null | number>(null);
   const [longitude, setLongitude] = useState<null | number>(null);
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
-
+  function kelvinToCelsius(kelvin) {
+    return (kelvin - 273.15).toFixed(2);
+}
   useEffect(() => {
     const getLocation = () => {
       if (navigator.geolocation) {
@@ -52,7 +56,7 @@ export default function BodyFrameSection1({ children }: any) {
           const API_URL = process.env.NEXT_PUBLIC_WEATHER_API;
 
           const currentWeatherFetch = fetch(
-            `${API_URL}/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
+            `${API_URL}/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`
           );
 
           Promise.all([currentWeatherFetch]).then(async (response) => {
@@ -61,7 +65,6 @@ export default function BodyFrameSection1({ children }: any) {
           });
         }
       } catch (error) {
-        console.log(error);
       }
     };
     getWeatherData();
@@ -85,19 +88,19 @@ export default function BodyFrameSection1({ children }: any) {
           <div className={`${styles.item_right_weather}`}>
             <div className={`${styles.right_top}`}>
               <div className={`${styles.city_home}`}>
-                {weatherData.name}, {weatherData.sys.country}
+                {weatherData.name}, {weatherData?.sys.country}
               </div>
               <div className={`${styles.weather}`}>
                 <div>
                   <img
                     className={`${styles.weather_image}`}
-                    src={`icon_weather/${weatherData.weather[0].icon}.png`}
+                    src={`icon_weather/${weatherData?.weather[0].icon}.png`}
                     alt=""
                   />
                 </div>
                 <div className={`${styles.weather_flex}`}>
                   <div className={`${styles.temperature}`}>
-                  {Math.round(weatherData.main.temp)}
+                  {kelvinToCelsius(weatherData?.main.temp)}
                   </div>
                   <div className={`${styles.weather_sign}`}>
                     <img src={`	/doC.svg`} alt="thoitiet" />

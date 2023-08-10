@@ -13,7 +13,7 @@ import DeletePolicyGroup from './deletePolicyGroupModal/PolicyGroupDelete';
 import PolicyDetailModal from './detailPolicyModal/policyDetail';
 import DeletePolicys from './deletePolicyGroupModal/PolicyDelete';
 
-export default function EmployeePolicy() {
+export default function EmployeePolicy({iconAdd, iconEdit, iconDelete}) {
     const [click, setClick] = useState(false)
     const [openModal, setOpenModal] = useState(0)
     const [currentPage, setCurrentPage] = useState(1);
@@ -32,14 +32,12 @@ export default function EmployeePolicy() {
         const fetchData = async () => {
             try {
                 const response = await PolicyList(currentPage, 5, isKey)
-                setData(response.data)
+                setData(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()
     }, [currentPage, isKey])
-    console.log(data?.data);
 
 
     const setIdParent = async (itemId: number) => {
@@ -50,13 +48,10 @@ export default function EmployeePolicy() {
             try {
                 const response = await PolicyByGroupList(itemId);
                 const dataResponse = response?.data?.data
-                console.log({ dataResponse });
-
                 const updatedDataChildList = [...dataChildList, { id: itemId, data: dataResponse }];
                 setDataChildList(updatedDataChildList);
-                setDataChild(response.data);
+                setDataChild(response?.data);
             } catch (error) {
-                console.log(error);
             }
         }
     };
@@ -116,12 +111,14 @@ export default function EmployeePolicy() {
                     <div className={`${styles.tab_pane} ${styles.fade} `}>
                         <div className={`${styles.recruitment2}`}>
                             <div className={`${styles.recruitment2_3}`}>
-                                <button className={`${styles.adds}`} onClick={handleClick}>
+                                {iconAdd && (
+                                    <button className={`${styles.adds}`} onClick={handleClick}>
                                     <picture>
                                         <img style={{ verticalAlign: 'middle' }} src={`	/add.png`} alt="" />
                                         Thêm mới
                                     </picture>
                                 </button>
+                                )}
                                 {click === true && (<div className={`${styles.settings} ${styles.lefftset}`} >
                                     <li onClick={() => setOpenModal(1)}>Thêm nhóm chính sách</li>
                                     <hr style={{ marginTop: 0, marginBottom: 0 }} />
@@ -158,9 +155,8 @@ export default function EmployeePolicy() {
                                                 <img className={`${styles.icondown}`} src="/down.png" />
                                             </div>
                                             <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpenPolicyGroupDetail(item?.id)} >Chi tiết/</a>
-                                            <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpentPolicyGroupUpdate(item?.id)} >Sửa</a>
-                                            <span>/</span>
-                                            <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpentPolicyGroupDelete(item?.id)}>Xóa</a>
+                                            {iconEdit && <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpentPolicyGroupUpdate(item?.id)} >Sửa/</a>}
+                                            {iconDelete && <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpentPolicyGroupDelete(item?.id)}>Xóa</a>}
                                         </div>
                                         <div className={`${styles.table_none}`} style={{ display: selectedItems.includes(item?.id) ? 'block' : 'none' }}>
                                             <table className={`${styles.tablelist}  ${styles.tablelist1}`}>

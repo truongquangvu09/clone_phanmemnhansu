@@ -10,10 +10,11 @@ import { DepartmentList } from "@/pages/api/listPhongBan";
 import DeleteSealUseList from "./deleteSealModal/useSealListDelete";
 import DeleteSignatures from "./deleteSealModal/signatureListDelete";
 import MyPagination from '@/components/pagination/Pagination';
+import Head from "next/head";
 
 type SelectOptionType = { label: string, value: string }
 
-export default function SealAndSignature({ children }: any) {
+export default function SealAndSignature({ iconAdd ,iconEdit, iconDelete  }: any) {
 
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
     const [openModal, setOpenModal] = useState(0)
@@ -44,9 +45,8 @@ export default function SealAndSignature({ children }: any) {
                 formData.append('page', currentPageSeal)
                 formData.append('pageSize', pagesize)
                 const response = await SealAndSignatureData(formData)
-                setUseSealList(response.data)
+                setUseSealList(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()
@@ -64,10 +64,9 @@ export default function SealAndSignature({ children }: any) {
                 formData.append('page', currentPageSignature)
                 formData.append('pageSize', pagesize)
                 const response = await SignatureList(formData)
-                setSignatureList(response.data)
+                setSignatureList(response?.data)
                 setIsEmpId(null)
             } catch (error) {
-                throw error
             }
         }
         fetchData()
@@ -82,9 +81,8 @@ export default function SealAndSignature({ children }: any) {
                 const formData = new FormData()
                 formData.append('com_id', comid)
                 const response = await DepartmentList(formData)
-                setDepartmentList(response.data)
+                setDepartmentList(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()
@@ -111,7 +109,6 @@ export default function SealAndSignature({ children }: any) {
 
             }
         } catch (error) {
-            throw error;
         }
     }
 
@@ -187,6 +184,9 @@ export default function SealAndSignature({ children }: any) {
 
     return (
         <>
+        <Head>
+            <title>Quyền sử dụng con dấu và mẫu chữ ký - Quản lý nhân sự - Timviec365.vn</title>
+        </Head>
             <div className={`${styles.tab_content}`}>
                 <div className={`${styles.tab_pane}`}>
                     <div className={`${styles.body} ${styles.body_planning}`}>
@@ -194,9 +194,12 @@ export default function SealAndSignature({ children }: any) {
                             <div className={`${styles.body_header_left}`}>
                                 <p style={{ color: '#4C5BD4', fontWeight: 600, fontSize: 14 }}>Danh sách thành viên được sử dụng con dấu công ty</p></div>
                             <div className={`${styles.body_header_left}`}>
-                                <button className={`${styles.add} ${styles.add_planning}`} onClick={() => setOpenModal(1)}>
+                                {iconAdd && (
+                                    <button className={`${styles.add} ${styles.add_planning}`} onClick={() => setOpenModal(1)}>
                                     <img style={{ verticalAlign: 'middle' }} src={`/add.png`} alt="" />Thêm mới
-                                </button></div>
+                                </button>
+                                )}
+                            </div>
                         </div>
                         {openModal === 1 && <AddSealModal onCancel={handleCloseModal}></AddSealModal>}
                         {openDeleteSealList && <DeleteSealUseList empId={openDeleteSealList} onCancel={handleCloseModal} />}
@@ -263,8 +266,7 @@ export default function SealAndSignature({ children }: any) {
                                             <th>Họ và tên</th>
                                             <th>Chức vụ</th>
                                             <th>Phòng ban</th>
-                                            <th></th>
-
+                                            {iconDelete && <th></th>}
                                         </tr>
                                     </thead>
                                     <tbody className={`${styles.filter_body}`}>
@@ -276,7 +278,8 @@ export default function SealAndSignature({ children }: any) {
                                                     <td>{item?.userName}</td>
                                                     <td>{item?.namePosition}</td>
                                                     <td>{item.dep_name}</td>
-                                                    <td>
+                                                    {iconDelete && (
+                                                        <td>
                                                         <a
                                                             style={{ cursor: 'pointer' }}
                                                             onClick={() => setOpenDeleteSealList(item?._id)}
@@ -285,6 +288,7 @@ export default function SealAndSignature({ children }: any) {
                                                             <img src={`/icon_delete.svg`} alt="" />
                                                         </a>
                                                     </td>
+                                                    )}
                                                 </tr>
                                             ))
                                         ) : (
@@ -374,7 +378,9 @@ export default function SealAndSignature({ children }: any) {
                                             <th>Chức vụ</th>
                                             <th>Phòng ban</th>
                                             <th>Mẫu chữ kí</th>
-                                            <th></th>
+                                            {iconEdit || iconDelete ? (
+                                                <th></th>       
+                                            ): null}
                                         </tr>
                                     </thead>
                                     <tbody className={`${styles.filter_body}`}>
@@ -396,17 +402,23 @@ export default function SealAndSignature({ children }: any) {
                                                         </a></label>
                                                         <input id="upload_file" data-id="284670" accept="image/*" className={`${styles.upload_file}`} type="file" onChange={(event) => handleProvisionFileChange(event)}></input>
                                                     </td>
-                                                    <td>
-                                                        <label htmlFor="" className={`${styles.edit_stamp}`} >
+                                                    {iconDelete || iconEdit ? (
+                                                        <td>
+                                                        {iconEdit && (
+                                                            <label htmlFor="" className={`${styles.edit_stamp}`} >
                                                             <a href="" onClick={(event) => handleEditClick(event, item?._id)} style={{ paddingRight: 10 }}>
                                                                 <img src={`/icon_edit.svg`} alt="" />
                                                             </a>
                                                         </label>
+                                                        )}
                                                         <input type="file" className={`${styles.upload_file}`} id="edit_file" accept="application/pdf, image/*" onChange={(event) => handleProvisionFileChange(event)} />
-                                                        <a style={{ cursor: 'pointer' }} className={`${styles.btn_delete}`} onClick={() => setOpenDeleteSignature(item?._id)} >
+                                                        {iconDelete && (
+                                                            <a style={{ cursor: 'pointer' }} className={`${styles.btn_delete}`} onClick={() => setOpenDeleteSignature(item?._id)} >
                                                             <img src={`/icon_delete.svg`} alt="" />
                                                         </a>
+                                                        )}
                                                     </td>
+                                                    ): null}
                                                 </tr>
                                             ))
                                         ) : (

@@ -57,17 +57,15 @@ const EmployeeForm = ({ title1, title2, img1, img2, img3, title_details1, title_
 export default function EmployeeInformation() {
 
     const [hrReportList, setHrReportList] = useState<any>(null)
-    console.log(hrReportList);
-    console.log(hrReportList?.data?.luanChuyenNam);
-
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const formData = new FormData();
                 const response = await GetDataHrReport(formData)
+                
                 if (response) {
-                    setHrReportList(response.data)
+                    setHrReportList(response?.data)
                 }
             } catch (error) {
 

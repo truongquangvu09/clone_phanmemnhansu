@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import { LeaderBiographyDetail } from "@/pages/api/co_cau_to_chuc";
 import { LeaderBiograpphyUpdate } from "@/pages/api/co_cau_to_chuc";
 import MyEditorNew from "@/components/myEditor";
+import Head from "next/head";
+import { getDataAuthentication } from "@/pages/api/Home/HomeService";
 
 export interface listRecruitmentProcess { }
 
@@ -68,6 +70,24 @@ export default function DetailLeaderBiography({ onCancel }: any) {
     const [provisionFile, setProvisionFile] = useState<File | null>(null);
     const [personalInfoData, setPersonalInfoData] = useState<any>(null)
     const { idDetailLeaderBiography }: any = router.query;
+    const [displayIcon, setDisplayIcon] = useState<any>();
+
+
+    useEffect(() => {
+        try {
+          const fetchData = async () => {
+            const response = await getDataAuthentication();
+            setDisplayIcon(response?.data?.data?.infoRoleHNNV);
+          };
+          fetchData();
+        } catch (error) {}
+      }, []);
+      
+      const perIdArray = displayIcon?.map((item) => item.perId);
+      const authen = perIdArray?.includes(1);
+      const iconAdd = perIdArray?.includes(2);
+      const iconEdit = perIdArray?.includes(3);
+      const iconDelete = perIdArray?.includes(4);
 
     useEffect(() => {
         if (idDetailLeaderBiography) { // Chỉ gọi API nếu idDetailLeaderBiography đã có giá trị
@@ -163,6 +183,9 @@ export default function DetailLeaderBiography({ onCancel }: any) {
 
     return (
         <>
+        <Head>
+            <title>Tiểu sử lãnh đạo - Quản lý nhân sự - Timviec365.vn</title>
+        </Head>
             <div className={`${styles.l_body}`}>
                 <div className={`${styles.add_quytrinh}`}>
                     <div className={`${styles.back_quytrinh}`}>
@@ -175,10 +198,12 @@ export default function DetailLeaderBiography({ onCancel }: any) {
                             </picture>
                             Tiểu sử lãnh đạo / {isLeaderDetail?.result?.ep_name}
                         </span>
-                        <button className={`${styles.btn_add1}`} onClick={() => setAddField(true)} >
+                        {iconAdd && (
+                            <button className={`${styles.btn_add1}`} onClick={() => setAddField(true)} >
                             <img src="/add.png" alt="" />
                             Thêm trường
                         </button>
+                        )}
                     </div>
                 </div>
                 <div className={`${styles.l_body_2}`}>
@@ -188,9 +213,11 @@ export default function DetailLeaderBiography({ onCancel }: any) {
                                 <p>THÔNG TIN</p>
                             </div>
                             <div className={`${styles.text_right}`}>
-                                <a onClick={() => setOpenUpdate(true)} style={{ cursor: 'pointer' }} className={`${styles.edit_hs_uv}`}>
+                                {iconEdit && (
+                                    <a onClick={() => setOpenUpdate(true)} style={{ cursor: 'pointer' }} className={`${styles.edit_hs_uv}`}>
                                     <img src="/icon-edit-white.svg" />
                                 </a>
+                                )}
                             </div>
                         </div>
                         <div className={`${styles.l_body_2_left_body}`}>

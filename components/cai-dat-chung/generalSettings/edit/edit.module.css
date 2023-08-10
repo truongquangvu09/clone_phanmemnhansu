@@ -6,7 +6,9 @@
 }
 
 .l_chinhsua_item_input {
-    user-select: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #474747;
 }
 .l_chinhsua_item {
     display: flex;

@@ -9,7 +9,7 @@ import MyPagination from "@/components/pagination/Pagination";
 import { getDataListProcessTrain } from "@/pages/api/dao-tao-phat-trien/TrainingProcess";
 import Link from "next/link";
 
-export default function ListTrainingProcess({ children }: any) {
+export default function ListTrainingProcess({ iconAdd,iconEdit, iconDelete }: any) {
   const [openModal, setOpenModal] = useState(0);
   const [animateModal, setAnimateModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -62,7 +62,8 @@ export default function ListTrainingProcess({ children }: any) {
           <div className={`${styles.list_quytrinh}`}>
             <div className={`${styles.add_quytrinh}`}>
               <div className={`${styles.add_quytrinh1}`}>
-                <button
+                {iconAdd && (
+                  <button
                   className={`${styles.adds}`}
                   onClick={() => handleOpenModalAdd(1)}
                 >
@@ -71,6 +72,7 @@ export default function ListTrainingProcess({ children }: any) {
                   </picture>
                   <p>Thêm mới</p>
                 </button>
+                )}
               </div>
               {openModal === 1 && (
                 <AddTrainingProcess
@@ -120,7 +122,9 @@ export default function ListTrainingProcess({ children }: any) {
                       href={{
                         pathname:
                           `/dao-tao-phat-trien/quy-trinh-dao-tao/${item.id}`,
+                          query: {iconAdd: iconAdd?.toString(),iconEdit: iconEdit?.toString(), iconDelete: iconDelete?.toString() }
                       }}
+                      as = {`/dao-tao-phat-trien/quy-trinh-dao-tao/${item.id}`}
                     >
                       <div className={`${styles.quytrinh_item11_link}`}>
                       (QTĐT{item.id}) {item.name}
@@ -132,13 +136,15 @@ export default function ListTrainingProcess({ children }: any) {
                       </div>
                     </div>
 
-                    <div className={`${styles.quytrinh_item2}`}>
+                    {iconDelete && (
+                      <div className={`${styles.quytrinh_item2}`}>
                       <button onClick={() => handleOpenModalDelete(item.id)}>
                         <picture>
                           <img src={`/trash.png`} alt="Xóa"></img>
                         </picture>
                       </button>
                     </div>
+                    )}
                   </div>
                   <hr className={`${styles.shr}`}></hr>
                 </div>

@@ -13,7 +13,7 @@ export default function DataCSNV({ list_employe_policy , dataCheckBox, localList
           : [...listCheck, id];
       
         setListCheck(newListCheck);
-        const checkBox = newListCheck.join(',');
+        const checkBox = newListCheck.join(', ');
         const dataObject = {
             list_employe_policy: checkBox,
           };

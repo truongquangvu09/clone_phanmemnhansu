@@ -15,7 +15,6 @@ export default function RecruitmentReport() {
   // const [currentPageBox4, setCurrentPageBox4] = useState(1);
   const [dataResponse, setDataResponse] = useState<any>();
  
-
   // const handlePageChangeBox2 = (page: any) => {
   //   setCurrentPageBox2(page);
   // };
@@ -27,12 +26,15 @@ export default function RecruitmentReport() {
   // };
 
   useEffect(() => {
-    const GetDataRecruitment = async () => {
-      const formData= new FormData()
-      const response = await GetDataHrReport(formData);
-      setDataResponse(response?.data.data);
-    };
-    GetDataRecruitment();
+    try {
+      const GetDataRecruitment = async () => {
+        const response = await GetDataHrReport();
+        setDataResponse(response?.data.data);
+      };
+      GetDataRecruitment();
+    } catch (error) {
+      
+    }
   }, []);
 
   const data = [
@@ -63,13 +65,13 @@ export default function RecruitmentReport() {
     {
       id: 5,
       title: "Số ứng viên qua phỏng vấn",
-      num: dataResponse?.tongSoUngVienHuyNhanViec,
+      num: dataResponse?.tongSoUngVienQuaPhongVan,
       color: "#4CD4B4",
     },
     {
       id: 6,
       title: "Số ứng viên hủy",
-      num: dataResponse?.tongSoUngVienQuaPhongVan,
+      num: dataResponse?.tongSoUngVienHuyNhanViec,
       color: "#D44C4C",
     },
   ];

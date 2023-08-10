@@ -25,15 +25,14 @@ const Chart = (data: any) => {
                 formData1.append('fromDate', data?.data?.from_date1)
                 formData1.append('toDate', data?.data?.to_date1)
                 const response1 = await PlanningAppointmentList(formData1)
-                setPlanningAppointmentList1(response1.data)
+                setPlanningAppointmentList1(response1?.data)
 
                 const formData2 = new FormData();
                 formData2.append('fromDate', data?.data?.from_date2)
                 formData2.append('toDate', data?.data?.to_date2)
                 const response2 = await PlanningAppointmentList(formData2)
-                setPlanningAppointmentList2(response2.data)
+                setPlanningAppointmentList2(response2?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()
@@ -46,15 +45,14 @@ const Chart = (data: any) => {
                 formData1.append('fromDate', data?.data?.from_date1)
                 formData1.append('toDate', data?.data?.to_date1)
                 const response1 = await WorkingRotaionList(formData1)
-                setWorkingRotaionList1(response1.data)
+                setWorkingRotaionList1(response1?.data)
 
                 const formData2 = new FormData();
                 formData2.append('fromDate', data?.data?.from_date2)
                 formData2.append('toDate', data?.data?.to_date2)
                 const response2 = await WorkingRotaionList(formData2)
-                setWorkingRotaionList2(response2.data)
+                setWorkingRotaionList2(response2?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()
@@ -67,15 +65,14 @@ const Chart = (data: any) => {
                 formData1.append('fromDate', data?.data?.from_date1)
                 formData1.append('toDate', data?.data?.to_date1)
                 const response1 = await PayrollDownList(formData1)
-                setPayrollDownList1(response1.data)
+                setPayrollDownList1(response1?.data)
 
                 const formData2 = new FormData();
                 formData2.append('fromDate', data?.data?.from_date2)
                 formData2.append('toDate', data?.data?.to_date2)
                 const response2 = await PayrollDownList(formData2)
-                setPayrollDownList2(response2.data)
+                setPayrollDownList2(response2?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()
@@ -88,15 +85,14 @@ const Chart = (data: any) => {
                 formData1.append('fromDate', data?.data?.from_date1)
                 formData1.append('toDate', data?.data?.to_date1)
                 const response1 = await OutJobList(formData1)
-                setOutJobList1(response1.data)
+                setOutJobList1(response1?.data)
 
                 const formData2 = new FormData();
                 formData2.append('fromDate', data?.data?.from_date2)
                 formData2.append('toDate', data?.data?.to_date2)
                 const response2 = await OutJobList(formData2)
-                setOutJobList2(response2.data)
+                setOutJobList2(response2?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()

@@ -6,7 +6,7 @@ import styles from "../component/Component.module.css";
 import { GetDataInfringes } from "@/pages/api/luong-thuong-phuc-loi/discipline";
 
 export interface CollectiveDiscipline {}
-export default function CollectiveDiscipline({ children }: any) {
+export default function CollectiveDiscipline({ iconAdd, iconEdit }: any) {
   const [data, setData] = useState<any>();
   const [currentPage, setCurrentPage] = useState<any>(1);
   const [keyWords, setKeyWords] = useState<any>("");
@@ -40,6 +40,8 @@ export default function CollectiveDiscipline({ children }: any) {
         violators="Tập thể vi phạm"
         keyWords={handleSearch}
         updateData = {handleUpDateData}
+        iconAdd = {iconAdd}
+        iconEdit = {iconEdit}
       ></PunishmentTable>
       <div className={`${styles.pagination}`}>
         <MyPagination

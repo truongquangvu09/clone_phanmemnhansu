@@ -14,7 +14,7 @@ export interface TabEmployeeManagement {
 
 }
 
-export default function TabEmployeeManagement({ children }: any) {
+export default function TabEmployeeManagement({ iconAdd, iconEdit }: any) {
 
     const [activeButton, setActiveButton] = useState(0)
     const [employeeCount, setEmployeeCount] = useState(10)
@@ -28,7 +28,6 @@ export default function TabEmployeeManagement({ children }: any) {
     const [currentPage, setCurrentPage] = useState<any>(1);
     const [PostionCharDatas, setPosttionCharData] = useState<any>(null)
     const [isSeach, setSearch] = useState<any>(null)
-
 
 
     // -- đóng mở modal --
@@ -53,9 +52,8 @@ export default function TabEmployeeManagement({ children }: any) {
                 const formData = new FormData()
                 formData.append('com_id', comid)
                 const response = await DepartmentList(formData)
-                setDepartmentList(response.data)
+                setDepartmentList(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()
@@ -66,9 +64,8 @@ export default function TabEmployeeManagement({ children }: any) {
         const fetchData = async () => {
             try {
                 const response = await PostionCharData()
-                setPosttionCharData(response.data)
+                setPosttionCharData(response?.data)
             } catch (error) {
-                console.log({ error });
             }
         }
         fetchData()
@@ -76,7 +73,6 @@ export default function TabEmployeeManagement({ children }: any) {
 
 
     // -- lấy dữ liệu và phân trang --
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -87,9 +83,8 @@ export default function TabEmployeeManagement({ children }: any) {
                 formData.append('com_id', comid)
                 formData.append('pageNumber', currentPage)
                 const response = await EmployeeList(formData)
-                setEmpData(response.data)
+                setEmpData(response?.data)
             } catch (error) {
-                console.log({ error });
             }
         }
         fetchData()
@@ -174,9 +169,9 @@ export default function TabEmployeeManagement({ children }: any) {
                 <div className={`${styles.tab_pane}`}>
                     <div className={`${styles.body}`}>
                         <div className={`${styles.recruitment}`}>
-                            <a target="blank" href="https://chamcong.timviec365.vn/quan-ly-cong-ty/nhan-vien.html" className={`${styles.add}`} >
+                            {iconAdd && <a target="blank" href="https://chamcong.timviec365.vn/quan-ly-cong-ty/nhan-vien.html" className={`${styles.add}`} >
                                 <img src={`/add.png`} alt="" />Thêm mới nhân viên
-                            </a>
+                            </a>}
                         </div>
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_new_t}`}>
@@ -302,7 +297,7 @@ export default function TabEmployeeManagement({ children }: any) {
                                                         <div className={`${styles.settings}`} style={{ width: '100%' }}>
                                                             <li onClick={handleOpenDetailModal}>Chi tiết</li>
                                                             {detailModal && <DetailCandidateList onCancel={handleCloseModal} infoList={{ id: item?.idQLC, userName: item?.userName, email: item.email, phoneTk: item.phoneTK, address: item.email, position: positionNameToShow, dateInCom: item.ngayvaocongty, positionId: item.position_id, depId: item.dep_id, nameDep: item.nameDeparment }} />}
-                                                            <li onClick={handleOpenEditModal}>Chỉnh sửa</li>
+                                                            {iconEdit && <li onClick={handleOpenEditModal}>Chỉnh sửa</li>}
                                                             {editModal && <EditCandidateList onCancel={handleCloseModal} infoList={{ id: item?.idQLC, userName: item?.userName, email: item.email, phoneTk: item.phoneTK, address: item.email, position: positionNameToShow, dateInCom: item.ngayvaocongty, positionId: item.position_id, depId: item.dep_id }} />}
                                                         </div>
                                                     </td>

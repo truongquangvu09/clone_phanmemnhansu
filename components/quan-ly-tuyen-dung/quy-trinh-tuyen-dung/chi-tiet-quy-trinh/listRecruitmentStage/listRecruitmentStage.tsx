@@ -10,7 +10,9 @@ export default function ListRecruitmentStage({
   recruitment,
   index,
   onDelete,
-  onEdit
+  onEdit,
+  iconEdit,
+  iconDelete
 }) {
   const [animateModal, setAnimateModal] = useState(false);
   const [openModalEdit, setOpenModalEdit] = useState(false);
@@ -95,32 +97,38 @@ export default function ListRecruitmentStage({
                 <div className={`${styles.row_top_right}`}>
                   <p>{item.name}</p>
                 </div>
-                <div
-                  className={`${styles.setting}`}
-                  onMouseEnter={() => setVisible(true)}
-                  onMouseLeave={() => setVisible(false)}
-                >
-                  <picture>
-                    <img src={`${"/3cham.png"}`} alt="setting"></img>
-                  </picture>
-                  {visible && (
-                    <>
-                      {!hidden && (
-                        <div className={`${styles.settings_hover}`}>
-                          <li onClick={() => handleItemClickEdit(item)}>
-                            Chỉnh sửa
-                          </li>
-                          <hr
-                            style={{ marginTop: "0", marginBottom: "0" }}
-                          ></hr>
-                          <li onClick={() => handleItemClickDelete(item)}>
-                            Xóa
-                          </li>
-                        </div>
-                      )}
-                    </>
-                  )}
-                </div>
+               {iconEdit || iconDelete ? (
+                 <div
+                 className={`${styles.setting}`}
+                 onMouseEnter={() => setVisible(true)}
+                 onMouseLeave={() => setVisible(false)}
+               >
+                 <picture>
+                   <img src={`${"/3cham.png"}`} alt="setting"></img>
+                 </picture>
+                 {visible && (
+                   <>
+                     {!hidden && (
+                       <div className={`${styles.settings_hover}`}>
+                         {iconEdit && (
+                           <li onClick={() => handleItemClickEdit(item)}>
+                           Chỉnh sửa
+                         </li>
+                         )}
+                         <hr
+                           style={{ marginTop: "0", marginBottom: "0" }}
+                         ></hr>
+                         {iconDelete && (
+                           <li onClick={() => handleItemClickDelete(item)}>
+                           Xóa
+                         </li>
+                         )}
+                       </div>
+                     )}
+                   </>
+                 )}
+               </div>
+               ): null}
               </div>
               <ul>
                 <li>

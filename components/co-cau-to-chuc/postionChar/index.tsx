@@ -35,19 +35,23 @@ const MemberViewBox1 = ({
     employee_number,
     mission,
     setOpenModalDetails,
-    handleUpdatePosition
+    handleUpdatePosition,
+    iconEdit
+
 }: any) => (
     <div className={`${styles.member_view_box} ${styles.member_view_box_top_3}`} style={{ width: 330 }}>
         <div className={`${styles.member_detail}`}>
             <div className={`${styles.member_details_header}`}>
                 <span style={{ color: '#474747', fontWeight: 600 }}>{text_part}</span>
                 <button className={`${styles.hide_div_parent}`} style={{ fontWeight: 500, background: 'unset', fontFamily: 'Roboto', fontSize: 16, display: name || name1 || name2 || name3 ? 'none' : 'inline' }} data-id="1">(Ẩn)</button>
-                <button className={`${styles.edit_dep}`} onClick={() => handleUpdatePosition({
-                    idPosition: idPosition,
-                    mission: mission
-                })}>
-                    <img src={`/vn_icon-edit.svg`} />
-                </button>
+                {iconEdit && (
+                    <button className={`${styles.edit_dep}`} onClick={() => handleUpdatePosition({
+                        idPosition: idPosition,
+                        mission: mission
+                    })}>
+                        <img src={`/vn_icon-edit.svg`} />
+                    </button>
+                )}
             </div>
             <div className={`${styles.member_details_body}`}>
                 <p>{position ? position : 'Họ và tên'}: {employee_number ? employee_number : (name ? name : 'Chưa cập nhật')}</p>
@@ -62,7 +66,7 @@ const MemberViewBox1 = ({
 );
 
 const defaultValue = { label: 'Default Option', value: 'default' };
-const PostionCharTree = () => {
+const PostionCharTree = ({ iconEdit }) => {
 
     const [openModalEdit, setOpenModalEdit] = useState<any>(null)
     const [isMission, setIsMission] = useState<any>(null)
@@ -96,9 +100,6 @@ const PostionCharTree = () => {
         }
         fetchData()
     }, [])
-
-
-
 
     return (
 
@@ -134,6 +135,7 @@ const PostionCharTree = () => {
                                         mission={PostionCharDatas?.data[0]?.mission}
                                         handleUpdatePosition={handleUpdatePosition}
                                         setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[0]?.mission)}
+                                        iconEdit = {iconEdit}
                                     /></StyledNode>}>
                                         {PostionCharDatas?.data[1] &&
                                             <TreeNode label={<StyledNode><MemberViewBox1
@@ -146,6 +148,8 @@ const PostionCharTree = () => {
                                                 mission={PostionCharDatas?.data[1]?.mission}
                                                 handleUpdatePosition={handleUpdatePosition}
                                                 setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[1]?.mission)}
+                                                iconEdit = {iconEdit}
+
                                             /></StyledNode>}>
                                                 {PostionCharDatas?.data[2] &&
                                                     <TreeNode label={<StyledNode><MemberViewBox1
@@ -160,6 +164,8 @@ const PostionCharTree = () => {
                                                         mission={PostionCharDatas?.data[2]?.mission}
                                                         handleUpdatePosition={handleUpdatePosition}
                                                         setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[2]?.mission)}
+                                                        iconEdit = {iconEdit}
+
                                                     /></StyledNode>}>
                                                         {PostionCharDatas?.data[3] &&
                                                             <TreeNode label={<StyledNode><MemberViewBox1
@@ -172,6 +178,8 @@ const PostionCharTree = () => {
                                                                 mission={PostionCharDatas?.data[3]?.mission}
                                                                 handleUpdatePosition={handleUpdatePosition}
                                                                 setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[3]?.mission)}
+                                                                iconEdit = {iconEdit}
+
                                                             /></StyledNode>}>
                                                                 {PostionCharDatas?.data[4] &&
                                                                     <TreeNode label={<StyledNode><MemberViewBox1
@@ -184,6 +192,8 @@ const PostionCharTree = () => {
                                                                         mission={PostionCharDatas?.data[4]?.mission}
                                                                         handleUpdatePosition={handleUpdatePosition}
                                                                         setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[4]?.mission)}
+                                                                        iconEdit = {iconEdit}
+
                                                                     /></StyledNode>}>
                                                                         {PostionCharDatas?.data[5] &&
                                                                             <TreeNode label={<StyledNode><MemberViewBox1
@@ -196,6 +206,8 @@ const PostionCharTree = () => {
                                                                                 mission={PostionCharDatas?.data[5]?.mission}
                                                                                 handleUpdatePosition={handleUpdatePosition}
                                                                                 setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[5]?.mission)}
+                                                                                iconEdit = {iconEdit}
+
                                                                             /></StyledNode>}>
                                                                                 {PostionCharDatas?.data[6] &&
                                                                                     <TreeNode label={<StyledNode><MemberViewBox1
@@ -208,6 +220,8 @@ const PostionCharTree = () => {
                                                                                         mission={PostionCharDatas?.data[6]?.mission}
                                                                                         handleUpdatePosition={handleUpdatePosition}
                                                                                         setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[6]?.mission)}
+                                                                                        iconEdit = {iconEdit}
+
                                                                                     /></StyledNode>}>
                                                                                         {PostionCharDatas?.data[7] &&
                                                                                             <TreeNode label={<StyledNode><MemberViewBox1
@@ -220,6 +234,8 @@ const PostionCharTree = () => {
                                                                                                 mission={PostionCharDatas?.data[7]?.mission}
                                                                                                 handleUpdatePosition={handleUpdatePosition}
                                                                                                 setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[7]?.mission)}
+                                                                                                iconEdit = {iconEdit}
+
                                                                                             /></StyledNode>}>
                                                                                                 {PostionCharDatas?.data[8] &&
                                                                                                     <TreeNode label={<StyledNode><MemberViewBox1
@@ -232,6 +248,8 @@ const PostionCharTree = () => {
                                                                                                         mission={PostionCharDatas?.data[8]?.mission}
                                                                                                         handleUpdatePosition={handleUpdatePosition}
                                                                                                         setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[8]?.mission)}
+                                                                                                        iconEdit = {iconEdit}
+
                                                                                                     /></StyledNode>}>
                                                                                                         {PostionCharDatas?.data[9] &&
                                                                                                             <TreeNode label={<StyledNode><MemberViewBox1
@@ -244,6 +262,8 @@ const PostionCharTree = () => {
                                                                                                                 mission={PostionCharDatas?.data[9]?.mission}
                                                                                                                 handleUpdatePosition={handleUpdatePosition}
                                                                                                                 setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[9]?.mission)}
+                                                                                                                iconEdit = {iconEdit}
+
                                                                                                             /></StyledNode>}>
                                                                                                                 {PostionCharDatas?.data[10] &&
                                                                                                                     <TreeNode label={<StyledNode><MemberViewBox1
@@ -256,6 +276,8 @@ const PostionCharTree = () => {
                                                                                                                         mission={PostionCharDatas?.data[10]?.mission}
                                                                                                                         handleUpdatePosition={handleUpdatePosition}
                                                                                                                         setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[10]?.mission)}
+                                                                                                                        iconEdit = {iconEdit}
+
                                                                                                                     /></StyledNode>}>
                                                                                                                         {PostionCharDatas?.data[11] &&
                                                                                                                             <TreeNode label={<StyledNode><MemberViewBox1
@@ -268,6 +290,8 @@ const PostionCharTree = () => {
                                                                                                                                 mission={PostionCharDatas?.data[11]?.mission}
                                                                                                                                 handleUpdatePosition={handleUpdatePosition}
                                                                                                                                 setOpenModalDetails={() => setOpenModalDetails(PostionCharDatas?.data[11]?.mission)}
+                                                                                                                                iconEdit = {iconEdit}
+
                                                                                                                             /></StyledNode>}>
                                                                                                                                 {PostionCharDatas?.data[PostionCharDatas?.data?.length - 1]?.map((item: any, index: any) => {
                                                                                                                                     return (
@@ -280,6 +304,8 @@ const PostionCharTree = () => {
                                                                                                                                             idPosition={item?.positionId}
                                                                                                                                             handleUpdatePosition={handleUpdatePosition}
                                                                                                                                             setOpenModalDetails={() => setOpenModalDetails(item?.mission)}
+                                                                                                                                            iconEdit = {iconEdit}
+
                                                                                                                                         /></StyledNode>}>
                                                                                                                                         </TreeNode>
                                                                                                                                     )

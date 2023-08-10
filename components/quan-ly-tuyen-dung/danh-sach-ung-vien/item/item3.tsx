@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import DeleteCandidate from "../candidateDeleteModal";
 
 
-export default function ItemCandidate3({ listCandidate, type, data, currentCol, setDragItem, setDropCol, setModalOpen }: any) {
+export default function ItemCandidate3({ listCandidate, type, data, currentCol, setDragItem, setDropCol, setModalOpen, iconDelete }: any) {
 
     const [isOpenOption, setOpenOption] = useState(0)
     const [isDelete, setDelete] = useState(0)
@@ -72,7 +72,7 @@ export default function ItemCandidate3({ listCandidate, type, data, currentCol, 
                                 <div className={`${styles.choose_option} ${styles.choose_option1}`} style={{ display: isOpenOption ? 'block' : 'none' }}>
                                     <ul style={{ marginBottom: 0, marginTop: 0 }}>
                                         <li onClick={() => handleClickDetail(data?.canId)}>Xem chi tiết</li>
-                                        <li onClick={() => setDelete(data?.canId)}>Xóa hồ sơ</li>
+                                        {iconDelete && <li onClick={() => setDelete(data?.id)}>Xóa hồ sơ</li>}
                                         {isDelete !== 0 && <DeleteCandidate onCancel={handleClosemodal} idCandidate={isDelete} />}
                                     </ul>
                                 </div>

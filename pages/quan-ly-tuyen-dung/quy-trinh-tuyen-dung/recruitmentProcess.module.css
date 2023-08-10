@@ -4,7 +4,7 @@
 .l_body {
     display: inline-block;
     width: 100%;
-    /* margin-top: 50px; */
+    margin-top: 50px;
     margin-bottom: 50px
 }
 
@@ -24,7 +24,7 @@
     align-items: center;
     background: #fafafa;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 14px;
     line-height: 16px;
     color: #4C5BD4;
@@ -33,7 +33,7 @@
 
 .add_quytrinh2_title {
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 14px;
     line-height: 16px;
     color: #4C5BD4;

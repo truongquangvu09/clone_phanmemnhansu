@@ -2,7 +2,7 @@
   position: absolute;
   width: 360px;
   height: 455px;
-  right: 0;
+  right: 16px;
   top: 80px;
   z-index: 100;
   background: #ffffff;
@@ -36,15 +36,21 @@
   font-size: 14px;
   text-align: center;
   color: #929292;
+  font-weight: 600;
 }
 .menu {
   height: 25px;
   padding: 14px 0;
   display: flex;
+  align-items: center;
+
 }
 .menu_icon {
   width: 23%;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .text_menu {
   font-style: normal;
@@ -52,6 +58,9 @@
   font-size: 16px;
   color: #666666;
   width: 70%;
+}
+.next_icon {
+  display: flex;
 }
 @media screen and (max-width: 495px) {
   .wrapper {

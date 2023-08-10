@@ -22,8 +22,8 @@ export default function TableData({ data, dataCheck, listCheck }) {
     event.stopPropagation();
     const { name, checked } = event.target;
     if (name === "list_recuitment" && checked) {
-      const allIds = list_recuitment.data.map((item) => item.id);
-      const idsAsString = allIds.join(',');
+      const allIds = list_recuitment.data.map((item) => item.id.toString());
+      const idsAsString = allIds.join(', ');
       const dataObject = {
         [name]: idsAsString,
       };
@@ -33,8 +33,8 @@ export default function TableData({ data, dataCheck, listCheck }) {
       ));
       dataCheck(dataObject);
     } else if (name === "list_recuitment_new" && checked) {
-      const allIds = list_recuitment_new.data.map((item) => item.id);
-      const idsAsString = allIds.join(',');
+      const allIds = list_recuitment_new.data.map((item) => item.id.toString());
+      const idsAsString = allIds.join(', ');
       const dataObject = {
         [name]: idsAsString,
       };
@@ -44,8 +44,8 @@ export default function TableData({ data, dataCheck, listCheck }) {
       ));
       dataCheck(dataObject);
     } else if (name === "list_job_desc" && checked) {
-      const allIds = list_job_desc.data.map((item) => item.id);
-      const idsAsString = allIds.join(',');
+      const allIds = list_job_desc.data.map((item) => item.id.toString());
+      const idsAsString = allIds.join(', ');
       const dataObject = {
         [name]: idsAsString,
       };
@@ -55,8 +55,8 @@ export default function TableData({ data, dataCheck, listCheck }) {
       ));
       dataCheck(dataObject);
     } else if (name === "list_training_process" && checked) {
-      const allIds = list_training_process.data.map((item) => item.id);
-      const idsAsString = allIds.join(',');
+      const allIds = list_training_process.data.map((item) => item.id.toString());
+      const idsAsString = allIds.join(', ');
       const dataObject = {
         [name]: idsAsString,
       };
@@ -66,8 +66,8 @@ export default function TableData({ data, dataCheck, listCheck }) {
       ));
       dataCheck(dataObject);
     } else if (name === "list_provision" && checked) {
-      const allIds = list_provision.data.map((item) => item.id);
-      const idsAsString = allIds.join(',');
+      const allIds = list_provision.data.map((item) => item.id.toString());
+      const idsAsString = allIds.join(', ');
       const dataObject = {
         [name]: idsAsString,
       };
@@ -77,8 +77,8 @@ export default function TableData({ data, dataCheck, listCheck }) {
       ));
       dataCheck(dataObject);
     } else if (name === "list_employe_policy" && checked) {
-      const allIds = list_employe_policy.data.map((item) => item.id);
-      const idsAsString = allIds.join(',');
+      const allIds = list_employe_policy.data.map((item) => item.id.toString());
+      const idsAsString = allIds.join(', ');
       const dataObject = {
         [name]: idsAsString,
       };

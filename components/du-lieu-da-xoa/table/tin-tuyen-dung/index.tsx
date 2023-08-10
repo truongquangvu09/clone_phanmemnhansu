@@ -13,7 +13,7 @@ export default function DataTTD({ list_recuitment_new, dataCheckBox,localListChe
       : [...listCheck, id];
 
     setListCheck(newListCheck);
-    const checkBox = newListCheck.join(',');
+    const checkBox = newListCheck.join(', ');
 
     const dataObject = {
       list_recuitment_new: checkBox,

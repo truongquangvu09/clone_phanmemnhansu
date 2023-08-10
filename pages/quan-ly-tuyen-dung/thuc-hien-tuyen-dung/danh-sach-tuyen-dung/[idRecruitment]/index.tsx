@@ -4,6 +4,7 @@ import styles from "./idRecruitment.module.css";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 import { DetailNews } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
 import { getToken2 } from "@/pages/api/token";
+import Head from "next/head";
 
 export interface IdRecruitment {}
 
@@ -60,6 +61,9 @@ export default function IdRecruitment({dataDetail}) {
   return (
 
     <>
+    <Head>
+        <title>Thực hiện tuyển dụng - Quản lý nhân sự - Timviec365.vn</title>
+      </Head>
       <div className={`${styles.l_body}`}>
         <ul className={`${styles.nav} ${styles.nav_tabs}`}>
           {listTab.map((item) => (
@@ -272,7 +276,6 @@ export const getServerSideProps = async ({ params, req  }) => {
       },
     };
   } catch (error) {
-    console.log("Error fetching data from API:", error);
     return { props: {} };
   }
 };

@@ -1,30 +1,17 @@
 import React, { useEffect, useState } from "react";
 import styles from "./bodyFrame_section2.module.css";
-import { getHomeData } from "@/pages/api/Home/HomeService";
 import { format, addSeconds } from "date-fns";
 import { enGB } from "date-fns/locale";
 import Weather from "../weather/Weather";
 
 export interface BodyFrameSection2 {}
 
-export default function BodyFrameSection2({ children }: any) {
-  const [dataHome, setDataHome] = useState<any>(null);
+export default function BodyFrameSection2({ dataHome }: any) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [currentTime, setCurrentTime] = useState(new Date());
   const [currentDay, setCurrentDay] = useState("");
   const [currentMonth, setCurrentMonth] = useState("");
-
-  useEffect(() => {
-    const fetchHomeData = async () => {
-      try {
-        const response = await getHomeData();
-        setDataHome(response?.data.data);
-      } catch (error) {
-        console.error("Error fetching home data:", error);
-      }
-    };
-    fetchHomeData();
-  }, []);
+  
 
   useEffect(() => {
     if (typeof window == "object") {

@@ -12,7 +12,7 @@ import DeletePlanningAppointments from "./deletePlanningModal";
 
 type SelectOptionType = { label: string, value: string }
 
-export default function TabPlaningAppointment({ children }: any) {
+export default function TabPlaningAppointment({ iconAdd, iconEdit, iconDelete }: any) {
 
     const [isPlanningAppointmentList, setPlanningAppointmentList] = useState<any>(null)
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
@@ -40,9 +40,8 @@ export default function TabPlaningAppointment({ children }: any) {
                 formData.append('fromDate', fromDate)
                 formData.append('toDate', toDate)
                 const response = await PlanningAppointmentList(formData)
-                setPlanningAppointmentList(response.data)
+                setPlanningAppointmentList(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()
@@ -57,9 +56,8 @@ export default function TabPlaningAppointment({ children }: any) {
                 const formData = new FormData()
                 formData.append('com_id', comid)
                 const response = await DepartmentList(formData)
-                setDepartmentList(response.data)
+                setDepartmentList(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()
@@ -72,9 +70,8 @@ export default function TabPlaningAppointment({ children }: any) {
                 const formData = new FormData();
                 const comid: any = 1664
                 const response = await EmployeeList(formData)
-                setEmpData(response.data)
+                setEmpData(response?.data)
             } catch (error) {
-                console.log({ error });
             }
         }
         fetchData()
@@ -161,9 +158,9 @@ export default function TabPlaningAppointment({ children }: any) {
                 <div className={`${styles.tab_pane}`}>
                     <div className={`${styles.body} ${styles.body_planning}`}>
                         <div className={`${styles.recruitment}`}>
-                            <button className={`${styles.add} ${styles.add_planning}`} onClick={() => setOpenModal(1)}>
+                            {iconAdd && <button className={`${styles.add} ${styles.add_planning}`} onClick={() => setOpenModal(1)}>
                                 <img style={{ verticalAlign: 'middle' }} src={`/add.png`} alt="" />Thêm mới bổ nhiệm, quy hoạch
-                            </button>
+                            </button>}
                         </div>
                         {openModal === 1 && <AddPlanningModal onCancel={handleCloseModal}></AddPlanningModal>}
                         {openEditModal === true ? <EditPlanningModal onCancel={handleCloseModal} infoList={infoList}></EditPlanningModal> : ''}
@@ -267,7 +264,7 @@ export default function TabPlaningAppointment({ children }: any) {
                                             <th>Chức vụ quy hoạch bổ nhiệm</th>
                                             <th>Phòng ban mới</th>
                                             <th>Thời gian quy hoạch bổ nhiệm</th>
-                                            <th>Tùy chỉnh</th>
+                                           {iconDelete || iconEdit ?  <th>Tùy chỉnh</th> : null}
                                         </tr>
                                     </thead>
                                     <tbody className={`${styles.filter_body}`}>
@@ -280,10 +277,12 @@ export default function TabPlaningAppointment({ children }: any) {
                                                 <td>{item.new_position_name}</td>
                                                 <td>{item.new_dep_name}</td>
                                                 <td>{format(parseISO(item?.time), 'dd/MM/yyyy')}</td>
-                                                <td>
-                                                    <a onClick={() => handleOpenEdit(item)} className={`${styles.btn_edit}`} style={{ cursor: 'pointer' }}><img src={`/icon_edit.svg`} alt="" /></a>
-                                                    <a onClick={() => setOpenDeleteModal(item.ep_id)} className={`${styles.btn_delete}`} style={{ cursor: 'pointer' }}><img src={`/icon_delete.svg`} alt="" /></a>
+                                                {iconDelete || iconEdit ? (
+                                                    <td>
+                                                    {iconEdit && <a onClick={() => handleOpenEdit(item)} className={`${styles.btn_edit}`} style={{ cursor: 'pointer' }}><img src={`/icon_edit.svg`} alt="" /></a>}
+                                                    {iconDelete && <a onClick={() => setOpenDeleteModal(item.ep_id)} className={`${styles.btn_delete}`} style={{ cursor: 'pointer' }}><img src={`/icon_delete.svg`} alt="" /></a>}
                                                 </td>
+                                                ): null}
                                             </tr>
                                         ))}
                                     </tbody>

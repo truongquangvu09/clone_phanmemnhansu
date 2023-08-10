@@ -1,223 +1,256 @@
-import axios from 'axios';
+import axios from "axios";
 
-interface ApiResponse {
-    data: {};
-    error: string | null;
-}
-const url = process.env.NEXT_PUBLIC_BASE_URL
-
-const token1='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTM5NiwiaWRUaW1WaWVjMzY1IjoyMzI0MTYsImlkUUxDIjoxNjY0LCJpZFJhb05oYW5oMzY1IjowLCJlbWFpbCI6InRyYW5nY2h1b2k0QGdtYWlsLmNvbSIsInBob25lVEsiOiIiLCJjcmVhdGVkQXQiOjE2NjM4MzY0MDUsInR5cGUiOjEsImNvbV9pZCI6MTY2NCwidXNlck5hbWUiOiJDw7RuZyB0eSBD4buVIHBo4bqnbiBUaGFuaCB0b8OhbiBIxrBuZyBIw6AgMiJ9LCJpYXQiOjE2OTA1MDYyNjIsImV4cCI6MTY5MDU5MjY2Mn0.8zrz5AoCfrNI_IS6owM7oSqhQgAZ_XnSJr7zS7-45bM'
+import { getToken } from "./token";
+const COOKIE_KEY = "user_365";
+const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 /* -------------------------------------- LIST ----------------------------------------------*/
 
-export const OrganizationalStructureData = async (): Promise<ApiResponse> => {
-    try {
-        const response = await axios.post<ApiResponse>(`${url}api/hr/organizationalStructure/detailInfoCompany`,
-            {},
-            {
-                headers: {
-                    authorization: `Bearer ${token1}`,
-                },
-            }
-        );
-        return response.data;
-    } catch (error) {
-        throw new Error('Failed to fetch data');
-    }
+export const OrganizationalStructureData = async () => {
+  try {
+    const isToken = getToken(COOKIE_KEY);
+    const response = await axios.post(
+      `${url}api/hr/organizationalStructure/detailInfoCompany`,
+      {},
+      {
+        headers: {
+          authorization: `Bearer ${isToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {}
 };
 
-export const PostionCharData = async ():Promise<ApiResponse>=>{
-    try {
-        const response = await axios.post<ApiResponse>(`${url}api/hr/organizationalStructure/listPosition`,
-        {},{
-            headers: {
-                authorization: `Bearer ${token1}`,
-            },
-        });
-        return response.data;
-    } catch (error) {
-        throw new Error('Failed to fetch data');
-    }
+export const PostionCharData = async () => {
+  try {
+    const isToken = getToken(COOKIE_KEY);
+    const response = await axios.post(
+      `${url}api/hr/organizationalStructure/listPosition`,
+      {},
+      {
+        headers: {
+          authorization: `Bearer ${isToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {}
+};
 
-}
+export const SealAndSignatureData = async (formData: FormData) => {
+  try {
+    const isToken = getToken(COOKIE_KEY);
+    const response = await axios.post(
+      `${url}api/hr/organizationalStructure/listEmpUseSignature`,
+      formData,
+      {
+        headers: {
+          authorization: `Bearer ${isToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {}
+};
 
-export const SealAndSignatureData = async (formData:FormData):Promise<ApiResponse>=>{
-    try {
-        const response = await axios.post(`${url}api/hr/organizationalStructure/listEmpUseSignature`,formData,{
-            headers: {
-                authorization: `Bearer ${token1}`,
-            },
-        })
-        return response.data
-    } catch (error) {
-        throw new Error("Failed to get list SealAndSignature")
-    }
-}
+export const SignatureList = async (formData: FormData) => {
+  try {
+    const isToken = getToken(COOKIE_KEY);
+    const response = await axios.post(
+      `${url}api/hr/organizationalStructure/listSignatureLeader`,
+      formData,
+      {
+        headers: {
+          authorization: `Bearer ${isToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {}
+};
 
-export const SignatureList = async (formData:FormData):Promise<ApiResponse>=>{
-    try {
-        const response = await axios.post(`${url}api/hr/organizationalStructure/listSignatureLeader`,formData,{
-            headers: {
-                authorization: `Bearer ${token1}`,
-            }
-        })
-        return response.data
-    } catch (error) {
-        throw new Error("Failed to get list signature")
-    }
-}
-
-export const LeaderBiographyList = async (formData:FormData):Promise<ApiResponse>=>{
-    try {
-        const response = await axios.post(`${url}api/hr/organizationalStructure/listInfoLeader`,formData,{
-            headers: {
-                authorization: `Bearer ${token1}`,
-            }
-        })
-        return response.data
-    } catch (error) {
-        throw new Error("Failed to get list leaderBiography")
-    }
-}
+export const LeaderBiographyList = async (formData: FormData) => {
+  try {
+    const isToken = getToken(COOKIE_KEY);
+    const response = await axios.post(
+      `${url}api/hr/organizationalStructure/listInfoLeader`,
+      formData,
+      {
+        headers: {
+          authorization: `Bearer ${isToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {}
+};
 
 /* -------------------------------------- DETAIL ----------------------------------------------*/
 
-export const OrganizationalStructureDetail = async (formData:FormData):Promise<ApiResponse>=>{
-    try {
-        const response = await axios.post(`${url}api/hr/organizationalStructure/description`,formData,{
-            headers: {
-                authorization: `Bearer ${token1}`,
-            },
-        })
-        return response.data
-    } catch (error) {
-        throw new Error('Failed to get detail Organizational Structure ');
-    }
-}
+export const OrganizationalStructureDetail = async (formData: FormData) => {
+  try {
+    const isToken = getToken(COOKIE_KEY);
+    const response = await axios.post(
+      `${url}api/hr/organizationalStructure/description`,
+      formData,
+      {
+        headers: {
+          authorization: `Bearer ${isToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {}
+};
 
-export const PostionCharDetail = async(formData:FormData): Promise<ApiResponse>=>{
-    try {
-        const response = await axios.post(`${url}api/hr/organizationalStructure/missionDetail`,formData,{
-            headers: {
-                authorization: `Bearer ${token1}`,
-            },
-        })
-        return response.data
-    } catch (error) {
-        throw new Error('Failed to get details from postionChar')
-    }
-}
+export const PostionCharDetail = async (formData: FormData) => {
+  try {
+    const isToken = getToken(COOKIE_KEY);
+    const response = await axios.post(
+      `${url}api/hr/organizationalStructure/missionDetail`,
+      formData,
+      {
+        headers: {
+          authorization: `Bearer ${isToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {}
+};
 
-export const LeaderBiographyDetail = async(formData:FormData): Promise<ApiResponse>=>{
-    try {
-        const response = await axios.post(`${url}api/hr/organizationalStructure/leaderDetail`,formData,{
-            headers: {
-                authorization: `Bearer ${token1}`,
-            },
-        })
-        return response.data
-    } catch (error) {
-        throw new Error('Failed to get details from postionChar')
-    }
-}
-
-
+export const LeaderBiographyDetail = async (formData: FormData) => {
+  try {
+    const isToken = getToken(COOKIE_KEY);
+    const response = await axios.post(
+      `${url}api/hr/organizationalStructure/leaderDetail`,
+      formData,
+      {
+        headers: {
+          authorization: `Bearer ${isToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {}
+};
 
 /* -------------------------------------- UPDATE ----------------------------------------------*/
 
-export const OrganizationalStructureUpdate = async (formData:FormData):Promise<ApiResponse>=>{
-    try {
-        const response = await axios.post(`${url}api/hr/organizationalStructure/updateDescription`,formData,{
-            headers: {
-                authorization: `Bearer ${token1}`,
-            },
-        })
-        return response.data
-    } catch (error) {
-        throw new Error('Failed to update Organizational Structure ');
-    }
-}
+export const OrganizationalStructureUpdate = async (formData: FormData) => {
+  try {
+    const isToken = getToken(COOKIE_KEY);
+    const response = await axios.post(
+      `${url}api/hr/organizationalStructure/updateDescription`,
+      formData,
+      {
+        headers: {
+          authorization: `Bearer ${isToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {}
+};
 
-export const PostionCharUpdate = async (formData:FormData):Promise<ApiResponse>=>{
-    try {
-        const response = await axios.post(`${url}api/hr/organizationalStructure/updateMission`,formData,{
-            headers: {
-                authorization: `Bearer ${token1}`,
-            },
-        })
-        return response.data
-    } catch (error) {
-        throw new Error('Failed to update Organizational Structure ');
-    }
-}
+export const PostionCharUpdate = async (formData: FormData) => {
+  try {
+    const isToken = getToken(COOKIE_KEY);
+    const response = await axios.post(
+      `${url}api/hr/organizationalStructure/updateMission`,
+      formData,
+      {
+        headers: {
+          authorization: `Bearer ${isToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {}
+};
 
-
-export const LeaderBiograpphyUpdate = async (formData:FormData):Promise<ApiResponse>=>{
-    try {
-        const response = await axios.post(`${url}api/hr/organizationalStructure/updateLeaderDetail`,formData,{
-            headers: {
-                authorization: `Bearer ${token1}`,
-            },
-        })
-        return response.data
-    } catch (error) {
-        throw new Error('Failed to update Leader Biograpphy ');
-    }
-}
+export const LeaderBiograpphyUpdate = async (formData: FormData) => {
+  try {
+    const isToken = getToken(COOKIE_KEY);
+    const response = await axios.post(
+      `${url}api/hr/organizationalStructure/updateLeaderDetail`,
+      formData,
+      {
+        headers: {
+          authorization: `Bearer ${isToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {}
+};
 
 /* -------------------------------------- DELETE ----------------------------------------------*/
 
-export const SealAndSignatureDelete = async(formData: FormData):Promise<ApiResponse>=>{
-    try {
-        const response = await axios.post(`${url}api/hr/organizationalStructure/deleteEmpUseSignature`,formData,{
-            headers:{
-                authorization:`Bearer ${token1}`,
-            }
-        })
-        return response.data
-    } catch (error) {
-        throw new Error('Failed to delete Seal and signature')
-    }
-}
+export const SealAndSignatureDelete = async (formData: FormData) => {
+  try {
+    const isToken = getToken(COOKIE_KEY);
+    const response = await axios.post(
+      `${url}api/hr/organizationalStructure/deleteEmpUseSignature`,
+      formData,
+      {
+        headers: {
+          authorization: `Bearer ${isToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {}
+};
 
-export const DeleteSignature = async(formData: FormData):Promise<ApiResponse>=>{
-    try {
-        const response = await axios.post(`${url}api/hr/organizationalStructure/deleteSignature`,formData,{
-            headers:{
-                authorization:`Bearer ${token1}`,
-            }
-        })
-        return response.data
-    } catch (error) {
-        throw new Error('Failed to delete signature')
-    }
-}
+export const DeleteSignature = async (formData: FormData) => {
+  try {
+    const isToken = getToken(COOKIE_KEY);
+    const response = await axios.post(
+      `${url}api/hr/organizationalStructure/deleteSignature`,
+      formData,
+      {
+        headers: {
+          authorization: `Bearer ${isToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {}
+};
 /* -------------------------------------- UPLOAD ----------------------------------------------*/
 
-export const UploadSignature = async (formData:FormData):Promise<ApiResponse>=>{
-    try {
-        const response = await axios.post(`${url}api/hr/organizationalStructure/uploadSignature`,formData,{
-            headers: {
-                authorization: `Bearer ${token1}`
-            }
-        })
-        return response.data
-    } catch (error) {
-        throw new Error('Failed to upload signature')
-    }
-}
+export const UploadSignature = async (formData: FormData) => {
+  try {
+    const isToken = getToken(COOKIE_KEY);
+    const response = await axios.post(
+      `${url}api/hr/organizationalStructure/uploadSignature`,
+      formData,
+      {
+        headers: {
+          authorization: `Bearer ${isToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {}
+};
 
 /* -------------------------------------- ADD ----------------------------------------------*/
 
-export const AddUserSignature = async (formData:FormData):Promise<ApiResponse>=>{
-    try {
-        const response = await axios.post(`${url}api/hr/organizationalStructure/updateEmpUseSignature`,formData,{
-            headers: {
-                authorization: `Bearer ${token1}`
-            }
-        })
-        return response.data
-    } catch (error) {
-        throw new Error('Failed to add user use signature')
-    }
-}
+export const AddUserSignature = async (formData: FormData) => {
+  try {
+    const isToken = getToken(COOKIE_KEY);
+    const response = await axios.post(
+      `${url}api/hr/organizationalStructure/updateEmpUseSignature`,
+      formData,
+      {
+        headers: {
+          authorization: `Bearer ${isToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {}
+};
