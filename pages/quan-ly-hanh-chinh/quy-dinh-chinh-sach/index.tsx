@@ -5,6 +5,8 @@ import RegulationsWork from "@/components/quan-ly-hanh-chinh/quy-dinh-chinh-sach
 import EmployeePolicy from "@/components/quan-ly-hanh-chinh/quy-dinh-chinh-sach/chinh-sach-nhan-vien";
 import Head from "next/head";
 import { getDataAuthentication } from "@/pages/api/Home/HomeService";
+import { getToken } from "@/pages/api/token";
+import jwt_decode from "jwt-decode";
 
 export default function RegulationsPolicy() {
     const [active, setActive] = useState(1)
@@ -12,6 +14,16 @@ export default function RegulationsPolicy() {
     const [isLoading, setIsLoading] = useState(true);
     const [isDataLoaded, setIsDataLoaded] = useState(false);
   
+    const [tokenType, setTokenType] = useState<any>(null);
+    const COOKIE_KEY = "user_365";
+  
+    useEffect(() => {
+      const currentCookie = getToken(COOKIE_KEY);
+      if (currentCookie) {
+        const decodedToken: any = jwt_decode(currentCookie);
+        setTokenType(decodedToken?.data?.type);
+      }
+    }, []);
     useEffect(() => {
       try {
         const fetchData = async () => {
@@ -45,7 +57,7 @@ export default function RegulationsPolicy() {
                         <Link href=''>Chính sách nhân viên</Link>
                     </li>
                 </ul>
-                {active === 1 ? <RegulationsWork iconAdd = {iconAdd} iconEdit = {iconEdit} iconDelete = {iconDelete}></RegulationsWork> : <EmployeePolicy iconAdd = {iconAdd} iconEdit = {iconEdit} iconDelete = {iconDelete}></EmployeePolicy>}
+                {active === 1 ? <RegulationsWork iconAdd = {iconAdd} iconEdit = {iconEdit} iconDelete = {iconDelete} tokenType = {tokenType}></RegulationsWork> : <EmployeePolicy iconAdd = {iconAdd} iconEdit = {iconEdit} iconDelete = {iconDelete}></EmployeePolicy>}
             </div>
 
 

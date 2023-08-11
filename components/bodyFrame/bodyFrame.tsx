@@ -7,7 +7,6 @@ import {
 } from "@/pages/api/cai-dat/generalSettings";
 import jwt_decode from "jwt-decode";
 import { getToken } from "@/pages/api/token";
-import { getCookie } from "cookies-next";
 export interface BodyFrame {}
 
 export default function Bodyframe({ children }: any) {
@@ -26,7 +25,7 @@ useEffect(() => {
     const fetchInfo = async () => {
       try {
         if (tokenType) {
-          if (tokenType === 1) {
+          if (tokenType === 1 || tokenType === '1') {
             const response = await getDataCompany();
             setDataHeader(response?.data);
           } else {
@@ -40,7 +39,7 @@ useEffect(() => {
               clearInterval(interval);
               const response = await getDataCompany();
               setDataHeader(response?.data);
-            } else if (updatedToken === 2) {
+            } else if (updatedToken !== 1) {
               clearInterval(interval);
               const response = await EmployeeInfo();
               setDataHeader(response?.data);

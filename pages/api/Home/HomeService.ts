@@ -3,7 +3,6 @@ import axios from "axios";
 import { hasCookie, setCookie } from "cookies-next";
 import { getToken } from "../token";
 import jwt from "jsonwebtoken";
-import { useRouter } from "next/router";
 const COOKIE_KEY = "user_365";
 
 export const getHomeData = async () => {

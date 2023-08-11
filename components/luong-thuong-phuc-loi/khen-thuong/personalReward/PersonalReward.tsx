@@ -6,9 +6,8 @@ import { GetDataAchievement } from "@/pages/api/luong-thuong-phuc-loi/reward";
 import MyPagination from "@/components/pagination/Pagination";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 
-
 export interface PersonalReward {}
-export default function PersonalReward({ iconAdd, iconEdit }: any) {
+export default function PersonalReward({ iconAdd, iconEdit, tokenType }: any) {
   const [data, setData] = useState<any>();
   const [currentPage, setCurrentPage] = useState<any>(1);
   const [keyWords, setKeyWords] = useState<any>('')
@@ -29,7 +28,6 @@ export default function PersonalReward({ iconAdd, iconEdit }: any) {
   useEffect(() => {
     const GetDataPersonalReward = async () => {
       const response = await GetDataAchievement(currentPage, 10, 1, keyWords);
-      console.log(response)
       setData(response?.data.data);
     };
     GetDataPersonalReward();
@@ -46,6 +44,7 @@ export default function PersonalReward({ iconAdd, iconEdit }: any) {
         updateData = {handleUpDateData}
         iconAdd = {iconAdd}
         iconEdit = {iconEdit}
+        tokenType = {tokenType}
       ></RewardTable>
       
       <div className={`${styles.pagination}`}>

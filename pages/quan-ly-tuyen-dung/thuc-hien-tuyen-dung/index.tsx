@@ -6,13 +6,26 @@ import { GetTotalCandi } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment
 import PageAuthenticator from "@/components/quyen-truy-cap";
 import LoadingSpinner from "@/components/loading";
 import Head from "next/head";
+import jwt_decode from "jwt-decode";
+import { getToken } from "@/pages/api/token";
 
 export default function HeaderForm({ children }: any) {
   const [totalCandi, setTotalCandi] = useState<any>();
   const [authentication, setAuthentication] = useState<any>();
   const [isLoading, setIsLoading] = useState(true);
   const [active, setActive] = useState(1);
+  const [tokenType, setTokenType] = useState<any>(null);
+  const COOKIE_KEY = "user_365";
 
+  useEffect(() => {
+
+    const currentCookie = getToken(COOKIE_KEY);
+    if (currentCookie) {
+      const decodedToken: any = jwt_decode(currentCookie);
+      setTokenType(decodedToken?.data?.type);
+    }
+  }, []);
+  
   useEffect(() => {
     try{
       const GetDataTotalCandi = async () => {
@@ -43,7 +56,7 @@ export default function HeaderForm({ children }: any) {
     {
       key: 2,
       header: "TIN TUYỂN DỤNG",
-      component: <Recruitment></Recruitment>,
+      component: <Recruitment tokenType = {tokenType}></Recruitment>,
     },
   ];
   return (

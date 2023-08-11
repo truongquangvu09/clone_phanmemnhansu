@@ -10,20 +10,20 @@ import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_f
 import { GetDataHrReport } from "@/pages/api/bao-cao-nhan-su/HrReportService";
 
 export default function RecruitmentReport() {
-  // const [currentPageBox2, setCurrentPageBox2] = useState(1);
-  // const [currentPageBox3, setCurrentPageBox3] = useState(1);
-  // const [currentPageBox4, setCurrentPageBox4] = useState(1);
+  const [currentPageBox2, setCurrentPageBox2] = useState(1);
+  const [currentPageBox3, setCurrentPageBox3] = useState(1);
+  const [currentPageBox4, setCurrentPageBox4] = useState(1);
   const [dataResponse, setDataResponse] = useState<any>();
  
-  // const handlePageChangeBox2 = (page: any) => {
-  //   setCurrentPageBox2(page);
-  // };
-  // const handlePageChangeBox3 = (page: any) => {
-  //   setCurrentPageBox3(page);
-  // };
-  // const handlePageChangeBox4 = (page: any) => {
-  //   setCurrentPageBox4(page);
-  // };
+  const handlePageChangeBox2 = (page: any) => {
+    setCurrentPageBox2(page);
+  };
+  const handlePageChangeBox3 = (page: any) => {
+    setCurrentPageBox3(page);
+  };
+  const handlePageChangeBox4 = (page: any) => {
+    setCurrentPageBox4(page);
+  };
 
   useEffect(() => {
     try {
@@ -108,14 +108,14 @@ export default function RecruitmentReport() {
               <SecondBlock listCardSecond={dataCardSecond}></SecondBlock>
             </tbody>
           </table>
-          {/* <div className={`${styles.pagination}`}>
+          <div className={`${styles.pagination}`}>
             <MyPagination
               current={currentPageBox2}
               total={50}
               pageSize={10}
               onChange={handlePageChangeBox2}
             />
-          </div> */}
+          </div>
         </div>
       </div>
 
@@ -138,14 +138,14 @@ export default function RecruitmentReport() {
               <ThirdBlock listCardThird={dataThird}></ThirdBlock>
             </tbody>
           </table>
-          {/* <div className={`${styles.pagination}`}>
+          <div className={`${styles.pagination}`}>
             <MyPagination
               current={currentPageBox3}
               total={50}
               pageSize={10}
               onChange={handlePageChangeBox3}
             />
-          </div> */}
+          </div>
         </div>
       </div>
 
@@ -170,14 +170,14 @@ export default function RecruitmentReport() {
               <FourthBlock listCardFourth={dataFourth}></FourthBlock>
             </tbody>
           </table>
-          {/* <div className={`${styles.pagination}`}>
+          <div className={`${styles.pagination}`}>
             <MyPagination
               current={currentPageBox4}
               total={50}
               pageSize={10}
               onChange={handlePageChangeBox4}
             />
-          </div> */}
+          </div>
         </div>
       </div>
       <BodyFrameFooter src="https://www.youtube.com/embed/ByFmUJ-4prs"></BodyFrameFooter>

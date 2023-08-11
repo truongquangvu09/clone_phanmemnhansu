@@ -5,7 +5,7 @@ import MyPagination from "@/components/pagination/Pagination";
 import styles from "../component/Component.module.css";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 export interface PersonalDiscipline {}
-export default function PersonalDiscipline({ iconAdd, iconEdit }: any) {
+export default function PersonalDiscipline({ iconAdd, iconEdit, tokenType }: any) {
   const [data, setData] = useState<any>();
   const [currentPage, setCurrentPage] = useState<any>(1);
   const [keyWords, setKeyWords] = useState<any>("");
@@ -43,6 +43,7 @@ export default function PersonalDiscipline({ iconAdd, iconEdit }: any) {
         updateData = {handleUpDateData}
         iconAdd = {iconAdd}
         iconEdit = {iconEdit}
+        tokenType = {tokenType}
       ></PunishmentTable>
       <div className={`${styles.pagination}`}>
         <MyPagination

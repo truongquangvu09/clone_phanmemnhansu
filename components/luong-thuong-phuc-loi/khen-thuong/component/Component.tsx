@@ -8,7 +8,16 @@ import ModalEditCommendationTeam from "../commendationTeam/modalEditCommendation
 import ModalEditAchievementList from "../achievementList/modalEditAchievementList/ModalEditAchievementList";
 import ModalAddTeamCompliments from "../commendationTeam/modalAddTeamCompliments/modalAddTeamCompliments";
 
-function RewardTable({ display, data, model, keyWords, updateData , iconAdd, iconEdit}: any) {
+function RewardTable({
+  display,
+  data,
+  model,
+  keyWords,
+  updateData,
+  iconAdd,
+  iconEdit,
+  tokenType,
+}: any) {
   const [visible, setVisible] = useState(true);
   const [typeModal, setTypeModal] = useState(model);
   const [open, setOpen] = useState(false);
@@ -60,17 +69,30 @@ function RewardTable({ display, data, model, keyWords, updateData , iconAdd, ico
     <>
       <div className={`${styles.tuyendung2}`} style={{ display: "block" }}>
         <div className={`${styles.tuyendung2_3}`}>
-          {iconAdd && (
+          {tokenType === 1 ? (
             <button
-            onClick={() => setOpen(true)}
-            className={`${styles.adds}`}
-            style={{ display: display }}
-          >
-            <picture>
-              <img src={`/add.png`} alt="+"></img>
-            </picture>
-            Thêm mới
-          </button>
+              onClick={() => setOpen(true)}
+              className={`${styles.adds}`}
+              style={{ display: display }}
+            >
+              <picture>
+                <img src={`/add.png`} alt="+"></img>
+              </picture>
+              Thêm mới
+            </button>
+          ) : !iconAdd ? (
+            <></>
+          ) : (
+            <button
+              onClick={() => setOpen(true)}
+              className={`${styles.adds}`}
+              style={{ display: display }}
+            >
+              <picture>
+                <img src={`/add.png`} alt="+"></img>
+              </picture>
+              Thêm mới
+            </button>
           )}
         </div>
         {typeModal === "canhan" && open && (
@@ -145,7 +167,13 @@ function RewardTable({ display, data, model, keyWords, updateData , iconAdd, ico
                 <th>Hình thức khen thưởng</th>
                 <th>Danh hiệu</th>
                 <th>Cấp khen</th>
-                {iconEdit && <th className={`${styles.lastth}`}></th>}
+                {tokenType === 1 ? (
+                  <th className={`${styles.lastth}`}></th>
+                ) : !iconEdit ? (
+                  <></>
+                ) : (
+                  <th className={`${styles.lastth}`}></th>
+                )}
               </tr>
             </thead>
             <tbody className={`${styles.filter}`}>
@@ -180,31 +208,61 @@ function RewardTable({ display, data, model, keyWords, updateData , iconAdd, ico
                       <td>{achievementType}</td>
                       <td>{item.appellation}</td>
                       <td>{item.achievementLevel}</td>
-                     {iconEdit &&  <td
-                        className={`${styles.r_t_top_right}`}
-                        style={{
-                          position: "relative",
-                          width: "110px",
-                          opacity: "1",
-                        }}
-                        onMouseEnter={() => setVisible(true)}
-                        onMouseLeave={() => setVisible(false)}
-                      >
-                        <img
-                          src={`/3cham.png`}
-                          alt="Tùy chỉnh"
-                          style={{ paddingTop: "6px" }}
-                        />
+                      {tokenType === 1 ? (
+                        <td
+                          className={`${styles.r_t_top_right}`}
+                          style={{
+                            position: "relative",
+                            width: "110px",
+                            opacity: "1",
+                          }}
+                          onMouseEnter={() => setVisible(true)}
+                          onMouseLeave={() => setVisible(false)}
+                        >
+                          <img
+                            src={`/3cham.png`}
+                            alt="Tùy chỉnh"
+                            style={{ paddingTop: "6px" }}
+                          />
 
-                        {visible && (
-                          <div
-                            className={styles.settings}
-                            onClick={() => handleEdit(item)}
-                          >
-                            <li>Chỉnh sửa</li>
-                          </div>
-                        )}
-                      </td>}
+                          {visible && (
+                            <div
+                              className={styles.settings}
+                              onClick={() => handleEdit(item)}
+                            >
+                              <li>Chỉnh sửa</li>
+                            </div>
+                          )}
+                        </td>
+                      ) : !iconEdit ? (
+                        <></>
+                      ) : (
+                        <td
+                          className={`${styles.r_t_top_right}`}
+                          style={{
+                            position: "relative",
+                            width: "110px",
+                            opacity: "1",
+                          }}
+                          onMouseEnter={() => setVisible(true)}
+                          onMouseLeave={() => setVisible(false)}
+                        >
+                          <img
+                            src={`/3cham.png`}
+                            alt="Tùy chỉnh"
+                            style={{ paddingTop: "6px" }}
+                          />
+
+                          {visible && (
+                            <div
+                              className={styles.settings}
+                              onClick={() => handleEdit(item)}
+                            >
+                              <li>Chỉnh sửa</li>
+                            </div>
+                          )}
+                        </td>
+                      )}
                     </tr>
                   );
                 })

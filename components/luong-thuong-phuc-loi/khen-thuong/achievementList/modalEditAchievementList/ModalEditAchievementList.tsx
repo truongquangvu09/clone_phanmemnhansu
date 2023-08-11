@@ -5,6 +5,8 @@ import { GetDepartmentList, UpdateAchievement } from "@/pages/api/luong-thuong-p
 import { getDataUser } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
 import { format } from "date-fns";
 import * as Yup from "yup";
+import { getToken } from "@/pages/api/token";
+import jwt_decode from "jwt-decode";
 
 function ModalEditAchievementList({ animation, onClose, dataOld }: any) {
   const typeEdit= dataOld.depId 
@@ -48,6 +50,17 @@ function ModalEditAchievementList({ animation, onClose, dataOld }: any) {
     achievement_level: Yup.string().required("Cấp khen không được để trống"),
   });
   
+  const [tokenComId, setComId] = useState<any>(null);
+  const COOKIE_KEY = "user_365";
+
+  useEffect(() => {
+    const currentCookie = getToken(COOKIE_KEY);
+    if (currentCookie) {
+      const decodedToken: any = jwt_decode(currentCookie);
+      
+      setComId(decodedToken?.data?.com_id);
+    }
+  }, []);
   const handleContentChange = (event) => {
     const { name, value } = event.target;
     setContent((prevState) => ({
@@ -132,7 +145,7 @@ function ModalEditAchievementList({ animation, onClose, dataOld }: any) {
     else {
       const getData2 = async() => {
         try{
-          const response = await GetDepartmentList("1664")
+          const response = await GetDepartmentList(tokenComId.toString())
           setDep(response?.data.data.data.map(item => ({name:"depId", value: item.dep_id, label : `${item.dep_name}`})))
         }catch(err) {
 

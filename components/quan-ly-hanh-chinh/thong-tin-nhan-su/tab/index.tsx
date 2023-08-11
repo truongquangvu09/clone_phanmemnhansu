@@ -14,7 +14,7 @@ export interface TabEmployeeManagement {
 
 }
 
-export default function TabEmployeeManagement({ iconAdd, iconEdit }: any) {
+export default function TabEmployeeManagement({ iconAdd, iconEdit, tokenType }: any) {
 
     const [activeButton, setActiveButton] = useState(0)
     const [employeeCount, setEmployeeCount] = useState(10)
@@ -162,16 +162,21 @@ export default function TabEmployeeManagement({ iconAdd, iconEdit }: any) {
     const handleSignaturePageChange = (page: number) => {
         setCurrentPage(page);
     };
-
+console.log(iconAdd)
     return (
         <>
             <div className={`${styles.tab_content}`}>
                 <div className={`${styles.tab_pane}`}>
                     <div className={`${styles.body}`}>
                         <div className={`${styles.recruitment}`}>
-                            {iconAdd && <a target="blank" href="https://chamcong.timviec365.vn/quan-ly-cong-ty/nhan-vien.html" className={`${styles.add}`} >
+                            {tokenType === 1 ? <a target="blank" href="https://chamcong.timviec365.vn/quan-ly-cong-ty/nhan-vien.html" className={`${styles.add}`} >
                                 <img src={`/add.png`} alt="" />Thêm mới nhân viên
-                            </a>}
+                            </a>: (
+                                !iconAdd ? <></> :
+                                (<a target="blank" href="https://chamcong.timviec365.vn/quan-ly-cong-ty/nhan-vien.html" className={`${styles.add}`} >
+                                <img src={`/add.png`} alt="" />Thêm mới nhân viên
+                            </a>)
+                            )}
                         </div>
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_new_t}`}>
@@ -297,7 +302,7 @@ export default function TabEmployeeManagement({ iconAdd, iconEdit }: any) {
                                                         <div className={`${styles.settings}`} style={{ width: '100%' }}>
                                                             <li onClick={handleOpenDetailModal}>Chi tiết</li>
                                                             {detailModal && <DetailCandidateList onCancel={handleCloseModal} infoList={{ id: item?.idQLC, userName: item?.userName, email: item.email, phoneTk: item.phoneTK, address: item.email, position: positionNameToShow, dateInCom: item.ngayvaocongty, positionId: item.position_id, depId: item.dep_id, nameDep: item.nameDeparment }} />}
-                                                            {iconEdit && <li onClick={handleOpenEditModal}>Chỉnh sửa</li>}
+                                                            {tokenType === 1 ? <li onClick={handleOpenEditModal}>Chỉnh sửa</li> : (!iconEdit)? <></> :<li onClick={handleOpenEditModal}>Chỉnh sửa</li> }
                                                             {editModal && <EditCandidateList onCancel={handleCloseModal} infoList={{ id: item?.idQLC, userName: item?.userName, email: item.email, phoneTk: item.phoneTK, address: item.email, position: positionNameToShow, dateInCom: item.ngayvaocongty, positionId: item.position_id, depId: item.dep_id }} />}
                                                         </div>
                                                     </td>

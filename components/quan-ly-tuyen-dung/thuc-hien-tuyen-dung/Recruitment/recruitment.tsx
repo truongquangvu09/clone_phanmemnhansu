@@ -10,7 +10,7 @@ import Head from "next/head";
 
 export interface Recruitment {}
 
-export default function Recruitment({ children }: any) {
+export default function Recruitment({ tokenType }: any) {
   const [animateModal, setAnimateModal] = useState(false);
   const [openModalAdd, setOpenModalAdd] = useState(false);
   const [currentPage, setCurrenPage] = useState<any>(1);
@@ -105,13 +105,22 @@ const EditDataRecruitment = (data) => {
       </Head>
       <div className={`${styles.tintuyendung}`}>
         <div className={`${styles.tuyendung1}`}>
-          {iconAdd && (
+          {tokenType === 1 ? (
             <button className={`${styles.adds}`} onClick={handleOpenModalAdd}>
             <picture style={{ paddingLeft: "12px" }}>
               <img src={`/add.png`} alt=""></img>
               <p>Thêm tin tuyển dụng</p>
             </picture>
           </button>
+          ): (
+            (!iconAdd) ? <></> : (
+              <button className={`${styles.adds}`} onClick={handleOpenModalAdd}>
+            <picture style={{ paddingLeft: "12px" }}>
+              <img src={`/add.png`} alt=""></img>
+              <p>Thêm tin tuyển dụng</p>
+            </picture>
+          </button>
+            )
           )}
         </div>
         {openModalAdd && (
@@ -173,7 +182,7 @@ const EditDataRecruitment = (data) => {
         >
           {dataMapping?.data.length === 0 ? <p className={`${styles.data_empty}`}>Không có dữ liệu</p>  : dataMapping?.data.map((item: any) => (
             <div key={item.id}>
-              <ListRecruitmentPage data={item} onDelete = {handleDelete} editData = {EditDataRecruitment} iconEdit = {iconEdit} iconDelete = {iconDelete}></ListRecruitmentPage>
+              <ListRecruitmentPage data={item} onDelete = {handleDelete} editData = {EditDataRecruitment} iconEdit = {iconEdit} iconDelete = {iconDelete} tokenType = {tokenType}></ListRecruitmentPage>
             </div>
           ))}
           {dataListNews?.data.totalCount > 4 && (

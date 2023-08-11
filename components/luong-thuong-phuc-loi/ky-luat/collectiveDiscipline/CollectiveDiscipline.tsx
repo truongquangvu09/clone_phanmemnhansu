@@ -6,7 +6,7 @@ import styles from "../component/Component.module.css";
 import { GetDataInfringes } from "@/pages/api/luong-thuong-phuc-loi/discipline";
 
 export interface CollectiveDiscipline {}
-export default function CollectiveDiscipline({ iconAdd, iconEdit }: any) {
+export default function CollectiveDiscipline({ iconAdd, iconEdit, tokenType }: any) {
   const [data, setData] = useState<any>();
   const [currentPage, setCurrentPage] = useState<any>(1);
   const [keyWords, setKeyWords] = useState<any>("");
@@ -42,6 +42,7 @@ export default function CollectiveDiscipline({ iconAdd, iconEdit }: any) {
         updateData = {handleUpDateData}
         iconAdd = {iconAdd}
         iconEdit = {iconEdit}
+        tokenType = {tokenType}
       ></PunishmentTable>
       <div className={`${styles.pagination}`}>
         <MyPagination

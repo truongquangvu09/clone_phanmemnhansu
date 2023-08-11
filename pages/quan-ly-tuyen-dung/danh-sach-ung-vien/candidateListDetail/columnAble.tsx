@@ -7,7 +7,7 @@ import { useDrop } from "react-dnd"
 import { ItemTypes } from "@/components/quan-ly-tuyen-dung/danh-sach-ung-vien/item/ItemType";
 
 export default function DropableColumn({
-    item, isProcessList, handleUpdateProcess, setDeleteProcess, setModalOpen, setDragItem, setDropCol, setProcess_id, iconEdit, iconDelete
+    item, isProcessList, handleUpdateProcess, setDeleteProcess, setModalOpen, setDragItem, setDropCol, setProcess_id, iconEdit, iconDelete,tokenType
 }: any) {
 
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
@@ -30,18 +30,39 @@ export default function DropableColumn({
                                             `}>
                     {(item?.id !== 0 && item?.id !== 1 && item?.id !== 2 && item?.id !== 3 && item?.id !== 4) ? <p>
                         {item.name} (
-                        <a onClick={() =>
-                            handleUpdateProcess({
-                                name: item.name,
-                                processBefore: item.processBefore,
-                                processInterviewId: item.id,
-                            })}
-                            style={{ cursor: "pointer" }}>Sửa
-                        </a>
+                        {tokenType === 1 ? (
+                            <a onClick={() =>
+                                handleUpdateProcess({
+                                    name: item.name,
+                                    processBefore: item.processBefore,
+                                    processInterviewId: item.id,
+                                })}
+                                style={{ cursor: "pointer" }}>Sửa
+                            </a>
+                        ): (
+                            (!iconEdit) ? <></>: (
+                                <a onClick={() =>
+                                    handleUpdateProcess({
+                                        name: item.name,
+                                        processBefore: item.processBefore,
+                                        processInterviewId: item.id,
+                                    })}
+                                    style={{ cursor: "pointer" }}>Sửa
+                                </a>
+                            )
+                        )}
                         /
-                        <a onClick={() => setDeleteProcess(item.id)}
+                        {tokenType === 1 ? (
+                            <a onClick={() => setDeleteProcess(item.id)}
                             style={{ cursor: "pointer" }}>Xóa
                         </a>
+                        ): (
+                            (!iconDelete)? <></>: (
+                                <a onClick={() => setDeleteProcess(item.id)}
+                                style={{ cursor: "pointer" }}>Xóa
+                            </a> 
+                            )
+                        )}
                         )
                     </p> : <>{item.name}</>}
                     <p>
@@ -80,6 +101,7 @@ export default function DropableColumn({
                                 setDragItem={setDragItem}
                                 setDropCol={setDropCol}
                                 iconDelete = {iconDelete}
+                                tokenType = {tokenType}
                             />
                         )
                     })}
@@ -95,6 +117,8 @@ export default function DropableColumn({
                                 setDropCol={setDropCol}
                                 setProcess_id={setProcess_id}
                                 iconDelete = {iconDelete}
+                                tokenType = {tokenType}
+
                             />
                         )
                     })
@@ -110,6 +134,8 @@ export default function DropableColumn({
                                 setDragItem={setDragItem}
                                 setDropCol={setDropCol}
                                 iconDelete = {iconDelete}
+                                tokenType = {tokenType}
+
                             />
                         )
                     })}
@@ -124,6 +150,8 @@ export default function DropableColumn({
                                 setDragItem={setDragItem}
                                 setDropCol={setDropCol}
                                 iconDelete = {iconDelete}
+                                tokenType = {tokenType}
+
                             />
                         )
                     })}
@@ -138,6 +166,8 @@ export default function DropableColumn({
                                 setDragItem={setDragItem}
                                 setDropCol={setDropCol}
                                 iconDelete = {iconDelete}
+                                tokenType = {tokenType}
+
                             />
                         )
                     })}
@@ -152,6 +182,8 @@ export default function DropableColumn({
                                 setDragItem={setDragItem}
                                 setDropCol={setDropCol}
                                 iconDelete = {iconDelete}
+                                tokenType = {tokenType}
+
                             />
                         )
                     })}

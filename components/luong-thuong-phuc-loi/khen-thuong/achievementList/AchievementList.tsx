@@ -7,7 +7,7 @@ import MyPagination from "@/components/pagination/Pagination";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 
 export interface AchievementList {}
-export default function AchievementList({ iconEdit }: any) {
+export default function AchievementList({ iconEdit, tokenType }: any) {
   const [data, setData] = useState<any>();
   const [currentPage, setCurrentPage] = useState<any>(1);
   const [keyWords, setKeyWords] = useState<any>("");
@@ -41,6 +41,7 @@ export default function AchievementList({ iconEdit }: any) {
         modal={<></>}
         keyWords={handleSearch}
         iconEdit = {iconEdit}
+        tokenType = {tokenType}
       ></RewardTable>
       <div className={`${styles.pagination}`}>
         <MyPagination

@@ -15,7 +15,7 @@ import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_f
 import Head from "next/head";
 
 type SelectOptionType = { label: string; value: any };
-export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete }) {
+export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete, tokenType }) {
   const [openModal, setOpenModal] = useState(0);
   const [isOpenModal, setModalOpen] = useState(false);
   const [isUpdateProcess, setUpdateProcess] = useState<any>(null);
@@ -159,7 +159,7 @@ export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete }) {
       <div className={`${styles.tab_content}`}>
         <div className={`${styles.tab_pane}`}>
           <div className={`${styles.body}`}>
-            {iconAdd && (
+            {tokenType === 1 ? (
               <div className={`${styles.recruitment}`}>
                 <button
                   className={`${styles.add}`}
@@ -184,6 +184,33 @@ export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete }) {
                   Thêm giai đoạn
                 </button>
               </div>
+            ): (
+              (!iconAdd) ? <></> : (
+                <div className={`${styles.recruitment}`}>
+                <button
+                  className={`${styles.add}`}
+                  onClick={() => setOpenModal(1)}
+                >
+                  <img
+                    style={{ verticalAlign: "middle" }}
+                    src={`/add.png`}
+                    alt=""
+                  />
+                  Thêm ứng viên
+                </button>
+                <button
+                  className={`${styles.add}`}
+                  onClick={() => setOpenModal(2)}
+                >
+                  <img
+                    style={{ verticalAlign: "middle" }}
+                    src={`/add.png`}
+                    alt=""
+                  />
+                  Thêm giai đoạn
+                </button>
+              </div>
+              )
             )}
             {openModal === 1 ? (
               <CandidateAddModal
@@ -340,6 +367,7 @@ export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete }) {
                       setProcess_id={setProcess_id}
                       iconEdit={iconEdit}
                       iconDelete={iconDelete}
+                      tokenType = {tokenType}
                     />
                   );
                 })}

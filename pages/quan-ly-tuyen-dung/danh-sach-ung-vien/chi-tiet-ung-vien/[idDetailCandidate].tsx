@@ -17,6 +17,9 @@ import { GetJobDetails } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 import { FailJobDetails } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 import { CancelJobDetails } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 import Head from "next/head";
+import { getToken } from "@/pages/api/token";
+import { getDataAuthentication } from "@/pages/api/Home/HomeService";
+import jwt_decode from "jwt-decode";
 
 
 interface Option {
@@ -31,14 +34,41 @@ interface Options {
     tinhtranghonnhan: Option[];
 }
 
-export default function DetailCandidate({ onCancel }: any) {
+export default function DetailCandidate({ onCancel,  }: any) {
     const router = useRouter();
     const id: any = router.asPath.split('/').pop();
     const [openModalDetail, setOpenModalDetail] = useState(false);
     const [animateModal, setAnimateModal] = useState(false);
     const [isCandidate, setCandidate] = useState<any>(null)
     const [isCandidateProcess, setCandidateProcess] = useState<any>(null)
-    const [isProcessName, setProcessName] = useState<any>(null);    
+    const [isProcessName, setProcessName] = useState<any>(null);  
+    const [tokenType, setTokenType] = useState<any>(null);
+  const [displayIcon, setDisplayIcon] = useState<any>();
+
+    const COOKIE_KEY = "user_365";
+  
+    useEffect(() => {
+      const currentCookie = getToken(COOKIE_KEY);
+      if (currentCookie) {
+        const decodedToken: any = jwt_decode(currentCookie);
+        setTokenType(decodedToken?.data?.type);
+      }
+    }, []);
+  
+    useEffect(() => {
+      try {
+        const fetchData = async () => {
+          const response = await getDataAuthentication();
+          setDisplayIcon(response?.data?.data?.infoRoleTD);
+        };
+        fetchData();
+      } catch (error) {
+      }
+    }, []);
+  
+    const perIdArray = displayIcon?.map((item) => item.perId);
+
+    const iconEdit = perIdArray?.includes(3);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -62,7 +92,6 @@ export default function DetailCandidate({ onCancel }: any) {
                         else {
                             const item = data?.data?.find((item: any) => item.id = Number(id?.slice(1, id?.length)))
                             setCandidate(item)
-                            console.log(item)
                         }
 
                     }
@@ -255,13 +284,25 @@ export default function DetailCandidate({ onCancel }: any) {
                   <p>Chi tiết hồ sơ ứng viên {isCandidate?.name}</p>
                 </div>
                 <div className={`${styles.text_right}`}>
-                  <a
+                  {tokenType === 1 ? (
+                    <a
                     onClick={handleOpenModal}
                     href=""
                     className={`${styles.edit_hs_uv}`}
                   >
                     <img src="/icon-edit-white.svg" />
                   </a>
+                  ): (
+                    (!iconEdit) ? <></> : (
+                      <a
+                    onClick={handleOpenModal}
+                    href=""
+                    className={`${styles.edit_hs_uv}`}
+                  >
+                    <img src="/icon-edit-white.svg" />
+                  </a>
+                    )
+                  )}
                 </div>
                 {openModalDetail &&
                 id?.charAt(0) === "u" &&
