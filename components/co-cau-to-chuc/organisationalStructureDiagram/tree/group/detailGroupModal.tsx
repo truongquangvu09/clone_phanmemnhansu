@@ -14,7 +14,7 @@ export default function DetailsGroupModal({ groupId, onCancel }: any) {
                 formData.append('groupId', groupId)
 
                 const response = await OrganizationalStructureDetail(formData)
-                setIsTitle(response.data)
+                setIsTitle(response?.data)
             } catch (error) {
                 throw error
             }

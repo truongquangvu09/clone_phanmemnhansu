@@ -7,7 +7,7 @@ import MyPagination from "@/components/pagination/Pagination";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 
 
-export interface PersonalReward {}
+export interface PersonalReward { }
 export default function PersonalReward({ iconAdd, iconEdit }: any) {
   const [data, setData] = useState<any>();
   const [currentPage, setCurrentPage] = useState<any>(1);
@@ -29,7 +29,6 @@ export default function PersonalReward({ iconAdd, iconEdit }: any) {
   useEffect(() => {
     const GetDataPersonalReward = async () => {
       const response = await GetDataAchievement(currentPage, 10, 1, keyWords);
-      console.log(response)
       setData(response?.data.data);
     };
     GetDataPersonalReward();
@@ -42,12 +41,12 @@ export default function PersonalReward({ iconAdd, iconEdit }: any) {
         display="block"
         data={newData}
         modal={<ModalReward></ModalReward>}
-        keyWords = {handleSearch}
-        updateData = {handleUpDateData}
-        iconAdd = {iconAdd}
-        iconEdit = {iconEdit}
+        keyWords={handleSearch}
+        updateData={handleUpDateData}
+        iconAdd={iconAdd}
+        iconEdit={iconEdit}
       ></RewardTable>
-      
+
       <div className={`${styles.pagination}`}>
         <MyPagination
           current={currentPage}

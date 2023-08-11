@@ -23,7 +23,7 @@ export default function RegulationDetailModal({ onCancel, idGroup }: RegulationD
         const fetchData = async () => {
             try {
                 const response = await RegulationsDetails(idGroup)
-                setDetailData(response.data)
+                setDetailData(response?.data)
             } catch (error) {
                 throw error
             }
@@ -35,7 +35,7 @@ export default function RegulationDetailModal({ onCancel, idGroup }: RegulationD
         const fetchData = async () => {
             try {
                 const response = await SpecifiedGroupList(10000, 1, keyWords)
-                setDataGroup(response.data)
+                setDataGroup(response?.data)
             } catch (error) {
                 throw error
             }

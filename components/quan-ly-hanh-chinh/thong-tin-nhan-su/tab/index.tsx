@@ -9,6 +9,7 @@ import { DepartmentList } from "@/pages/api/listPhongBan";
 import MyPagination from "@/components/pagination/Pagination";
 import { PostionCharData } from '@/pages/api/co_cau_to_chuc';
 import { format, parseISO } from "date-fns";
+import GetComId from "@/components/getComID";
 
 type SelectOptionType = { label: string, value: string }
 export interface TabEmployeeManagement {
@@ -20,7 +21,7 @@ export default function TabEmployeeManagement({ iconAdd, iconEdit }: any) {
     const [activeButton, setActiveButton] = useState(0)
     const [employeeCount, setEmployeeCount] = useState(10)
     const [detailModal, setDetailModal] = useState(false)
-    const [editModal, setEditmodal] = useState(false)
+    const [editModal, setEditmodal] = useState<any>(null)
     const [EmpData, setEmpData] = useState<any>(null)
     const [departmentList, setDepartmentList] = useState<any>(null)
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
@@ -30,15 +31,14 @@ export default function TabEmployeeManagement({ iconAdd, iconEdit }: any) {
     const [PostionCharDatas, setPosttionCharData] = useState<any>(null)
     const [isSeach, setSearch] = useState<any>(null)
     const [visible, setVisible] = useState(false);
+    const comid: any = GetComId()
+
+    console.log(editModal);
 
 
     // -- đóng mở modal --
     const handleOpenDetailModal = () => {
         setDetailModal(!detailModal)
-    }
-
-    const handleOpenEditModal = () => {
-        setEditmodal(!editModal)
     }
 
     const handleCloseModal = () => {
@@ -51,7 +51,6 @@ export default function TabEmployeeManagement({ iconAdd, iconEdit }: any) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const comid: any = 1664
                 const formData = new FormData()
                 formData.append('com_id', comid)
                 const response = await DepartmentList(formData)
@@ -80,7 +79,6 @@ export default function TabEmployeeManagement({ iconAdd, iconEdit }: any) {
         const fetchData = async () => {
             try {
                 const formData = new FormData();
-                const comid: any = 1664
                 formData.append('dep_id', isDep_id)
                 formData.append('userName', isUserName)
                 formData.append('com_id', comid)
@@ -300,16 +298,13 @@ export default function TabEmployeeManagement({ iconAdd, iconEdit }: any) {
                                                     <td
                                                         className={`${styles.r_t_top_right}`} style={{ position: 'relative' }}>
                                                         <img src={`	/icon-settting.png`} alt=" " />
-                                                        <Setting
-                                                            handleOpenDetailModal={handleOpenDetailModal}
-                                                            detailModal={detailModal}
-                                                            handleCloseModal={handleCloseModal}
-                                                            item={item}
-                                                            positionNameToShow={positionNameToShow}
-                                                            iconEdit={iconEdit}
-                                                            handleOpenEditModal={handleOpenEditModal}
-                                                            editModal={editModal}
-                                                        />
+                                                        <div
+                                                            className={`${styles.settings}`} style={{ width: '100%' }}>
+                                                            <li onClick={handleOpenDetailModal}>Chi tiết</li>
+                                                            {detailModal && <DetailCandidateList onCancel={handleCloseModal} infoList={{ infoList: item, position: positionNameToShow }} />}
+                                                            {iconEdit && <li onClick={() => setEditmodal(item?._id)}>Chỉnh sửa</li>}
+                                                            {editModal === item?._id && <EditCandidateList onCancel={handleCloseModal} infoList={{ infoList: item, position: positionNameToShow }} />}
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             )
@@ -335,12 +330,3 @@ export default function TabEmployeeManagement({ iconAdd, iconEdit }: any) {
     )
 }
 
-const Setting = ({ handleOpenDetailModal, detailModal, handleCloseModal, item, positionNameToShow, iconEdit, handleOpenEditModal, editModal }: any) => (
-    <div
-        className={`${styles.settings}`} style={{ width: '100%' }}>
-        <li onClick={handleOpenDetailModal}>Chi tiết</li>
-        {detailModal && <DetailCandidateList onCancel={handleCloseModal} infoList={{ infoList: item, position: positionNameToShow }} />}
-        {iconEdit && <li onClick={handleOpenEditModal}>Chỉnh sửa</li>}
-        {editModal && <EditCandidateList onCancel={handleCloseModal} infoList={{ infoList: item, position: positionNameToShow }} />}
-    </div>
-)

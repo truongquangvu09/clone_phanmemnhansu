@@ -4,8 +4,6 @@ import { DeleteRegulations } from "@/pages/api/quy_dinh_chinh_sach";
 
 export default function DeleteRegulation({ onCancel, idGroup }: any) {
 
-    console.log({ idGroup });
-
     const handleSubmit = async () => {
         try {
             const formData = new FormData()

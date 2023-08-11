@@ -8,6 +8,7 @@ import { parseISO, format } from "date-fns";
 import { GetJobDetails } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 import { AddGetJob } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 import * as Yup from "yup";
+import GetComId from "@/components/getComID";
 
 type SelectOptionType = { label: string; value: any };
 
@@ -27,14 +28,12 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
     const [isNewList, setNewsList] = useState<any>(null);
     const [isCandidate, setCandidate] = useState<any>(null);
     const [errors, setErrors] = useState<any>({});
-
-    console.log(candidate);
+    const comid: any = GetComId()
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const formData = new FormData();
-                const comid: any = 1664;
                 formData.append("com_id", comid);
                 const response = await EmployeeList(formData);
                 if (response) {

@@ -9,8 +9,7 @@ type SelectOptionType = { label: string, value: any }
 
 export default function EditCandidateList({ onCancel, infoList, position }: any) {
 
-    console.log(infoList?.infoList);
-
+    console.log(infoList);
 
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
     const [isGender, setGender] = useState<any>(1)
@@ -26,9 +25,9 @@ export default function EditCandidateList({ onCancel, infoList, position }: any)
         const fetchData = async () => {
             try {
                 const response = await PostionCharData()
-                setPosttionCharData(response.data)
+                setPosttionCharData(response?.data)
             } catch (error) {
-                console.log({ error });
+
             }
         }
         fetchData()
@@ -100,8 +99,6 @@ export default function EditCandidateList({ onCancel, infoList, position }: any)
     };
 
     const allPositions = PostionCharDatas?.data?.flat();
-    console.log(PostionCharDatas);
-
 
     const chonpchưvuOptions = useMemo(
         () =>

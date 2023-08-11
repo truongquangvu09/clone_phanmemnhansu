@@ -4,7 +4,7 @@ import Select from "react-select";
 import { GetDepartmentList } from "@/pages/api/luong-thuong-phuc-loi/reward";
 import { AddInfringesGroup } from "@/pages/api/luong-thuong-phuc-loi/discipline";
 import * as Yup from "yup";
-function AddModalCollectiveDiscipline({ animation,onClose,updateData }: any) {
+function AddModalCollectiveDiscipline({ animation, onClose, updateData }: any) {
 
   const [content, setContent] = useState<any>();
   const [listDep, setListDep] = useState<any>()
@@ -12,16 +12,16 @@ function AddModalCollectiveDiscipline({ animation,onClose,updateData }: any) {
   const [errors, setErrors] = useState<any>({});
 
   useEffect(() => {
-    const getData = async() => {
-      try{
+    const getData = async () => {
+      try {
         const response = await GetDepartmentList("1664")
-        setListDep(response?.data.data.data.map(item => ({name:"depId", value: item.dep_id, label : `${item.dep_name}`})))
-      }catch(err) {
-       
+        setListDep(response?.data.data.data.map(item => ({ name: "depId", value: item.dep_id, label: `${item.dep_name}` })))
+      } catch (err) {
+
       }
     }
     getData()
-  },[])
+  }, [])
 
   const options = {
     tenphongban: listDep,
@@ -57,7 +57,7 @@ function AddModalCollectiveDiscipline({ animation,onClose,updateData }: any) {
     try {
       await schema.validate(mergedObject, { abortEarly: false });
       const response = await AddInfringesGroup(mergedObject);
-      if( response?.status === 404) {
+      if (response?.status === 404) {
         alert('Không tìm thấy nhân viên trong phòng ban ')
       }
       else if (response?.status === 200) {
@@ -74,20 +74,19 @@ function AddModalCollectiveDiscipline({ animation,onClose,updateData }: any) {
       setErrors(validationErrors);
     }
   };
-console.log(errors)
 
   return (
     <>
       <div className={`${styles.overlay}`}></div>
-      <div className={`${styles.modal} ${styles.modal_setting}  ${animation ? styles.fade_in : styles.fade_out }`} style={{display:'block'}}>
+      <div className={`${styles.modal} ${styles.modal_setting}  ${animation ? styles.fade_in : styles.fade_out}`} style={{ display: 'block' }}>
         <div className={`${styles.modal_dialog} ${styles.contentquytrinh}`}>
           <div className={`${styles.modal_content} `}>
             {/* header */}
             <div className={`${styles.modal_header} ${styles.headquytrinh}`}>
               <h5 className={`${styles.modal_title}`}>
-                
-              THÊM MỚI VI PHẠM TẬP THỂ
-                
+
+                THÊM MỚI VI PHẠM TẬP THỂ
+
               </h5>
             </div>
             {/* body */}
@@ -96,7 +95,7 @@ console.log(errors)
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                  Tên lỗi vi phạm
+                    Tên lỗi vi phạm
                     <span className={`${styles.red}`}> *</span>
                   </label>
                   <div className={`${styles.inputright}`}>
@@ -126,7 +125,7 @@ console.log(errors)
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                  Căn cứ quy định
+                    Căn cứ quy định
                     <span className={`${styles.red}`}> *</span>
                   </label>
                   <div className={`${styles.inputright}`}>
@@ -156,7 +155,7 @@ console.log(errors)
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                  Số quy định xử lý vi phạm
+                    Số quy định xử lý vi phạm
                     <span className={`${styles.red}`}> *</span>
                   </label>
                   <div className={`${styles.inputright}`}>
@@ -186,14 +185,14 @@ console.log(errors)
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                  Thời gian vi phạm
+                    Thời gian vi phạm
                     <span className={`${styles.red}`}> *</span>
                   </label>
                   <div className={`${styles.inputright}`}>
                     <input
                       type="date"
                       className={`${styles.inputquytrinh}`}
-                      style={{height: '30.6px'}}
+                      style={{ height: '30.6px' }}
                       name="infringe_at"
                       onChange={handleContentChange}
                     ></input>
@@ -209,7 +208,7 @@ console.log(errors)
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                  Hình thức xử lý sai phạm
+                    Hình thức xử lý sai phạm
                     <span className={`${styles.red}`}> *</span>
                   </label>
                   <div className={`${styles.inputright}`}>
@@ -239,11 +238,11 @@ console.log(errors)
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                  Tập thể vi phạm
+                    Tập thể vi phạm
                     <span className={`${styles.red}`}> *</span>
                     {errors.dep_id && (
                       <>
-                        <div className={`${styles.errors}`}style={{marginTop: 6}}>
+                        <div className={`${styles.errors}`} style={{ marginTop: 6 }}>
                           {errors.dep_id}
                         </div>
                       </>
@@ -254,9 +253,9 @@ console.log(errors)
                   </label>
                   <div style={{ marginRight: "2%" }} className={`${styles.select}`}>
                     <Select
-                    
+
                       options={options.tenphongban}
-                      placeholder = {'--Vui lòng chọn--'}
+                      placeholder={'--Vui lòng chọn--'}
                       onChange={(option) =>
                         handleSelectionChange(option, options.tenphongban)
                       }
@@ -286,7 +285,7 @@ console.log(errors)
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                  Người ký quyết định
+                    Người ký quyết định
                     <span className={`${styles.red}`}> *</span>
                   </label>
                   <div className={`${styles.inputright}`}>
@@ -316,7 +315,7 @@ console.log(errors)
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                  Số tiền phạt
+                    Số tiền phạt
                     <span className={`${styles.red}`}></span>
                   </label>
                   <div className={`${styles.inputright}`}>
@@ -326,14 +325,14 @@ console.log(errors)
                       placeholder={'Số tiền phạt'}
                       name="price"
                       onChange={handleContentChange}
-                     
+
                     ></input>
                   </div>
                 </div>
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                  Lý do phạt
+                    Lý do phạt
                     <span className={`${styles.red}`}></span>
                   </label>
                   <div className={`${styles.inputright}`}>

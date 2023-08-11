@@ -14,6 +14,7 @@ import StageFailJob from "@/components/quan-ly-tuyen-dung/danh-sach-ung-vien/sta
 import StageCancelJob from "@/components/quan-ly-tuyen-dung/danh-sach-ung-vien/stageTransitionModal/stageCancelJob";
 import StageContactJob from "@/components/quan-ly-tuyen-dung/danh-sach-ung-vien/stageTransitionModal/stateContactJob";
 import Head from "next/head";
+import GetComId from "@/components/getComID";
 
 type SelectOptionType = { label: string; value: any };
 export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete }: any) {
@@ -34,6 +35,7 @@ export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete }: a
   const [isDropCol, setDropCol] = useState<any>(null);
   const [isProcess_id, setProcess_id] = useState<any>(null);
   const [animateModal, setAnimateModal] = useState(true);
+  const comid: any = GetComId()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,11 +70,10 @@ export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete }: a
     const fetchData = async () => {
       try {
         const formData = new FormData();
-        const comid: any = 1664;
         const response = await EmployeeList(formData);
-        setEmpData(response.data);
+        setEmpData(response?.data);
       } catch (error) {
-        console.log({ error });
+
       }
     };
     fetchData();
@@ -319,7 +320,7 @@ export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete }: a
             </div>
             <div
               className={`${styles.export_excel}`}
-              style={{ paddingRight: 20, right: 0, position: "absolute" }}
+              style={{ paddingRight: 20, right: 0, position: "relative" }}
             >
               <a href="" className={`${styles.t_excel}`}>
                 <img src={`/t-icon-excel.svg`} alt="" />

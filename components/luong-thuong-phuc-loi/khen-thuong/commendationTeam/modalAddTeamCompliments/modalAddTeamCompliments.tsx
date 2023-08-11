@@ -5,13 +5,13 @@ import Select from "react-select";
 import * as Yup from "yup";
 import { AddAchievementGroup, GetDepartmentList } from "@/pages/api/luong-thuong-phuc-loi/reward";
 
-function ModalAddTeamCompliments({ animation,onClose, updateData }: any) {
+function ModalAddTeamCompliments({ animation, onClose, updateData }: any) {
   const [dep, setDep] = useState<any>()
   const [content, setContent] = useState<any>();
   const [listUser, setListUser] = useState<any>()
   const [appellation, setAppellation] = useState<any>({})
   const [errors, setErrors] = useState<any>({});
-  const [hidden , setHidden ] = useState(false)
+  const [hidden, setHidden] = useState(false)
   const mergedObject = { ...content, ...listUser, ...appellation };
 
   const schema = Yup.object().shape({
@@ -24,29 +24,28 @@ function ModalAddTeamCompliments({ animation,onClose, updateData }: any) {
     appellation: Yup.string().required("Danh hiệu không được để trống"),
     achievement_level: Yup.string().required("Cấp khen không được để trống"),
   });
-  
+
   useEffect(() => {
-    const getData = async() => {
-      try{
+    const getData = async () => {
+      try {
         const response = await GetDepartmentList("1664")
-        setDep(response?.data.data.data.map(item => ({name:"depId", value: item.dep_id, label : `${item.dep_name}`})))
-      }catch(err) {
-        console.log(err)
+        setDep(response?.data.data.data.map(item => ({ name: "depId", value: item.dep_id, label: `${item.dep_name}` })))
+      } catch (err) {
       }
     }
     getData()
-  },[])
+  }, [])
 
   const options = {
     tenphongban: dep,
 
     hinhthuckhenthuong: [
-      {name: "achievement_type",  value: "1", label: "Huân Chương" },
-      {name: "achievement_type",  value: "2", label: "Huy Chương" },
-      {name: "achievement_type",  value: "3", label: "Giấy khen" },
-      {name: "achievement_type",  value: "4", label: "Thăng chức" },
-      {name: "achievement_type",  value: "5", label: "Kỉ niệm chương" },
-      {name: "achievement_type",  value: "6", label: "Tiền mặt" },
+      { name: "achievement_type", value: "1", label: "Huân Chương" },
+      { name: "achievement_type", value: "2", label: "Huy Chương" },
+      { name: "achievement_type", value: "3", label: "Giấy khen" },
+      { name: "achievement_type", value: "4", label: "Thăng chức" },
+      { name: "achievement_type", value: "5", label: "Kỉ niệm chương" },
+      { name: "achievement_type", value: "6", label: "Tiền mặt" },
     ],
   };
 
@@ -57,7 +56,7 @@ function ModalAddTeamCompliments({ animation,onClose, updateData }: any) {
       [name]: value,
     }));
   };
-  
+
   const handleSelectionChange = (selectedOptions, actionMeta) => {
     setListUser((prevSelectedOption) => ({
       ...prevSelectedOption,
@@ -80,31 +79,31 @@ function ModalAddTeamCompliments({ animation,onClose, updateData }: any) {
   };
 
   useEffect(() => {
-    if(appellation.achievement_type === "6") {
+    if (appellation.achievement_type === "6") {
       setHidden(true)
-    }else {
+    } else {
       setHidden(false)
     }
-  },[appellation.achievement_type])
+  }, [appellation.achievement_type])
 
 
-  const handleSubmit = async (e: any) => {    
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
       await schema.validate(mergedObject, { abortEarly: false });
       const response = await AddAchievementGroup(mergedObject)
-      if(response?.status !== 200){
+      if (response?.status !== 200) {
         alert('Thêm mới khen thưởng không thành công')
       }
-      if(response?.status === 400) {
+      if (response?.status === 400) {
         setErrors('Phòng ban của bạn không có nhân viên')
       }
-      if( response?.status === 200) {
+      if (response?.status === 200) {
         onClose()
         updateData(response?.data)
       }
 
-    }catch (error: any) {
+    } catch (error: any) {
       const validationErrors = {};
       if (error?.inner) {
         error.inner.forEach((err) => {
@@ -118,7 +117,7 @@ function ModalAddTeamCompliments({ animation,onClose, updateData }: any) {
   return (
     <>
       <div className={`${styles.overlay}`}></div>
-      <div className={`${styles.modal} ${styles.modal_setting}  ${animation ? styles.fade_in : styles.fade_out }`} style={{display:'block'}}>
+      <div className={`${styles.modal} ${styles.modal_setting}  ${animation ? styles.fade_in : styles.fade_out}`} style={{ display: 'block' }}>
         <div className={`${styles.modal_dialog} ${styles.contentquytrinh}`}>
           <div className={`${styles.modal_content} `}>
             {/* header */}
@@ -139,10 +138,10 @@ function ModalAddTeamCompliments({ animation,onClose, updateData }: any) {
                     <input
                       type="text"
                       name="achievement_id"
-                       onChange={handleContentChange}
+                      onChange={handleContentChange}
                       className={`${styles.inputquytrinh}`}
                       placeholder="Nhập số quyết định"
-                     
+
                     ></input>
                     {errors.achievement_id && (
                       <>
@@ -193,11 +192,11 @@ function ModalAddTeamCompliments({ animation,onClose, updateData }: any) {
 
                 <div className={`${styles.form_groups}`}>
                   <label>
-                  Tên phòng ban 
+                    Tên phòng ban
                     <span className={`${styles.red}`}> *</span>
-                     {errors.depId && (
+                    {errors.depId && (
                       <>
-                        <div className={`${styles.errors}`} style={{marginTop: '6px'}}>
+                        <div className={`${styles.errors}`} style={{ marginTop: '6px' }}>
                           {errors.depId}
                         </div>
                       </>
@@ -232,7 +231,7 @@ function ModalAddTeamCompliments({ animation,onClose, updateData }: any) {
                         }),
                       }}
                     />
-                   
+
                   </div>
                 </div>
 
@@ -244,7 +243,7 @@ function ModalAddTeamCompliments({ animation,onClose, updateData }: any) {
                   <div className={`${styles.inputright}`}>
                     <input
                       type="text"
-                      name = 'created_by'
+                      name='created_by'
                       className={`${styles.inputquytrinh}`}
                       placeholder="Người ký quyết định"
                       onChange={handleContentChange}
@@ -277,12 +276,12 @@ function ModalAddTeamCompliments({ animation,onClose, updateData }: any) {
                       name="achievement_at"
                       className={`${styles.inputquytrinh}`}
                       placeholder="Nhập tên giai đoạn"
-                      style={{height:'30.6px'}} 
+                      style={{ height: '30.6px' }}
                       onChange={handleContentChange}
                     ></input>
-                   {errors.achievement_at && (
+                    {errors.achievement_at && (
                       <>
-                        <picture style={{display: 'none'}}>
+                        <picture style={{ display: 'none' }}>
                           <img
                             className={`${styles.icon_err}`}
                             src={`${"/danger.png"}`}
@@ -305,9 +304,9 @@ function ModalAddTeamCompliments({ animation,onClose, updateData }: any) {
                       className={`${styles.red} ${styles.float_right}`}
                     ></div>
                   </label>
-                  <div style={{ marginRight: "2%"}}  className={`${styles.select}`}>
+                  <div style={{ marginRight: "2%" }} className={`${styles.select}`}>
                     <Select
-                      
+
                       onChange={(option) =>
                         handleSelectionChangeAppellation(option, options.hinhthuckhenthuong)
                       }
@@ -336,7 +335,7 @@ function ModalAddTeamCompliments({ animation,onClose, updateData }: any) {
                     />
                     {errors.achievement_type && (
                       <>
-                        <picture style={{display: 'none'}}>
+                        <picture style={{ display: 'none' }}>
                           <img
                             className={`${styles.icon_err}`}
                             src={`${"/danger.png"}`}
@@ -351,68 +350,68 @@ function ModalAddTeamCompliments({ animation,onClose, updateData }: any) {
                   </div>
                 </div>
 
-               {hidden && (
-                <>
-                 <div className={`${styles.form_groups}`}>
-                  <label>
-                    Số tiền
-                    <span className={`${styles.red}`}> *</span>
-                  </label>
-                  <div className={`${styles.inputright}`}>
-                    <input 
-                      style={{height: '28px'}}
-                      type="text"
-                      name = 'price'
-                      className={`${styles.inputquytrinh}`}
-                      placeholder="Số tiền"
-                      onChange={handleContentChange}
-                    ></input>
-                    {errors.price && (
-                      <>
-                        <picture>
-                          <img
-                            className={`${styles.icon_err}`}
-                            src={`${"/danger.png"}`}
-                            alt="Lỗi"
-                          ></img>
-                        </picture>
-                        <div className={`${styles.errors}`}>
-                          {errors.price}
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </div>
+                {hidden && (
+                  <>
+                    <div className={`${styles.form_groups}`}>
+                      <label>
+                        Số tiền
+                        <span className={`${styles.red}`}> *</span>
+                      </label>
+                      <div className={`${styles.inputright}`}>
+                        <input
+                          style={{ height: '28px' }}
+                          type="text"
+                          name='price'
+                          className={`${styles.inputquytrinh}`}
+                          placeholder="Số tiền"
+                          onChange={handleContentChange}
+                        ></input>
+                        {errors.price && (
+                          <>
+                            <picture>
+                              <img
+                                className={`${styles.icon_err}`}
+                                src={`${"/danger.png"}`}
+                                alt="Lỗi"
+                              ></img>
+                            </picture>
+                            <div className={`${styles.errors}`}>
+                              {errors.price}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </div>
 
-                <div className={`${styles.form_groups}`}>
-                  <label>
-                    Lý do
-                    <span className={`${styles.red}`}> *</span>
-                  </label>
-                  <div className={`${styles.inputright}`}>
-                    <textarea
-                      className={`${styles.inputquytrinh}`}
-                      onChange={handleContentChange}
-                      name= 'resion'
-                    ></textarea>
-                    {errors.resion && (
-                      <>
-                        <picture>
-                          <img
-                            className={`${styles.icon_err}`}
-                            src={`${"/danger.png"}`}
-                            alt="Lỗi"
-                          ></img>
-                        </picture>
-                        <div className={`${styles.errors}`}>
-                          {errors.resion}
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </div>
-                </>
-               )}
+                    <div className={`${styles.form_groups}`}>
+                      <label>
+                        Lý do
+                        <span className={`${styles.red}`}> *</span>
+                      </label>
+                      <div className={`${styles.inputright}`}>
+                        <textarea
+                          className={`${styles.inputquytrinh}`}
+                          onChange={handleContentChange}
+                          name='resion'
+                        ></textarea>
+                        {errors.resion && (
+                          <>
+                            <picture>
+                              <img
+                                className={`${styles.icon_err}`}
+                                src={`${"/danger.png"}`}
+                                alt="Lỗi"
+                              ></img>
+                            </picture>
+                            <div className={`${styles.errors}`}>
+                              {errors.resion}
+                            </div>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </>
+                )}
 
                 <div className={`${styles.form_groups}`}>
                   <label>
@@ -422,7 +421,7 @@ function ModalAddTeamCompliments({ animation,onClose, updateData }: any) {
                   <div className={`${styles.inputright}`}>
                     <input
                       type="text"
-                      name= 'appellation'
+                      name='appellation'
                       className={`${styles.inputquytrinh}`}
                       placeholder="Danh hiệu"
                       onChange={handleContentChange}

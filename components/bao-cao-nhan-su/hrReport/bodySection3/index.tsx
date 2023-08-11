@@ -8,8 +8,6 @@ export default function InfomationSection3({
 }: any) {
     const categorie = dateInRange;
 
-    console.log(dateInRange);
-
     return (
         <div className={`${styles.wrapper}`}>
             <div className={`${styles.t_chart_bot}`} style={{ marginBottom: 40 }}>

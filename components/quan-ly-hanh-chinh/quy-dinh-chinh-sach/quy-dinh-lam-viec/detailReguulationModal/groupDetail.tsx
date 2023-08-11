@@ -11,14 +11,13 @@ interface GroupDetailModalProps {
 }
 
 export default function GroupDetailModal({ onCancel, idGroup }: GroupDetailModalProps) {
-    console.log({ idGroup });
     const [DetailData, setDetailData] = useState<any | null>(null)
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await GroupDetails(idGroup)
-                setDetailData(response.data)
+                setDetailData(response?.data)
             } catch (error) {
                 throw error
             }

@@ -5,6 +5,7 @@ import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_f
 import { DetailReport } from "@/pages/api/bao-cao-nhan-su/HrReportService";
 import { EmployeeList } from "@/pages/api/listNhanVien";
 import { format, parseISO } from "date-fns";
+import GetComId from "@/components/getComID";
 
 type SelectOptionType = { value: string, label: string }
 export interface TabSalary {
@@ -17,6 +18,7 @@ export default function TabSalary({ children }: any) {
     const [EmpData, setEmpData] = useState<any>(null)
     const [isEmp_id, setEmp_id] = useState<any>("")
     const [isSeach, setSearch] = useState<any>(null);
+    const comid: any = GetComId()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,7 +32,7 @@ export default function TabSalary({ children }: any) {
                 formData.append('to_date', toDate)
                 const response = await DetailReport(formData)
                 if (response) {
-                    setSalaryList(response.data)
+                    setSalaryList(response?.data)
                 }
             } catch (error) {
                 throw error
@@ -44,11 +46,10 @@ export default function TabSalary({ children }: any) {
         const fetchData = async () => {
             try {
                 const formData = new FormData();
-                const comid: any = 1664
                 const response = await EmployeeList(formData)
-                setEmpData(response.data)
+                setEmpData(response?.data)
             } catch (error) {
-                console.log({ error });
+
             }
         }
         fetchData()

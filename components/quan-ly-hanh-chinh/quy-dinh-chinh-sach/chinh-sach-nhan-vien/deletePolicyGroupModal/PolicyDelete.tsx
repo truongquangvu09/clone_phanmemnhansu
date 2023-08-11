@@ -6,8 +6,6 @@ import { DeletePolicy } from "@/pages/api/quy_dinh_chinh_sach";
 
 export default function DeletePolicys({ onCancel, idGroup }: any) {
 
-    console.log({ idGroup });
-
     const handleSubmit = async () => {
         try {
             const formData = new FormData()

@@ -8,6 +8,7 @@ import { GetListNews } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
 import * as Yup from "yup";
 import Selects from "@/components/select";
 import HandleAddAnotherSkill from "./addAnotherSkill";
+import GetComId from "@/components/getComID";
 
 type SelectOptionType = { label: string, value: any }
 
@@ -29,16 +30,16 @@ export default function CandidateAddModal({ onCancel, animation }: any) {
     const [isEmpList, setEmpList] = useState<any>(null)
     const [isNewList, setNewsList] = useState<any>(null);
     const [errors, setErrors] = useState<any>({});
+    const comid: any = GetComId()
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const formData = new FormData()
-                const comid: any = 1664
                 formData.append('com_id', comid)
                 const response = await EmployeeList(formData)
                 if (response) {
-                    setEmpList(response.data)
+                    setEmpList(response?.data)
                 }
             } catch (error) {
                 throw error
@@ -52,7 +53,7 @@ export default function CandidateAddModal({ onCancel, animation }: any) {
             try {
                 const response = await GetListNews(1, 2000, "", "", "")
                 if (response) {
-                    setNewsList(response.data)
+                    setNewsList(response?.data)
                 }
             } catch (error) {
                 throw error

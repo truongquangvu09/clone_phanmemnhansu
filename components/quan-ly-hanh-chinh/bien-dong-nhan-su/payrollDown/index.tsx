@@ -9,6 +9,7 @@ import DeletePayrollDowns from "./deletePayroll";
 import { PayrollDownList } from "@/pages/api/bien_dong_nhan_su";
 import { EmployeeList } from "@/pages/api/listNhanVien";
 import { DepartmentList } from "@/pages/api/listPhongBan";
+import GetComId from "@/components/getComID";
 
 type SelectOptionType = { label: string, value: string }
 
@@ -24,6 +25,7 @@ export default function TabPayrollDown({ iconAdd, iconEdit, iconDelete }: any) {
     const [isEmp_id, setEmp_id] = useState<any>("")
     const [isSeach, setSearch] = useState<any>(null)
     const [infoList, setInfoList] = useState<any>(null)
+    const comid: any = GetComId()
 
 
     useEffect(() => {
@@ -50,7 +52,6 @@ export default function TabPayrollDown({ iconAdd, iconEdit, iconDelete }: any) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const comid: any = 1664
                 const formData = new FormData()
                 formData.append('com_id', comid)
                 const response = await DepartmentList(formData)
@@ -66,7 +67,6 @@ export default function TabPayrollDown({ iconAdd, iconEdit, iconDelete }: any) {
         const fetchData = async () => {
             try {
                 const formData = new FormData();
-                const comid: any = 1664
                 const response = await EmployeeList(formData)
                 setEmpData(response?.data)
             } catch (error) {
@@ -153,7 +153,7 @@ export default function TabPayrollDown({ iconAdd, iconEdit, iconDelete }: any) {
                             {iconAdd && <button className={`${styles.add} ${styles.add_planning}`} onClick={() => setOpenModal(1)}>
                                 <img style={{ verticalAlign: 'middle' }} src={`/add.png`} alt="" />Thêm mới giảm biên chế
                             </button>}
-                            <div className={`${styles.export_excel}`} style={{ paddingRight: 20, right: 0, position: 'absolute' }}>
+                            <div className={`${styles.export_excel}`} style={{ paddingRight: 20, right: 0, position: 'relative' }}>
                                 <a href="" className={`${styles.t_excel} ${styles.t_excel_payroll}`} >
                                     <img src={`/t-icon-excel.svg`} alt="" />
                                     Xuất file Excel
@@ -277,10 +277,10 @@ export default function TabPayrollDown({ iconAdd, iconEdit, iconDelete }: any) {
                                                 <td>{format(parseISO(item.time), 'dd-MM-yyyy')}</td>
                                                 {iconDelete || iconEdit ? (
                                                     <td>
-                                                    {iconEdit && <a onClick={() => handleOpenEdit(item)} className={`${styles.btn_edit}`}><img src={`/icon_edit.svg`} alt="" /></a>}
-                                                    {iconDelete && <a onClick={() => setOpenDeleteModal(item.ep_id)} className={`${styles.btn_delete}`}><img src={`/icon_delete.svg`} alt="" /></a>}
-                                                </td>
-                                                ): null}
+                                                        {iconEdit && <a onClick={() => handleOpenEdit(item)} className={`${styles.btn_edit}`}><img src={`/icon_edit.svg`} alt="" /></a>}
+                                                        {iconDelete && <a onClick={() => setOpenDeleteModal(item.ep_id)} className={`${styles.btn_delete}`}><img src={`/icon_delete.svg`} alt="" /></a>}
+                                                    </td>
+                                                ) : null}
                                             </tr>
                                         ))}
                                     </tbody>

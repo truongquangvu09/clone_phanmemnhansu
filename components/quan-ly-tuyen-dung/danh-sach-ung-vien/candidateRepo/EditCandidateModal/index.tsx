@@ -8,6 +8,7 @@ import { GetListNews } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
 import Selects from "@/components/select";
 import * as Yup from "yup";
 import { parseISO, format } from "date-fns";
+import GetComId from "@/components/getComID";
 
 type SelectOptionType = { label: string; value: any };
 
@@ -36,13 +37,12 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
     const [isEmpList, setEmpList] = useState<any>(null);
     const [isNewList, setNewsList] = useState<any>(null);
     const [errors, setErrors] = useState<any>({});
-
+    const comid: any = GetComId()
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const formData = new FormData();
-                const comid: any = 1664;
                 formData.append("com_id", comid);
                 const response = await EmployeeList(formData);
                 if (response) {

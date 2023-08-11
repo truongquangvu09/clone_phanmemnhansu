@@ -66,7 +66,7 @@ export default function ItemCandidate2({ data, process_id, setModalOpen, setDrop
                         <div className={`${styles.hs_body_card_no2}`}>
                             <p>{data?.canName}</p>
                             <p>SĐT: <span>{data?.phone}</span></p>
-                            <p>{data?.title}</p>
+                            <p className={`${styles.word_wrap}`}>{data?.title}</p>
                             <Rating size={27} initialValue={data?.starVote} disableFillHover className={`${styles.star_rating}`} />
                         </div>
                         <div className={`${styles.hs_body_card_no3}`}>
@@ -76,7 +76,7 @@ export default function ItemCandidate2({ data, process_id, setModalOpen, setDrop
                                     <ul style={{ marginBottom: 0, marginTop: 0 }}>
                                         <li onClick={() => handleClickDetail(data?.id)}>Xem chi tiết</li>
                                         {iconDelete && <li onClick={() => setDelete(data?.id)}>Xóa hồ sơ</li>}
-                                        {isDelete !== 0 && <DeleteCandidate onCancel={handleClosemodal} idCandidate={isDelete} />}
+                                        {isDelete !== 0 && <DeleteCandidate animation={animateModal} onCancel={handleClosemodal} idCandidate={isDelete} />}
                                     </ul>
                                 </div>
                             </a>
@@ -84,7 +84,7 @@ export default function ItemCandidate2({ data, process_id, setModalOpen, setDrop
                     </div>
                     <div className={`${styles.hs_footer}`}>
                         <p style={{ textAlign: 'center' }}>Nhân viên thực hiện:
-                            <span>Phùng Ngọc Anh</span>
+                            <span>{data?.nameHr}</span>
                         </p>
                     </div>
                 </div>

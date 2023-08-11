@@ -50,20 +50,20 @@ const MemberViewBoxRoom = ({
                 <span style={{ color: '#474747', fontWeight: 600 }}>{text_part}</span>
                 {iconEdit && (
                     <button
-                    className={`${styles.edit_dep}`}
-                    onClick={() =>
-                        handleDataUpdateRoom({
-                            dep_id: idRoom,
-                            dep_name: text_part,
-                            manager,
-                            deputy,
-                            total_emp: employeeNumber,
-                            description: describe
-                        })
-                    }
-                >
-                    <img src={`/vn_icon-edit.svg`} />
-                </button>
+                        className={`${styles.edit_dep}`}
+                        onClick={() =>
+                            handleDataUpdateRoom({
+                                dep_id: idRoom,
+                                dep_name: text_part,
+                                manager,
+                                deputy,
+                                total_emp: employeeNumber,
+                                description: describe
+                            })
+                        }
+                    >
+                        <img src={`/vn_icon-edit.svg`} />
+                    </button>
                 )}
             </div>
             <div className={`${styles.member_details_body}`}>
@@ -94,7 +94,7 @@ const MemberViewBoxNest = ({
     setOpenModalEditNest,
     setOpenModalDetailsNest,
     handleDataUpdateNest,
-    iconEdit 
+    iconEdit
 }: any) => (
     <div className={`${styles.member_view_box} ${styles.member_view_box_top_3}`} style={{ display: 'flex', width: 'inherit' }}>
         <div className={`${styles.member_detail}`} style={{ width: '100%' }}>
@@ -143,7 +143,7 @@ const MemberViewBoxGroup = ({
     setOpenModalEditGroup,
     setOpenModalDetailsGroup,
     handleDataUpdateGroup,
-    iconEdit 
+    iconEdit
 }: any) => (
     <div className={`${styles.member_view_box} ${styles.member_view_box_top_3}`} style={{ display: 'flex', width: 'inherit' }}>
         <div className={`${styles.member_detail}`} style={{ width: '100%' }}>
@@ -201,7 +201,7 @@ const MemberViewBoxCompany = ({
 
 );
 const defaultValue = { label: 'Default Option', value: 'default' };
-const StyledTreeExample = ({iconEdit}) => {
+const StyledTreeExample = ({ iconEdit }) => {
 
     const [openModalEdit, setOpenModalEdit] = useState(0)
     const [openModalDetails, setOpenModalDetails] = useState(0)
@@ -281,7 +281,7 @@ const StyledTreeExample = ({iconEdit}) => {
         const fetchData = async () => {
             try {
                 const response = await OrganizationalStructureData()
-                setData(response.data)
+                setData(response?.data)
             } catch (error) {
 
             }
@@ -325,7 +325,7 @@ const StyledTreeExample = ({iconEdit}) => {
                                     setOpenModalEdit={() => setOpenModalEdit(dep?.dep_id)}
                                     handleDataUpdateRoom={handleDataUpdateRoom}
                                     setOpenModalDetails={() => setOpenModalDetails(dep?.dep_id)}
-                                    iconEdit = {iconEdit}
+                                    iconEdit={iconEdit}
                                 /></StyledNode>}>
                                     {dep?.infoTeam?.map((team: any) => {
                                         return (
@@ -344,9 +344,9 @@ const StyledTreeExample = ({iconEdit}) => {
                                                 noAttendance='12'
                                                 setOpenModalEditNest={() => setOpenModalEditNest(team?.gr_id)}
                                                 handleDataUpdateNest={handleDataUpdateNest}
-                                                setOpenModalDetailsNest={() => setOpenModalDetailsNest(team?.gr_id)} 
-                                                iconEdit = {iconEdit}
-                                                />
+                                                setOpenModalDetailsNest={() => setOpenModalDetailsNest(team?.gr_id)}
+                                                iconEdit={iconEdit}
+                                            />
                                             </StyledNode>}>
                                                 {team?.infoGroup?.filter((group: any, index: number, self: any[]) =>
                                                     self.findIndex((g: any) => g.gr_id === group.gr_id) === index
@@ -369,7 +369,7 @@ const StyledTreeExample = ({iconEdit}) => {
                                                             setOpenModalEditGroup={() => setOpenModalEditGroup(group?.gr_id)}
                                                             handleDataUpdateGroup={handleDataUpdateGroup}
                                                             setOpenModalDetailsGroup={() => setOpenModalDetailsGroup(group?.gr_id)}
-                                                            iconEdit = {iconEdit}
+                                                            iconEdit={iconEdit}
                                                         /></StyledNode>} />
                                                     )
                                                 })}
@@ -392,7 +392,7 @@ const StyledTreeExample = ({iconEdit}) => {
                                     employeeNumber={com?.tong_nv}
                                     registered={com?.tong_nv_da_diem_danh}
                                     noAttendance={com?.tong_nv - com?.tong_nv_da_diem_danh}
-                                    iconEdit = {iconEdit}
+                                    iconEdit={iconEdit}
                                 // setOpenModalEdit={() => setOpenModalEdit(true)}
                                 /></StyledNode>}>
                                     {com?.infoDep?.map((dep: any) => {
@@ -410,7 +410,7 @@ const StyledTreeExample = ({iconEdit}) => {
                                                 noAttendance={dep?.total_emp - dep?.tong_nv_da_diem_danh}
                                                 setOpenModalEdit={() => setOpenModalEdit(dep?.dep_id)}
                                                 setOpenModalDetails={() => setOpenModalDetails(dep?.dep_id)}
-                                                iconEdit = {iconEdit}
+                                                iconEdit={iconEdit}
 
                                             /></StyledNode>}>
                                                 {dep?.infoTeam?.map((team: any) => {
@@ -427,9 +427,9 @@ const StyledTreeExample = ({iconEdit}) => {
                                                             registered='15'
                                                             noAttendance='12'
                                                             setOpenModalEditNest={() => setOpenModalEditNest(team?.gr_id)}
-                                                            setOpenModalDetailsNest={() => setOpenModalDetailsNest(team?.gr_id)} 
-                                                            iconEdit = {iconEdit}
-                                                            />
+                                                            setOpenModalDetailsNest={() => setOpenModalDetailsNest(team?.gr_id)}
+                                                            iconEdit={iconEdit}
+                                                        />
                                                         </StyledNode>}>
                                                             {team?.infoGroup?.map((group: any) => {
                                                                 return (
@@ -446,7 +446,7 @@ const StyledTreeExample = ({iconEdit}) => {
                                                                         noAttendance='12'
                                                                         setOpenModalEditGroup={() => setOpenModalEditGroup(group?.gr_id)}
                                                                         setOpenModalDetailsGroup={() => setOpenModalDetailsGroup(group?.gr_id)}
-                                                                        iconEdit = {iconEdit}
+                                                                        iconEdit={iconEdit}
 
                                                                     /></StyledNode>} />
                                                                 )

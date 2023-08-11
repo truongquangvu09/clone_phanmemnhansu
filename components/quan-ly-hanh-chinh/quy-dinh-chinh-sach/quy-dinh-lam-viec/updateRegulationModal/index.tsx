@@ -47,7 +47,7 @@ export default function UpdateRegulationsGroupsModal({ onCancel, idGroup }: Upda
         const fetchData = async () => {
             try {
                 const response = await GroupDetails(idGroup)
-                setDetailData(response.data)
+                setDetailData(response?.data)
             } catch (error) {
                 throw error
             }

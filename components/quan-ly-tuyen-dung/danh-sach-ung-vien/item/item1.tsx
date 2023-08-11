@@ -70,7 +70,7 @@ export default function ItemCandidate1({ data, setProcess_id, process_id, curren
                         <div className={`${styles.hs_body_card_no2}`}>
                             <p>{data?.name}</p>
                             <p>SĐT: <span>{data?.phone}</span></p>
-                            <p>{data?.title}</p>
+                            <p className={`${styles.word_wrap}`}>{data?.title}</p>
                             <Rating size={27} disableFillHover initialValue={data?.starVote} className={`${styles.star_rating}`} />
                         </div>
                         <div className={`${styles.hs_body_card_no3}`}>
@@ -80,7 +80,7 @@ export default function ItemCandidate1({ data, setProcess_id, process_id, curren
                                     <ul style={{ marginBottom: 0, marginTop: 0 }}>
                                         <li onClick={() => handleClickDetail(data?.id)} >Xem chi tiết</li>
                                         {iconDelete && <li onClick={() => setDelete(data?.id)}>Xóa hồ sơ</li>}
-                                        {isDelete !== 0 && <DeleteCandidate onCancel={handleClosemodal} idCandidate={isDelete} />}
+                                        {isDelete !== 0 && <DeleteCandidate animation={animateModal} onCancel={handleClosemodal} idCandidate={isDelete} />}
                                     </ul>
                                 </div>
                             </a>

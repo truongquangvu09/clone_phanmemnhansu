@@ -6,7 +6,6 @@ import { OrganizationalStructureDetail } from "@/pages/api/co_cau_to_chuc";
 export default function DetailsRoomModal({ depId, onCancel }: any) {
 
     const [isTitle, setIsTitle] = useState<any | null>(null)
-    console.log({ depId });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -15,7 +14,7 @@ export default function DetailsRoomModal({ depId, onCancel }: any) {
                 formData.append('depId', depId)
 
                 const response = await OrganizationalStructureDetail(formData)
-                setIsTitle(response.data)
+                setIsTitle(response?.data)
             } catch (error) {
                 throw error
             }

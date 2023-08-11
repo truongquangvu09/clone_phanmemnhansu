@@ -147,7 +147,6 @@ export default function StageFailJob({ onCancel, process_id, data, process_id_fr
             });
 
             const canid: any = process_id_from === 0 ? data?.id : data?.canId
-            console.log(data?.canId, data?.id, process_id_from);
 
             const formData = new FormData();
             formData.append("canId", canid);

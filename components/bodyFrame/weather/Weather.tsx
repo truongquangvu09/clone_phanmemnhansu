@@ -3,29 +3,29 @@ import { useEffect, useState } from 'react';
 import styles from '../bodyFrame_section2/bodyFrame_section2.module.css'
 
 interface WeatherData {
-    name: string;
-    sys: {
-      country: string;
-    };
-    weather: {
-      main: string;
-      description: string;
-      icon: string;
-    }[];
-    main: {
-      temp: number;
-      humidity: number;
-    };
-  }
+  name: string;
+  sys: {
+    country: string;
+  };
+  weather: {
+    main: string;
+    description: string;
+    icon: string;
+  }[];
+  main: {
+    temp: number;
+    humidity: number;
+  };
+}
 
-  export default function Weather () {
+export default function Weather() {
   const [latitude, setLatitude] = useState<null | number>(null);
   const [longitude, setLongitude] = useState<null | number>(null);
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
 
   function kelvinToCelsius(kelvin) {
     return (kelvin - 273.15).toFixed(2);
-}
+  }
   useEffect(() => {
     const getLocation = () => {
       if (navigator.geolocation) {
@@ -68,31 +68,30 @@ interface WeatherData {
     getWeatherData();
   }, [latitude, longitude]);
 
-  // console.log(weatherData)
   return (
     <div>
       {weatherData && latitude && longitude && (
         <div className={`${styles.item_right_weather}`}>
-        <div className={`${styles.right_top}`}>
-          <div className={`${styles.city_home}`}>{weatherData?.name}, {weatherData?.sys.country}</div>
-          <div className={`${styles.weather}`}>
-            <div>
-              <img
-                className={`${styles.weather_image}`}
-                src={`icon_weather/${weatherData?.weather[0].icon}.png`}
-                alt=""
-              />
-            </div>
-            <div className={`${styles.weather_flex}`}>
-              {/* <div className={`${styles.temperature}`}>{Math.round(weatherData.main.temp)}</div> */}
-              <div className={`${styles.temperature}`}>{kelvinToCelsius(weatherData?.main.temp)}</div>
-              <div className={`${styles.weather_sign}`}>
-                <img src={`	/doC.svg`} alt="thoitiet" />
+          <div className={`${styles.right_top}`}>
+            <div className={`${styles.city_home}`}>{weatherData?.name}, {weatherData?.sys.country}</div>
+            <div className={`${styles.weather}`}>
+              <div>
+                <img
+                  className={`${styles.weather_image}`}
+                  src={`icon_weather/${weatherData?.weather[0].icon}.png`}
+                  alt=""
+                />
+              </div>
+              <div className={`${styles.weather_flex}`}>
+                {/* <div className={`${styles.temperature}`}>{Math.round(weatherData.main.temp)}</div> */}
+                <div className={`${styles.temperature}`}>{kelvinToCelsius(weatherData?.main.temp)}</div>
+                <div className={`${styles.weather_sign}`}>
+                  <img src={`	/doC.svg`} alt="thoitiet" />
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
       )}
     </div>
   );

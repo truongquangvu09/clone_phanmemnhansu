@@ -8,6 +8,7 @@ import Image from "next/image";
 import { DetailReport } from "./api/bao-cao-nhan-su/HrReportService";
 import { DepartmentList } from "@/pages/api/listPhongBan";
 import { PostionCharData } from '@/pages/api/co_cau_to_chuc';
+import GetComId from "@/components/getComID";
 
 type SelectOptionType = { label: string, value: any }
 
@@ -71,12 +72,12 @@ export default function DetailHrReport({ children }: any) {
     const [isMaried, setMaried] = useState<any>("")
     const [isBirthday, setBirthday] = useState<any>("")
     const [isTitle, setTitle] = useState<any>("")
-    console.log(isTitle);
 
     const router = useRouter();
     const link: any = router.asPath.split('/').pop();
     const index: number = link.indexOf('?');
     const link_cut: any = index !== -1 ? link.slice(0, index) + '.html' : link + '.html';
+    const comid: any = GetComId()
 
     useEffect(() => {
         if (link.includes('gender=')) {
@@ -108,13 +109,13 @@ export default function DetailHrReport({ children }: any) {
                         if (link.includes("gender=") && link_cut && isGender !== "") {
                             formData.append("gender", isGender);
                             const response = await DetailReport(formData);
-                            setReportList(response.data);
+                            setReportList(response?.data);
 
                         }
                         if (link.includes("type=") && link_cut && isType !== "") {
                             formData.append("type", isType);
                             const response = await DetailReport(formData);
-                            setReportList(response.data);
+                            setReportList(response?.data);
 
                         }
                     }
@@ -123,7 +124,7 @@ export default function DetailHrReport({ children }: any) {
                         ;
                         formData.append("link", link_cut);
                         const response = await DetailReport(formData);
-                        setReportList(response.data);
+                        setReportList(response?.data);
 
                     }
                 }
@@ -139,11 +140,10 @@ export default function DetailHrReport({ children }: any) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const comid: any = 1664
                 const formData = new FormData()
                 formData.append('com_id', comid)
                 const response = await DepartmentList(formData)
-                setDepartmentList(response.data)
+                setDepartmentList(response?.data)
             } catch (error) {
                 throw error
             }
@@ -155,9 +155,9 @@ export default function DetailHrReport({ children }: any) {
         const fetchData = async () => {
             try {
                 const response = await PostionCharData()
-                setPosttionCharData(response.data)
+                setPosttionCharData(response?.data)
             } catch (error) {
-                console.log({ error });
+
             }
         }
         fetchData()

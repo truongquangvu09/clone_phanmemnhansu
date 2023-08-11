@@ -43,6 +43,12 @@
   color: #337ab7;
   font-weight: 600;
 }
+.choose_option ul {
+  padding: 0;
+}
+.choose_option li:hover {
+  border-left: 3px solid #337ab7;
+}
 .hs_footer {
   padding: 11px 5px;
   border-top: 1px dashed #999999;
@@ -53,4 +59,9 @@
   font-size: 12px;
   line-height: 14px;
   color: #474747;
+}
+.word_wrap {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

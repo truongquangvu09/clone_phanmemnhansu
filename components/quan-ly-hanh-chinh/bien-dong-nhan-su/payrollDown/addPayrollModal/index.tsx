@@ -4,6 +4,7 @@ import Select from 'react-select';
 import MyEditorNew from "@/components/myEditor";
 import { FetchDataDep, FetchDataOrganizationalStructure, FetchDataEmployee, FetchDataPosition, FetchDataSpecifiedGroup } from "@/components/util/listAll";
 import { ShiftList, AddPayrollDown } from "@/pages/api/bien_dong_nhan_su";
+import GetComId from "@/components/getComID";
 interface InputTextareaProps {
     onDescriptionChange: (data: any) => void
 }
@@ -62,6 +63,7 @@ export default function AddPayrollModal({ onCancel }: any) {
     const [isDep_id, setDep_id] = useState<any>(null)
     const [isType_id, setType_id] = useState<any>(null)
     const [isShift_id, setShift_id] = useState<any>(null)
+    const comid: any = GetComId()
 
     useEffect(() => {
         fetchData();
@@ -105,11 +107,10 @@ export default function AddPayrollModal({ onCancel }: any) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const comid: any = 1664
                 const formData = new FormData();
                 formData.append('companyID', comid)
                 const response = await ShiftList(formData)
-                setShiftList(response.data)
+                setShiftList(response?.data)
             } catch (error) {
                 throw error
             }

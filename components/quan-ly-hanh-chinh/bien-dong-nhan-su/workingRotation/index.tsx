@@ -9,6 +9,7 @@ import { parseISO, format } from 'date-fns';
 import { EmployeeList } from "@/pages/api/listNhanVien";
 import { DepartmentList } from "@/pages/api/listPhongBan";
 import DeleteWorkingRotations from "./deleteWorkingModal";
+import GetComId from "@/components/getComID";
 
 type SelectOptionType = { label: string, value: string }
 export interface TabWorkingRotation {
@@ -31,6 +32,7 @@ export default function TabWorkingRotation({ iconAdd, iconEdit, iconDelete }: an
     const [isEmp_id, setEmp_id] = useState<any>("")
     const [isSeach, setSearch] = useState<any>(null)
     const [infoList, setInfoList] = useState<any>(null)
+    const comid: any = GetComId()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -56,7 +58,6 @@ export default function TabWorkingRotation({ iconAdd, iconEdit, iconDelete }: an
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const comid: any = 1664
                 const formData = new FormData()
                 formData.append('com_id', comid)
                 const response = await DepartmentList(formData)
@@ -71,7 +72,6 @@ export default function TabWorkingRotation({ iconAdd, iconEdit, iconDelete }: an
         const fetchData = async () => {
             try {
                 const formData = new FormData();
-                const comid: any = 1664
                 const response = await EmployeeList(formData)
                 setEmpData(response?.data)
             } catch (error) {
@@ -154,8 +154,8 @@ export default function TabWorkingRotation({ iconAdd, iconEdit, iconDelete }: an
                         <div className={`${styles.recruitment}`}>
                             {iconAdd && (
                                 <button className={`${styles.add} ${styles.add_planning}`} onClick={() => setOpenModal(1)}>
-                                <img style={{ verticalAlign: 'middle' }} src={`/add.png`} alt="" />Thêm mới luân chuyển công tác
-                            </button>
+                                    <img style={{ verticalAlign: 'middle' }} src={`/add.png`} alt="" />Thêm mới luân chuyển công tác
+                                </button>
                             )}
                         </div>
                         {openModal === 1 && <AddWorkingModal onCancel={handleCloseModal}></AddWorkingModal>}
@@ -262,7 +262,7 @@ export default function TabWorkingRotation({ iconAdd, iconEdit, iconDelete }: an
                                             <th>Tên công ty</th>
                                             <th>Chức vụ cũ</th>
                                             <th>Chức vụ mới</th>
-                                            {iconDelete || iconEdit ?  <th>Tùy chỉnh</th> : null}
+                                            {iconDelete || iconEdit ? <th>Tùy chỉnh</th> : null}
                                         </tr>
                                     </thead>
                                     <tbody className={`${styles.filter_body}`}>
@@ -279,10 +279,10 @@ export default function TabWorkingRotation({ iconAdd, iconEdit, iconDelete }: an
                                                 <td>{item.new_position}</td>
                                                 {iconDelete || iconEdit ? (
                                                     <td>
-                                                    {iconEdit && <a style={{ cursor: 'pointer' }} onClick={() => handleOpenEdit({ com_name: item.new_com_name, dep_name: item.new_dep_name, emp_name: item.userName, position_name: item.new_position, ep_id: item.ep_id, note: item.note, mission: item.mission, dep_id: item.new_dep_id })} className={`${styles.btn_edit}`}><img src={`/icon_edit.svg`} alt="" /></a>}
-                                                    {iconDelete && <a className={`${styles.btn_delete}`}><img src={`/icon_delete.svg`} alt="" onClick={() => setOpenDeleteModal(item.ep_id)} /></a>}
-                                                </td>
-                                                ): null}
+                                                        {iconEdit && <a style={{ cursor: 'pointer' }} onClick={() => handleOpenEdit({ com_name: item.new_com_name, dep_name: item.new_dep_name, emp_name: item.userName, position_name: item.new_position, ep_id: item.ep_id, note: item.note, mission: item.mission, dep_id: item.new_dep_id })} className={`${styles.btn_edit}`}><img src={`/icon_edit.svg`} alt="" /></a>}
+                                                        {iconDelete && <a className={`${styles.btn_delete}`}><img src={`/icon_delete.svg`} alt="" onClick={() => setOpenDeleteModal(item.ep_id)} /></a>}
+                                                    </td>
+                                                ) : null}
                                             </tr>
                                         ))}
                                     </tbody>

@@ -11,10 +11,14 @@ import DeleteSealUseList from "./deleteSealModal/useSealListDelete";
 import DeleteSignatures from "./deleteSealModal/signatureListDelete";
 import MyPagination from '@/components/pagination/Pagination';
 import Head from "next/head";
+import { getToken } from "@/pages/api/token";
+import jwt_decode from "jwt-decode";
+import GetComId from "@/components/getComID";
+
 
 type SelectOptionType = { label: string, value: string }
 
-export default function SealAndSignature({ iconAdd ,iconEdit, iconDelete  }: any) {
+export default function SealAndSignature({ iconAdd, iconEdit, iconDelete }: any) {
 
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
     const [openModal, setOpenModal] = useState(0)
@@ -33,6 +37,7 @@ export default function SealAndSignature({ iconAdd ,iconEdit, iconDelete  }: any
     const [isSeachSeal, setSearchSeal] = useState<any>(null)
     const [isSeachSignature, setSearchSignature] = useState<any>(null)
 
+    const com_id: any = GetComId()
 
     // Fetch data for seal
     useEffect(() => {
@@ -77,9 +82,8 @@ export default function SealAndSignature({ iconAdd ,iconEdit, iconDelete  }: any
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const comid: any = 1664
                 const formData = new FormData()
-                formData.append('com_id', comid)
+                formData.append('com_id', com_id)
                 const response = await DepartmentList(formData)
                 setDepartmentList(response?.data)
             } catch (error) {
@@ -184,9 +188,9 @@ export default function SealAndSignature({ iconAdd ,iconEdit, iconDelete  }: any
 
     return (
         <>
-        <Head>
-            <title>Quyền sử dụng con dấu và mẫu chữ ký - Quản lý nhân sự - Timviec365.vn</title>
-        </Head>
+            <Head>
+                <title>Quyền sử dụng con dấu và mẫu chữ ký - Quản lý nhân sự - Timviec365.vn</title>
+            </Head>
             <div className={`${styles.tab_content}`}>
                 <div className={`${styles.tab_pane}`}>
                     <div className={`${styles.body} ${styles.body_planning}`}>
@@ -196,8 +200,8 @@ export default function SealAndSignature({ iconAdd ,iconEdit, iconDelete  }: any
                             <div className={`${styles.body_header_left}`}>
                                 {iconAdd && (
                                     <button className={`${styles.add} ${styles.add_planning}`} onClick={() => setOpenModal(1)}>
-                                    <img style={{ verticalAlign: 'middle' }} src={`/add.png`} alt="" />Thêm mới
-                                </button>
+                                        <img style={{ verticalAlign: 'middle' }} src={`/add.png`} alt="" />Thêm mới
+                                    </button>
                                 )}
                             </div>
                         </div>
@@ -280,14 +284,14 @@ export default function SealAndSignature({ iconAdd ,iconEdit, iconDelete  }: any
                                                     <td>{item.dep_name}</td>
                                                     {iconDelete && (
                                                         <td>
-                                                        <a
-                                                            style={{ cursor: 'pointer' }}
-                                                            onClick={() => setOpenDeleteSealList(item?._id)}
-                                                            className={`${styles.btn_delete}`}
-                                                        >
-                                                            <img src={`/icon_delete.svg`} alt="" />
-                                                        </a>
-                                                    </td>
+                                                            <a
+                                                                style={{ cursor: 'pointer' }}
+                                                                onClick={() => setOpenDeleteSealList(item?._id)}
+                                                                className={`${styles.btn_delete}`}
+                                                            >
+                                                                <img src={`/icon_delete.svg`} alt="" />
+                                                            </a>
+                                                        </td>
                                                     )}
                                                 </tr>
                                             ))
@@ -379,8 +383,8 @@ export default function SealAndSignature({ iconAdd ,iconEdit, iconDelete  }: any
                                             <th>Phòng ban</th>
                                             <th>Mẫu chữ kí</th>
                                             {iconEdit || iconDelete ? (
-                                                <th></th>       
-                                            ): null}
+                                                <th></th>
+                                            ) : null}
                                         </tr>
                                     </thead>
                                     <tbody className={`${styles.filter_body}`}>
@@ -404,21 +408,21 @@ export default function SealAndSignature({ iconAdd ,iconEdit, iconDelete  }: any
                                                     </td>
                                                     {iconDelete || iconEdit ? (
                                                         <td>
-                                                        {iconEdit && (
-                                                            <label htmlFor="" className={`${styles.edit_stamp}`} >
-                                                            <a href="" onClick={(event) => handleEditClick(event, item?._id)} style={{ paddingRight: 10 }}>
-                                                                <img src={`/icon_edit.svg`} alt="" />
-                                                            </a>
-                                                        </label>
-                                                        )}
-                                                        <input type="file" className={`${styles.upload_file}`} id="edit_file" accept="application/pdf, image/*" onChange={(event) => handleProvisionFileChange(event)} />
-                                                        {iconDelete && (
-                                                            <a style={{ cursor: 'pointer' }} className={`${styles.btn_delete}`} onClick={() => setOpenDeleteSignature(item?._id)} >
-                                                            <img src={`/icon_delete.svg`} alt="" />
-                                                        </a>
-                                                        )}
-                                                    </td>
-                                                    ): null}
+                                                            {iconEdit && (
+                                                                <label htmlFor="" className={`${styles.edit_stamp}`} >
+                                                                    <a href="" onClick={(event) => handleEditClick(event, item?._id)} style={{ paddingRight: 10 }}>
+                                                                        <img src={`/icon_edit.svg`} alt="" />
+                                                                    </a>
+                                                                </label>
+                                                            )}
+                                                            <input type="file" className={`${styles.upload_file}`} id="edit_file" accept="application/pdf, image/*" onChange={(event) => handleProvisionFileChange(event)} />
+                                                            {iconDelete && (
+                                                                <a style={{ cursor: 'pointer' }} className={`${styles.btn_delete}`} onClick={() => setOpenDeleteSignature(item?._id)} >
+                                                                    <img src={`/icon_delete.svg`} alt="" />
+                                                                </a>
+                                                            )}
+                                                        </td>
+                                                    ) : null}
                                                 </tr>
                                             ))
                                         ) : (

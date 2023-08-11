@@ -37,9 +37,6 @@ export default function DetailCandidate({ onCancel }: any) {
   const [isCandidateProcess, setCandidateProcess] = useState<any>(null)
   const [isProcessName, setProcessName] = useState<any>(null);
 
-  console.log(isCandidateProcess);
-
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -60,12 +57,7 @@ export default function DetailCandidate({ onCancel }: any) {
               setCandidate(item)
             }
             else {
-              console.log(data?.data);
-
               const item = data?.data?.find((item: any) => item.id = Number(id?.slice(1, id?.length)))
-              console.log(Number(id?.slice(1, id?.length)));
-              console.log(item);
-
               setCandidate(item)
             }
           }

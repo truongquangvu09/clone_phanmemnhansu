@@ -63,7 +63,6 @@ export default function AddJobPosition({
       setErrors(validationErrors);
     }
   };
-  console.log(errors);
 
   const handleCloseModalAdd = () => {
     closeModal();
@@ -73,9 +72,8 @@ export default function AddJobPosition({
     <>
       <div className={`${styles.overlay}`}></div>
       <div
-        className={`${styles.modal} ${styles.modal_setting}  ${
-          animation ? styles.fade_in : styles.fade_out
-        }`}
+        className={`${styles.modal} ${styles.modal_setting}  ${animation ? styles.fade_in : styles.fade_out
+          }`}
       >
         <div className={` ${styles.modal_dialog} ${styles.contentquytrinh}`}>
           <div className={`${styles.modal_content} `}>

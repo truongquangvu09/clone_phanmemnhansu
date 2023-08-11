@@ -39,17 +39,12 @@ export default function AddEmployeePolicyModal2({ onCancel }: AddEmployeePolicyM
     const [provisionFile, setProvisionFile] = useState<File | null>(null);
     const [descriptions, setDescription] = useState("");
     const [ListPolicyGroup, setListPolicyGroup] = useState<any | null>(null)
-    console.log({ provisionFile });
-
-
-    console.log({ ListPolicyGroup });
-
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await PolicyList(1, 50, "")
-                setListPolicyGroup(response.data)
+                setListPolicyGroup(response?.data)
             } catch (error) {
                 throw error
             }

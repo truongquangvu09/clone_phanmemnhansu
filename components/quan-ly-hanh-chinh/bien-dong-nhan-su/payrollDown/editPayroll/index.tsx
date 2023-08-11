@@ -5,6 +5,7 @@ import MyEditorNew from "@/components/myEditor";
 import { parseISO, format } from 'date-fns';
 import { FetchDataOrganizationalStructure, FetchDataDep, FetchDataPosition, FetchDataSpecifiedGroup } from "@/components/util/listAll";
 import { ShiftList, AddPayrollDown } from "@/pages/api/bien_dong_nhan_su";
+import GetComId from "@/components/getComID";
 interface InputTextareaProps {
     onDescriptionChange: (data: any) => void
     reason: any
@@ -45,8 +46,6 @@ function Input_textarea({ onDescriptionChange, reason }: InputTextareaProps) {
 }
 export default function EditPayroll({ onCancel, infoList }: any) {
 
-    console.log(infoList);
-
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
     const [isDepList, setDepList] = useState<any>(null)
     const [isPositionList, setPositionList] = useState<any>(null)
@@ -63,9 +62,7 @@ export default function EditPayroll({ onCancel, infoList }: any) {
     const [isSpecified_id, setSpecified_id] = useState<any>("")
     const [isPosition_id, setPosition_id] = useState<any>("")
     const [isDep_name, setDep_name] = useState<any>("")
-
-    console.log(infoList.time);
-
+    const comid: any = GetComId()
 
     useEffect(() => {
         fetchData();
@@ -105,11 +102,10 @@ export default function EditPayroll({ onCancel, infoList }: any) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const comid: any = 1664
                 const formData = new FormData();
                 formData.append('companyID', comid)
                 const response = await ShiftList(formData)
-                setShiftList(response.data)
+                setShiftList(response?.data)
             } catch (error) {
                 throw error
             }

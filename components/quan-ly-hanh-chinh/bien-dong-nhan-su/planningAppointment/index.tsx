@@ -9,6 +9,7 @@ import { PlanningAppointmentList } from "@/pages/api/bien_dong_nhan_su";
 import { EmployeeList } from "@/pages/api/listNhanVien";
 import { DepartmentList } from "@/pages/api/listPhongBan";
 import DeletePlanningAppointments from "./deletePlanningModal";
+import GetComId from "@/components/getComID";
 
 type SelectOptionType = { label: string, value: string }
 
@@ -27,6 +28,7 @@ export default function TabPlaningAppointment({ iconAdd, iconEdit, iconDelete }:
     const [isEmp_id, setEmp_id] = useState<any>("")
     const [isSeach, setSearch] = useState<any>(null)
     const [infoList, setInfoList] = useState<any>(null)
+    const comid: any = GetComId()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -52,7 +54,6 @@ export default function TabPlaningAppointment({ iconAdd, iconEdit, iconDelete }:
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const comid: any = 1664
                 const formData = new FormData()
                 formData.append('com_id', comid)
                 const response = await DepartmentList(formData)
@@ -68,7 +69,6 @@ export default function TabPlaningAppointment({ iconAdd, iconEdit, iconDelete }:
         const fetchData = async () => {
             try {
                 const formData = new FormData();
-                const comid: any = 1664
                 const response = await EmployeeList(formData)
                 setEmpData(response?.data)
             } catch (error) {
@@ -264,7 +264,7 @@ export default function TabPlaningAppointment({ iconAdd, iconEdit, iconDelete }:
                                             <th>Chức vụ quy hoạch bổ nhiệm</th>
                                             <th>Phòng ban mới</th>
                                             <th>Thời gian quy hoạch bổ nhiệm</th>
-                                           {iconDelete || iconEdit ?  <th>Tùy chỉnh</th> : null}
+                                            {iconDelete || iconEdit ? <th>Tùy chỉnh</th> : null}
                                         </tr>
                                     </thead>
                                     <tbody className={`${styles.filter_body}`}>
@@ -279,10 +279,10 @@ export default function TabPlaningAppointment({ iconAdd, iconEdit, iconDelete }:
                                                 <td>{format(parseISO(item?.time), 'dd/MM/yyyy')}</td>
                                                 {iconDelete || iconEdit ? (
                                                     <td>
-                                                    {iconEdit && <a onClick={() => handleOpenEdit(item)} className={`${styles.btn_edit}`} style={{ cursor: 'pointer' }}><img src={`/icon_edit.svg`} alt="" /></a>}
-                                                    {iconDelete && <a onClick={() => setOpenDeleteModal(item.ep_id)} className={`${styles.btn_delete}`} style={{ cursor: 'pointer' }}><img src={`/icon_delete.svg`} alt="" /></a>}
-                                                </td>
-                                                ): null}
+                                                        {iconEdit && <a onClick={() => handleOpenEdit(item)} className={`${styles.btn_edit}`} style={{ cursor: 'pointer' }}><img src={`/icon_edit.svg`} alt="" /></a>}
+                                                        {iconDelete && <a onClick={() => setOpenDeleteModal(item.ep_id)} className={`${styles.btn_delete}`} style={{ cursor: 'pointer' }}><img src={`/icon_delete.svg`} alt="" /></a>}
+                                                    </td>
+                                                ) : null}
                                             </tr>
                                         ))}
                                     </tbody>

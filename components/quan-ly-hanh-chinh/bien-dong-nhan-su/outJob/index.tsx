@@ -9,6 +9,7 @@ import { parseISO, format } from 'date-fns';
 import { DeleteOutJob, OutJobList } from "@/pages/api/bien_dong_nhan_su";
 import { EmployeeList } from "@/pages/api/listNhanVien";
 import { DepartmentList } from "@/pages/api/listPhongBan";
+import GetComId from "@/components/getComID";
 
 type SelectOptionType = { label: string, value: string }
 
@@ -28,6 +29,7 @@ export default function TabOutJob({ iconAdd, iconEdit, iconDelete }: any) {
     const [departmentList, setDepartmentList] = useState<any>(null)
     const tableContentRef = useRef<HTMLDivElement>(null);
     const currentPositionRef = useRef(0);
+    const com_id: any = GetComId()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -52,9 +54,9 @@ export default function TabOutJob({ iconAdd, iconEdit, iconDelete }: any) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const comid: any = 1664
+
                 const formData = new FormData()
-                formData.append('com_id', comid)
+                formData.append('com_id', com_id)
                 const response = await DepartmentList(formData)
                 setDepartmentList(response?.data)
             } catch (error) {
@@ -68,7 +70,6 @@ export default function TabOutJob({ iconAdd, iconEdit, iconDelete }: any) {
         const fetchData = async () => {
             try {
                 const formData = new FormData();
-                const comid: any = 1664
                 const response = await EmployeeList(formData)
                 setEmpData(response?.data)
             } catch (error) {
@@ -274,10 +275,10 @@ export default function TabOutJob({ iconAdd, iconEdit, iconDelete }: any) {
                                                 <td>{format(parseISO(item?.time), 'dd/MM/yyyy')}</td>
                                                 {iconDelete || iconEdit ? (
                                                     <td>
-                                                    {iconEdit && <a onClick={() => handleOpenEdit(item)} className={`${styles.btn_edit}`}><img src={`/icon_edit.svg`} alt="" /></a>}
-                                                    {iconDelete && <a onClick={() => setOpenDeleteModal(item.ep_id)} className={`${styles.btn_delete}`}><img src={`/icon_delete.svg`} alt="" /></a>}
-                                                </td>
-                                                ): null}
+                                                        {iconEdit && <a onClick={() => handleOpenEdit(item)} className={`${styles.btn_edit}`}><img src={`/icon_edit.svg`} alt="" /></a>}
+                                                        {iconDelete && <a onClick={() => setOpenDeleteModal(item.ep_id)} className={`${styles.btn_delete}`}><img src={`/icon_delete.svg`} alt="" /></a>}
+                                                    </td>
+                                                ) : null}
                                             </tr>
                                         ))}
                                     </tbody>

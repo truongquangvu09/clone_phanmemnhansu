@@ -9,6 +9,7 @@ import { parseISO, format } from "date-fns";
 import { GetJobDetails } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 import { AddInterview } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 import * as Yup from "yup";
+import GetComId from "@/components/getComID";
 
 type SelectOptionType = { label: string; value: any };
 
@@ -33,12 +34,12 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
     const [isNewList, setNewsList] = useState<any>(null);
     const [isCandidate, setCandidate] = useState<any>(null);
     const [errors, setErrors] = useState<any>({});
+    const comid: any = GetComId()
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const formData = new FormData();
-                const comid: any = 1664;
                 formData.append("com_id", comid);
                 const response = await EmployeeList(formData);
                 if (response) {
@@ -55,8 +56,6 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
         const fetchData = async () => {
             try {
                 const formData = new FormData();
-                console.log(candidate);
-
                 formData.append('canId', candidate?.id)
                 const response = await GetJobDetails(formData);
                 if (response) {

@@ -9,13 +9,14 @@ import { addDays, format } from 'date-fns';
 import { GetDataHrReport, ReportCharts } from '@/pages/api/bao-cao-nhan-su/HrReportService'
 import { DepartmentList } from "@/pages/api/listPhongBan";
 import GetComId from '@/components/getComID';
-
 type SelectOptionType = { label: string, value: any }
 
 export default function TabHRReport({ dateRangeDatas }: any) {
 
     const defaultStartDate = format(addDays(new Date(), -12), 'yyyy-MM-dd');
     const defaultEndDate = format(new Date(), 'yyyy-MM-dd');
+    const [tokenComId, setComId] = useState<any>(null);
+    const COOKIE_KEY = "user_365";
 
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
     const [startDate, setStartDate] = useState(defaultStartDate);
@@ -29,6 +30,7 @@ export default function TabHRReport({ dateRangeDatas }: any) {
     const [isDep_id, setIsDep_id] = useState<any>("")
     const [isSelect, setSelect] = useState<any>("date")
     const [ReportChart, setReportChart] = useState<any>(null)
+    const comid: any = GetComId()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -86,11 +88,9 @@ export default function TabHRReport({ dateRangeDatas }: any) {
     }, [dateRangeData])
 
     // -- lấy dữ liệu phòng ban --
-
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const comid: any = 1664
                 const formData = new FormData()
                 formData.append('com_id', comid)
                 const response = await DepartmentList(formData)
@@ -133,9 +133,6 @@ export default function TabHRReport({ dateRangeDatas }: any) {
 
         // Xóa hết dữ liệu trong mảng
         datesInRange.length = 0;
-
-        console.log(start, end);
-
 
         if (isSelect === "date") {
             // Lặp qua từng tháng trong khoảng

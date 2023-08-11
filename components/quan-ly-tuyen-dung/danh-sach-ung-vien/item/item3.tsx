@@ -6,7 +6,6 @@ import { ItemTypes } from "./ItemType";
 import { useRouter } from "next/router";
 import DeleteCandidate from "../candidateDeleteModal";
 
-
 export default function ItemCandidate3({ process_id, setProcess_id, type, data, currentCol, setDragItem, setDropCol, setModalOpen, iconDelete }: any) {
 
     const [isOpenOption, setOpenOption] = useState(0)
@@ -18,7 +17,6 @@ export default function ItemCandidate3({ process_id, setProcess_id, type, data, 
         item: { data, process_id, currentCol },
         end: (item, monitor) => {
             const dropResult = monitor.getDropResult()
-            console.log(dropResult);
 
             if (dropResult && item) {
                 setDragItem(item?.data)
@@ -75,17 +73,17 @@ export default function ItemCandidate3({ process_id, setProcess_id, type, data, 
                         <div className={`${styles.hs_body_card_no2}`}>
                             <p>{data?.canName}</p>
                             <p>SĐT: <span>{data?.phone}</span></p>
-                            <p>{data?.title}</p>
+                            <p className={`${styles.word_wrap}`}>{data?.title}</p>
                             <Rating size={27} initialValue={data?.starVote} disableFillHover className={`${styles.star_rating}`} />
                         </div>
                         <div className={`${styles.hs_body_card_no3}`}>
                             <a className={`${styles.hs_dot} ${styles.hs_dot1}`} style={{ cursor: 'pointer' }}>
                                 <img onClick={() => handleToggleOption(data?.canId)} src="https://phanmemnhansu.timviec365.vn/assets/images/t_images/hs-t-dot.svg" />
-                                <div className={`${styles.choose_option} ${styles.choose_option1}`} style={{ display: isOpenOption ? 'block' : 'none' }}>
+                                <div className={`${styles.choose_option} ${styles.choose_option1}`} style={{ display: isOpenOption || isDelete ? 'block' : 'none' }}>
                                     <ul style={{ marginBottom: 0, marginTop: 0 }}>
                                         <li onClick={() => handleClickDetail(data?.canId)}>Xem chi tiết</li>
                                         {iconDelete && <li onClick={() => setDelete(data?.id)}>Xóa hồ sơ</li>}
-                                        {isDelete !== 0 && <DeleteCandidate onCancel={handleClosemodal} idCandidate={isDelete} />}
+                                        {isDelete !== 0 && <DeleteCandidate animation={animateModal} onCancel={handleClosemodal} idCandidate={isDelete} />}
                                     </ul>
                                 </div>
                             </a>
@@ -93,7 +91,7 @@ export default function ItemCandidate3({ process_id, setProcess_id, type, data, 
                     </div>
                     <div className={`${styles.hs_footer}`}>
                         <p style={{ textAlign: 'center' }}>Nhân viên thực hiện:
-                            <span>Phùng Ngọc Anh</span>
+                            <span>{data?.hrName}</span>
                         </p>
                     </div>
                 </div>

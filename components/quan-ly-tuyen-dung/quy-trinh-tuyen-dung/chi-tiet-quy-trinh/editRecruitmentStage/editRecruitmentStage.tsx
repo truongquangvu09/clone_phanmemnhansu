@@ -5,7 +5,7 @@ import DOMPurify from "dompurify";
 import * as Yup from "yup";
 import { EditDataRecruitmentStage } from "@/pages/api/quan-ly-tuyen-dung/RecruitmentManagerService";
 
-export interface EditRecruitmentStage {}
+export interface EditRecruitmentStage { }
 
 export default function EditRecruitmentStage({
   data,
@@ -39,14 +39,14 @@ export default function EditRecruitmentStage({
         stageRecruitmentId,
         formData
       );
-      if( response?.status === 403) {
+      if (response?.status === 403) {
         alert('Bạn chưa được phân quyền trên phần mềm quản trị nhân sự 365. Vui lòng liên hệ quản trị viên để biết thêm chi tiết!')
       }
       else if (response?.status !== 200) {
         alert("Chỉnh sửa giai đoạn không thành công");
       } else {
         onCloseModal();
-        newDataEdit(response.data);
+        newDataEdit(response?.data);
       }
     } catch (error: any) {
       const validationErrors = {};
@@ -81,9 +81,8 @@ export default function EditRecruitmentStage({
     <>
       <div className={`${styles.overlay}`}></div>
       <div
-        className={`${styles.modal} ${styles.modal_setting}  ${
-          animation ? styles.fade_in : styles.fade_out
-        }`}
+        className={`${styles.modal} ${styles.modal_setting}  ${animation ? styles.fade_in : styles.fade_out
+          }`}
       >
         <div className={`${styles.modal_dialog} ${styles.contentquytrinh}`}>
           <div className={`${styles.modal_content}`}>
