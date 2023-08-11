@@ -7,13 +7,17 @@ import MyPagination from "@/components/pagination/Pagination";
 import ThirdBlock from "../component/thirdBlock/ThirdBlock";
 import FourthBlock from "../component/fourthBlock/FourthBlock";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
-import { GetDataHrReport } from "@/pages/api/bao-cao-nhan-su/HrReportService";
+import { GetDataHrReport, GetDataHrReport2, GetDataHrReport3, GetDataHrReport4 } from "@/pages/api/bao-cao-nhan-su/HrReportService";
 
 export default function RecruitmentReport() {
   const [currentPageBox2, setCurrentPageBox2] = useState(1);
   const [currentPageBox3, setCurrentPageBox3] = useState(1);
   const [currentPageBox4, setCurrentPageBox4] = useState(1);
   const [dataResponse, setDataResponse] = useState<any>();
+  const [dataResponse2, setDataResponse2] = useState<any>();
+  const [dataResponse3, setDataResponse3] = useState<any>();
+  const [dataResponse4, setDataResponse4] = useState<any>();
+
  
   const handlePageChangeBox2 = (page: any) => {
     setCurrentPageBox2(page);
@@ -28,15 +32,50 @@ export default function RecruitmentReport() {
   useEffect(() => {
     try {
       const GetDataRecruitment = async () => {
-        const response = await GetDataHrReport();
+        const response = await GetDataHrReport(currentPageBox2, 10);
         setDataResponse(response?.data.data);
       };
       GetDataRecruitment();
     } catch (error) {
       
     }
-  }, []);
+  }, [currentPageBox2]);
 
+  useEffect(() => {
+    try {
+      const GetDataRecruitment = async () => {
+        const response = await GetDataHrReport2(currentPageBox3, 10);
+        setDataResponse2(response?.data.data);
+      };
+      GetDataRecruitment();
+    } catch (error) {
+      
+    }
+  }, [currentPageBox3]);
+
+  useEffect(() => {
+    try {
+      const GetDataRecruitment = async () => {
+        const response = await GetDataHrReport3(currentPageBox4, 10);
+        setDataResponse3(response?.data.data);
+      };
+      GetDataRecruitment();
+    } catch (error) {
+      
+    }
+  }, [currentPageBox4]);
+
+  useEffect(() => {
+    try {
+      const GetDataRecruitment = async () => {
+        const response = await GetDataHrReport4(1, 10000000);
+        setDataResponse4(response?.data.data);
+      };
+      GetDataRecruitment();
+    } catch (error) {
+      
+    }
+  }, [currentPageBox2]);
   const data = [
     {
       id: 1,
@@ -77,10 +116,12 @@ export default function RecruitmentReport() {
   ];
 
   const dataCardSecond = dataResponse?.mangThongTin;
-
-  const dataThird = dataResponse?.thongKeNhanVienTuyenDung;
-
-  const dataFourth = dataResponse?.gioiThieuUngVien;
+  const dataThird = dataResponse2?.thongKeNhanVienTuyenDung;
+  const dataFourth = dataResponse3?.gioiThieuUngVien;
+  const dataLengthBox2 = dataResponse4?.mangThongTin?.length
+  const dataLengthBox3 = dataResponse4?.thongKeNhanVienTuyenDung?.length
+  const dataLengthBox4 = dataResponse4?.gioiThieuUngVien?.length
+  
 
   return (
     <>
@@ -111,7 +152,7 @@ export default function RecruitmentReport() {
           <div className={`${styles.pagination}`}>
             <MyPagination
               current={currentPageBox2}
-              total={50}
+              total={dataLengthBox2}
               pageSize={10}
               onChange={handlePageChangeBox2}
             />
@@ -141,7 +182,7 @@ export default function RecruitmentReport() {
           <div className={`${styles.pagination}`}>
             <MyPagination
               current={currentPageBox3}
-              total={50}
+              total={dataLengthBox3}
               pageSize={10}
               onChange={handlePageChangeBox3}
             />
@@ -173,7 +214,7 @@ export default function RecruitmentReport() {
           <div className={`${styles.pagination}`}>
             <MyPagination
               current={currentPageBox4}
-              total={50}
+              total={dataLengthBox4}
               pageSize={10}
               onChange={handlePageChangeBox4}
             />

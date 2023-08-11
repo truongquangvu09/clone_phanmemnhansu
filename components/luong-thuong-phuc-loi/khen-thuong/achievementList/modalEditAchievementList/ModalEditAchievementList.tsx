@@ -61,6 +61,7 @@ function ModalEditAchievementList({ animation, onClose, dataOld }: any) {
       setComId(decodedToken?.data?.com_id);
     }
   }, []);
+  
   const handleContentChange = (event) => {
     const { name, value } = event.target;
     setContent((prevState) => ({
