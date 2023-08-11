@@ -15,18 +15,29 @@ export default function Bodyframe({ children }: any) {
   const COOKIE_KEY = "user_365";
 
   useEffect(() => {
-    const currentCookie = getToken(COOKIE_KEY);
-    if (currentCookie) {
-      const decodedToken: any = jwt_decode(currentCookie);
-      setTokenType(decodedToken?.data?.type);
+    const fetchDataType = async () => {
+      const currentCookie = getToken(COOKIE_KEY);
+      if (currentCookie) {
+        const decodedToken: any = jwt_decode(currentCookie);
+        setTokenType(decodedToken?.data?.type);
+      }
+      else {
+        const interval = setInterval(async () => {
+          clearInterval(interval)
+          fetchDataType()
+        }, 500)
+      }
     }
-  }, []);
+    fetchDataType()
+  }, [])
+  
 useEffect(() => {
     const fetchInfo = async () => {
       try {
         if (tokenType) {
           if (tokenType === 1 || tokenType === '1') {
             const response = await getDataCompany();
+            console.log(response)
             setDataHeader(response?.data);
           } else {
             const response = await EmployeeInfo();
@@ -35,14 +46,9 @@ useEffect(() => {
         } else {
           const interval = setInterval(async () => {
             const updatedToken = tokenType;
-            if (updatedToken === 1) {
-              clearInterval(interval);
-              const response = await getDataCompany();
-              setDataHeader(response?.data);
-            } else if (updatedToken !== 1) {
-              clearInterval(interval);
-              const response = await EmployeeInfo();
-              setDataHeader(response?.data);
+            if (updatedToken === 1 || updatedToken === "1") {
+              clearInterval(interval); 
+              fetchInfo()
             }
           }, 1000);
         }
