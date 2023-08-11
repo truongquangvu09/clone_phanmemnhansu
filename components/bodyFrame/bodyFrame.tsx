@@ -30,14 +30,13 @@ export default function Bodyframe({ children }: any) {
     }
     fetchDataType()
   }, [])
-  
+
 useEffect(() => {
     const fetchInfo = async () => {
       try {
         if (tokenType) {
           if (tokenType === 1 || tokenType === '1') {
             const response = await getDataCompany();
-            console.log(response)
             setDataHeader(response?.data);
           } else {
             const response = await EmployeeInfo();
