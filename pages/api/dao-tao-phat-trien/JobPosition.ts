@@ -17,8 +17,7 @@ export const getDataJobPosition = async (page: number, pageSize: number) => {
 
     return response;
   } catch (err) {
-    console.error("Error fetching home data:", err);
-    throw err;
+   
   }
 };
 
@@ -38,8 +37,7 @@ export const addDataJobPosition = async (formData: FormData) => {
 
     return response;
   } catch (err) {
-    console.error("Error fetching home data:", err);
-    throw err;
+
   }
 };
 
@@ -59,7 +57,6 @@ export const deleteDataJobPosition = async (jobId: number) => {
 
     return response;
   } catch (err) {
-    console.error("Error fetching home data:", err);
-    throw err;
+
   }
 };

@@ -8,7 +8,7 @@ import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_f
 import ModalAddTeamCompliments from "./modalAddTeamCompliments/modalAddTeamCompliments";
 
 export interface CommendationTeam {}
-export default function CommendationTeam({ children }: any) {
+export default function CommendationTeam({ iconAdd, iconEdit }: any) {
   const [data, setData] = useState<any>();
   const [currentPage, setCurrentPage] = useState<any>(1);
   const [keyWords, setKeyWords] = useState<any>('')
@@ -39,6 +39,8 @@ export default function CommendationTeam({ children }: any) {
         data={newData}
         modal={<ModalAddTeamCompliments></ModalAddTeamCompliments>}
         keyWords = {handleSearch}
+        iconAdd = {iconAdd}
+        iconEdit = {iconEdit}
       ></RewardTable>
       <div className={`${styles.pagination}`}>
         <MyPagination

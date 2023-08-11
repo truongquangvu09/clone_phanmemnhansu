@@ -8,12 +8,10 @@ export default function Remind() {
   
     const handleFollowReminderChange = () => {
       setIsFollowReminderEnabled(!isFollowReminderEnabled);
-      // Thực hiện các hành động khi nút switch của nhắc nhở theo dõi đến hạn/quá hạn thay đổi
     };
   
     const handleContentReminderChange = () => {
       setIsContentReminderEnabled(!isContentReminderEnabled);
-      // Thực hiện các hành động khi nút switch của nhắc nhở nội dung tạo ra đến hạn/quá hạn thay đổi
     };
   return (
     <>

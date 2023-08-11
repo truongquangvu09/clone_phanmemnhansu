@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useMemo } from "react";
 import styles from "../../candidateAddModal/candidateAddModal.module.css";
 import { Rating } from "react-simple-star-rating";
-import { CandidateUpdate } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 import { EmployeeList } from "@/pages/api/listNhanVien";
 import { GetListNews } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
 import Selects from "@/components/select";
 import { parseISO, format } from "date-fns";
 import { ContactJobDetails } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 import { AddContactJob } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
+import * as Yup from "yup";
+
 
 type SelectOptionType = { label: string; value: any };
 
@@ -25,8 +26,7 @@ export default function EditCandidateContactJob({ onCancel, candidate }: any) {
     const [isEmpList, setEmpList] = useState<any>(null);
     const [isNewList, setNewsList] = useState<any>(null);
     const [isCandidate, setCandidate] = useState<any>(null);
-
-    console.log({ isCandidate });
+    const [errors, setErrors] = useState<any>({});
 
     useEffect(() => {
         const fetchData = async () => {
@@ -75,8 +75,13 @@ export default function EditCandidateContactJob({ onCancel, candidate }: any) {
         fetchData();
     }, []);
 
-    console.log(isCandidate?.detail_contact_job);
-
+    const validationSchema = Yup.object().shape({
+        starVote: Yup.string().required("Đánh giá không được để trống"),
+        resiredSalary: Yup.string().required("Nhập mức lương mong muốn"),
+        salary: Yup.string().required("Mức lương thực không được để trống"),
+        empInterview: Yup.string().required("Chọn nhân viên tham gia"),
+        timeInterView: Yup.string().required("Thời gian hẹn không được để trống"),
+    });
 
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -110,6 +115,16 @@ export default function EditCandidateContactJob({ onCancel, candidate }: any) {
                 document.getElementById("resiredSalary") as HTMLInputElement
             )?.value;
 
+            const formDatas = {
+                starVote: rating || "",
+                resiredSalary: resiredSalary || "",
+                salary: salary || "",
+            };
+
+            await validationSchema.validate(formDatas, {
+                abortEarly: false,
+            });
+
             const formData = new FormData();
             formData.append("canId", candidate?.id);
             formData.append("name", name);
@@ -141,7 +156,15 @@ export default function EditCandidateContactJob({ onCancel, candidate }: any) {
                 }, 1500);
             }
         } catch (error) {
-            throw error;
+            if (error instanceof Yup.ValidationError) {
+                const yupErrors = {};
+                error.inner.forEach((yupError: any) => {
+                    yupErrors[yupError.path] = yupError.message;
+                });
+                setErrors(yupErrors);
+            } else {
+                console.error("Lỗi validate form:", error);
+            }
         }
     };
 
@@ -604,6 +627,7 @@ export default function EditCandidateContactJob({ onCancel, candidate }: any) {
                                                 defaultValue={isCandidate?.detail_contact_job?.resiredSalary}
                                                 className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.resiredSalary && <div className={`${styles.t_require} `}>{errors.resiredSalary}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -617,6 +641,7 @@ export default function EditCandidateContactJob({ onCancel, candidate }: any) {
                                                 defaultValue={isCandidate?.detail_contact_job?.salary}
                                                 className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.salary && <div className={`${styles.t_require} `}>{errors.salary}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -654,3 +679,4 @@ export default function EditCandidateContactJob({ onCancel, candidate }: any) {
         </>
     );
 }
+

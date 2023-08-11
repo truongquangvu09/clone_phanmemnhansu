@@ -15,7 +15,7 @@ export interface TabWorkingRotation {
 
 }
 
-export default function TabWorkingRotation({ children }: any) {
+export default function TabWorkingRotation({ iconAdd, iconEdit, iconDelete }: any) {
 
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
     const [openEditModal, setOpenEditModal] = useState(false)
@@ -45,9 +45,8 @@ export default function TabWorkingRotation({ children }: any) {
                 formData.append('toDate', toDate)
                 formData.append('pageSize', pagesize)
                 const response = await WorkingRotaionList(formData)
-                setWorkingRotationList(response.data)
+                setWorkingRotationList(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()
@@ -61,9 +60,8 @@ export default function TabWorkingRotation({ children }: any) {
                 const formData = new FormData()
                 formData.append('com_id', comid)
                 const response = await DepartmentList(formData)
-                setDepartmentList(response.data)
+                setDepartmentList(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()
@@ -75,9 +73,8 @@ export default function TabWorkingRotation({ children }: any) {
                 const formData = new FormData();
                 const comid: any = 1664
                 const response = await EmployeeList(formData)
-                setEmpData(response.data)
+                setEmpData(response?.data)
             } catch (error) {
-                console.log({ error });
             }
         }
         fetchData()
@@ -155,9 +152,11 @@ export default function TabWorkingRotation({ children }: any) {
                 <div className={`${styles.tab_pane}`}>
                     <div className={`${styles.body} ${styles.body_planning}`}>
                         <div className={`${styles.recruitment}`}>
-                            <button className={`${styles.add} ${styles.add_planning}`} onClick={() => setOpenModal(1)}>
+                            {iconAdd && (
+                                <button className={`${styles.add} ${styles.add_planning}`} onClick={() => setOpenModal(1)}>
                                 <img style={{ verticalAlign: 'middle' }} src={`/add.png`} alt="" />Thêm mới luân chuyển công tác
                             </button>
+                            )}
                         </div>
                         {openModal === 1 && <AddWorkingModal onCancel={handleCloseModal}></AddWorkingModal>}
                         {openEditModal && <EditWorkingModal onCancel={handleCloseModal} infoList={infoList} />}
@@ -263,7 +262,7 @@ export default function TabWorkingRotation({ children }: any) {
                                             <th>Tên công ty</th>
                                             <th>Chức vụ cũ</th>
                                             <th>Chức vụ mới</th>
-                                            <th>Tùy chỉnh</th>
+                                            {iconDelete || iconEdit ?  <th>Tùy chỉnh</th> : null}
                                         </tr>
                                     </thead>
                                     <tbody className={`${styles.filter_body}`}>
@@ -278,10 +277,12 @@ export default function TabWorkingRotation({ children }: any) {
                                                 <td>{item.new_com_name}</td>
                                                 <td>{item.old_position}</td>
                                                 <td>{item.new_position}</td>
-                                                <td>
-                                                    <a style={{ cursor: 'pointer' }} onClick={() => handleOpenEdit({ com_name: item.new_com_name, dep_name: item.new_dep_name, emp_name: item.userName, position_name: item.new_position, ep_id: item.ep_id, note: item.note, mission: item.mission, dep_id: item.new_dep_id })} className={`${styles.btn_edit}`}><img src={`/icon_edit.svg`} alt="" /></a>
-                                                    <a className={`${styles.btn_delete}`}><img src={`/icon_delete.svg`} alt="" onClick={() => setOpenDeleteModal(item.ep_id)} /></a>
+                                                {iconDelete || iconEdit ? (
+                                                    <td>
+                                                    {iconEdit && <a style={{ cursor: 'pointer' }} onClick={() => handleOpenEdit({ com_name: item.new_com_name, dep_name: item.new_dep_name, emp_name: item.userName, position_name: item.new_position, ep_id: item.ep_id, note: item.note, mission: item.mission, dep_id: item.new_dep_id })} className={`${styles.btn_edit}`}><img src={`/icon_edit.svg`} alt="" /></a>}
+                                                    {iconDelete && <a className={`${styles.btn_delete}`}><img src={`/icon_delete.svg`} alt="" onClick={() => setOpenDeleteModal(item.ep_id)} /></a>}
                                                 </td>
+                                                ): null}
                                             </tr>
                                         ))}
                                     </tbody>

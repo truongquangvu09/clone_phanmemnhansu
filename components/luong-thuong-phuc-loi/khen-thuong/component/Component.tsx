@@ -8,7 +8,7 @@ import ModalEditCommendationTeam from "../commendationTeam/modalEditCommendation
 import ModalEditAchievementList from "../achievementList/modalEditAchievementList/ModalEditAchievementList";
 import ModalAddTeamCompliments from "../commendationTeam/modalAddTeamCompliments/modalAddTeamCompliments";
 
-function RewardTable({ display, data, model, keyWords, updateData }: any) {
+function RewardTable({ display, data, model, keyWords, updateData , iconAdd, iconEdit}: any) {
   const [visible, setVisible] = useState(true);
   const [typeModal, setTypeModal] = useState(model);
   const [open, setOpen] = useState(false);
@@ -60,7 +60,8 @@ function RewardTable({ display, data, model, keyWords, updateData }: any) {
     <>
       <div className={`${styles.tuyendung2}`} style={{ display: "block" }}>
         <div className={`${styles.tuyendung2_3}`}>
-          <button
+          {iconAdd && (
+            <button
             onClick={() => setOpen(true)}
             className={`${styles.adds}`}
             style={{ display: display }}
@@ -70,6 +71,7 @@ function RewardTable({ display, data, model, keyWords, updateData }: any) {
             </picture>
             Thêm mới
           </button>
+          )}
         </div>
         {typeModal === "canhan" && open && (
           <ModalAddReward
@@ -143,7 +145,7 @@ function RewardTable({ display, data, model, keyWords, updateData }: any) {
                 <th>Hình thức khen thưởng</th>
                 <th>Danh hiệu</th>
                 <th>Cấp khen</th>
-                <th className={`${styles.lastth}`}></th>
+                {iconEdit && <th className={`${styles.lastth}`}></th>}
               </tr>
             </thead>
             <tbody className={`${styles.filter}`}>
@@ -178,7 +180,7 @@ function RewardTable({ display, data, model, keyWords, updateData }: any) {
                       <td>{achievementType}</td>
                       <td>{item.appellation}</td>
                       <td>{item.achievementLevel}</td>
-                      <td
+                     {iconEdit &&  <td
                         className={`${styles.r_t_top_right}`}
                         style={{
                           position: "relative",
@@ -202,7 +204,7 @@ function RewardTable({ display, data, model, keyWords, updateData }: any) {
                             <li>Chỉnh sửa</li>
                           </div>
                         )}
-                      </td>
+                      </td>}
                     </tr>
                   );
                 })

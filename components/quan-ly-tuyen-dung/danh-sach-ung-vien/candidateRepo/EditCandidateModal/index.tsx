@@ -6,6 +6,7 @@ import { CandidateUpdate } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 import { EmployeeList } from "@/pages/api/listNhanVien";
 import { GetListNews } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
 import Selects from "@/components/select";
+import * as Yup from "yup";
 import { parseISO, format } from "date-fns";
 
 type SelectOptionType = { label: string; value: any };
@@ -34,9 +35,8 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
     );
     const [isEmpList, setEmpList] = useState<any>(null);
     const [isNewList, setNewsList] = useState<any>(null);
+    const [errors, setErrors] = useState<any>({});
 
-    console.log({ candidate });
-    console.log(isNewList);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -46,7 +46,7 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
                 formData.append("com_id", comid);
                 const response = await EmployeeList(formData);
                 if (response) {
-                    setEmpList(response.data);
+                    setEmpList(response?.data);
                 }
             } catch (error) {
                 throw error;
@@ -60,7 +60,7 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
             try {
                 const response = await GetListNews(1, 2000, "", "", "");
                 if (response) {
-                    setNewsList(response.data);
+                    setNewsList(response?.data);
                 }
             } catch (error) {
                 throw error;
@@ -68,6 +68,24 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
         };
         fetchData();
     }, []);
+
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required("Tên không được để trống"),
+        email: Yup.string().required("email không được để trống"),
+        phone: Yup.string().required("Số điện thoại không được để trống"),
+        gender: Yup.string().required("Chọn giới tính"),
+        birthday: Yup.string().required("Chọn ngày sinh"),
+        education: Yup.string().required("Chọn trình độ học vấn"),
+        exp: Yup.string().required("Chọn kinh nghiệm làm việc"),
+        meried: Yup.string().required("Chọn tình trạng hôn nhân"),
+        address: Yup.string().required("Địa chỉ không được để trống"),
+        cvFrom: Yup.string().required("Nhập nguồn ứng viên"),
+        userHiring: Yup.string().required("Chọn nhân viên tuyển dụng"),
+        recruitment: Yup.string().required("Chọn vị trí tuyển dụng"),
+        timeSendCv: Yup.string().required("Thời gian gửi không được để trống"),
+        starVote: Yup.string().required("Đánh giá không được để trống"),
+    });
+
 
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -91,6 +109,27 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
             const timeSendCv = (
                 document.getElementById("timeSendCv") as HTMLInputElement
             )?.value;
+
+            const formDatas = {
+                name: name || "",
+                email: email || "",
+                phone: phone || "",
+                gender: isGender || "",
+                birthday: birthday || "",
+                education: isEducation || "",
+                exp: isExp || "",
+                meried: isMarried || "",
+                address: address || "",
+                cvFrom: cvFrom || "",
+                userHiring: isUserHiring || "",
+                recruitment: isRecruitmentNewsId || "",
+                timeSendCv: timeSendCv || "",
+                starVote: rating || "",
+            };
+
+            await validationSchema.validate(formDatas, {
+                abortEarly: false,
+            });
 
             const formData = new FormData();
             formData.append("name", name);
@@ -132,7 +171,15 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
                 }, 1500);
             }
         } catch (error) {
-            throw error;
+            if (error instanceof Yup.ValidationError) {
+                const yupErrors = {};
+                error.inner.forEach((yupError: any) => {
+                    yupErrors[yupError.path] = yupError.message;
+                });
+                setErrors(yupErrors);
+            } else {
+                console.error("Lỗi validate form:", error);
+            }
         }
     };
 
@@ -318,14 +365,12 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
     const selectedMarried: any = options.tinhtranghonnhan?.find(
         (item) => item.value === candidate?.isMarried
     );
-    const selectedUseHiring: any = options.tennhanvientuyendung?.find(
+    const selectedUseHiring: any = chonnhanvienOptions?.find(
         (item: any) => item.value === candidate?.userHiring
     );
-    const selectedUseRecomment: any = options.tennhanviengioithieu?.find(
+    const selectedUseRecomment: any = chonnhanvienOptions?.find(
         (item: any) => item.value === candidate?.userRecommend
     );
-
-    console.log(options.tennhanvientuyendung);
 
     return (
         <>
@@ -354,6 +399,7 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
                                                 placeholder="Nhập tên ứng viên"
                                                 className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.name && <div className={`${styles.t_require} `}>{errors.name}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -368,6 +414,7 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
                                                 placeholder="Nhập Email ứng viên"
                                                 className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.email && <div className={`${styles.t_require} `}>{errors.email}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -382,6 +429,7 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
                                                 placeholder="Nhập SĐt ứng viên"
                                                 className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.phone && <div className={`${styles.t_require} `}>{errors.phone}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -401,6 +449,7 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
                                                     option={options.chongioitinh}
                                                     placeholder={"Chọn giới tính"}
                                                 />
+                                                <span> {errors.gender && <div className={`${styles.t_require} `}>{errors.gender}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -419,6 +468,7 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
                                                 placeholder="dd/mm/yyyy"
                                                 className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.birthday && <div className={`${styles.t_require} `}>{errors.birthday}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -450,6 +500,7 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
                                                     option={options.trinhdohocvan}
                                                     placeholder={"-- Vui lòng chọn --"}
                                                 />
+                                                <span> {errors.education && <div className={`${styles.t_require} `}>{errors.education}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -483,6 +534,7 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
                                                     option={options.kinhnghiemlamviec}
                                                     placeholder={"-- Vui lòng chọn --"}
                                                 />
+                                                <span> {errors.exp && <div className={`${styles.t_require} `}>{errors.exp}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -504,6 +556,7 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
                                                     option={options.tinhtranghonnhan}
                                                     placeholder={"-- Vui lòng chọn --"}
                                                 />
+                                                <span> {errors.meried && <div className={`${styles.t_require} `}>{errors.meried}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -519,6 +572,7 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
                                                 placeholder="Nhập địa chỉ ứng viên"
                                                 className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.address && <div className={`${styles.t_require} `}>{errors.address}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -533,6 +587,7 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
                                                 placeholder="Nhập nguồn ứng viên"
                                                 className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.cvFrom && <div className={`${styles.t_require} `}>{errors.cvFrom}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -553,6 +608,7 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
                                                     option={options.tennhanvientuyendung}
                                                     placeholder={"Chọn nhân viên"}
                                                 />
+                                                <span> {errors.userHiring && <div className={`${styles.t_require} `}>{errors.userHiring}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -595,6 +651,7 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
                                                     option={options.vitrituyendung}
                                                     placeholder={"-- Vui lòng chọn --"}
                                                 />
+                                                <span> {errors.recruitment && <div className={`${styles.t_require} `}>{errors.recruitment}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -614,6 +671,7 @@ export default function EditCandidateModal({ onCancel, candidate }: any) {
                                                 placeholder="dd/mm/yyyy --:--:--"
                                                 className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.timeSenCv && <div className={`${styles.t_require} `}>{errors.timeSenCv}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groupss}`}>

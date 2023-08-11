@@ -5,6 +5,8 @@ import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_f
 import ListRecruitmentPage from "@/pages/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/ListRecruitment";
 import { GetListNews } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
 import MyPagination from "@/components/pagination/Pagination";
+import { getDataAuthentication } from "@/pages/api/Home/HomeService";
+import Head from "next/head";
 
 export interface Recruitment {}
 
@@ -19,6 +21,7 @@ export default function Recruitment({ children }: any) {
   const [toDate, setToDate] = useState<any>()
   const [addData, setAddData] = useState<any>()
   const [editData, setEditData] = useState<any>()
+  const [displayIcon, setDisplayIcon] = useState<any>()
 
   useEffect(() => {
     const GetDataListNews = async () => {
@@ -37,6 +40,22 @@ export default function Recruitment({ children }: any) {
     };
     GetDataListNews();
   }, [title, currentPage, onDelete, formDate, toDate, addData, editData]);
+
+  useEffect(() => {
+    try {
+        const fetchData =  async () => {
+            const response = await getDataAuthentication() 
+            setDisplayIcon(response?.data?.data?.infoRoleTD)
+        }
+        fetchData()
+    }catch(error) {
+    }
+}, [])
+
+const perIdArray = displayIcon?.map(item => item.perId)
+const iconAdd = perIdArray?.includes(2)
+const iconEdit = perIdArray?.includes(3)
+const iconDelete = perIdArray?.includes(4)
 
   const handleDelete = async () => {
     const itemsPerPage = dataListNews?.data.data.length;
@@ -63,11 +82,11 @@ export default function Recruitment({ children }: any) {
     setCurrenPage(page);
   };
 
-  
   const handleFormDateChange = (event) => {
     const selectedFormDate = event.target.value;
     setFormDate(selectedFormDate);
   };
+
   const handleToDateChange = (event) => {
     const selectedToDate = event.target.value;
     setToDate(selectedToDate);
@@ -81,14 +100,19 @@ const EditDataRecruitment = (data) => {
 }
   return (
     <>
+    <Head>
+        <title>Thực hiện tuyển dụng - Quản lý nhân sự - Timviec365.vn</title>
+      </Head>
       <div className={`${styles.tintuyendung}`}>
         <div className={`${styles.tuyendung1}`}>
-          <button className={`${styles.adds}`} onClick={handleOpenModalAdd}>
+          {iconAdd && (
+            <button className={`${styles.adds}`} onClick={handleOpenModalAdd}>
             <picture style={{ paddingLeft: "12px" }}>
               <img src={`/add.png`} alt=""></img>
               <p>Thêm tin tuyển dụng</p>
             </picture>
           </button>
+          )}
         </div>
         {openModalAdd && (
           <AddPerformRecruitment
@@ -149,7 +173,7 @@ const EditDataRecruitment = (data) => {
         >
           {dataMapping?.data.length === 0 ? <p className={`${styles.data_empty}`}>Không có dữ liệu</p>  : dataMapping?.data.map((item: any) => (
             <div key={item.id}>
-              <ListRecruitmentPage data={item} onDelete = {handleDelete} editData = {EditDataRecruitment}></ListRecruitmentPage>
+              <ListRecruitmentPage data={item} onDelete = {handleDelete} editData = {EditDataRecruitment} iconEdit = {iconEdit} iconDelete = {iconDelete}></ListRecruitmentPage>
             </div>
           ))}
           {dataListNews?.data.totalCount > 4 && (

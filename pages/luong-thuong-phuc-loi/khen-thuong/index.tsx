@@ -4,74 +4,84 @@ import PersonalReward from "@/components/luong-thuong-phuc-loi/khen-thuong/perso
 import CommendationTeam from "@/components/luong-thuong-phuc-loi/khen-thuong/commendationTeam/CommendationTeam";
 import AchievementList from "@/components/luong-thuong-phuc-loi/khen-thuong/achievementList/AchievementList";
 import { GetDataAchievement } from "@/pages/api/luong-thuong-phuc-loi/reward";
+import Head from "next/head";
+import { getDataAuthentication } from "@/pages/api/Home/HomeService";
+import LoadingSpinner from "@/components/loading";
+import PageAuthenticator from "@/components/quyen-truy-cap";
 
 export default function NavBar({ children }: any) {
   const [active, setActive] = useState(1);
-  const [keyWords, setKeyWords] = useState<any>('')
-  const [updateData, setUpdateData] = useState<any>()
-  const [data, setData] = useState<any>();
-  const [currentPage, setCurrentPage] = useState<any>(1);
+  const [displayIcon, setDisplayIcon] = useState<any>();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
-  const newData = data?.data.slice(0, -1)
-  const myPagination = data?.data[data.data.length - 1];
   useEffect(() => {
-    const GetDataPersonalReward = async () => {
-      const response = await GetDataAchievement(currentPage, 10, 1, keyWords);
-      console.log(response)
-      setData(response?.data.data);
-    };
-    GetDataPersonalReward();
-  }, [currentPage, keyWords]);
+    try {
+      const fetchData = async () => {
+        const response = await getDataAuthentication();
+        setDisplayIcon(response?.data?.data?.infoRoleTTVP);
+        setIsDataLoaded(true); // Move this line here
+        setIsLoading(false); // Move this line here
+      };
+      fetchData();
+    } catch (error) {}
+   
+  }, []);
 
-
-  const handlePageChange = (page: any) => {
-    setCurrentPage(page);
-  };
-  const handleSearch = (key) => {
-    setKeyWords(key)
-  }
-  const handleUpDateData = (newData) => {
-    setUpdateData(newData)
-  }
+  const perIdArray = displayIcon?.map((item) => item.perId);
+  const authen = perIdArray?.includes(1);
+  const iconAdd = perIdArray?.includes(2);
+  const iconEdit = perIdArray?.includes(3);
+  const iconDelete = perIdArray?.includes(4);
   const NavBarList = [
     {
       key: 1,
       header: "CÁ NHÂN",
-      component: <PersonalReward></PersonalReward>,
+      component: <PersonalReward iconAdd = {iconAdd} iconEdit = {iconEdit}></PersonalReward>,
     },
     {
       key: 2,
       header: "TẬP THỂ",
-      component: <CommendationTeam></CommendationTeam>,
+      component: <CommendationTeam iconAdd = {iconAdd} iconEdit = {iconEdit}></CommendationTeam>,
     },
     {
       key: 3,
       header: "DANH SÁCH THÀNH TÍCH",
-      component: <AchievementList></AchievementList>,
+      component: <AchievementList iconEdit = {iconEdit}></AchievementList>,
     },
   ];
 
   return (
     <>
-      <div className={`${styles.l_body}`}>
-        <ul className={`${styles.nav} ${styles.nav_tabs}`}>
-          {NavBarList.map((item) => (
-            <div key={item.key}>
-              <li className={`${styles.li_tabs}`}>
-                <span
-                  className={`${
-                    active === item?.key ? styles.active : styles.hover
-                  } `}
-                  onClick={() => setActive(item.key)}
-                >
-                  {item.header}
-                </span>
-              </li>
-            </div>
-          ))}
-        </ul>
-      </div>
-      {NavBarList.find(item => item.key === active)?.component } 
+      <Head>
+        <title>Khen thưởng - Quản lý nhân sự - Timviec365.vn</title>
+      </Head>
+
+      {!isDataLoaded ? (
+        <LoadingSpinner />
+      ) : authen ? (
+        <div className={`${styles.l_body}`}>
+          <ul className={`${styles.nav} ${styles.nav_tabs}`}>
+            {NavBarList.map((item) => (
+              <div key={item.key}>
+                <li className={`${styles.li_tabs}`}>
+                  <span
+                    className={`${
+                      active === item?.key ? styles.active : styles.hover
+                    } `}
+                    onClick={() => setActive(item.key)}
+                  >
+                    {item.header}
+                  </span>
+                </li>
+              </div>
+            ))}
+          </ul>
+          {NavBarList.find((item) => item.key === active)?.component}
+        </div>
+      ) : (
+        <PageAuthenticator />
+      )}
     </>
   );
 }

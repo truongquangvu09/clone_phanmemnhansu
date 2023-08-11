@@ -7,6 +7,7 @@ import { GetDataRecruitment } from "@/pages/api/quan-ly-tuyen-dung/RecruitmentMa
 import PageAuthenticator from "@/components/quyen-truy-cap";
 import LoadingSpinner from "@/components/loading";
 import { getDataAuthentication } from "@/pages/api/Home/HomeService";
+import Head from "next/head";
 
 export default function RecruitmentProcess() {
   const [openModalAdd, setOpenModalAdd] = useState(false);
@@ -18,21 +19,25 @@ export default function RecruitmentProcess() {
   const [authen, setAuthen] = useState<any>();
   const [isLoading, setIsLoading] = useState(true);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-
+  const [displayIcon, setDisplayIcon] = useState<any>()
 
   useEffect(() => {
     try {
         const fetchData =  async () => {
             const response = await getDataAuthentication() 
-            console.log( response)
+            setDisplayIcon(response?.data?.data?.infoRoleTD)
         }
         fetchData()
     }catch(error) {
-
     }
-})
+}, [])
 
-  useEffect(() => {
+const perIdArray = displayIcon?.map(item => item.perId)
+const iconAdd = perIdArray?.includes(2)
+const iconEdit = perIdArray?.includes(3)
+const iconDelete = perIdArray?.includes(4)
+
+useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await GetDataRecruitment(currentPage, 5, key);
@@ -88,6 +93,10 @@ export default function RecruitmentProcess() {
   };
 
   return (
+    <>
+    <Head>
+      <title>Quy trình tuyển dụng - Quản lý nhân sự - Timviec365.vn</title>
+    </Head>
     <div className={styles.l_body}>
       {!isDataLoaded ? (
         <LoadingSpinner />
@@ -97,27 +106,29 @@ export default function RecruitmentProcess() {
         <>
           <div className={styles.add_quytrinh}>
             <div className={styles.add_quytrinh1}>
-              <button
-                type="submit"
-                className="adds"
-                style={{ outline: "none", border: "none", padding: "0" }}
-              >
-                <div
-                  className={styles.add_quytrinh2}
-                  onClick={handleOpenModalAdd}
-                >
-                  <picture>
-                    <img
-                    src={"/add.png"}
-                    alt=""
-                    style={{ marginRight: "10px", marginTop: "-3px" }}
-                  ></img>
-                  </picture>
-                  <div className={styles.add_quytrinh2_title}>
-                    Thêm quy trình tuyển dụng
-                  </div>
-                </div>
-              </button>
+             {iconAdd && (
+               <button
+               type="submit"
+               className="adds"
+               style={{ outline: "none", border: "none", padding: "0" }}
+             >
+               <div
+                 className={styles.add_quytrinh2}
+                 onClick={handleOpenModalAdd}
+               >
+                 <picture>
+                   <img
+                   src={"/add.png"}
+                   alt=""
+                   style={{ marginRight: "10px", marginTop: "-3px" }}
+                 ></img>
+                 </picture>
+                 <div className={styles.add_quytrinh2_title}>
+                   Thêm quy trình tuyển dụng
+                 </div>
+               </div>
+             </button>
+             )}
             </div>
             {openModalAdd && (
               <AddRecruitmentProcess
@@ -156,11 +167,16 @@ export default function RecruitmentProcess() {
             currentPage={currentPage}
             handleDelete={handleDelete}
             setDataUpDate={newRecruitmentProcess}
+            iconAdd = {iconAdd}
+            iconEdit = {iconEdit}
+            iconDelete = {iconDelete}
           ></ListRecruitmentProcess>
 
           <BodyFrameFooter src="https://www.youtube.com/embed/J7JEoQkqarA"></BodyFrameFooter>
         </>
       )}
     </div>
+    </>
+    
   );
 }

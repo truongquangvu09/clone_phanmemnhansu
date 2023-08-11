@@ -23,6 +23,9 @@ interface WeatherData {
   const [longitude, setLongitude] = useState<null | number>(null);
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
 
+  function kelvinToCelsius(kelvin) {
+    return (kelvin - 273.15).toFixed(2);
+}
   useEffect(() => {
     const getLocation = () => {
       if (navigator.geolocation) {
@@ -32,11 +35,9 @@ interface WeatherData {
             setLongitude(position.coords.longitude);
           },
           (error) => {
-            console.log(error);
           }
         );
       } else {
-        console.log("Geolocation is not supported by this browser.");
       }
     };
     if (typeof window !== "undefined") {
@@ -53,7 +54,7 @@ interface WeatherData {
           const API_URL = process.env.NEXT_PUBLIC_WEATHER_API;
 
           const currentWeatherFetch = fetch(
-            `${API_URL}/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`
+            `${API_URL}/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`
           );
 
           Promise.all([currentWeatherFetch]).then(async (response) => {
@@ -62,28 +63,29 @@ interface WeatherData {
           });
         }
       } catch (error) {
-        console.log(error);
       }
     };
     getWeatherData();
   }, [latitude, longitude]);
 
+  // console.log(weatherData)
   return (
     <div>
       {weatherData && latitude && longitude && (
         <div className={`${styles.item_right_weather}`}>
         <div className={`${styles.right_top}`}>
-          <div className={`${styles.city_home}`}>{weatherData.name}, {weatherData.sys.country}</div>
+          <div className={`${styles.city_home}`}>{weatherData?.name}, {weatherData?.sys.country}</div>
           <div className={`${styles.weather}`}>
             <div>
               <img
                 className={`${styles.weather_image}`}
-                src={`icon_weather/${weatherData.weather[0].icon}.png`}
+                src={`icon_weather/${weatherData?.weather[0].icon}.png`}
                 alt=""
               />
             </div>
             <div className={`${styles.weather_flex}`}>
-              <div className={`${styles.temperature}`}>{Math.round(weatherData.main.temp)}</div>
+              {/* <div className={`${styles.temperature}`}>{Math.round(weatherData.main.temp)}</div> */}
+              <div className={`${styles.temperature}`}>{kelvinToCelsius(weatherData?.main.temp)}</div>
               <div className={`${styles.weather_sign}`}>
                 <img src={`	/doC.svg`} alt="thoitiet" />
               </div>

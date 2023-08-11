@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "../khoi-phuc/Restore.module.css";
 import { forceDelete } from "@/pages/api/du-lieu-da-xoa-gan-day/DeletedDataComPonentService";
 
 export default function DeleteData({
   animation,
   handleClose,
-  handleData
+  handleData,
 }: any) {
-
   const handleSubmit = (e) => {
-
     try {
       const fetchData = async () => {
         const response = await forceDelete(handleData);
@@ -20,9 +18,7 @@ export default function DeleteData({
         }
       };
       fetchData();
-    } catch (error) {
-
-    }
+    } catch (error) {}
   };
 
   return (
@@ -46,20 +42,20 @@ export default function DeleteData({
                 phục mục này.
               </p>
             </div>
-            <form onSubmit={(e) => handleSubmit(e)}>
-              <div className={`${styles.modal_footer}`}>
-                <button
-                  className={`${styles.l_btn_cancel}`}
-                  onClick={handleClose}
-                >
-                  Đóng
-                </button>
 
+            <div className={`${styles.modal_footer}`}>
+              <button
+                className={`${styles.l_btn_cancel}`}
+                onClick={handleClose}
+              >
+                Đóng
+              </button>
+              <form onSubmit={(e) => handleSubmit(e)}>
                 <button type="submit" className={`${styles.btn_delete}`}>
                   Xóa
                 </button>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>

@@ -41,13 +41,15 @@ const MemberViewBoxRoom = ({
     noAttendance,
     setOpenModalEdit,
     handleDataUpdateRoom,
-    setOpenModalDetails
+    setOpenModalDetails,
+    iconEdit
 }: any) => (
     <div className={`${styles.member_view_box} ${styles.member_view_box_top_3}`} style={{ display: 'flex', width: 'inherit' }}>
         <div className={`${styles.member_detail}`} style={{ width: '100%' }}>
             <div className={`${styles.member_details_header}`}>
                 <span style={{ color: '#474747', fontWeight: 600 }}>{text_part}</span>
-                <button
+                {iconEdit && (
+                    <button
                     className={`${styles.edit_dep}`}
                     onClick={() =>
                         handleDataUpdateRoom({
@@ -62,6 +64,7 @@ const MemberViewBoxRoom = ({
                 >
                     <img src={`/vn_icon-edit.svg`} />
                 </button>
+                )}
             </div>
             <div className={`${styles.member_details_body}`}>
                 <p>Mô tả: {describe} <button className={`${styles.see_more}`} onClick={() => setOpenModalDetails()}>( Chi tiết )</button></p>
@@ -90,22 +93,25 @@ const MemberViewBoxNest = ({
     noAttendance,
     setOpenModalEditNest,
     setOpenModalDetailsNest,
-    handleDataUpdateNest
+    handleDataUpdateNest,
+    iconEdit 
 }: any) => (
     <div className={`${styles.member_view_box} ${styles.member_view_box_top_3}`} style={{ display: 'flex', width: 'inherit' }}>
         <div className={`${styles.member_detail}`} style={{ width: '100%' }}>
             <div className={`${styles.member_details_header}`}>
                 <span style={{ color: '#474747', fontWeight: 600 }}>{text_part}</span>
-                <button className={`${styles.edit_dep}`} onClick={() =>
-                    handleDataUpdateNest({
-                        dep_name: dep_name,
-                        gr_id: gr_id,
-                        gr_name: text_part,
-                        description: describe,
-                    })
-                }>
-                    <img src={`/vn_icon-edit.svg`} />
-                </button>
+                {iconEdit && (
+                    <button className={`${styles.edit_dep}`} onClick={() =>
+                        handleDataUpdateNest({
+                            dep_name: dep_name,
+                            gr_id: gr_id,
+                            gr_name: text_part,
+                            description: describe,
+                        })
+                    }>
+                        <img src={`/vn_icon-edit.svg`} />
+                    </button>
+                )}
             </div>
             <div className={`${styles.member_details_body}`}>
                 <p>Mô tả: {describe} <button className={`${styles.see_more}`} onClick={() => setOpenModalDetailsNest()}>( Chi tiết )</button></p>
@@ -136,23 +142,26 @@ const MemberViewBoxGroup = ({
     noAttendance,
     setOpenModalEditGroup,
     setOpenModalDetailsGroup,
-    handleDataUpdateGroup
+    handleDataUpdateGroup,
+    iconEdit 
 }: any) => (
     <div className={`${styles.member_view_box} ${styles.member_view_box_top_3}`} style={{ display: 'flex', width: 'inherit' }}>
         <div className={`${styles.member_detail}`} style={{ width: '100%' }}>
             <div className={`${styles.member_details_header}`}>
                 <span style={{ color: '#474747', fontWeight: 600 }}>{text_part}</span>
-                <button className={`${styles.edit_dep}`} onClick={() =>
-                    handleDataUpdateGroup({
-                        dep_name: dep_name,
-                        gr_id: gr_id,
-                        nest_name: nest_name,
-                        gr_name: text_part,
-                        description: describe,
-                    })
-                }>
-                    <img src={`/vn_icon-edit.svg`} />
-                </button>
+                {iconEdit && (
+                    <button className={`${styles.edit_dep}`} onClick={() =>
+                        handleDataUpdateGroup({
+                            dep_name: dep_name,
+                            gr_id: gr_id,
+                            nest_name: nest_name,
+                            gr_name: text_part,
+                            description: describe,
+                        })
+                    }>
+                        <img src={`/vn_icon-edit.svg`} />
+                    </button>
+                )}
             </div>
             <div className={`${styles.member_details_body}`}>
                 <p>Mô tả: {describe} <button className={`${styles.see_more}`} onClick={() => setOpenModalDetailsGroup()}>( Chi tiết )</button></p>
@@ -192,7 +201,7 @@ const MemberViewBoxCompany = ({
 
 );
 const defaultValue = { label: 'Default Option', value: 'default' };
-const StyledTreeExample = () => {
+const StyledTreeExample = ({iconEdit}) => {
 
     const [openModalEdit, setOpenModalEdit] = useState(0)
     const [openModalDetails, setOpenModalDetails] = useState(0)
@@ -222,9 +231,6 @@ const StyledTreeExample = () => {
     const [phoTruongPhong, setPhoTruongPhong] = useState<any>("")
     const [soluongnhanvien, setSoLuongNhanVien] = useState<any>("")
     const [mota, setMota] = useState<any>("")
-
-    console.log({ tenTo, chonPhongBan });
-
 
     const handleDataUpdateRoom = ({ dep_id, dep_name, manager, deputy, total_emp, description }: any) => {
         setChonPhongBan(dep_name)
@@ -270,9 +276,6 @@ const StyledTreeExample = () => {
     };
 
     const [data, setData] = useState<any>(null)
-
-
-
 
     useEffect(() => {
         const fetchData = async () => {
@@ -322,8 +325,7 @@ const StyledTreeExample = () => {
                                     setOpenModalEdit={() => setOpenModalEdit(dep?.dep_id)}
                                     handleDataUpdateRoom={handleDataUpdateRoom}
                                     setOpenModalDetails={() => setOpenModalDetails(dep?.dep_id)}
-
-
+                                    iconEdit = {iconEdit}
                                 /></StyledNode>}>
                                     {dep?.infoTeam?.map((team: any) => {
                                         return (
@@ -342,7 +344,9 @@ const StyledTreeExample = () => {
                                                 noAttendance='12'
                                                 setOpenModalEditNest={() => setOpenModalEditNest(team?.gr_id)}
                                                 handleDataUpdateNest={handleDataUpdateNest}
-                                                setOpenModalDetailsNest={() => setOpenModalDetailsNest(team?.gr_id)} />
+                                                setOpenModalDetailsNest={() => setOpenModalDetailsNest(team?.gr_id)} 
+                                                iconEdit = {iconEdit}
+                                                />
                                             </StyledNode>}>
                                                 {team?.infoGroup?.filter((group: any, index: number, self: any[]) =>
                                                     self.findIndex((g: any) => g.gr_id === group.gr_id) === index
@@ -365,6 +369,7 @@ const StyledTreeExample = () => {
                                                             setOpenModalEditGroup={() => setOpenModalEditGroup(group?.gr_id)}
                                                             handleDataUpdateGroup={handleDataUpdateGroup}
                                                             setOpenModalDetailsGroup={() => setOpenModalDetailsGroup(group?.gr_id)}
+                                                            iconEdit = {iconEdit}
                                                         /></StyledNode>} />
                                                     )
                                                 })}
@@ -387,6 +392,7 @@ const StyledTreeExample = () => {
                                     employeeNumber={com?.tong_nv}
                                     registered={com?.tong_nv_da_diem_danh}
                                     noAttendance={com?.tong_nv - com?.tong_nv_da_diem_danh}
+                                    iconEdit = {iconEdit}
                                 // setOpenModalEdit={() => setOpenModalEdit(true)}
                                 /></StyledNode>}>
                                     {com?.infoDep?.map((dep: any) => {
@@ -404,6 +410,7 @@ const StyledTreeExample = () => {
                                                 noAttendance={dep?.total_emp - dep?.tong_nv_da_diem_danh}
                                                 setOpenModalEdit={() => setOpenModalEdit(dep?.dep_id)}
                                                 setOpenModalDetails={() => setOpenModalDetails(dep?.dep_id)}
+                                                iconEdit = {iconEdit}
 
                                             /></StyledNode>}>
                                                 {dep?.infoTeam?.map((team: any) => {
@@ -420,7 +427,9 @@ const StyledTreeExample = () => {
                                                             registered='15'
                                                             noAttendance='12'
                                                             setOpenModalEditNest={() => setOpenModalEditNest(team?.gr_id)}
-                                                            setOpenModalDetailsNest={() => setOpenModalDetailsNest(team?.gr_id)} />
+                                                            setOpenModalDetailsNest={() => setOpenModalDetailsNest(team?.gr_id)} 
+                                                            iconEdit = {iconEdit}
+                                                            />
                                                         </StyledNode>}>
                                                             {team?.infoGroup?.map((group: any) => {
                                                                 return (
@@ -437,6 +446,8 @@ const StyledTreeExample = () => {
                                                                         noAttendance='12'
                                                                         setOpenModalEditGroup={() => setOpenModalEditGroup(group?.gr_id)}
                                                                         setOpenModalDetailsGroup={() => setOpenModalDetailsGroup(group?.gr_id)}
+                                                                        iconEdit = {iconEdit}
+
                                                                     /></StyledNode>} />
                                                                 )
                                                             })}

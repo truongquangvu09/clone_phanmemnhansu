@@ -8,6 +8,7 @@ import InfomationSection3 from './bodySection3';
 import { addDays, format } from 'date-fns';
 import { GetDataHrReport, ReportCharts } from '@/pages/api/bao-cao-nhan-su/HrReportService'
 import { DepartmentList } from "@/pages/api/listPhongBan";
+import GetComId from '@/components/getComID';
 
 type SelectOptionType = { label: string, value: any }
 
@@ -85,6 +86,7 @@ export default function TabHRReport({ dateRangeDatas }: any) {
     }, [dateRangeData])
 
     // -- lấy dữ liệu phòng ban --
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -92,7 +94,7 @@ export default function TabHRReport({ dateRangeDatas }: any) {
                 const formData = new FormData()
                 formData.append('com_id', comid)
                 const response = await DepartmentList(formData)
-                setDepartmentList(response.data)
+                setDepartmentList(response?.data)
             } catch (error) {
                 throw error
             }

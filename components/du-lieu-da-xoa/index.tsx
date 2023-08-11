@@ -6,7 +6,7 @@ import Restore from "./khoi-phuc";
 import DeleteData from "./xoa-du-lieu";
 import { getDataDeleteComponent } from "@/pages/api/du-lieu-da-xoa-gan-day/DeletedDataComPonentService";
 
-export default function DeletedDataComPonent() {
+export default function DeletedDataComPonent({iconEdit, iconDelete}) {
 
   const [openModal, setOpenModal] = useState(0)
   const [animation, setAnimation] = useState(false)
@@ -57,29 +57,47 @@ export default function DeletedDataComPonent() {
 
   return (
     <>
-     {openModal === 1 && <Restore  animation = {animation} handleClose = {handleClose} handleData = {handleData} ></Restore>}
-     {openModal === 2 && <DeleteData  animation = {animation} handleClose = {handleClose} handleData = {handleData} ></DeleteData>}
+      {openModal === 1 && (
+        <Restore
+          animation={animation}
+          handleClose={handleClose}
+          handleData={handleData}
+        ></Restore>
+      )}
+      {openModal === 2 && (
+        <DeleteData
+          animation={animation}
+          handleClose={handleClose}
+          handleData={handleData}
+        ></DeleteData>
+      )}
       <div className={`${styles.l_body}`}>
         <div className={`${styles.t_delete_head}`}>
           <div className={`${styles.header_left}`}>
             <p>DỮ LIỆU ĐÃ XÓA GẦN ĐÂY</p>
           </div>
 
-          <div className={`${styles.between}`}>
-            <div className={`${styles.between_time}`}
-            onClick={() => handleOpen(1)}
-            >
-              <picture>
-                <img src={`${"/icon-time.svg"}`} alt=""></img>
-              </picture>
+          {iconDelete || iconEdit ? (
+            <div className={`${styles.between}`}>
+              {iconEdit && (
+                <div
+                className={`${styles.between_time}`}
+                onClick={() => handleOpen(1)}
+              >
+                <picture>
+                  <img src={`${"/icon-time.svg"}`} alt=""></img>
+                </picture>
+              </div>
+              )}
+              {iconDelete && (
+                <div className={`${styles.between_delete}`}>
+                <picture onClick={() => handleOpen(2)}>
+                  <img src={`${"/icon-trash.svg"}`} alt=""></img>
+                </picture>
+              </div>
+              )}
             </div>
-            <div className={`${styles.between_delete}`}>
-              <picture 
-              onClick={() => handleOpen(2)}>
-                <img src={`${"/icon-trash.svg"}`} alt=""></img>
-              </picture>
-            </div>
-          </div>
+          ) : null}
 
           <div className={`${styles.right}`}>
             <form className={`${styles.form}`}>
@@ -98,7 +116,11 @@ export default function DeletedDataComPonent() {
             </form>
           </div>
         </div>
-        <TableData data = {data} dataCheck = {dataCheck} listCheck={listCheck}></TableData>
+        <TableData
+          data={data}
+          dataCheck={dataCheck}
+          listCheck={listCheck}
+        ></TableData>
         <BodyFrameFooter src="https://www.youtube.com/embed/XEAFwQRkBfQ"></BodyFrameFooter>
       </div>
     </>

@@ -15,9 +15,9 @@ export const GetDataHrReport = async (formData:FormData) => {
         }
       );
       return response.data;
-    } catch (err) {
-      console.error("Error fetching recruitment data:", err);
-      throw err;
+    } catch (err: any) {
+      
+    
     }
   };
 

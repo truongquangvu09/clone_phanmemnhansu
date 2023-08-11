@@ -7,9 +7,6 @@ type SelectOptionType = { label: string, value: string }
 
 export default function DetailCandidateList({ onCancel, infoList }: any) {
 
-    console.log(infoList);
-
-
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
 
     const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
@@ -17,7 +14,6 @@ export default function DetailCandidateList({ onCancel, infoList }: any) {
             setSelectedOption(option)
         }
     };
-
 
     const options = {
         tinhtranghonnhan: [

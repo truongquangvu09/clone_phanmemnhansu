@@ -9,7 +9,7 @@ import Selects from "@/components/select";
 import HandleAddAnotherSkill from '../candidateAddModal/addAnotherSkill';
 import MyEditorNew from '@/components/myEditor';
 import { AddFailJob } from '@/pages/api/quan-ly-tuyen-dung/candidateList';
-
+import * as Yup from "yup";
 interface InputTextareaProps {
     onDescriptionChange: (data: any) => void
     process_id: any
@@ -19,6 +19,7 @@ function Input_textarea({ onDescriptionChange, process_id }: InputTextareaProps)
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [data, setData] = useState(`Thân gửi ..........Tên ứng viên........!
     Cảm ơn bạn,`)
+    const [errors, setErrors] = useState<any>({});
 
     useEffect(() => {
         setEditorLoaded(true);
@@ -54,6 +55,7 @@ export default function StageFailJob({ onCancel, process_id, data, process_id_fr
     const [descriptions, setDescription] = useState("");
     const [isUserHiring, setUserHiring] = useState<any>("")
     const [type, setType] = useState<any>(1);
+    const [errors, setErrors] = useState<any>({});
 
     useEffect(() => {
         const fetchData = async () => {
@@ -104,6 +106,17 @@ export default function StageFailJob({ onCancel, process_id, data, process_id_fr
     }, []);
 
 
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required("Tên không được để trống"),
+        cvFrom: Yup.string().required("Nhập nguồn ứng viên"),
+        userHiring: Yup.string().required("Chọn nhân viên tuyển dụng"),
+        recruitment: Yup.string().required("Chọn vị trí tuyển dụng"),
+        timeSendCv: Yup.string().required("Thời gian gửi không được để trống"),
+        email: Yup.string().required("email không được để trống"),
+        type: Yup.string().required("Chọn giai đoạn chuyển"),
+    });
+
+
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
@@ -120,7 +133,22 @@ export default function StageFailJob({ onCancel, process_id, data, process_id_fr
                 document.getElementById("note") as HTMLInputElement
             )?.value;
 
+            const formDatas = {
+                name: name || "",
+                email: email || "",
+                cvFrom: cvFrom || "",
+                userHiring: isUserHiring || "",
+                recruitment: isRecruitmentNewsId || "",
+                timeSendCv: timeSendCv || "",
+                type: type || "",
+            };
+            await validationSchema.validate(formDatas, {
+                abortEarly: false,
+            });
+
             const canid: any = process_id_from === 0 ? data?.id : data?.canId
+            console.log(data?.canId, data?.id, process_id_from);
+
             const formData = new FormData();
             formData.append("canId", canid);
             formData.append("name", name);
@@ -133,6 +161,16 @@ export default function StageFailJob({ onCancel, process_id, data, process_id_fr
             formData.append("note", note);
             formData.append("contentsend", descriptions);
             formData.append("type", type);
+            formData.append('firstStarVote', rating)
+            {
+                skills?.map((item, index) => {
+                    const skillData = {
+                        skillName: item.skillName,
+                        skillVote: item.skillVote,
+                    };
+                    formData.append('listSkill', JSON.stringify(skillData));
+                });
+            }
 
             const response = await AddFailJob(formData);
             if (response) {
@@ -142,7 +180,15 @@ export default function StageFailJob({ onCancel, process_id, data, process_id_fr
             }
 
         } catch (error) {
-            throw error;
+            if (error instanceof Yup.ValidationError) {
+                const yupErrors = {};
+                error.inner.forEach((yupError: any) => {
+                    yupErrors[yupError.path] = yupError.message;
+                });
+                setErrors(yupErrors);
+            } else {
+                console.error("Lỗi validate form:", error);
+            }
         }
     };
 
@@ -211,12 +257,14 @@ export default function StageFailJob({ onCancel, process_id, data, process_id_fr
                                         <label htmlFor="">Tên ứng viên <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="text" id="name" defaultValue={isCandidate?.name} className={`${styles.input_process}`} />
+                                            <span> {errors.name && <div className={`${styles.t_require} `}>{errors.name}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Nguồn ứng viên <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="text" id="cvFrom" defaultValue={isCandidate?.cvFrom} className={`${styles.input_process}`} />
+                                            <span> {errors.cvFrom && <div className={`${styles.t_require} `}>{errors.cvFrom}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -238,6 +286,7 @@ export default function StageFailJob({ onCancel, process_id, data, process_id_fr
                                                         placeholder={"Chọn Nhân viên"}
                                                     />
                                                 }
+                                                <span> {errors.userHiring && <div className={`${styles.t_require} `}>{errors.userHiring}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -260,6 +309,7 @@ export default function StageFailJob({ onCancel, process_id, data, process_id_fr
                                                         placeholder={"Chọn vị trí tuyển dụng"}
                                                     />
                                                 }
+                                                <span> {errors.recruitment && <div className={`${styles.t_require} `}>{errors.recruitment}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -280,10 +330,10 @@ export default function StageFailJob({ onCancel, process_id, data, process_id_fr
                                                     className={`${styles.input_process}`}
                                                 />
                                             }
-
+                                            <span> {errors.timeSendCv && <div className={`${styles.t_require} `}>{errors.timeSendCv}</div>}</span>
                                         </div>
                                     </div>
-                                    <div className={`${styles.form_groups}`}>
+                                    <div className={`${styles.form_groupss}`}>
                                         <label htmlFor="">Đánh giá hồ sơ <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <Rating size={27} initialValue={isCandidate?.starVote} disableFillHover className={`${styles.star_rating}`} onClick={handleRating} />
@@ -310,11 +360,12 @@ export default function StageFailJob({ onCancel, process_id, data, process_id_fr
                                                     option={options?.chontrangthai}
                                                     placeholder={"Chọn Nhân viên"}
                                                 />
+                                                <span> {errors.type && <div className={`${styles.t_require} `}>{errors.type}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups1}`}>
-                                        <label htmlFor="">Ghi chú <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Ghi chú </label>
                                         <div className={`${styles.input_right}`}>
                                             <textarea style={{ height: 50 }} id="note" className={`${styles.input_process}`} />
                                         </div>
@@ -323,6 +374,7 @@ export default function StageFailJob({ onCancel, process_id, data, process_id_fr
                                         <label htmlFor="">Gửi email đến <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="text" id="email" defaultValue={isCandidate?.email} className={`${styles.input_process}`} />
+                                            <span> {errors.email && <div className={`${styles.t_require} `}>{errors.email}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groupss}`}>

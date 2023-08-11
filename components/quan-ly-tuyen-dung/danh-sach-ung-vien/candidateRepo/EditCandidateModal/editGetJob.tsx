@@ -1,43 +1,34 @@
 import React, { useState, useEffect, useMemo } from "react";
 import styles from "../../candidateAddModal/candidateAddModal.module.css";
 import { Rating } from "react-simple-star-rating";
-import { CandidateUpdate } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 import { EmployeeList } from "@/pages/api/listNhanVien";
 import { GetListNews } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
 import Selects from "@/components/select";
 import { parseISO, format } from "date-fns";
 import { GetJobDetails } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
-
+import { AddGetJob } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
+import * as Yup from "yup";
 
 type SelectOptionType = { label: string; value: any };
 
 export default function EditCandidateGetJob({ onCancel, candidate }: any) {
     const [rating, setRating] = useState<any>(candidate?.starVote);
     const [addAnotherSkill, setAddAnotherSkill] = useState<JSX.Element[]>([]);
-    const [skills, setSkills] = useState<{ skillName: string; skillVote: any }[]>(
-        []
-    );
+    const [skills, setSkills] = useState<{ skillName: string; skillVote: any }[]>([]);
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(
         null
     );
-
-    const [provisionFile, setProvisionFile] = useState<File | null>(null);
     const [isGender, setGender] = useState<any>(candidate?.gender);
     const [isEducation, setEducation] = useState<any>(candidate?.education);
-    const [isUserHiring, setUserHiring] = useState<any>(candidate?.userHiring);
     const [isExp, setExp] = useState<any>(candidate?.exp);
     const [isMarried, setMarried] = useState<any>(candidate?.isMarried);
-    const [isUserRecommend, setUserRecommend] = useState<any>(
-        candidate?.userRecommend
-    );
-    const [isRecruitmentNewsId, setRecruitmentNewsId] = useState<any>(
-        candidate?.recruitmentNewsId
-    );
+    const [isEmpInterview, setEmpInterview] = useState<any>(candidate?.userHiring);
     const [isEmpList, setEmpList] = useState<any>(null);
     const [isNewList, setNewsList] = useState<any>(null);
     const [isCandidate, setCandidate] = useState<any>(null);
+    const [errors, setErrors] = useState<any>({});
 
-    console.log({ isCandidate });
+    console.log(candidate);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -60,8 +51,6 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
         const fetchData = async () => {
             try {
                 const formData = new FormData();
-                console.log(candidate);
-
                 formData.append('canId', candidate?.id)
                 const response = await GetJobDetails(formData);
                 if (response) {
@@ -88,71 +77,93 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
         fetchData();
     }, []);
 
-
+    const validationSchema = Yup.object().shape({
+        starVote: Yup.string().required("Đánh giá không được để trống"),
+        resiredSalary: Yup.string().required("Nhập mức lương mong muốn"),
+        salary: Yup.string().required("Mức lương thực không được để trống"),
+        empInterview: Yup.string().required("Chọn nhân viên tham gia"),
+        timeInterView: Yup.string().required("Thời gian hẹn không được để trống"),
+    });
 
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-
         try {
-            const name = (document.getElementById("name") as HTMLInputElement)?.value;
-            const email = (document.getElementById("email") as HTMLInputElement)
-                ?.value;
-            const phone = (document.getElementById("phone") as HTMLInputElement)
-                ?.value;
-            const birthday = (document.getElementById("birthday") as HTMLInputElement)
-                ?.value;
-            const hometown = (document.getElementById("hometown") as HTMLInputElement)
-                ?.value;
-            const school = (document.getElementById("school") as HTMLInputElement)
-                ?.value;
-            const address = (document.getElementById("address") as HTMLInputElement)
-                ?.value;
-            const cvFrom = (document.getElementById("cvFrom") as HTMLInputElement)
-                ?.value;
-            const timeSendCv = (
-                document.getElementById("timeSendCv") as HTMLInputElement
+
+            const resiredSalary = (
+                document.getElementById("resiredSalary") as HTMLInputElement
+            )?.value;
+            const salary = (
+                document.getElementById("salary") as HTMLInputElement
+            )?.value;
+            const timeInterView = (
+                document.getElementById("timeInterView") as HTMLInputElement
+            )?.value;
+            const note = (
+                document.getElementById("note") as HTMLInputElement
             )?.value;
 
+            const formDatas = {
+                starVote: rating || "",
+                resiredSalary: resiredSalary || "",
+                salary: salary || "",
+                empInterview: isEmpInterview || "",
+                timeInterView: timeInterView || "",
+            };
+
+            await validationSchema.validate(formDatas, {
+                abortEarly: false,
+            });
+
             const formData = new FormData();
-            formData.append("name", name);
-            formData.append("email", email);
-            formData.append("phone", phone);
+            formData.append("name", candidate?.name);
+            formData.append("email", candidate?.email);
+            formData.append("phone", candidate?.phone);
             formData.append("gender", isGender);
-            formData.append("birthday", birthday);
-            formData.append("hometown", hometown);
+            formData.append("birthday", format(
+                parseISO(candidate?.birthday),
+                "yyyy-MM-dd"
+            ));
+            formData.append("hometown", candidate?.hometown);
             formData.append("education", isEducation);
-            formData.append("school", school);
+            formData.append("school", candidate?.school);
             formData.append("exp", isExp);
             formData.append("isMarried", isMarried);
-            formData.append("address", address);
-            formData.append("userHiring", isUserHiring);
-            formData.append("userRecommend", isUserRecommend);
-            formData.append("recruitmentNewsId", isRecruitmentNewsId);
-            formData.append("cvFrom", cvFrom);
-            formData.append("timeSendCv", timeSendCv);
-            formData.append("firstStarVote", rating);
-            formData.append("candidateId", candidate?.id);
-            {
-                skills?.map((item, index) => {
-                    const skillData = {
-                        skillName: item.skillName,
-                        skillVote: item.skillVote,
-                    };
-                    formData.append("listSkill", JSON.stringify(skillData));
-                });
-            }
-            if (provisionFile) {
-                formData.append("cv", provisionFile);
-            }
+            formData.append("address", candidate?.address);
+            formData.append("userHiring", candidate?.userHiring);
+            formData.append("userRecommend", candidate?.userRecommend);
+            formData.append("cvFrom", candidate?.cvFrom);
+            formData.append("timeSendCv", format(
+                parseISO(candidate?.timeSendCv),
+                "yyyy-MM-dd"
+            ));
+            formData.append("starVote", rating);
+            formData.append("canId", candidate?.id);
+            formData.append("resiredSalary", resiredSalary);
+            formData.append("interviewTime", timeInterView);
+            formData.append("empInterview", isEmpInterview);
+            formData.append("salary", salary);
+            formData.append("note", note);
+            formData.append("contentsend", isCandidate?.detail_get_job?.contentSend);
+            formData.append("processInterviewId", isCandidate?.detail_get_job?.id);
+            formData.append("recruitmentNewsId", isCandidate?.detail?.recruitmentNewsId);
 
-            const response = await CandidateUpdate(formData);
+
+            const response = await AddGetJob(formData);
             if (response) {
                 setTimeout(() => {
                     onCancel();
                 }, 1500);
             }
         } catch (error) {
-            throw error;
+            if (error instanceof Yup.ValidationError) {
+                const yupErrors = {};
+                error.inner.forEach((yupError: any) => {
+                    yupErrors[yupError.path] = yupError.message;
+                });
+                setErrors(yupErrors);
+            } else {
+                console.error("Lỗi validate form:", error);
+            }
         }
     };
 
@@ -256,6 +267,9 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
     const selectedUseRecomment: any = options.tennhanviengioithieu?.find(
         (item: any) => item.value === candidate?.userRecommend
     );
+    const selectedEmpInterview: any = options.tennhanvientuyendung?.find(
+        (item: any) => item.value === isCandidate?.detail_get_job?.empInterview
+    );
 
     return (
         <>
@@ -279,7 +293,7 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
                                         <div className={`${styles.input_right}`}>
                                             <input
                                                 type="text"
-                                                defaultValue={candidate?.name}
+                                                value={candidate?.name}
                                                 id="name"
                                                 placeholder="Nhập tên ứng viên"
                                                 className={`${styles.input_process}`}
@@ -293,7 +307,7 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
                                         <div className={`${styles.input_right}`}>
                                             <input
                                                 type="text"
-                                                defaultValue={candidate?.email}
+                                                value={candidate?.email}
                                                 id="email"
                                                 placeholder="Nhập Email ứng viên"
                                                 className={`${styles.input_process}`}
@@ -308,7 +322,7 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
                                             <input
                                                 type="text"
                                                 id="phone"
-                                                defaultValue={candidate?.phone}
+                                                value={candidate?.phone}
                                                 placeholder="Nhập SĐt ứng viên"
                                                 className={`${styles.input_process}`}
                                             />
@@ -342,7 +356,7 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
                                             <input
                                                 type="date"
                                                 id="birthday"
-                                                defaultValue={format(
+                                                value={format(
                                                     parseISO(candidate?.birthday),
                                                     "yyyy-MM-dd"
                                                 )}
@@ -357,7 +371,7 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
                                             <input
                                                 type="text"
                                                 id="hometown"
-                                                defaultValue={candidate?.hometown}
+                                                value={candidate?.hometown}
                                                 placeholder="Nhập quê quán"
                                                 className={`${styles.input_process}`}
                                             />
@@ -389,7 +403,7 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
                                             <input
                                                 type="text"
                                                 id="school"
-                                                defaultValue={candidate?.school}
+                                                value={candidate?.school}
                                                 placeholder="Nhập trường học"
                                                 className={`${styles.input_process}`}
                                             />
@@ -445,7 +459,7 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
                                             <input
                                                 type="text"
                                                 id="address"
-                                                defaultValue={candidate?.address}
+                                                value={candidate?.address}
                                                 placeholder="Nhập địa chỉ ứng viên"
                                                 className={`${styles.input_process}`}
                                             />
@@ -459,7 +473,7 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
                                             <input
                                                 type="text"
                                                 id="cvFrom"
-                                                defaultValue={candidate?.cvFrom}
+                                                value={candidate?.cvFrom}
                                                 placeholder="Nhập nguồn ứng viên"
                                                 className={`${styles.input_process}`}
                                             />
@@ -479,8 +493,7 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
                                                     width_control={100}
                                                     width_menu={97}
                                                     height={33.6}
-                                                    setState={setUserHiring}
-                                                    option={options.tennhanvientuyendung}
+                                                    // option={options.tennhanvientuyendung}
                                                     placeholder={"Chọn nhân viên"}
                                                 />
                                             </div>
@@ -500,8 +513,8 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
                                                     width_control={100}
                                                     width_menu={97}
                                                     height={33.6}
-                                                    setState={setUserRecommend}
-                                                    option={options.tennhanviengioithieu}
+                                                    // setState={setUserRecommend}
+                                                    // option={options.tennhanviengioithieu}
                                                     placeholder={"Chọn nhân viên"}
                                                 />
                                             </div>
@@ -514,20 +527,22 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">
-                                            Thời gian gửi hồ sơ{" "}
-                                            <span style={{ color: "red" }}> * </span>
+                                            Thời gian nhận hồ sơ{" "}
+
                                         </label>
                                         <div className={`${styles.input_right}`}>
-                                            <input
-                                                type="date"
-                                                id="timeSendCv"
-                                                defaultValue={format(
-                                                    parseISO(candidate?.timeSendCv),
-                                                    "yyyy-MM-dd"
-                                                )}
-                                                placeholder="dd/mm/yyyy --:--:--"
-                                                className={`${styles.input_process}`}
-                                            />
+                                            {isCandidate?.detail_get_job?.createdAt &&
+                                                <input
+                                                    type="date"
+                                                    id="timeSendCv"
+                                                    value={format(
+                                                        parseISO(isCandidate?.detail_get_job?.createdAt),
+                                                        "yyyy-MM-dd"
+                                                    )}
+                                                    placeholder="dd/mm/yyyy --:--:--"
+                                                    className={`${styles.input_process}`}
+                                                />}
+
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -543,7 +558,7 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
                                                 onClick={handleRating}
                                             />
                                             <div className={`${styles.skills_container}`}>
-                                                {addAnotherSkill}
+
                                             </div>
 
                                         </div>
@@ -560,10 +575,11 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
                                         <div className={`${styles.input_right} `}>
                                             <input
                                                 type="text"
-                                                id="address"
-                                                defaultValue={candidate?.address}
+                                                id="resiredSalary"
+                                                defaultValue={isCandidate?.detail_get_job?.resiredSalary}
                                                 className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.resiredSalary && <div className={`${styles.t_require} `}>{errors.resiredSalary}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -573,10 +589,11 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
                                         <div className={`${styles.input_right} `}>
                                             <input
                                                 type="text"
-                                                id="address"
-                                                defaultValue={candidate?.address}
+                                                id="salary"
+                                                defaultValue={isCandidate?.detail_get_job?.salary}
                                                 className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.salary && <div className={`${styles.t_require} `}>{errors.salary}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -584,27 +601,52 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
                                             Thời gian hẹn <span style={{ color: "red" }}> * </span>
                                         </label>
                                         <div className={`${styles.input_right}`}>
-                                            <input
-                                                type="date"
-                                                id="birthday"
-                                                defaultValue={format(
-                                                    parseISO(candidate?.birthday),
-                                                    "yyyy-MM-dd"
-                                                )}
-                                                placeholder="dd/mm/yyyy"
-                                                className={`${styles.input_process}`}
-                                            />
+                                            {isCandidate?.detail_get_job?.interviewTime &&
+                                                <input
+                                                    type="date"
+                                                    id="timeInterView"
+                                                    defaultValue={format(
+                                                        parseISO(isCandidate?.detail_get_job?.interviewTime),
+                                                        "yyyy-MM-dd"
+                                                    )}
+                                                    placeholder="dd/mm/yyyy"
+                                                    className={`${styles.input_process}`}
+                                                />}
+                                            <span> {errors.timeInterView && <div className={`${styles.t_require} `}>{errors.timeInterView}</div>}</span>
+
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">
-                                            Ghi chú <span style={{ color: "red" }}> * </span>
+                                            Nhân viên tham gia{" "}
+                                            <span style={{ color: "red" }}> * </span>
+                                        </label>
+                                        <div className={`${styles.input_right}`}>
+                                            <div className={`${styles.div_no_pad} `}>
+                                                <Selects
+                                                    selectedOption={selectedEmpInterview}
+                                                    onChange={handleSelectChange}
+                                                    padding={15}
+                                                    width_control={100}
+                                                    width_menu={97}
+                                                    height={33.6}
+                                                    setState={setEmpInterview}
+                                                    option={options.tennhanvientuyendung}
+                                                    placeholder={"Chọn nhân viên"}
+                                                />
+                                                <span> {errors.empInterview && <div className={`${styles.t_require} `}>{errors.empInterview}</div>}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={`${styles.form_groups}`}>
+                                        <label htmlFor="">
+                                            Ghi chú
                                         </label>
                                         <div className={`${styles.input_right} `}>
                                             <textarea
                                                 style={{ height: 60 }}
-                                                id="address"
-                                                defaultValue={candidate?.address}
+                                                id="note"
+                                                defaultValue={isCandidate?.detail_get_job?.note}
                                                 className={`${styles.input_process}`}
                                             />
                                         </div>

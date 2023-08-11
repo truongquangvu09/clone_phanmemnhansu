@@ -13,7 +13,7 @@ import UpdateRegulationsGroupsModal from './updateRegulationModal';
 import DeleteRegulationGroup from './deleteRegulationModal';
 import DeleteRegulation from './deleteRegulationModal/deleteRegulation';
 
-export default function RegulationsWork() {
+export default function RegulationsWork( {iconAdd, iconEdit, iconDelete}) {
     const [click, setClick] = useState(false)
     const [openModal, setOpenModal] = useState(0)
     const [openDetail, setOpentDetail] = useState(0)
@@ -36,9 +36,8 @@ export default function RegulationsWork() {
     const fetchData = useCallback(async () => {
         try {
             const response = await SpecifiedGroupList(10, currentPage, keyWords);
-            setData(response.data);
+            setData(response?.data);
         } catch (error) {
-            throw error;
         }
     }, [currentPage, keyWords]);
 
@@ -55,9 +54,8 @@ export default function RegulationsWork() {
                 const dataResponse = response?.data?.data
                 const updatedDataChildList = [...dataChildList, { id: itemId, data: dataResponse }];
                 setDataChildList(updatedDataChildList);
-                setDataChild(response.data);
+                setDataChild(response?.data);
             } catch (error) {
-                throw error
             }
         }
     };
@@ -118,12 +116,14 @@ export default function RegulationsWork() {
                 <div className={`${styles.tab_pane} ${styles.fade} `}>
                     <div className={`${styles.recruitment2}`}>
                         <div className={`${styles.recruitment2_3}`}>
-                            <button className={`${styles.adds}`} onClick={handleClick}>
+                            {iconAdd && (
+                                <button className={`${styles.adds}`} onClick={handleClick}>
                                 <picture>
                                     <img style={{ verticalAlign: 'middle' }} src={`/add.png`} alt="" />
                                     Thêm mới
                                 </picture>
                             </button>
+                            )}
                             {click === true && (<div className={`${styles.settings} ${styles.lefftset}`} >
                                 <li onClick={() => setOpenModal(1)}>Thêm nhóm quy định</li>
                                 <hr style={{ marginTop: 0, marginBottom: 0 }} />
@@ -160,9 +160,8 @@ export default function RegulationsWork() {
                                             <img className={`${styles.icondown}`} src="/down.png" />
                                         </div>
                                         <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpendetail(item.id)} >Chi tiết/</a>
-                                        <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpenUpdate(item.id)}>Sửa</a>
-                                        <span>/</span>
-                                        <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpenDelete(item.id)} >Xóa</a>
+                                        {iconEdit && <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpenUpdate(item.id)}>Sửa/</a>}
+                                        {iconDelete && <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpenDelete(item.id)} >Xóa</a>}
                                     </div>
                                     <div className={`${styles.table_none}`} style={{ display: selectedItems.includes(item?.id) ? 'block' : 'none' }}>
                                         <table className={`${styles.tablelist}  ${styles.tablelist1}`}>

@@ -9,14 +9,18 @@ import NotificationSetting from "./notification/Notification";
 import Remind from "./remind/Remind";
 import Decentralization from "./decentralization";
 
-export default function GeneralSettings({dataCompany}) {
-  
-  const dataDisplay = dataCompany?.data.data
+export default function   GeneralSettings({ dataCompany, tokenType }) {
+  const dataDisplay = dataCompany?.data.data;
 
   const componentObj2 = {
-    city: <PublicInformation dataDisplay = {dataDisplay}/>,
-    edit: <Edit dataDisplay = {dataDisplay} onClickButton={(e) => handleButtonClick(e)} />,
-  }
+    city: <PublicInformation dataDisplay={dataDisplay} />,
+    edit: (
+      <Edit
+        dataDisplay={dataDisplay}
+        onClickButton={(e) => handleButtonClick(e)}
+      />
+    ),
+  };
   const componentObj = {
     notification: <NotificationSetting />,
     remind: <Remind />,
@@ -24,14 +28,12 @@ export default function GeneralSettings({dataCompany}) {
 
   const [page, setPage] = useState(1);
   const [currentComponents, setCurrentComponents] = useState<string[]>([]);
-  const [component, setComponent] = useState<string>('');
+  const [component, setComponent] = useState<string>("");
 
   const handleButtonClick = (e: any) => {
-
-    setComponent('')
-    e.stopPropagation()
+    setComponent("");
+    e.stopPropagation();
   };
-
 
   const handleClick = (typeCollapse: string) => {
     setCurrentComponents((prev) => {
@@ -41,7 +43,6 @@ export default function GeneralSettings({dataCompany}) {
         return [...prev, typeCollapse];
       }
     });
-
   };
 
   return (
@@ -50,7 +51,10 @@ export default function GeneralSettings({dataCompany}) {
         <div className={`${styles.l_content_setting}`}>
           {page === 1 && (
             <>
-              <Space direction="vertical" style={{ width: "100%" }}
+              {tokenType === 1 ? (
+                <Space
+                direction="vertical"
+                style={{ width: "100%" }}
                 onClick={(e) => e.stopPropagation}
               >
                 <div className={`${styles.content}`}>
@@ -61,7 +65,7 @@ export default function GeneralSettings({dataCompany}) {
                           className={`${styles.content_1_left}`}
                           onClick={(e) => {
                             // e.stopPropagation()
-                            setComponent('city')
+                            setComponent("city");
                           }}
                         >
                           <p style={{ lineHeight: "36px" }}>
@@ -76,7 +80,7 @@ export default function GeneralSettings({dataCompany}) {
                         <div
                           className={`${styles.content_1_right}`}
                           onClick={(e) => {
-                            setComponent('edit')
+                            setComponent("edit");
                           }}
                         >
                           <button>Chỉnh sửa</button>
@@ -88,8 +92,10 @@ export default function GeneralSettings({dataCompany}) {
                   </CustomCollapse>
                 </div>
               </Space>
+              ): null}
 
-              <div className={`${styles.box}`} style={{ height: "60px" }}>
+              {tokenType === 1 ? (
+                <div className={`${styles.box}`} style={{ height: "60px" }}>
                 <div
                   className={`${styles.content2}`}
                   onClick={() => setPage(2)}
@@ -102,6 +108,7 @@ export default function GeneralSettings({dataCompany}) {
                   </div>
                 </div>
               </div>
+              ): null}
 
               <Space
                 direction="vertical"

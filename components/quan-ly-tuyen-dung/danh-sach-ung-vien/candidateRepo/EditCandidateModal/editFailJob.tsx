@@ -8,6 +8,8 @@ import Selects from "@/components/select";
 import { parseISO, format } from "date-fns";
 import { FailJobDetails } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 import { AddFailJob } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
+import * as Yup from "yup";
+
 
 type SelectOptionType = { label: string; value: any };
 
@@ -24,8 +26,6 @@ export default function EditCandidateFailJob({ onCancel, candidate }: any) {
     const [isEmpList, setEmpList] = useState<any>(null);
     const [isNewList, setNewsList] = useState<any>(null);
     const [isCandidate, setCandidate] = useState<any>(null);
-
-    console.log({ isCandidate });
 
     useEffect(() => {
         const fetchData = async () => {
@@ -100,6 +100,8 @@ export default function EditCandidateFailJob({ onCancel, candidate }: any) {
                 document.getElementById("note") as HTMLInputElement
             )?.value;
 
+
+
             const formData = new FormData();
             formData.append("canId", candidate?.id);
             formData.append("name", name);
@@ -129,7 +131,6 @@ export default function EditCandidateFailJob({ onCancel, candidate }: any) {
                 }, 1500);
             }
         } catch (error) {
-            throw error;
         }
     };
 

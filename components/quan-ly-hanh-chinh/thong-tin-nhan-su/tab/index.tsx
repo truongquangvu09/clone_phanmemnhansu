@@ -15,7 +15,7 @@ export interface TabEmployeeManagement {
 
 }
 
-export default function TabEmployeeManagement({ children }: any) {
+export default function TabEmployeeManagement({ iconAdd, iconEdit }: any) {
 
     const [activeButton, setActiveButton] = useState(0)
     const [employeeCount, setEmployeeCount] = useState(10)
@@ -29,7 +29,7 @@ export default function TabEmployeeManagement({ children }: any) {
     const [currentPage, setCurrentPage] = useState<any>(1);
     const [PostionCharDatas, setPosttionCharData] = useState<any>(null)
     const [isSeach, setSearch] = useState<any>(null)
-
+    const [visible, setVisible] = useState(false);
 
 
     // -- đóng mở modal --
@@ -44,6 +44,7 @@ export default function TabEmployeeManagement({ children }: any) {
     const handleCloseModal = () => {
         setDetailModal(false)
         setEditmodal(false)
+        setVisible(false);
     }
 
     // -- lấy dữ liệu phòng ban --
@@ -54,9 +55,8 @@ export default function TabEmployeeManagement({ children }: any) {
                 const formData = new FormData()
                 formData.append('com_id', comid)
                 const response = await DepartmentList(formData)
-                setDepartmentList(response.data)
+                setDepartmentList(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()
@@ -67,9 +67,8 @@ export default function TabEmployeeManagement({ children }: any) {
         const fetchData = async () => {
             try {
                 const response = await PostionCharData()
-                setPosttionCharData(response.data)
+                setPosttionCharData(response?.data)
             } catch (error) {
-                console.log({ error });
             }
         }
         fetchData()
@@ -77,7 +76,6 @@ export default function TabEmployeeManagement({ children }: any) {
 
 
     // -- lấy dữ liệu và phân trang --
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -88,9 +86,8 @@ export default function TabEmployeeManagement({ children }: any) {
                 formData.append('com_id', comid)
                 formData.append('pageNumber', currentPage)
                 const response = await EmployeeList(formData)
-                setEmpData(response.data)
+                setEmpData(response?.data)
             } catch (error) {
-                console.log({ error });
             }
         }
         fetchData()
@@ -170,13 +167,13 @@ export default function TabEmployeeManagement({ children }: any) {
 
     return (
         <>
-            <div className={`${styles.tab_content}`}>
+            <div className={`${styles.tab_content} `} >
                 <div className={`${styles.tab_pane}`}>
                     <div className={`${styles.body}`}>
                         <div className={`${styles.recruitment}`}>
-                            <a target="blank" href="https://chamcong.timviec365.vn/quan-ly-cong-ty/nhan-vien.html" className={`${styles.add}`} >
+                            {iconAdd && <a target="blank" href="https://chamcong.timviec365.vn/quan-ly-cong-ty/nhan-vien.html" className={`${styles.add}`} >
                                 <img src={`/add.png`} alt="" />Thêm mới nhân viên
-                            </a>
+                            </a>}
                         </div>
                         <div className={`${styles.bg_search}`}>
                             <div className={`${styles.search_new_t}`}>
@@ -243,7 +240,7 @@ export default function TabEmployeeManagement({ children }: any) {
                                 </div>
                             </div>
                         </div>
-                        <div className={`${styles.export_excel} ${styles.export_excel_emp}`} style={{ paddingRight: 20, right: 0, position: 'absolute' }}>
+                        <div className={`${styles.export_excel} ${styles.export_excel_emp}`} style={{ paddingRight: 20, right: 0, position: 'relative' }}>
                             <a href="" className={`${styles.t_excel}`} >
                                 <img src={`/t-icon-excel.svg`} alt="" />
                                 Xuất file Excel
@@ -300,14 +297,19 @@ export default function TabEmployeeManagement({ children }: any) {
                                                         parseISO(new Date(item?.start_working_time * 1000).toISOString()),
                                                         "yyyy-MM-dd"
                                                     )}</td>
-                                                    <td className={`${styles.r_t_top_right}`} style={{ position: 'relative' }}>
+                                                    <td
+                                                        className={`${styles.r_t_top_right}`} style={{ position: 'relative' }}>
                                                         <img src={`	/icon-settting.png`} alt=" " />
-                                                        <div className={`${styles.settings}`} style={{ width: '100%' }}>
-                                                            <li onClick={handleOpenDetailModal}>Chi tiết</li>
-                                                            {detailModal && <DetailCandidateList onCancel={handleCloseModal} infoList={{ infoList: item, position: positionNameToShow }} />}
-                                                            <li onClick={handleOpenEditModal}>Chỉnh sửa</li>
-                                                            {editModal && <EditCandidateList onCancel={handleCloseModal} infoList={{ infoList: item, position: positionNameToShow }} />}
-                                                        </div>
+                                                        <Setting
+                                                            handleOpenDetailModal={handleOpenDetailModal}
+                                                            detailModal={detailModal}
+                                                            handleCloseModal={handleCloseModal}
+                                                            item={item}
+                                                            positionNameToShow={positionNameToShow}
+                                                            iconEdit={iconEdit}
+                                                            handleOpenEditModal={handleOpenEditModal}
+                                                            editModal={editModal}
+                                                        />
                                                     </td>
                                                 </tr>
                                             )
@@ -332,3 +334,13 @@ export default function TabEmployeeManagement({ children }: any) {
         </>
     )
 }
+
+const Setting = ({ handleOpenDetailModal, detailModal, handleCloseModal, item, positionNameToShow, iconEdit, handleOpenEditModal, editModal }: any) => (
+    <div
+        className={`${styles.settings}`} style={{ width: '100%' }}>
+        <li onClick={handleOpenDetailModal}>Chi tiết</li>
+        {detailModal && <DetailCandidateList onCancel={handleCloseModal} infoList={{ infoList: item, position: positionNameToShow }} />}
+        {iconEdit && <li onClick={handleOpenEditModal}>Chỉnh sửa</li>}
+        {editModal && <EditCandidateList onCancel={handleCloseModal} infoList={{ infoList: item, position: positionNameToShow }} />}
+    </div>
+)

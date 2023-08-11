@@ -110,10 +110,8 @@ export const SoftDeleteNews = async (newsId: number) => {
 };
 
 export const DetailNews = async (recruitmentNewsId: any, isToken) => {
-  console.log(isToken)
   const url = process.env.NEXT_PUBLIC_BASE_URL;
     // const isToken = getToken(COOKIE_KEY)
-    // const isToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTQxNzUzNSwiaWRUaW1WaWVjMzY1Ijo5NDM2OTAsImlkUUxDIjo5LCJpZFJhb05oYW5oMzY1Ijo5LCJlbWFpbCI6bnVsbCwicGhvbmVUSyI6IjA5ODk4Nzg2NjgiLCJjcmVhdGVkQXQiOjE2OTA5NDU3MTMsInR5cGUiOjIsImNvbV9pZCI6MTIxNTk3LCJ1c2VyTmFtZSI6Im5oYW52aWVucGhhbnF1eWVuIn0sImlhdCI6MTY5MDk2MTA3MSwiZXhwIjoxNjkxMDQ3NDcxfQ.kClWijmj-6-Pc_4-rUlwkSqPZA5NzR_di1Kizx_iQgg"
   try {
     const response = await axios.post(
       `${url}api/hr/recruitment/detailNews`,
@@ -170,8 +168,7 @@ export const getDataAddress = async () => {
 
 export const getDataUser = async () => {
   const url = process.env.NEXT_PUBLIC_BASE_URL2;
-    // const isToken = getToken(COOKIE_KEY)
-    const isToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTQxNzUzOCwiaWRUaW1WaWVjMzY1IjoyNDU1NTksImlkUUxDIjoxMjE1OTgsImlkUmFvTmhhbmgzNjUiOjIsImVtYWlsIjpudWxsLCJwaG9uZVRLIjoiMDM5NjY0NjA5MCIsImNyZWF0ZWRBdCI6MTY5MDk1OTYyNiwidHlwZSI6MSwiY29tX2lkIjoxMjE1OTgsInVzZXJOYW1lIjoiY29uZyB0eSB2dnZ2diJ9LCJpYXQiOjE2OTEzMzg1NjQsImV4cCI6MTY5MTQyNDk2NH0.kzprE0aFRBeONnVKgYyp8MJuM9zNsA_MVSQ2K8WHGgs'
+    const isToken = getToken(COOKIE_KEY)
   try {
     const response = await axios.post(
       `${url}api/qlc/managerUser/listAll`,

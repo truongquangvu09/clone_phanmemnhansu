@@ -5,14 +5,12 @@ import EditDetailTrainingProcess from "../editDetailTrainingProcess/EditDetailTr
 import DeleteDetailTrainingProcess from "../deleteDetailTrainingProcess/DeleteDetailTrainingProcess";
 export interface ListDetailTrainingProcess { }
 
-export default function ListDetailTrainingProcess({ item, index , setData}: any) {
+export default function ListDetailTrainingProcess({ item, index , setData, iconEdit, iconDelete}: any) {
   
   const [animateModal, setAnimateModal] = useState(false);
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const [visible, setVisible] = useState(false);
-
- 
   
   const handleCloseModal = () => {
     setAnimateModal(false);
@@ -42,7 +40,9 @@ export default function ListDetailTrainingProcess({ item, index , setData}: any)
               <div className={`${styles.row_top_right}`}>
                 <p>{item.name}</p>
               </div>
-              <div
+
+              {iconDelete || iconEdit ? (
+                <div
                 className={`${styles.setting}`}
                 onMouseEnter={() => setVisible(true)}
                 onMouseLeave={() => setVisible(false)}
@@ -53,16 +53,17 @@ export default function ListDetailTrainingProcess({ item, index , setData}: any)
                 {visible && (
                   <>
                       <div className={`${styles.settings_hover}`}>
-                        <li onClick={() => handleItemClickEdit(item)}>
+                        {iconEdit && <li onClick={() => handleItemClickEdit(item)}>
                           Chỉnh sửa
-                        </li>
+                        </li>}
                         <hr style={{ marginTop: "0", marginBottom: "0" }}></hr>
-                        <li onClick={() => handleItemClickDelete(item)}>Xóa</li>
+                       {iconDelete &&  <li onClick={() => handleItemClickDelete(item)}>Xóa</li>}
                       </div>
                   </>
                 )}
-
-                {openModalEdit && (
+              </div>
+              ): null}
+              {openModalEdit && (
                   <EditDetailTrainingProcess
                     data={item}
                     animation={animateModal}
@@ -79,7 +80,6 @@ export default function ListDetailTrainingProcess({ item, index , setData}: any)
                     newData={setData}
                   />
                 )}
-              </div>
             </div>
             <ul>
               <li style={{ marginBottom: "4px" }}>

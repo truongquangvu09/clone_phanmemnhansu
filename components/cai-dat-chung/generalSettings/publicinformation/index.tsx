@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./PublicInformation.module.css";
 
 export default function PublicInformation({dataDisplay}) {
-
+  console.log(dataDisplay)
 
   return (
     <>
@@ -13,7 +13,7 @@ export default function PublicInformation({dataDisplay}) {
           </div>
 
           <div className={`${styles.l_thongtincongty_text}`}>
-            <p>Điện thoại: {dataDisplay?.phoneTK}</p>
+            <p>Điện thoại: {dataDisplay?.phone}</p>
           </div>
         </div>
       </div>
@@ -21,11 +21,11 @@ export default function PublicInformation({dataDisplay}) {
       <div className={`${styles.l_thongtincongty}`}>
         <div className={`${styles.l_thongtincongty_item}`}>
           <div className={`${styles.l_thongtincongty_text}`}>
-            <p>Lĩnh vực hoạt động: </p>
+            <p>Lĩnh vực hoạt động: {dataDisplay?.description} </p>
           </div>
 
           <div className={`${styles.l_thongtincongty_text}`}>
-            <p>Quy mô nhân sự: {dataDisplay?.userNum}</p>
+            <p>Quy mô nhân sự: {dataDisplay?.com_size}</p>
           </div>
         </div>
       </div>
@@ -37,7 +37,7 @@ export default function PublicInformation({dataDisplay}) {
           </div>
 
           <div className={`${styles.l_thongtincongty_text}`}>
-            <p>Email: </p>
+            <p>Email:{dataDisplay?.emailContact} </p>
           </div>
         </div>
       </div>

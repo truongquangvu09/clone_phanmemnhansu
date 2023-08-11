@@ -13,7 +13,7 @@ export default function DataVTCV({ list_job_desc, dataCheckBox, localListCheck }
       : [...listCheck, id];
 
     setListCheck(newListCheck);
-    const checkBox = newListCheck.join(',');
+    const checkBox = newListCheck.join(', ');
     const dataObject = {
       list_job_desc: checkBox,
     };

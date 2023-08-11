@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import DeleteCandidate from "../candidateDeleteModal";
 
 
-export default function ItemCandidate3({ listCandidate, type, data, currentCol, setDragItem, setDropCol, setModalOpen }: any) {
+export default function ItemCandidate3({ process_id, setProcess_id, type, data, currentCol, setDragItem, setDropCol, setModalOpen, iconDelete }: any) {
 
     const [isOpenOption, setOpenOption] = useState(0)
     const [isDelete, setDelete] = useState(0)
@@ -15,7 +15,7 @@ export default function ItemCandidate3({ listCandidate, type, data, currentCol, 
 
     const [{ isDragging }, drag] = useDrag({
         type: ItemTypes.INTERVIEW,
-        item: { data, currentCol },
+        item: { data, process_id, currentCol },
         end: (item, monitor) => {
             const dropResult = monitor.getDropResult()
             console.log(dropResult);
@@ -24,6 +24,7 @@ export default function ItemCandidate3({ listCandidate, type, data, currentCol, 
                 setDragItem(item?.data)
                 setDropCol(dropResult)
                 setModalOpen(true)
+                setProcess_id(item?.process_id)
             }
         },
         collect: (monitor) => ({
@@ -83,8 +84,8 @@ export default function ItemCandidate3({ listCandidate, type, data, currentCol, 
                                 <div className={`${styles.choose_option} ${styles.choose_option1}`} style={{ display: isOpenOption ? 'block' : 'none' }}>
                                     <ul style={{ marginBottom: 0, marginTop: 0 }}>
                                         <li onClick={() => handleClickDetail(data?.canId)}>Xem chi tiết</li>
-                                        <li onClick={() => setDelete(data?.canId)}>Xóa hồ sơ</li>
-                                        {isDelete !== 0 && <DeleteCandidate animation={animateModal} onCancel={handleClosemodal} idCandidate={isDelete} />}
+                                        {iconDelete && <li onClick={() => setDelete(data?.id)}>Xóa hồ sơ</li>}
+                                        {isDelete !== 0 && <DeleteCandidate onCancel={handleClosemodal} idCandidate={isDelete} />}
                                     </ul>
                                 </div>
                             </a>

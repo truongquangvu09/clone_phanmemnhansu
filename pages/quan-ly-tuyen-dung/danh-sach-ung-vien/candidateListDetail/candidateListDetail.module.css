@@ -100,7 +100,7 @@
   overflow-y: scroll;
 }
 .list_hs_t {
-  max-height: 500px;
+  display: flex;
   overflow-y: scroll;
   font-family: Roboto;
   width: 350%;
@@ -108,6 +108,7 @@
   border-collapse: collapse;
   border-radius: 8px;
   border: 1px solid rgba(102, 102, 102, 0.24);
+  height: 500px;
 }
 .hs_t {
   width: 250px;

@@ -4,7 +4,9 @@ import { useRouter } from "next/router";
 import ListDetailTrainingProcess from "@/components/dao-tao-phat-trien/quy-trinh-dao-tao/chi-tiet-quy-trinh/listDetailTrainingProcess/ListDetailTrainingProcess";
 import AddDetailTrainingProcess from "@/components/dao-tao-phat-trien/quy-trinh-dao-tao/chi-tiet-quy-trinh/addDetailTrainingProcess/AddDetailTrainingProcess";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
-import { DataDetailProcess } from "@/pages/api/dao-tao-phat-trien/TrainingProcess";
+import { DataDetailProcess, GetDataDetailProcess } from "@/pages/api/dao-tao-phat-trien/TrainingProcess";
+import Head from "next/head";
+import { getToken2 } from "@/pages/api/token";
 
 export default function DetailTrainingProcess({ dataDetail }: any) {
 
@@ -17,6 +19,14 @@ export default function DetailTrainingProcess({ dataDetail }: any) {
   const trainingProcessName = dataDetail?.processTrain.name;
   const trainingProcessId = dataDetail?.processTrain.id;
   const [trainingProcess, setTrainingProcess] = useState<any>();
+
+  const iconAddQueryParam = router.query.iconAdd;
+  const iconEditQueryParam = router.query.iconEdit;
+  const iconDeleteQueryParam = router.query.iconDelete;
+
+  const iconAdd = iconAddQueryParam === "true";
+  const iconEdit = iconEditQueryParam === "true";
+  const iconDelete = iconDeleteQueryParam === "true";
 
   useEffect(() => {
       const filteredStages = dataDetail?.listStage?.filter((stage) => stage.isDelete === 0);
@@ -48,6 +58,7 @@ export default function DetailTrainingProcess({ dataDetail }: any) {
   useEffect(() => {
     const fetchDataDetailProcess = async () => {
       try {
+        
         const response = await DataDetailProcess(trainingProcessId);
         setTrainingProcess(response?.data.data.listStage?.filter((stage) => stage.isDelete === 0));
       } catch (error) {
@@ -58,6 +69,9 @@ export default function DetailTrainingProcess({ dataDetail }: any) {
   }, [newData]);
   return (
     <>
+     <Head>
+      <title>Quy trình đào tạo - Quản lý nhân sự - Timviec365.vn</title>
+    </Head>
       <div className={`${styles.ct_quytrinh}`}>
         <div className={`${styles.l_body}`}>
           <ul className={`${styles.nav} ${styles.nav_tabs}`}>
@@ -87,7 +101,8 @@ export default function DetailTrainingProcess({ dataDetail }: any) {
               </button>
             </div>
 
-            <div className={`${styles.add_quytrinh1}`}>
+            {iconAdd && (
+              <div className={`${styles.add_quytrinh1}`}>
               <button
                 style={{ display: "flex" }}
                 onClick={() => handleOpenModal(1)}
@@ -98,6 +113,7 @@ export default function DetailTrainingProcess({ dataDetail }: any) {
                 <p>Thêm giai đoạn đào tạo</p>
               </button>
             </div>
+            )}
           </div>
           {openModal === 1 && (
             <AddDetailTrainingProcess
@@ -121,6 +137,8 @@ export default function DetailTrainingProcess({ dataDetail }: any) {
                   item={item}
                   index={index}
                   setData={handleUpdateData}
+                  iconEdit = {iconEdit}
+                  iconDelete = {iconDelete}
                 ></ListDetailTrainingProcess>
               </div>
             ))}
@@ -132,12 +150,11 @@ export default function DetailTrainingProcess({ dataDetail }: any) {
   );
 }
 
-export const getServerSideProps = async ({ params }) => {
+export const getServerSideProps = async ({ params, req }) => {
   const { idTrainingProcess } = params;
- 
-
+  const isToken = getToken2(req.headers.cookie || '');
   try {
-    const response = await DataDetailProcess(idTrainingProcess);
+    const response = await GetDataDetailProcess(idTrainingProcess, isToken);
     const dataDetail = response?.data.data;
     return {
       props: {
@@ -145,7 +162,6 @@ export const getServerSideProps = async ({ params }) => {
       },
     };
   } catch (error) {
-    console.error("Error fetching data from API:", error);
     return { props: {} };
   }
 };

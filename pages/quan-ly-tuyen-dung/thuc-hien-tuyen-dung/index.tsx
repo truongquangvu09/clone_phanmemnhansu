@@ -5,11 +5,13 @@ import Recruitment from "@/components/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/Re
 import { GetTotalCandi } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
 import PageAuthenticator from "@/components/quyen-truy-cap";
 import LoadingSpinner from "@/components/loading";
+import Head from "next/head";
 
 export default function HeaderForm({ children }: any) {
   const [totalCandi, setTotalCandi] = useState<any>();
   const [authentication, setAuthentication] = useState<any>();
   const [isLoading, setIsLoading] = useState(true);
+  const [active, setActive] = useState(1);
 
   useEffect(() => {
     try{
@@ -28,10 +30,8 @@ export default function HeaderForm({ children }: any) {
     }catch(error: any) {
 
     }
-
   }, []);
 
-  const [active, setActive] = useState(1);
   const listTab = [
     {
       key: 1,
@@ -48,12 +48,14 @@ export default function HeaderForm({ children }: any) {
   ];
   return (
     <>
+    <Head>
+      <title>Thực hiện tuyển dụng - Quản lý nhân sự - Timviec365.vn</title>
+    </Head>
       { isLoading ? (
         <LoadingSpinner />
       ) : authentication ? (
         <PageAuthenticator />
       ) : (
-          
           <div className={`${styles.l_body}`}>
           <ul className={`${styles.nav} ${styles.nav_tabs}`} style={{marginBottom: 50}}>
             {listTab.map((item) => (
@@ -75,7 +77,6 @@ export default function HeaderForm({ children }: any) {
           {listTab?.find((item) => item.key === active)?.component}
         </div>
       )}
-      
     </>
   );
 }

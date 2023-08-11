@@ -6,8 +6,7 @@ export interface DropDownMenu {
 
 }
 
-export default function DropDownMenu() {
-
+export default function DropDownMenu({dataHeader}) {
     const ListMenu = [
         {
             img: '/huongdan.svg',
@@ -46,9 +45,8 @@ export default function DropDownMenu() {
         <>
             <div className={`${styles.wrapper}`}>
                 <div className={`${styles.avatar}`}><img className={`${styles.img_avatar}`} src={`/app_1686633773283.jpg`} alt="" /></div>
-                <div className={`${styles.menu_name}`}>Trương Quang Vu</div>
-                <div className={`${styles.menu_cpn}`}>CÔNG TY CỔ PHẦN THANH TOÁN HƯNG HÀ</div>
-                <div className={`${styles.menu_id}`}>555955</div>
+                <div className={`${styles.menu_cpn}`}>{dataHeader?.data.userName}</div>
+                <div className={`${styles.menu_id}`}>{dataHeader?.data.idQLC || ''}</div>
                 {ListMenu.map((item, index) => (
                     <div key={index}>
                         <Link href={item.href}>
@@ -67,7 +65,6 @@ export default function DropDownMenu() {
                     </div>
                 ))}
             </div>
-
         </>
     )
 }

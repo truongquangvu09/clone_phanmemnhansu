@@ -2,11 +2,12 @@
 import axios from "axios";
 import { hasCookie, setCookie } from "cookies-next";
 import { getToken } from "../token";
-// import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
+import { useRouter } from "next/router";
 const COOKIE_KEY = "user_365";
 
 export const getHomeData = async () => {
-  const isToken = getToken(COOKIE_KEY)
+  const isToken = getToken(COOKIE_KEY);
   const url = process.env.NEXT_PUBLIC_BASE_URL;
   try {
     const response = await axios.post(
@@ -21,8 +22,7 @@ export const getHomeData = async () => {
 
     return response;
   } catch (err) {
-    console.error("Error fetching home data:", err);
-    throw err;
+
   }
 };
 
@@ -36,37 +36,36 @@ export const SignIn = async () => {
       type: 1,
     };
     try {
-      const res = await axios.post(
-        `${currentUrl}api/qlc/employee/login`,
-        body
-      );
-
+      const res = await axios.post(`${currentUrl}api/qlc/employee/login`, body);
       if (res?.status === 200) {
         const userInfo = res?.data?.data?.data;
         setCookie(COOKIE_KEY, userInfo);
       }
+
     } catch (error) {}
   }
 };
 
+export const CheckLogIn = async () => {
+  const currentCookie = hasCookie(COOKIE_KEY);
+  return currentCookie;
+};
+
 export const getDataAuthentication = async () => {
-  try{
+  try {
     const url = process.env.NEXT_PUBLIC_BASE_URL;
-    const isToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6MTQyODExNCwiaWRUaW1WaWVjMzY1IjoxMTAxMjIsImlkUUxDIjoyMjcyLCJpZFJhb05oYW5oMzY1Ijo5LCJlbWFpbCI6bnVsbCwicGhvbmVUSyI6IjA5ODk4NzczMzQzIiwiY3JlYXRlZEF0IjoxNjkxMzk3MjkzLCJ0eXBlIjoyLCJjb21faWQiOjEyMTU5OCwidXNlck5hbWUiOiJuaGFudmllbmhvYW5nMyJ9LCJpYXQiOjE2OTEzOTg1ODEsImV4cCI6MTY5MTQ4NDk4MX0.4fZ-Wegoxh6HE2J8ibqm6uOYKCVQMbPVu-vEF6IAOGY'
-    // const isToken = getToken(COOKIE_KEY)
-    // const decodedToken = jwt.decode(isToken);
+    const isToken = getToken(COOKIE_KEY);
+    const decodedToken = jwt.decode(isToken);
 
     const response = await axios.post(
-      `${url}api/hr/setting/getListPermisionUserLogin`, {},
+      `${url}api/hr/setting/getListPermisionUserLogin`,
+      {},
       {
         headers: {
           Authorization: `Bearer ${isToken}`,
         },
       }
-    )
-    return response
-  }catch(error) {
-
-  }
-  
-}
+    );
+    return response;
+  } catch (error) {}
+};

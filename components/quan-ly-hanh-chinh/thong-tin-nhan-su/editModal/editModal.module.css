@@ -112,6 +112,13 @@
   margin-bottom: 5px;
   width: 33%;
 }
+.t_require {
+  color: red;
+  font-size: 14px;
+  margin-left: 5px;
+  margin-right: 5px;
+  display: inline-block;
+}
 .input_right {
   width: 70%;
 }

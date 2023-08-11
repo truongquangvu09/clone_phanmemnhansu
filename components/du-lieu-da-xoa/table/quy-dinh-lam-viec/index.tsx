@@ -13,7 +13,7 @@ export default function DataQTLV({ list_provision, dataCheckBox ,localListCheck}
       : [...listCheck, id];
 
     setListCheck(newListCheck);
-    const checkBox = newListCheck.join(',');
+    const checkBox = newListCheck.join(', ');
     const dataObject = {
       list_provision: checkBox,
     };

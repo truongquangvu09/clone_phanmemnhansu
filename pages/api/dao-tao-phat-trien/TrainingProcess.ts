@@ -18,8 +18,7 @@ export const getDataListProcessTrain = async (page: any, pageSize: any,name: any
     
         return response;
       } catch (err) {
-        console.error("Error fetching home data:", err);
-        throw err;
+
       }
 }
 
@@ -41,8 +40,7 @@ export const addDataListProcessTrain = async (formData: any) => {
     
         return response;
       } catch (err) {
-        console.error("Error fetching home data:", err);
-        throw err;
+
       }
 }
 
@@ -63,15 +61,31 @@ export const deleteDataTrainingPosition = async (processTrainId: number) => {
 
     return response;
   } catch (err) {
-    console.error("Error fetching home data:", err);
-    throw err;
+
   }
   }
 
   export const DataDetailProcess= async (processTrainId: string) => {
     const url = process.env.NEXT_PUBLIC_BASE_URL;
-  
-     const isToken = getToken(COOKIE_KEY)
+    const isToken = getToken(COOKIE_KEY)
+    try {
+      const response = await axios.post(
+        `${url}api/hr/training/detailProcess`,
+        { processTrainId },
+        {
+          headers: {
+            Authorization: `Bearer ${isToken}`,
+          },
+        }
+      );
+      return response;
+    } catch (error) {
+      
+    }
+  };
+
+    export const GetDataDetailProcess= async (processTrainId: string, isToken) => {
+    const url = process.env.NEXT_PUBLIC_BASE_URL;
     try {
       const response = await axios.post(
         `${url}api/hr/training/detailProcess`,

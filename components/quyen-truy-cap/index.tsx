@@ -139,7 +139,7 @@ export default function PageAuthenticator() {
       </div>
 
     <div className={`${styles.body} `}>
-    <div className={`${styles.l_body_content} ${styles.t_role}`} style={{width: '69%', margin: '22px 0 0 10px'}}>
+    <div className={`${styles.l_body_content} ${styles.t_role}`} style={{width: '69%', margin: '22px 0 0 10px', paddingLeft: 18}}>
         <picture>
           <img src={`${"/role_warning.svg"}`} alt="Quyền truy cập" />
         </picture>

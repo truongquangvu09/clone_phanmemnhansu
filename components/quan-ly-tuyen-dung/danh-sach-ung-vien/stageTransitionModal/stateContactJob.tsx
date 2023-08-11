@@ -8,6 +8,8 @@ import { parseISO, format } from "date-fns";
 import Selects from "@/components/select";
 import HandleAddAnotherSkill from '../candidateAddModal/addAnotherSkill';
 import { AddContactJob } from '@/pages/api/quan-ly-tuyen-dung/candidateList';
+import * as Yup from "yup";
+
 
 type SelectOptionType = { label: string, value: string }
 
@@ -23,6 +25,7 @@ export default function StageContactJob({ onCancel, process_id, data, process_id
     const [lastAddedIndex, setLastAddedIndex] = useState(-1);
     const [rating, setRating] = useState<any>(0)
     const [isUserHiring, setUserHiring] = useState<any>("")
+    const [errors, setErrors] = useState<any>({});
 
     useEffect(() => {
         const fetchData = async () => {
@@ -72,6 +75,18 @@ export default function StageContactJob({ onCancel, process_id, data, process_id
         fetchData();
     }, []);
 
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required("Tên không được để trống"),
+        cvFrom: Yup.string().required("Nhập nguồn ứng viên"),
+        userHiring: Yup.string().required("Chọn nhân viên tuyển dụng"),
+        recruitment: Yup.string().required("Chọn vị trí tuyển dụng"),
+        timeSendCv: Yup.string().required("Thời gian gửi không được để trống"),
+        empInterview: Yup.string().required("Chọn nhân viên tham gia"),
+        salary: Yup.string().required("Chọn mức lương thực"),
+        resiredSalary: Yup.string().required("Chọn mức lương mong muốn"),
+        timeContact: Yup.string().required("Chọn ngày kí hợp đồng"),
+    });
+
 
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -98,6 +113,22 @@ export default function StageContactJob({ onCancel, process_id, data, process_id
             )?.value;
             const canid: any = process_id_from === 0 ? data?.id : data?.canId
 
+            const formDatas = {
+                name: name || "",
+                cvFrom: cvFrom || "",
+                userHiring: isUserHiring || "",
+                recruitment: isRecruitmentNewsId || "",
+                timeSendCv: timeSendCv || "",
+                empInterview: empInterview || "",
+                salary: salary || "",
+                resiredSalary: resiredSalary || "",
+                timeContact: offerTime || "",
+
+            };
+            await validationSchema.validate(formDatas, {
+                abortEarly: false,
+            });
+
             const formData = new FormData();
             formData.append("canId", canid);
             formData.append("name", name);
@@ -111,7 +142,15 @@ export default function StageContactJob({ onCancel, process_id, data, process_id
             formData.append("salary", salary);
             formData.append("resiredSalary", resiredSalary);
             formData.append("offerTime", offerTime);
-
+            {
+                skills?.map((item, index) => {
+                    const skillData = {
+                        skillName: item.skillName,
+                        skillVote: item.skillVote,
+                    };
+                    formData.append('listSkill', JSON.stringify(skillData));
+                });
+            }
 
             const response = await AddContactJob(formData);
             if (response) {
@@ -121,7 +160,15 @@ export default function StageContactJob({ onCancel, process_id, data, process_id
             }
 
         } catch (error) {
-            throw error;
+            if (error instanceof Yup.ValidationError) {
+                const yupErrors = {};
+                error.inner.forEach((yupError: any) => {
+                    yupErrors[yupError.path] = yupError.message;
+                });
+                setErrors(yupErrors);
+            } else {
+                console.error("Lỗi validate form:", error);
+            }
         }
     };
 
@@ -186,12 +233,14 @@ export default function StageContactJob({ onCancel, process_id, data, process_id
                                         <label htmlFor="">Tên ứng viên <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="text" id="name" defaultValue={isCandidate?.name} className={`${styles.input_process}`} />
+                                            <span> {errors.name && <div className={`${styles.t_require} `}>{errors.name}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Nguồn ứng viên <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="text" id="cvFrom" defaultValue={isCandidate?.cvFrom} className={`${styles.input_process}`} />
+                                            <span> {errors.cvFrom && <div className={`${styles.t_require} `}>{errors.cvFrom}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -213,6 +262,7 @@ export default function StageContactJob({ onCancel, process_id, data, process_id
                                                         placeholder={"Chọn Nhân viên"}
                                                     />
                                                 }
+                                                <span> {errors.userHiring && <div className={`${styles.t_require} `}>{errors.userHiring}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -235,6 +285,7 @@ export default function StageContactJob({ onCancel, process_id, data, process_id
                                                         placeholder={"Chọn vị trí tuyển dụng"}
                                                     />
                                                 }
+                                                <span> {errors.recruitment && <div className={`${styles.t_require} `}>{errors.recruitment}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -255,7 +306,7 @@ export default function StageContactJob({ onCancel, process_id, data, process_id
                                                     className={`${styles.input_process}`}
                                                 />
                                             }
-
+                                            <span> {errors.timeSendCv && <div className={`${styles.t_require} `}>{errors.timeSendCv}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -272,12 +323,14 @@ export default function StageContactJob({ onCancel, process_id, data, process_id
                                         <label htmlFor="">Mức lương mong muốn <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="text" id="resiredSalary" className={`${styles.input_process}`} />
+                                            <span> {errors.salary && <div className={`${styles.t_require} `}>{errors.salary}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Mức lương thực <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="text" id="salary" className={`${styles.input_process}`} />
+                                            <span> {errors.resiredSalary && <div className={`${styles.t_require} `}>{errors.resiredSalary}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -291,6 +344,7 @@ export default function StageContactJob({ onCancel, process_id, data, process_id
                                                 placeholder="dd/mm/yyyy"
                                                 className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.timeContact && <div className={`${styles.t_require} `}>{errors.timeContact}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -312,11 +366,12 @@ export default function StageContactJob({ onCancel, process_id, data, process_id
                                                         placeholder={"Chọn Nhân viên"}
                                                     />
                                                 }
+                                                <span> {errors.empInterView && <div className={`${styles.t_require} `}>{errors.empInterView}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Ghi chú <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Ghi chú </label>
                                         <div className={`${styles.input_right}`}>
                                             <textarea style={{ height: 50 }} id="note" className={`${styles.input_process}`} />
                                         </div>

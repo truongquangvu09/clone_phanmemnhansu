@@ -176,14 +176,10 @@ export default function Decentralization ({}) {
   const handleUpdateRole = async (event: any) => {
     try {
       const response = await SettingPermission(dataRes);
-      console.log(response)
-      if (response?.status !== 200) {
-        alert("Cấp Quyền Thất Bại");
-      } else {
-        
-      }
+        if( response?.status !== 200) {
+          alert('Cấp quyền thất bại')
+        }
     } catch (error) {
-
     }
   };
   

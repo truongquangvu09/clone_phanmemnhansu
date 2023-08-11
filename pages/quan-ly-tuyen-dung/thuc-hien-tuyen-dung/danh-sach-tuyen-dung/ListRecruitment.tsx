@@ -4,10 +4,11 @@ import EditPerformRecruitment from "@/components/quan-ly-tuyen-dung/thuc-hien-tu
 import DeleteRecruitment from "@/components/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/DeletePerformRecruitment/DeleteRecruitment";
 import Link from "next/link";
 import { setAsTemplate } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
+import Head from "next/head";
 export interface ListRecruitment {}
 
-export default function ListRecruitment({ data, onDelete, editData }: any) {
-  const recruitmentNewsId = data?.id;
+export default function ListRecruitment({ data, onDelete, editData, iconEdit, iconDelete }: any) {
+  const idRecruitment = data?.id;
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -97,7 +98,8 @@ export default function ListRecruitment({ data, onDelete, editData }: any) {
   }
 
   return (
-    <div>
+    <>
+      
       <div className={`${styles.new_r_t}`}>
         <div className={`${styles.new_r_t_left}`}>
           <div className={`${styles.new_r_t_header} ${styles.row}`}>
@@ -118,9 +120,10 @@ export default function ListRecruitment({ data, onDelete, editData }: any) {
                       passHref
                       href={{
                         pathname:
-                          "/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/[idRecruitment]",
-                        query: { idRecruitment: recruitmentNewsId },
+                          `/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/${data?.id}`,
+                       
                       }}
+                      as={`/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/${data?.id}`}
                     >
                       <span>
                         (TD{data?.id}) {data?.title}
@@ -139,7 +142,8 @@ export default function ListRecruitment({ data, onDelete, editData }: any) {
               {dateBelieveTime(data?.timeEnd)}
             </div>
 
-            <div
+            {iconEdit && iconDelete && (
+              <div
               className={`${styles.new_r_top_right}`}
               onMouseEnter={() => setVisible(true)}
               onMouseLeave={() => setVisible(false)}
@@ -166,30 +170,40 @@ export default function ListRecruitment({ data, onDelete, editData }: any) {
                         <Link 
                           passHref
                           href={{
-                            pathname: `/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/${data.id}`,
+                            pathname:
+                            `/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/${data?.id}`,
                           }}
+                         as={ `/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/${data?.id}`}
                         >
                           Chi tiết
                         </Link>
                       </li>
                     </button>
 
-                    <button
+                    {iconEdit && (
+                      <button
                       style={{ paddingRight: "55px" }}
                       className={`${styles.edit_new}`}
                       onClick={handleOpenModalEdit}
                     >
                       Chỉnh sửa tin
                     </button>
+                    )}
                     <hr style={{ marginTop: "0", marginBottom: "0" }}></hr>
-                    <li onClick={handleOpenModalDelete}>Gỡ tin tuyển dụng</li>
-                    <li
-                     onClick = {(e) => handleSetTemplate(e, recruitmentNewsId)}
-                    >Thiết lập làm tin mẫu</li>
+                    {iconDelete && (
+                      <li onClick={handleOpenModalDelete}>Gỡ tin tuyển dụng</li>
+                    )}
+                    {iconEdit && (
+                      <li
+                      onClick = {(e) => handleSetTemplate(e, idRecruitment)}
+                     >Thiết lập làm tin mẫu</li>
+                    )}
                   </div>
                 )}
               </div>
             </div>
+            )}
+
           </div>
           {openModalEdit && (
             <EditPerformRecruitment
@@ -253,6 +267,6 @@ export default function ListRecruitment({ data, onDelete, editData }: any) {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

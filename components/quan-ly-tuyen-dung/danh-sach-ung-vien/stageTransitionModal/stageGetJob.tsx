@@ -9,6 +9,7 @@ import Selects from "@/components/select";
 import HandleAddAnotherSkill from '../candidateAddModal/addAnotherSkill';
 import MyEditorNew from '@/components/myEditor';
 import { AddInterview, AddGetJob } from '@/pages/api/quan-ly-tuyen-dung/candidateList';
+import * as Yup from "yup";
 interface InputTextareaProps {
     onDescriptionChange: (data: any) => void
     process_id: any
@@ -90,6 +91,7 @@ export default function StageGetJob({ onCancel, process_id, data, process_id_fro
     const [descriptions, setDescription] = useState("");
     const [isUserHiring, setUserHiring] = useState<any>("")
     const [checked, setChecked] = useState<any>(0);
+    const [errors, setErrors] = useState<any>({});
 
     useEffect(() => {
         const fetchData = async () => {
@@ -139,6 +141,16 @@ export default function StageGetJob({ onCancel, process_id, data, process_id_fro
         fetchData();
     }, []);
 
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required("Tên không được để trống"),
+        cvFrom: Yup.string().required("Nhập nguồn ứng viên"),
+        userHiring: Yup.string().required("Chọn nhân viên tuyển dụng"),
+        recruitment: Yup.string().required("Chọn vị trí tuyển dụng"),
+        timeSendCv: Yup.string().required("Thời gian gửi không được để trống"),
+        email: Yup.string().required("email không được để trống"),
+        empInterview: Yup.string().required("Chọn nhân viên tham gia"),
+        timeInterView: Yup.string().required("Thời gian hẹn không được để trống"),
+    });
 
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -166,6 +178,21 @@ export default function StageGetJob({ onCancel, process_id, data, process_id_fro
             )?.value;
             const canid: any = process_id_from === 0 ? data?.id : data?.canId
 
+            const formDatas = {
+                name: name || "",
+                email: email || "",
+                cvFrom: cvFrom || "",
+                userHiring: isUserHiring || "",
+                recruitment: isRecruitmentNewsId || "",
+                timeSendCv: timeSendCv || "",
+                empInterview: empInterview || "",
+                timeInterView: interviewTime || "",
+
+            };
+            await validationSchema.validate(formDatas, {
+                abortEarly: false,
+            });
+
             const formData = new FormData();
             formData.append("canId", canid);
             formData.append("name", name);
@@ -184,6 +211,16 @@ export default function StageGetJob({ onCancel, process_id, data, process_id_fro
             formData.append("checkEmail", checked);
             if (process_id !== 1) {
                 formData.append("processInterviewId", process_id);
+            }
+            formData.append('firstStarVote', rating)
+            {
+                skills?.map((item, index) => {
+                    const skillData = {
+                        skillName: item.skillName,
+                        skillVote: item.skillVote,
+                    };
+                    formData.append('listSkill', JSON.stringify(skillData));
+                });
             }
 
             if (process_id === 1) {
@@ -204,7 +241,15 @@ export default function StageGetJob({ onCancel, process_id, data, process_id_fro
 
 
         } catch (error) {
-            throw error;
+            if (error instanceof Yup.ValidationError) {
+                const yupErrors = {};
+                error.inner.forEach((yupError: any) => {
+                    yupErrors[yupError.path] = yupError.message;
+                });
+                setErrors(yupErrors);
+            } else {
+                console.error("Lỗi validate form:", error);
+            }
         }
     };
 
@@ -279,12 +324,14 @@ export default function StageGetJob({ onCancel, process_id, data, process_id_fro
                                         <label htmlFor="">Tên ứng viên <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="text" id="name" defaultValue={isCandidate?.name} className={`${styles.input_process}`} />
+                                            <span> {errors.name && <div className={`${styles.t_require} `}>{errors.name}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Nguồn ứng viên <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="text" id="cvFrom" defaultValue={isCandidate?.cvFrom} className={`${styles.input_process}`} />
+                                            <span> {errors.cvFrom && <div className={`${styles.t_require} `}>{errors.cvFrom}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -306,6 +353,7 @@ export default function StageGetJob({ onCancel, process_id, data, process_id_fro
                                                         placeholder={"Chọn Nhân viên"}
                                                     />
                                                 }
+                                                <span> {errors.userHiring && <div className={`${styles.t_require} `}>{errors.userHiring}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -328,6 +376,7 @@ export default function StageGetJob({ onCancel, process_id, data, process_id_fro
                                                         placeholder={"Chọn vị trí tuyển dụng"}
                                                     />
                                                 }
+                                                <span> {errors.recruitment && <div className={`${styles.t_require} `}>{errors.recruitment}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -348,10 +397,11 @@ export default function StageGetJob({ onCancel, process_id, data, process_id_fro
                                                     className={`${styles.input_process}`}
                                                 />
                                             }
+                                            <span> {errors.timeSendCv && <div className={`${styles.t_require} `}>{errors.timeSendCv}</div>}</span>
 
                                         </div>
                                     </div>
-                                    <div className={`${styles.form_groups}`}>
+                                    <div className={`${styles.form_groupss}`}>
                                         <label htmlFor="">Đánh giá hồ sơ <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <Rating size={27} initialValue={isCandidate?.starVote} disableFillHover className={`${styles.star_rating}`} onClick={handleRating} />
@@ -362,13 +412,13 @@ export default function StageGetJob({ onCancel, process_id, data, process_id_fro
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Mức lương mong muốn <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Mức lương mong muốn </label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="text" id="resiredSalary" className={`${styles.input_process}`} />
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Mức lương thực <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Mức lương thực </label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="text" id="salary" className={`${styles.input_process}`} />
                                         </div>
@@ -380,6 +430,7 @@ export default function StageGetJob({ onCancel, process_id, data, process_id_fro
                                         <div className={`${styles.input_right}`}>
                                             <input type="date" id="interviewTime" placeholder="dd/mm/yyyy" className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.timeInterView && <div className={`${styles.t_require} `}>{errors.timeInterView}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -401,11 +452,12 @@ export default function StageGetJob({ onCancel, process_id, data, process_id_fro
                                                         placeholder={"Chọn Nhân viên"}
                                                     />
                                                 }
+                                                <span> {errors.empInterView && <div className={`${styles.t_require} `}>{errors.empInterView}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups1}`}>
-                                        <label htmlFor="">Ghi chú <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Ghi chú </label>
                                         <div className={`${styles.input_right}`}>
                                             <textarea style={{ height: 50 }} id="note" className={`${styles.input_process}`} />
                                         </div>
@@ -414,6 +466,7 @@ export default function StageGetJob({ onCancel, process_id, data, process_id_fro
                                         <label htmlFor="">Gửi email đến <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="text" id="email" defaultValue={isCandidate?.email} className={`${styles.input_process}`} />
+                                            <span> {errors.email && <div className={`${styles.t_require} `}>{errors.email}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>

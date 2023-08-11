@@ -30,8 +30,6 @@ export default function CandidateAddModal({ onCancel, animation }: any) {
     const [isNewList, setNewsList] = useState<any>(null);
     const [errors, setErrors] = useState<any>({});
 
-    console.log(animation);
-
     useEffect(() => {
         const fetchData = async () => {
             try {

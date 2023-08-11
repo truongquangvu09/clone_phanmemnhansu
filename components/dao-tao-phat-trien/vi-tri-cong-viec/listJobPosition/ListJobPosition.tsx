@@ -7,7 +7,7 @@ import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_f
 import MyPagination from "@/components/pagination/Pagination";
 import { getDataJobPosition } from "@/pages/api/dao-tao-phat-trien/JobPosition";
 
-export default function ListJobPosition({ children }: any) {
+export default function ListJobPosition({ iconAdd, iconDelete }: any) {
   const [openModal, setOpenModal] = useState(0);
   const [animateModal, setAnimateModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -50,7 +50,8 @@ export default function ListJobPosition({ children }: any) {
     <>
       <div className={`${styles.tuyendung2}`} style={{ display: "block" }}>
         <div className={`${styles.tuyendung2_3}`}>
-          <button
+          {iconAdd && (
+            <button
             onClick={() => handleOpenModalAdd()}
             className={`${styles.adds}`}
           >
@@ -59,6 +60,7 @@ export default function ListJobPosition({ children }: any) {
             </picture>
             Thêm mới
           </button>
+          )}
         </div>
 
         {openModal === 1 && (
@@ -113,7 +115,7 @@ export default function ListJobPosition({ children }: any) {
                 <th>Mô tả công việc</th>
                 <th>Yêu cầu công việc</th>
                 <th>Lộ trình thăng tiến</th>
-                <th className={`${styles.lastth}`}></th>
+                {iconDelete && <th className={`${styles.lastth}`}></th>}
               </tr>
             </thead>
             <tbody className={`${styles.filter}`}>
@@ -136,7 +138,8 @@ export default function ListJobPosition({ children }: any) {
                         )}
                       </td>
 
-                      <td
+                      {iconDelete && (
+                        <td
                         onClick={() => handleOpenModalDelete(item.id)}
                         className={`${styles.r_t_top_right}`}
                         style={{
@@ -151,6 +154,7 @@ export default function ListJobPosition({ children }: any) {
                           style={{ paddingTop: "6px" }}
                         />
                       </td>
+                      )}
                     </tr>
                   );
                 }

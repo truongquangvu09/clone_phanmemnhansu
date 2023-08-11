@@ -184,6 +184,15 @@
 .cke {
   display: inline-block !important;
 }
+.t_require {
+  color: red;
+  font-size: 14px;
+  margin-left: 5px;
+  margin-right: 15px;
+  display: block;
+  text-align: end;
+  font-weight: 400;
+}
 /* .ckeditor {
   width: 615px;
 } */

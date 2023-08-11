@@ -124,14 +124,8 @@ export default function PerformRecruitment({ children, totalCandi }: any) {
 
                       <div className={`${styles.tin_item2}`}>
                         <h4>
-                          <Link
-                            href={{
-                              pathname: "",
-                              query: "",
-                            }}
-                          >
-                            <span>{item.title}</span>
-                          </Link>
+                          
+                          <span>{item.title}</span>
                         </h4>
                         <div className={`${styles.tin_item3}`}>
                           <li>
@@ -274,7 +268,15 @@ export default function PerformRecruitment({ children, totalCandi }: any) {
                               </li>
                             </div>
                             <div className={`${styles.h_pvitem_2}`}>
-                              <h4>{item.name}</h4>
+                              <Link
+                                passHref
+                                href={{
+                                  pathname: `/quan-ly-tuyen-dung/danh-sach-ung-vien/chi-tiet-ung-vien/u${item.id}`
+                                }}
+                              >
+                                <h4>{item.name}</h4>
+                              </Link>
+                              
                               <p>
                                 {item.RecruitmentNews.title}
                                 <span> . </span>
@@ -290,8 +292,11 @@ export default function PerformRecruitment({ children, totalCandi }: any) {
                     );
                   })
                 )}
-                {listSchedule?.listSchedule.length > 3 && (
-                  <div className={`${styles.pagination}`}>
+              </div>
+           
+            </div>
+            {listSchedule?.totalSchedule > 3 && (
+                  <div className={`${styles.pagination}`} style={{marginRight:'8%'}}>
                     <MyPagination
                       current={currentPageListSchedule}
                       total={listSchedule?.totalSchedule}
@@ -300,8 +305,6 @@ export default function PerformRecruitment({ children, totalCandi }: any) {
                     />
                   </div>
                 )}
-              </div>
-            </div>
           </>
         </div>
         <BodyFrameFooter src="https://www.youtube.com/embed/v8FmUlUI1bs"></BodyFrameFooter>

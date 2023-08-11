@@ -17,13 +17,20 @@ export default function listRecruitmentProcess({dataDetail}) {
   const [newData, setNewData] = useState<any>();
   const recruitment = recruitmentStage?.data.recruitment
 
+  const iconAddQueryParam = router.query.iconAdd;
+  const iconEditQueryParam = router.query.iconEdit;
+  const iconDeleteQueryParam = router.query.iconDelete;
+
+  const iconAdd = iconAddQueryParam === "true";
+  const iconEdit = iconEditQueryParam === "true";
+  const iconDelete = iconDeleteQueryParam === "true";
+
   useEffect(() => {
     const fetchDataRecruitmentStage = async (idRecruitmentStage: any) => {
       try {
         const response = await DataRecruitmentStage(idRecruitmentStage);
         setRecruitmentStage(response?.data.data);
       } catch (error) {
-        console.log(error);
       }
     };
     fetchDataRecruitmentStage(idRecruitmentStage);
@@ -57,7 +64,8 @@ export default function listRecruitmentProcess({dataDetail}) {
               Danh sách quy trình tuyển dụng
             </span>
           </div>
-          <div className={`${styles.add_quytrinh1}`}>
+          {iconAdd && (
+            <div className={`${styles.add_quytrinh1}`}>
             <button className={`${styles.adds}`} onClick={handleOpenModalAdd}>
               <picture>
                 <img src={`${"/add.png"}`} alt=""></img>
@@ -65,6 +73,7 @@ export default function listRecruitmentProcess({dataDetail}) {
               Thêm giai đoạn tuyển dụng
             </button>
           </div>
+          )}
         </div>
         {openModalAdd && (
           <AddRecruitmentStage
@@ -89,6 +98,8 @@ export default function listRecruitmentProcess({dataDetail}) {
                 index={index}
                 onDelete = {setNewData}
                 onEdit = {setNewData}
+                iconEdit = {iconEdit}
+                iconDelete = {iconDelete}
               ></ListRecruitmentStage>
             </div>
           ))}
@@ -110,7 +121,6 @@ export const getServerSideProps = async ({ params }) => {
       },
     };
   } catch (error) {
-    console.log('Error fetching data from API:', error);
     return { props: {} };
   }
 };

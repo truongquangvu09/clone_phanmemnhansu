@@ -12,7 +12,7 @@ import { DepartmentList } from "@/pages/api/listPhongBan";
 
 type SelectOptionType = { label: string, value: string }
 
-export default function TabPayrollDown({ children }: any) {
+export default function TabPayrollDown({ iconAdd, iconEdit, iconDelete }: any) {
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
     const [openModal, setOpenModal] = useState(0)
     const [openEditModal, setOpenEditModal] = useState(false)
@@ -39,9 +39,8 @@ export default function TabPayrollDown({ children }: any) {
                 formData.append('toDate', toDate)
                 formData.append('pageSize', pagesize)
                 const response = await PayrollDownList(formData)
-                setPayrollDownList(response.data)
+                setPayrollDownList(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()
@@ -55,9 +54,8 @@ export default function TabPayrollDown({ children }: any) {
                 const formData = new FormData()
                 formData.append('com_id', comid)
                 const response = await DepartmentList(formData)
-                setDepartmentList(response.data)
+                setDepartmentList(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()
@@ -70,9 +68,8 @@ export default function TabPayrollDown({ children }: any) {
                 const formData = new FormData();
                 const comid: any = 1664
                 const response = await EmployeeList(formData)
-                setEmpData(response.data)
+                setEmpData(response?.data)
             } catch (error) {
-                console.log({ error });
             }
         }
         fetchData()
@@ -153,9 +150,9 @@ export default function TabPayrollDown({ children }: any) {
                 <div className={`${styles.tab_pane}`}>
                     <div className={`${styles.body} ${styles.body_planning}`}>
                         <div className={`${styles.recruitment}`}>
-                            <button className={`${styles.add} ${styles.add_planning}`} onClick={() => setOpenModal(1)}>
+                            {iconAdd && <button className={`${styles.add} ${styles.add_planning}`} onClick={() => setOpenModal(1)}>
                                 <img style={{ verticalAlign: 'middle' }} src={`/add.png`} alt="" />Thêm mới giảm biên chế
-                            </button>
+                            </button>}
                             <div className={`${styles.export_excel}`} style={{ paddingRight: 20, right: 0, position: 'absolute' }}>
                                 <a href="" className={`${styles.t_excel} ${styles.t_excel_payroll}`} >
                                     <img src={`/t-icon-excel.svg`} alt="" />
@@ -265,7 +262,7 @@ export default function TabPayrollDown({ children }: any) {
                                             <th>Chức vụ</th>
                                             <th>Giảm biên chế/nghỉ việc</th>
                                             <th>Ngày bắt đầu nghỉ</th>
-                                            <th>Tùy chỉnh</th>
+                                            {iconDelete || iconEdit ? <th>Tùy chỉnh</th> : null}
                                         </tr>
                                     </thead>
                                     <tbody className={`${styles.filter_body}`}>
@@ -278,10 +275,12 @@ export default function TabPayrollDown({ children }: any) {
                                                 <td>{item.position_name}</td>
                                                 <td>{item.type === 2 ? 'Nghỉ việc' : 'Giảm biên chế'}</td>
                                                 <td>{format(parseISO(item.time), 'dd-MM-yyyy')}</td>
-                                                <td>
-                                                    <a onClick={() => handleOpenEdit(item)} className={`${styles.btn_edit}`}><img src={`/icon_edit.svg`} alt="" /></a>
-                                                    <a onClick={() => setOpenDeleteModal(item.ep_id)} className={`${styles.btn_delete}`}><img src={`/icon_delete.svg`} alt="" /></a>
+                                                {iconDelete || iconEdit ? (
+                                                    <td>
+                                                    {iconEdit && <a onClick={() => handleOpenEdit(item)} className={`${styles.btn_edit}`}><img src={`/icon_edit.svg`} alt="" /></a>}
+                                                    {iconDelete && <a onClick={() => setOpenDeleteModal(item.ep_id)} className={`${styles.btn_delete}`}><img src={`/icon_delete.svg`} alt="" /></a>}
                                                 </td>
+                                                ): null}
                                             </tr>
                                         ))}
                                     </tbody>

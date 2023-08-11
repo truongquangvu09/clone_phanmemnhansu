@@ -7,7 +7,7 @@ import { useDrop } from "react-dnd"
 import { ItemTypes } from "@/components/quan-ly-tuyen-dung/danh-sach-ung-vien/item/ItemType";
 
 export default function DropableColumn({
-    item, isProcessList, handleUpdateProcess, setDeleteProcess, setModalOpen, setDragItem, setDropCol, setProcess_id
+    item, isProcessList, handleUpdateProcess, setDeleteProcess, setModalOpen, setDragItem, setDropCol, setProcess_id, iconEdit, iconDelete
 }: any) {
 
     const [{ canDrop, isOver }, drop] = useDrop(() => ({
@@ -79,6 +79,7 @@ export default function DropableColumn({
                                 setModalOpen={setModalOpen}
                                 setDragItem={setDragItem}
                                 setDropCol={setDropCol}
+                                iconDelete={iconDelete}
                             />
                         )
                     })}
@@ -93,63 +94,74 @@ export default function DropableColumn({
                                 setDragItem={setDragItem}
                                 setDropCol={setDropCol}
                                 setProcess_id={setProcess_id}
+                                iconDelete={iconDelete}
                             />
                         )
                     })
                     }
-                    {item?.id === 1 && isProcessList?.listCandidateGetJob?.map((item: any, index: any) => {
+                    {item?.id === 1 && isProcessList?.listCandidateGetJob?.map((data: any, index: any) => {
                         return (
                             <ItemCandidate3
                                 key={index}
                                 type="g"
                                 listCandidate={isProcessList?.listCandidateGetJob}
-                                data={item}
+                                data={data}
                                 setModalOpen={setModalOpen}
                                 setDragItem={setDragItem}
                                 setDropCol={setDropCol}
+                                iconDelete={iconDelete}
+                                process_id={item?.id}
+                                setProcess_id={setProcess_id}
                             />
                         )
                     })}
-                    {item?.id === 2 && isProcessList?.listCandidateFailJob?.map((item: any, index: any) => {
+                    {item?.id === 2 && isProcessList?.listCandidateFailJob?.map((data: any, index: any) => {
                         return (
                             <ItemCandidate3
                                 key={index}
                                 type="f"
                                 listCandidate={isProcessList?.listCandidateFailJob}
-                                data={item}
+                                data={data}
                                 setModalOpen={setModalOpen}
                                 setDragItem={setDragItem}
                                 setDropCol={setDropCol}
+                                iconDelete={iconDelete}
+                                process_id={item?.id}
+                                setProcess_id={setProcess_id}
                             />
                         )
                     })}
-                    {item?.id === 3 && isProcessList?.listCandidateCancelJob?.map((item: any, index: any) => {
+                    {item?.id === 3 && isProcessList?.listCandidateCancelJob?.map((data: any, index: any) => {
                         return (
                             <ItemCandidate3
                                 key={index}
                                 type="c"
                                 listCandidate={isProcessList?.listCandidateCancelJob}
-                                data={item}
+                                data={data}
                                 setModalOpen={setModalOpen}
                                 setDragItem={setDragItem}
                                 setDropCol={setDropCol}
+                                iconDelete={iconDelete} process_id={item?.id}
+                                setProcess_id={setProcess_id}
                             />
                         )
                     })}
-                    {item?.id === 4 && isProcessList?.listCandidateContactJob?.map((item: any, index: any) => {
+                    {item?.id === 4 && isProcessList?.listCandidateContactJob?.map((data: any, index: any) => {
                         return (
                             <ItemCandidate3
                                 key={index}
                                 type="s"
                                 listCandidate={isProcessList?.listCandidateContactJob}
-                                data={item}
+                                data={data}
                                 setModalOpen={setModalOpen}
                                 setDragItem={setDragItem}
                                 setDropCol={setDropCol}
+                                iconDelete={iconDelete}
+                                process_id={item?.id}
+                                setProcess_id={setProcess_id}
                             />
                         )
                     })}
-
                 </div>
             </div>
         </>
