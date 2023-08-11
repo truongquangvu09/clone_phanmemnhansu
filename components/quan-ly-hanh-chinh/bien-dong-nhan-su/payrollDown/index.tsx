@@ -25,6 +25,7 @@ export default function TabPayrollDown({ iconAdd, iconEdit, iconDelete }: any) {
     const [isSeach, setSearch] = useState<any>(null)
     const [infoList, setInfoList] = useState<any>(null)
 
+
     useEffect(() => {
         const fetchData = async () => {
             try {

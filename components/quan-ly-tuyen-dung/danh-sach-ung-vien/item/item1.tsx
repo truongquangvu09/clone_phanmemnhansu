@@ -9,13 +9,13 @@ import { useRouter } from "next/router";
 export default function ItemCandidate1({ data, setProcess_id, process_id, currentCol, setDragItem, setDropCol, setModalOpen, iconDelete }: any) {
     const [isOpenOption, setOpenOption] = useState(0)
     const [isDelete, setDelete] = useState(0)
+    const [animateModal, setAnimateModal] = useState(true);
+
     const [{ isDragging }, drag] = useDrag({
         type: ItemTypes.INTERVIEW,
         item: { data, process_id, currentCol },
         end: (item, monitor) => {
             const dropResult = monitor.getDropResult()
-            console.log(dropResult);
-
             if (dropResult && item) {
                 setDragItem(item?.data)
                 setDropCol(dropResult)
@@ -28,12 +28,20 @@ export default function ItemCandidate1({ data, setProcess_id, process_id, curren
         }),
     });
 
+    useEffect(() => {
+        if (isDelete === 0) {
+            setAnimateModal(true)
+        }
+    }, [isDelete])
+
+
     const handleToggleOption = (itemId: number) => {
         setOpenOption(prevState => prevState === itemId ? 0 : itemId);
     }
 
     const handleClosemodal = () => {
         setDelete(0)
+        setAnimateModal(false)
     }
 
     const router = useRouter()

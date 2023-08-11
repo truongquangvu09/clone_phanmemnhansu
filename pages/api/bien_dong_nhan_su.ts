@@ -6,12 +6,12 @@ const url1 = process.env.NEXT_PUBLIC_BASE_URL2;
 
 /* -------------------------------------- LIST ----------------------------------------------*/
 
-export const SalaryVolatilityList = async () => {
+export const SalaryVolatilityList = async (formData:FormData) => {
   try {
     const isToken = getToken(COOKIE_KEY);
     const response = await axios.post(
       `${url}api/hr/personalChange/getListSalary`,
-      {},
+      formData,
       {
         headers: {
           authorization: `Bearer ${isToken}`,

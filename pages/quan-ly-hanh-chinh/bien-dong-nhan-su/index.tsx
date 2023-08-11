@@ -17,14 +17,16 @@ export default function PersonnalChange({ children }: any) {
   const [displayIcon, setDisplayIcon] = useState<any>();
   const [isLoading, setIsLoading] = useState(true);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [iconTGL, setIconTGL] = useState<any>(false)
 
   useEffect(() => {
     try {
       const fetchData = async () => {
         const response = await getDataAuthentication();
         setDisplayIcon(response?.data?.data?.infoRoleTTNS);
-        setIsDataLoaded(true); // Move this line here
-        setIsLoading(false); // Move this line here
+        setIconTGL(response?.data?.data?.infoRoleTGL)
+        setIsDataLoaded(true); 
+        setIsLoading(false); 
       };
       fetchData();
     } catch (error) {}
@@ -36,6 +38,9 @@ export default function PersonnalChange({ children }: any) {
   const iconEdit = perIdArray?.includes(3);
   const iconDelete = perIdArray?.includes(4);
 
+  const perIdArray2 = iconTGL?.map((item) => item.perId)
+  const authenTGL = perIdArray2?.includes(1)
+  
   return (
     <>
       <Head>
@@ -88,7 +93,7 @@ export default function PersonnalChange({ children }: any) {
               <Link href="">Biểu đồ</Link>
             </li>
           </ul>
-          {active === 1 && <TabSalary></TabSalary>}
+          {authenTGL && active === 1 && <TabSalary></TabSalary>}
           {active === 2 && <TabPlaningAppointment iconAdd = {iconAdd} iconEdit = {iconEdit} iconDelete = {iconDelete}></TabPlaningAppointment>}
           {active === 3 && <TabWorkingRotation iconAdd = {iconAdd} iconEdit = {iconEdit} iconDelete = {iconDelete}></TabWorkingRotation>}
           {active === 4 && <TabPayrollDown iconAdd = {iconAdd} iconEdit = {iconEdit} iconDelete = {iconDelete}></TabPayrollDown>}

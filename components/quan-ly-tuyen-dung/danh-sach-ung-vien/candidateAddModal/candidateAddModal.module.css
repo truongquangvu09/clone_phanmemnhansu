@@ -7,6 +7,7 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5); /* Màu đen với độ trong suốt 50% */
   z-index: 101;
+  animation: fadeInOverlay 0.5s ease-in-out forwards;
 }
 .modal {
   position: fixed;
@@ -14,17 +15,19 @@
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1050;
+  z-index: 9998;
   outline: 0;
   overflow-y: auto !important;
   overflow-x: hidden;
 }
-.fade {
-  transition: opacity 0.15s linear;
+
+.modal_setting {
+  display: block;
+  padding-right: 2px;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
 }
-.fade .in {
-  opacity: 1;
-}
+
 .content_process {
   width: 736px;
   height: auto;
@@ -43,6 +46,7 @@
   outline: 0;
   background-clip: padding-box;
 }
+
 .header_process {
   text-align: center;
   background: #4c5bd4;
@@ -65,7 +69,15 @@
   padding-right: 7%;
 }
 .body_process .form_groups {
-  margin-top: 30px;
+  height: 65px;
+  display: flex;
+}
+.body_process .form_groupss {
+  margin-top: 20px;
+  display: flex;
+}
+.body_process .form_groups1 {
+  height: 80px;
   display: flex;
 }
 
@@ -183,6 +195,53 @@
 .btn_add:hover {
   background-color: #449d44;
 }
+.t_require {
+  color: red;
+  font-size: 14px;
+  margin-left: 5px;
+  margin-right: 15px;
+  display: block;
+  text-align: end;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-150%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-out {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-150%);
+  }
+}
+
+.fade_in {
+  animation-name: fade-in;
+}
+
+.fade_out {
+  animation-name: fade-out;
+}
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @media screen and (min-width: 480px) and (max-width: 1024px) {
   .content_process {
     width: 95%;

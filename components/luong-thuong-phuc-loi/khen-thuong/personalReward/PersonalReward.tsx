@@ -7,7 +7,7 @@ import MyPagination from "@/components/pagination/Pagination";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 
 export interface PersonalReward {}
-export default function PersonalReward({ iconAdd, iconEdit, tokenType }: any) {
+export default function PersonalReward({ iconAdd, iconEdit }: any) {
   const [data, setData] = useState<any>();
   const [currentPage, setCurrentPage] = useState<any>(1);
   const [keyWords, setKeyWords] = useState<any>('')
@@ -44,7 +44,6 @@ export default function PersonalReward({ iconAdd, iconEdit, tokenType }: any) {
         updateData = {handleUpDateData}
         iconAdd = {iconAdd}
         iconEdit = {iconEdit}
-        tokenType = {tokenType}
       ></RewardTable>
       
       <div className={`${styles.pagination}`}>

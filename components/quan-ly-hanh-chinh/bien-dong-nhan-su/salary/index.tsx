@@ -1,84 +1,88 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import Select from 'react-select'
 import styles from '../../thong-tin-nhan-su/tab/employeeManagement.module.css'
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
+import { DetailReport } from "@/pages/api/bao-cao-nhan-su/HrReportService";
+import { EmployeeList } from "@/pages/api/listNhanVien";
+import { format, parseISO } from "date-fns";
 
 type SelectOptionType = { value: string, label: string }
 export interface TabSalary {
-
-}
-export interface Employee {
-    id: number;
-    name: string;
-    chucvu: string;
-    phongban: string;
-    mucluongbandau: string;
-    mucluongtang: string;
-    mucluonggiam: string;
-    thoigianthaydoi: Date;
-    quyetdinh: string;
 }
 
 export default function TabSalary({ children }: any) {
 
-    const [activeButton, setActiveButton] = useState(0)
-    const [employeeCount, setEmployeeCount] = useState(10)
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null)
+    const [isSalaryList, setSalaryList] = useState<any>(null)
+    const [EmpData, setEmpData] = useState<any>(null)
+    const [isEmp_id, setEmp_id] = useState<any>("")
+    const [isSeach, setSearch] = useState<any>(null);
 
-    const handleSelectionChange = (option: SelectOptionType | null, optionsArray: SelectOptionType[]) => {
-        if (option) {
-            setSelectedOption(option)
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const formData = new FormData()
+                const fromDate = (document.getElementById('from_date') as HTMLInputElement)?.value
+                const toDate = (document.getElementById('to_date') as HTMLInputElement)?.value
+                formData.append('link', "bieu-do-danh-sach-nhan-vien-tang-giam-luong.html")
+                formData.append('ep_id', isEmp_id)
+                formData.append('from_date', fromDate)
+                formData.append('to_date', toDate)
+                const response = await DetailReport(formData)
+                if (response) {
+                    setSalaryList(response.data)
+                }
+            } catch (error) {
+                throw error
+            }
+        }
+        fetchData()
+    }, [isSeach])
+
+    // -- lấy dữ liệu nhân viên --
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const formData = new FormData();
+                const comid: any = 1664
+                const response = await EmployeeList(formData)
+                setEmpData(response.data)
+            } catch (error) {
+                console.log({ error });
+            }
+        }
+        fetchData()
+    }, [])
+
+
+    const handleSearch = useCallback(() => {
+        setSearch({ isEmp_id });
+    }, [isEmp_id]);
+
+    const handleSelectChange = (selectedOption: SelectOptionType | null, setState: any) => {
+        setSelectedOption(selectedOption);
+        if (selectedOption) {
+            setState(selectedOption.value); // Set giá trị đã chọn vào state setIsDep_id
         }
     };
 
+    const chonnhanvienOptions = useMemo(
+        () =>
+            EmpData?.data?.map((emp: any) => ({
+                value: emp.idQLC,
+                label: emp.userName,
+            })),
+        [EmpData?.data]
+    );
     const options = {
-        chonnhanvien: [
-            { value: 'Lê Hồng Anh', label: 'Lê Hồng Anh (KỸ THUẬT - ID:284670)' },
-            { value: 'Phan Mạnh Hùng', label: 'Phan Mạnh Hùng (SÁNG TẠO - ID:153846)' },
-        ],
+        chonnhanvien: chonnhanvienOptions,
     };
 
-    useEffect(() => {
-        setCurrentList(listCandidates.slice(0, employeeCount));
-    }, [employeeCount]);
-
-
-    function createArray(n: number): Employee[] {
-        const obj: Employee = {
-            id: 1,
-            name: 'nguyen van a',
-            chucvu: 'truong phong',
-            phongban: 'bien tap',
-            mucluongbandau: '10000 VNĐ',
-            mucluongtang: '10000 VNĐ',
-            mucluonggiam: '10000 VNĐ',
-            thoigianthaydoi: new Date(),
-            quyetdinh: 'oke'
-        };
-        return Array(n).fill(obj);
-    }
-    const listCandidates: Employee[] = createArray(4);
-
-    const handleChoose = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = parseInt(event.target.value);
-        setEmployeeCount(value)
-        setCurrentList(listCandidates.slice(0, value));
-        window.scrollTo(0, 0);
-    }
-
-    const totalPages = Math.ceil(listCandidates.length / employeeCount);
-
-    const [currentList, setCurrentList] = useState<Employee[] | null>(null);
-
-    const handleClick = (buttonIndex: number) => {
-        setActiveButton(buttonIndex)
-    }
     const tableContentRef = useRef<HTMLDivElement>(null);
     const currentPositionRef = useRef(0);
 
     const handleLeftClick = () => {
         if (tableContentRef.current) {
-            // Update the scroll position and currentPositionRef
             const newPosition = currentPositionRef.current - 100;
             if (newPosition >= 0) {
                 tableContentRef.current.scrollLeft = newPosition;
@@ -89,7 +93,6 @@ export default function TabSalary({ children }: any) {
 
     const handleRightClick = () => {
         if (tableContentRef.current) {
-            // Update the scroll position and currentPositionRef
             const newPosition = currentPositionRef.current + 100;
             if (newPosition <= tableContentRef.current.scrollWidth - tableContentRef.current.clientWidth) {
                 tableContentRef.current.scrollLeft = newPosition;
@@ -107,7 +110,7 @@ export default function TabSalary({ children }: any) {
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_salary} `}>
                                     <Select
                                         defaultValue={selectedOption}
-                                        onChange={(option) => handleSelectionChange(option, options.chonnhanvien)}
+                                        onChange={(option) => handleSelectChange(option, setEmp_id)}
                                         options={options.chonnhanvien}
                                         placeholder="Chọn nhân viên"
                                         styles={{
@@ -139,13 +142,13 @@ export default function TabSalary({ children }: any) {
                                     />
                                 </div>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_salary} `}>
-                                    <input type="date" className={`${styles.search_date} ${styles.form_control}`} placeholder='Từ dd/mm/yyyy' />
+                                    <input type="date" id="from_date" className={`${styles.search_date} ${styles.form_control}`} placeholder='Từ dd/mm/yyyy' />
                                 </div>
                                 <div className={`${styles.div_no_pad} ${styles.div_no_pad_salary}`}>
-                                    <input type="date" className={`${styles.search_date} ${styles.form_control}`} placeholder='Từ dd/mm/yyyy' />
+                                    <input type="date" id="to_date" className={`${styles.search_date} ${styles.form_control}`} placeholder='Từ dd/mm/yyyy' />
                                 </div>
-                                <div className={`${styles.div_no_pad_search}   `}>
-                                    <a href="" className={`${styles.icon_search_top} ${styles.div_search_salary}`}>
+                                <div className={`${styles.div_no_pad_search}  `}>
+                                    <a onClick={handleSearch} className={`${styles.icon_search_top} ${styles.div_search_salary}`}>
                                         <img style={{ verticalAlign: '-webkit-baseline-middle' }} src={`/t-icon-search-n.svg`} alt="" />
                                     </a>
                                 </div>
@@ -176,88 +179,26 @@ export default function TabSalary({ children }: any) {
                                         </tr>
                                     </thead>
                                     <tbody className={`${styles.filter_body}`}>
-                                        {currentList?.map((item, index) => (
+                                        {isSalaryList?.data?.map((item: any, index: any) => (
                                             <tr key={index}>
-                                                <td>{item.id}</td>
-                                                <td>{item.name}</td>
+                                                <td>{item.sb_id_user}</td>
+                                                <td>{item.userName}</td>
                                                 <td>{item.chucvu}</td>
-                                                <td>{item.phongban}</td>
-                                                <td>{item.mucluongbandau}</td>
-                                                <td>{item.mucluongtang}</td>
-                                                <td>{item.mucluonggiam}</td>
-                                                <td>{item.thoigianthaydoi.toString().slice(0, 16)}</td>
-                                                <td>{item.quyetdinh}</td>
+                                                <td>{item.dep}</td>
+                                                {item.tangLuong || item.giamluong ? <td>{item.luongmoi - item.tangLuong}</td> : <td>{item.luongmoi}</td>}
+                                                <td>{item.tangLuong}</td>
+                                                <td>{item.giamLuong}</td>
+                                                {item?.sb_time_up &&
+                                                    <td>{format(
+                                                        new Date(item?.sb_time_up),
+                                                        "yyyy-MM-dd"
+                                                    )}</td>
+                                                }
+                                                <td>{item.sb_quyetdinh}</td>
                                             </tr>
                                         ))}
                                     </tbody>
                                 </table>
-                            </div>
-                        </div>
-                        <div id="choose_limit" className={`${styles.pull_left}`}>
-                            <select name="" id="choose_limit_page" className={`${styles.form_control}`} onChange={(event) => handleChoose(event)}>
-                                <option value="10"  >10</option>
-                                <option value="20" >20</option>
-                                <option value="30">30</option>
-                            </select>
-                        </div>
-                        <div id="pagination" className={`${styles.pull_right}`}>
-                            <div className={`${styles.pagging}`} style={{ textAlign: 'center' }}>
-                                <nav>
-                                    <ul className={`${styles.pagination}`}>
-                                        {Array(totalPages).fill(null).map((value, index) => {
-                                            if (index === 0) {
-                                                return (
-                                                    <li
-                                                        className={styles.page_item}
-                                                        onClick={() => handleClick(0)}
-                                                        key={index}
-                                                    >
-                                                        <span
-                                                            className={`${activeButton === 0 ? styles.active : ''} ${styles.page_link
-                                                                }`}
-                                                        >
-                                                            1
-                                                        </span>
-                                                    </li>
-                                                );
-                                            } else if (index === totalPages - 1) {
-                                                return (
-                                                    <li
-                                                        className={styles.page_item}
-                                                        onClick={() => handleClick(totalPages - 1)}
-                                                        key={index}
-                                                    >
-                                                        <span
-                                                            className={`${activeButton === totalPages - 1 ? styles.active : ''} ${styles.page_link
-                                                                }`}
-                                                        >
-                                                            Cuối
-                                                        </span>
-                                                    </li>
-                                                );
-                                            } else if (
-                                                index === activeButton ||
-                                                index === activeButton - 1 ||
-                                                index === activeButton + 1
-                                            ) {
-                                                return (
-                                                    <li
-                                                        className={styles.page_item}
-                                                        onClick={() => handleClick(index)}
-                                                        key={index}
-                                                    >
-                                                        <span
-                                                            className={`${activeButton === index ? styles.active : ''} ${styles.page_link
-                                                                }`}
-                                                        >
-                                                            {index + 1}
-                                                        </span>
-                                                    </li>
-                                                );
-                                            }
-                                        })}
-                                    </ul>
-                                </nav>
                             </div>
                         </div>
                     </div>

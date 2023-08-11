@@ -3,19 +3,23 @@ import styles from './editModal.module.css'
 import Select from 'react-select';
 import { EmployeeUpdate } from "@/pages/api/quan_ly_nhan_vien";
 import { PostionCharData } from '@/pages/api/co_cau_to_chuc';
+import { format, parseISO } from "date-fns";
+import * as Yup from "yup";
+type SelectOptionType = { label: string, value: any }
 
-type SelectOptionType = { label: string, value: string }
+export default function EditCandidateList({ onCancel, infoList, position }: any) {
 
-export default function EditCandidateList({ onCancel, infoList }: any) {
+    console.log(infoList?.infoList);
 
 
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
-    const [isGender, setGender] = useState<any>(null)
-    const [isMaritalStatus, setMaritalStatus] = useState<any>(null)
-    const [isPosition_id, setPosition_id] = useState<any>(infoList?.positionId)
-    const [isExp, setExp] = useState<any>(null)
-    const [isEducation, setEducation] = useState<any>(null)
-    const [PostionCharDatas, setPosttionCharData] = useState<any>(null)
+    const [isGender, setGender] = useState<any>(1)
+    const [isMaritalStatus, setMaritalStatus] = useState<any>("")
+    const [isPosition_id, setPosition_id] = useState<any>(infoList?.infoList?.position_id)
+    const [isExp, setExp] = useState<any>("")
+    const [isEducation, setEducation] = useState<any>("")
+    const [PostionCharDatas, setPosttionCharData] = useState<any>("")
+    const [errors, setErrors] = useState<any>({});
 
     // -- lấy dữ liệu chức vụ --
     useEffect(() => {
@@ -30,35 +34,61 @@ export default function EditCandidateList({ onCancel, infoList }: any) {
         fetchData()
     }, [])
 
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required("Tên nhân viên không được để trống"),
+        phone: Yup.string().required("Điện thoại không được để trống"),
+
+    });
+
+
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         try {
             const formData = new FormData();
-            const role: any = 0
-            const comId: any = 1664
             const names = (document.getElementById('names') as HTMLInputElement)?.value
             const dateInCom = (document.getElementById('date_in_com') as HTMLInputElement)?.value
             const birthday = (document.getElementById('birthday') as HTMLInputElement)?.value
             const phoneNumber = (document.getElementById('phone') as HTMLInputElement)?.value
             const address = (document.getElementById('address') as HTMLInputElement)?.value
-            formData.append('com_id', comId)
-            formData.append('dep_id', infoList?.depId)
-            formData.append('role', role)
+            const formDatas = {
+                name: names || "",
+                phone: phoneNumber || "",
+            };
+
+            await validationSchema.validate(formDatas, {
+                abortEarly: false,
+            });
+
+            formData.append('com_id', infoList?.infoList?.com_id)
+            formData.append('dep_id', infoList?.infoList?.dep_id)
+            formData.append('role', infoList?.infoList?.role)
             formData.append('userName', names)
-            formData.append('idQLC', infoList?.id)
+            formData.append('_id', infoList?.infoList?._id)
             formData.append('birthday', birthday)
             formData.append('phoneTk', phoneNumber)
             formData.append('address', address)
             formData.append('gender', isGender)
-            formData.append('email', infoList?.email)
             formData.append('position_id', isPosition_id)
-            formData.append('exp', isExp)
-            formData.append('date_in_come', dateInCom)
+            formData.append('experience', isExp)
+            formData.append('start_working_time', dateInCom)
             formData.append('education', isEducation)
+            formData.append('married', isMaritalStatus)
+            formData.append('password', isMaritalStatus)
 
             const response = await EmployeeUpdate(formData)
+            if (response) {
+                onCancel()
+            }
         } catch (error) {
-            throw error
+            if (error instanceof Yup.ValidationError) {
+                const yupErrors = {};
+                error.inner.forEach((yupError: any) => {
+                    yupErrors[yupError.path] = yupError.message;
+                });
+                setErrors(yupErrors);
+            } else {
+                console.error("Lỗi validate form:", error);
+            }
         }
     }
 
@@ -84,31 +114,43 @@ export default function EditCandidateList({ onCancel, infoList }: any) {
 
     const options = {
         tinhtranghonnhan: [
-            { value: 'đã kết hôn', label: 'Đã kết hôn' },
-            { value: 'độc thân', label: 'Độc thân' },
+            { value: 1, label: 'Độc thân' },
+            { value: 2, label: 'Đã kết hôn' },
+            { value: 3, label: 'Khác' },
         ],
         chongioitinh: [
             { value: '1', label: 'Nam' },
             { value: '2', label: 'Nữ' },
         ],
-        kinhnghiemlamviec: [
-            { value: 'dưới 1 năm kinh nghiệm', label: 'Dưới 1 năm kinh nghiệm' },
-            { value: '1 năm', label: '1 năm' },
-            { value: '2 năm', label: '2 năm' },
-            { value: '3 năm', label: '3 năm' },
-            { value: '4 năm', label: '4 năm' },
-            { value: '5 năm', label: '5 năm' },
-            { value: 'trên 5 năm', label: 'trên 5 năm' },
-        ],
         trinhdohocvan: [
-            { value: 'Trên đại học', label: 'Trên đại học' },
-            { value: 'Đại học', label: 'Đại học' },
-            { value: 'Cao đẳng', label: 'Cao đẳng' },
-            { value: 'Trung cấp', label: 'Trung cấp' },
-            { value: 'Đào tạo nghề', label: 'Đào tạo nghề' },
-            { value: 'Trung học phổ thông', label: 'Trung học phổ thông' },
-            { value: 'Trung học cơ sở', label: 'Trung học cơ sở' },
-            { value: 'Tiểu học', label: 'Tiểu học' },
+            { value: 7, label: 'Đại học trở lên' },
+            { value: 5, label: 'Cao đẳng trở lên' },
+            { value: 1, label: 'THPT trở lên' },
+            { value: 2, label: 'Trung học trở lên' },
+            { value: 3, label: 'Chứng chỉ' },
+            { value: 4, label: 'Trung cấp trở lên' },
+            { value: 6, label: 'Cử nhân trở lên' },
+            { value: 8, label: 'Thạc sỹ' },
+            { value: 9, label: 'Thạc sỹ Nghệ thuật' },
+            { value: 10, label: 'Thạc sỹ Thương mại' },
+            { value: 11, label: 'Thạc sỹ Khoa học' },
+            { value: 12, label: 'Thạc sỹ Kiến trúc' },
+            { value: 13, label: 'Thạc sỹ QTKD' },
+            { value: 14, label: 'Thạc sỹ Kỹ thuật ứng dụng' },
+            { value: 15, label: 'Thạc sỹ Luật' },
+            { value: 16, label: 'Thạc sỹ Y học' },
+            { value: 17, label: 'Thạc sỹ Dược phẩm' },
+            { value: 18, label: 'Tiến sỹ' },
+            { value: 19, label: 'Khác' },
+
+        ],
+        kinhnghiemlamviec: [
+            { value: 0, label: 'Chưa có kinh nghiệm' },
+            { value: 1, label: '0 - 1 năm kinh nghiệm' },
+            { value: 2, label: '1 - 2 năm kinh nghiệm' },
+            { value: 3, label: '2 - 5 năm kinh nghiệm' },
+            { value: 4, label: '5 - 10 năm kinh nghiệm' },
+            { value: 5, label: 'Hơn 10 năm kinh nghiệm' },
         ],
         chucvuhientai: chonpchưvuOptions
 
@@ -126,30 +168,37 @@ export default function EditCandidateList({ onCancel, infoList }: any) {
                             <form action="">
                                 <div className={`${styles.modal_body} ${styles.body_process}`}>
                                     <div className={`${styles.form_groups}`}>
-                                        <label htmlFor="">Tên nhân viên <span style={{ color: 'red' }}> * </span></label>
-                                        <input type="text" defaultValue={infoList.userName} id="names" placeholder="" className={`${styles.form_control}`} />
+                                        <label htmlFor="">Tên nhân viên <span style={{ color: 'red' }}> * </span>
+                                            <span> {errors.name && <div className={`${styles.t_require} `}>{errors.name}</div>}</span></label>
+                                        <input type="text" defaultValue={infoList?.infoList?.userName} id="names" placeholder="" className={`${styles.form_control}`} />
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Mã ID nhân viên <span style={{ color: 'red' }}> * </span></label>
-                                        <input type="text" id="names" value={infoList.id} placeholder="" className={`${styles.form_control} ${styles.read_only}`} />
+                                        <input type="text" value={infoList?.infoList?.idQLC} placeholder="" className={`${styles.form_control} ${styles.read_only}`} />
                                     </div>
                                     <div className={`${styles.form_groups} ${styles.form_groups2}`}>
                                         <div className={`${styles.content_left}`}>
                                             <div className={`${styles.form_groups} ${styles.form_groups3}`}>
                                                 <label htmlFor="">Ngày sinh </label>
-                                                <input style={{ height: 20 }} type="date" id="birthday" placeholder="" className={`${styles.form_control} `} />
+                                                <input style={{ height: 20 }} type="date" defaultValue={format(
+                                                    parseISO(new Date(infoList?.infoList?.birthday * 1000).toISOString()),
+                                                    "yyyy-MM-dd"
+                                                )} id="birthday" placeholder="" className={`${styles.form_control} `} />
                                             </div>
                                         </div>
                                         <div className={`${styles.content_right}`}>
                                             <div className={`${styles.form_groups} ${styles.form_groups5} ${styles.form_groups6}   `}>
-                                                <label htmlFor="">Điện thoại <span style={{ color: 'red' }}> * </span></label>
-                                                <input type="text" id="phone" defaultValue={infoList.phoneTK} placeholder="" className={`${styles.form_control} `} />
+                                                <label htmlFor="">Điện thoại <span style={{ color: 'red' }}> *
+                                                    <span> {errors.phone && <div className={`${styles.t_require} `}>{errors.phone}</div>}</span>
+                                                </span>
+                                                </label>
+                                                <input type="text" id="phone" defaultValue={infoList?.infoList?.phoneTK} placeholder="" className={`${styles.form_control} `} />
                                             </div>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Địa chỉ</label>
-                                        <input type="text" id="address" defaultValue={infoList.address} placeholder="" className={`${styles.form_control}`} />
+                                        <input type="text" id="address" defaultValue={infoList?.infoList?.address} placeholder="" className={`${styles.form_control}`} />
                                     </div>
                                     <div className={`${styles.form_groups} ${styles.form_groups2}`}>
                                         <div className={`${styles.content_left}`}>
@@ -223,7 +272,7 @@ export default function EditCandidateList({ onCancel, infoList }: any) {
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Email <span style={{ color: 'red' }}> * </span></label>
-                                        <input type="text" value={infoList.email} id="names" placeholder="" className={`${styles.form_control} ${styles.read_only}`} />
+                                        <input type="text" value={infoList?.infoList?.emailContact} id="email" placeholder="" className={`${styles.form_control} ${styles.read_only}`} />
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Chức vụ </label>
@@ -291,7 +340,10 @@ export default function EditCandidateList({ onCancel, infoList }: any) {
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Ngày vào công ty </label>
-                                        <input type="date" id="date_in_com" defaultValue={infoList.dateInCom} placeholder="" className={`${styles.form_control}`} />
+                                        <input type="date" id="date_in_com" defaultValue={format(
+                                            parseISO(new Date(infoList?.infoList?.start_working_time * 1000).toISOString()),
+                                            "yyyy-MM-dd"
+                                        )} placeholder="" className={`${styles.form_control}`} />
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Trình độ học vấn </label>

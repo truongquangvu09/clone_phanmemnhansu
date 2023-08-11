@@ -6,11 +6,12 @@
   width: 92%;
   margin-top: 20px;
 }
-.row_search_new_t {
-  margin-top: 0px;
-  padding-bottom: 24px;
-  display: flex;
-  justify-content: space-between;
+.d_back {
+  width: 100%;
+  padding: 53px 0 24px;
+}
+.d_info {
+  display: inline-flex;
 }
 .div_no_pad {
   width: 16.677777%;
@@ -88,7 +89,7 @@
   background-color: transparent;
 }
 .table_list {
-  width: 200%;
+  width: 250%;
   max-width: unset;
   border-collapse: collapse;
   border-radius: 8px;
@@ -117,6 +118,13 @@
 .table tbody tr {
   background: white;
 }
+.text_content {
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
+  font-weight: 600;
+}
 .table tbody tr td {
   padding: 8px;
   line-height: 1.42857143;
@@ -125,6 +133,7 @@
 }
 .table td {
   font-size: 14px;
+  font-weight: 600;
   border: 1px solid rgba(102, 102, 102, 0.24);
 }
 

@@ -3,6 +3,7 @@ import styles from './addRegulationsModal.module.css'
 import MyEditorNew from "@/components/myEditor";
 import { AddRulesByGroupList } from "@/pages/api/quy_dinh_chinh_sach";
 import { SpecifiedGroupList } from "@/pages/api/quy_dinh_chinh_sach";
+import * as Yup from "yup";
 interface InputTextareaProps {
     onDescriptionChange: (data: any) => void
 }
@@ -39,6 +40,7 @@ export default function AddRegulationsModal2({ onCancel }: AddRegulationsModal2P
     const [ListRegulationsGroup, setListRegulationsGroup] = useState<any | null>(null)
     const [provisionId, setProvisionId] = useState<number | null>(null)
     const [keyWords, setKeyWords] = useState('')
+    const [errors, setErrors] = useState<any>({});
 
     useEffect(() => {
         const fetchData = async () => {
@@ -52,9 +54,15 @@ export default function AddRegulationsModal2({ onCancel }: AddRegulationsModal2P
         fetchData()
     }, [])
     const name = (document.getElementById('names') as HTMLInputElement)?.value
-    console.log(name);
-    console.log(1);
 
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required("Tên quy định không được để trống"),
+        provision_id: Yup.string().required("Nhóm quy định không được để trống"),
+        time: Yup.string().required("Thời gian không được để trống"),
+        supervisor: Yup.string().required("Người giám sát không được để trống"),
+        apply_for: Yup.string().required("Đối tượng thi hành không được để trống"),
+        note: Yup.string().required("Mô tả không được để trống không được để trống"),
+    });
 
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -65,10 +73,18 @@ export default function AddRegulationsModal2({ onCancel }: AddRegulationsModal2P
             const supervisor_name = (document.getElementById('supervisor_name') as HTMLInputElement)?.value
             const apply_for = (document.getElementById('apply_for') as HTMLInputElement)?.value
             const content = descriptions
+            const formDatas = {
+                name: name || "",
+                time: time_start || "",
+                provision_id: provision_id || "",
+                apply_for: apply_for || "",
+                supervisor: supervisor_name || "",
+                note: content || "",
+            };
 
-            console.log(name);
-
-
+            await validationSchema.validate(formDatas, {
+                abortEarly: false,
+            });
             const formData = new FormData()
             formData.append('name', name)
             formData.append('provision_id', provision_id)
@@ -82,7 +98,15 @@ export default function AddRegulationsModal2({ onCancel }: AddRegulationsModal2P
 
             const response = await AddRulesByGroupList(formData)
         } catch (error) {
-            throw error
+            if (error instanceof Yup.ValidationError) {
+                const yupErrors = {};
+                error.inner.forEach((yupError: any) => {
+                    yupErrors[yupError.path] = yupError.message;
+                });
+                setErrors(yupErrors);
+            } else {
+                console.error("Lỗi validate form:", error);
+            }
         }
     }
 
@@ -125,6 +149,7 @@ export default function AddRegulationsModal2({ onCancel }: AddRegulationsModal2P
                                         <label htmlFor="">Tên quy định <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="text" id="names" placeholder="Nhập tên quy định" className={`${styles.input_process}`} />
+                                            <span> {errors.name && <div className={`${styles.t_require} `}>{errors.name}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -135,28 +160,34 @@ export default function AddRegulationsModal2({ onCancel }: AddRegulationsModal2P
                                                     <option value={item.id} key={index}>-- {item.name} --</option>
                                                 ))}
                                             </select>
+                                            <span> {errors.provision_id && <div className={`${styles.provision_id} `}>{errors.phone}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Thời gian bắt đầu hiệu lực <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="date" id="time_start" placeholder="dd/mm/yyyy" className={`${styles.input_process}`} />
+                                            <span> {errors.time && <div className={`${styles.t_require} `}>{errors.time}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Người giám sát <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="text" id="supervisor_name" placeholder="Người giám sát" className={`${styles.input_process}`} />
+                                            <span> {errors.supervisor && <div className={`${styles.t_require} `}>{errors.supervisor}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
                                         <label htmlFor="">Đối tượng thi hành <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="text" id="apply_for" placeholder="Đối tượng thi hành" className={`${styles.input_process}`} />
+                                            <span> {errors.apply_for && <div className={`${styles.t_require} `}>{errors.apply_for}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups} ${styles.cke}`}>
-                                        <label htmlFor="">Nội dung quy định <span style={{ color: 'red' }}> * </span></label>
+                                        <label htmlFor="">Nội dung quy định <span style={{ color: 'red' }}> *
+                                            <span > {errors.note && <div className={`${styles.t_require} `}>{errors.note}</div>}</span>
+                                        </span></label>
                                         <div className={`${styles.ckeditor}`}>
                                             <Input_textarea onDescriptionChange={handleDescriptionChange} />
                                         </div>

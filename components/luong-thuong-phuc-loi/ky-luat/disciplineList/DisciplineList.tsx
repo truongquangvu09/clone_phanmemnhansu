@@ -6,7 +6,7 @@ import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_f
 import styles from "../component/Component.module.css";
 
 export interface DisciplineList {}
-export default function DisciplineList({iconEdit, tokenType }: any) {
+export default function DisciplineList({iconEdit }: any) {
   const [data, setData] = useState<any>();
   const [currentPage, setCurrentPage] = useState<any>(1);
   const [keyWords, setKeyWords] = useState<any>("");
@@ -37,7 +37,6 @@ export default function DisciplineList({iconEdit, tokenType }: any) {
         violators="Cá nhân / phòng ban vi phạm"
         keyWords={handleSearch}
         iconEdit = {iconEdit}
-        tokenType = {tokenType}
       ></PunishmentTable>
       <div className={`${styles.pagination}`}>
         <MyPagination

@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import styles from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/deleteRecruitmentProcess/DeleteRecruitmentProcess.module.css"
 import { CandidateDelete } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 
-
-
-export default function DeleteCandidate({ onCancel, idCandidate }: any) {
+export default function DeleteCandidate({ onCancel, idCandidate, animation }: any) {
 
     console.log({ idCandidate });
 
@@ -13,7 +11,9 @@ export default function DeleteCandidate({ onCancel, idCandidate }: any) {
             const formData = new FormData()
             formData.append('candidateId', idCandidate)
             const response = await CandidateDelete(formData)
-            onCancel()
+            setTimeout(() => {
+                onCancel()
+            }, 1000)
         } catch (error) {
             throw error
         }
@@ -22,7 +22,8 @@ export default function DeleteCandidate({ onCancel, idCandidate }: any) {
     return (
         <>
             <div className={`${styles.overlay}`}></div>
-            <div className={`${styles.modal} ${styles.modal_setting}  `}>
+            <div className={`${styles.modal} ${styles.modal_setting} ${animation ? styles.fade_in : styles.fade_out
+                }`}>
                 <div className={`${styles.contentquytrinh}`}>
                     <div className={`${styles.modal_content} ${styles.contentdel}`}>
                         <div className={`${styles.modal_header} ${styles.headquytrinh}`}>

@@ -7,13 +7,15 @@ import { useRouter } from "next/router";
 import DeleteCandidate from "../candidateDeleteModal";
 
 
-export default function ItemCandidate3({ listCandidate, type, data, currentCol, setDragItem, setDropCol, setModalOpen, iconDelete }: any) {
+export default function ItemCandidate3({ process_id, setProcess_id, type, data, currentCol, setDragItem, setDropCol, setModalOpen, iconDelete }: any) {
 
     const [isOpenOption, setOpenOption] = useState(0)
     const [isDelete, setDelete] = useState(0)
+    const [animateModal, setAnimateModal] = useState(true);
+
     const [{ isDragging }, drag] = useDrag({
         type: ItemTypes.INTERVIEW,
-        item: { data, currentCol },
+        item: { data, process_id, currentCol },
         end: (item, monitor) => {
             const dropResult = monitor.getDropResult()
             console.log(dropResult);
@@ -22,6 +24,7 @@ export default function ItemCandidate3({ listCandidate, type, data, currentCol, 
                 setDragItem(item?.data)
                 setDropCol(dropResult)
                 setModalOpen(true)
+                setProcess_id(item?.process_id)
             }
         },
         collect: (monitor) => ({
@@ -29,19 +32,28 @@ export default function ItemCandidate3({ listCandidate, type, data, currentCol, 
         }),
     });
 
+    useEffect(() => {
+        if (isDelete === 0) {
+            setAnimateModal(true)
+        }
+    }, [isDelete])
+
+
     const handleToggleOption = (itemId: number) => {
         setOpenOption(prevState => prevState === itemId ? 0 : itemId);
     }
 
     const handleClosemodal = () => {
         setDelete(0)
+        setAnimateModal(false)
+
     }
 
     const router = useRouter()
     const handleClickDetail = (item: number) => {
         if (typeof item === "number" && !isNaN(item)) {
             router.push(
-                `/quan-ly-tuyen-dung/danh-sach-ung-vien/chi-tiet-ung-vien/${type}-${item}`
+                `/quan-ly-tuyen-dung/danh-sach-ung-vien/chi-tiet-ung-vien/${type}${item}`
             );
         }
     };

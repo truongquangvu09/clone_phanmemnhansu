@@ -8,7 +8,7 @@ import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_f
 import ModalAddTeamCompliments from "./modalAddTeamCompliments/modalAddTeamCompliments";
 
 export interface CommendationTeam {}
-export default function CommendationTeam({ iconAdd, iconEdit, tokenType }: any) {
+export default function CommendationTeam({ iconAdd, iconEdit }: any) {
   const [data, setData] = useState<any>();
   const [currentPage, setCurrentPage] = useState<any>(1);
   const [keyWords, setKeyWords] = useState<any>('')
@@ -41,7 +41,6 @@ export default function CommendationTeam({ iconAdd, iconEdit, tokenType }: any) 
         keyWords = {handleSearch}
         iconAdd = {iconAdd}
         iconEdit = {iconEdit}
-        tokenType = {tokenType}
       ></RewardTable>
       <div className={`${styles.pagination}`}>
         <MyPagination

@@ -30,9 +30,9 @@ export const SignIn = async () => {
   const currentUrl = process.env.NEXT_PUBLIC_BASE_URL2;
   if (!currentCookie) {
     const body = {
-      account: "trangchuoi4@gmail.com",
-      password: "trang677199",
-      type: 1,
+      account: "09898773345",
+      password: "123123a",
+      type: 2,
     };
     try {
       const res = await axios.post(`${currentUrl}api/qlc/employee/login`, body);

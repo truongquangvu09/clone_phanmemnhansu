@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import styles from "./candidateListDetail.module.css";
 import CandidateAddModal from "@/components/quan-ly-tuyen-dung/danh-sach-ung-vien/candidateAddModal";
@@ -11,20 +10,20 @@ import { GetListNews } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
 import Selects from "@/components/select";
 import DropableColumn from "./columnAble";
 import StageGetJob from "@/components/quan-ly-tuyen-dung/danh-sach-ung-vien/stageTransitionModal/stageGetJob";
-import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
+import StageFailJob from "@/components/quan-ly-tuyen-dung/danh-sach-ung-vien/stageTransitionModal/stageFailJob";
+import StageCancelJob from "@/components/quan-ly-tuyen-dung/danh-sach-ung-vien/stageTransitionModal/stageCancelJob";
+import StageContactJob from "@/components/quan-ly-tuyen-dung/danh-sach-ung-vien/stageTransitionModal/stateContactJob";
 import Head from "next/head";
 
 type SelectOptionType = { label: string; value: any };
-export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete, tokenType }) {
-  const [openModal, setOpenModal] = useState(0);
+export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete }: any) {
+  const [openModal, setOpenModal] = useState<any>(null);
   const [isOpenModal, setModalOpen] = useState(false);
   const [isUpdateProcess, setUpdateProcess] = useState<any>(null);
-  const [isDeleteProcess, setDeleteProcess] = useState(0);
+  const [isDeleteProcess, setDeleteProcess] = useState<any>(null);
   const [isProcessList, setProcessList] = useState<any>(null);
   const [isNewList, setNewsList] = useState<any>(null);
-  const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(
-    null
-  );
+  const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
   const [isEmp_id, setEmp_id] = useState<any>("");
   const [EmpData, setEmpData] = useState<any>(null);
   const [isGender, setGender] = useState<any>("");
@@ -34,6 +33,7 @@ export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete, tok
   const [isDragItem, setDragItem] = useState<any>(null);
   const [isDropCol, setDropCol] = useState<any>(null);
   const [isProcess_id, setProcess_id] = useState<any>(null);
+  const [animateModal, setAnimateModal] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,9 +54,11 @@ export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete, tok
         formData.append("userHiring", isEmp_id);
         if (formData) {
           const response = await ProcessList(formData);
-          setProcessList(response.data);
+          setProcessList(response?.data);
         }
-      } catch (error) {}
+      } catch (error) {
+        throw error;
+      }
     };
     fetchData();
   }, [isSeach]);
@@ -69,7 +71,9 @@ export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete, tok
         const comid: any = 1664;
         const response = await EmployeeList(formData);
         setEmpData(response.data);
-      } catch (error) {}
+      } catch (error) {
+        console.log({ error });
+      }
     };
     fetchData();
   }, []);
@@ -82,16 +86,27 @@ export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete, tok
         if (response) {
           setNewsList(response.data);
         }
-      } catch (error) {}
+      } catch (error) {
+        throw error;
+      }
     };
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (openModal === null || isUpdateProcess === null || isDeleteProcess === null) {
+      setAnimateModal(true)
+    }
+  }, [openModal, isUpdateProcess, isDeleteProcess])
+
   const handleCloseModal = () => {
-    setOpenModal(0);
-    setUpdateProcess(0);
-    setDeleteProcess(0);
+    setAnimateModal(false)
+    setUpdateProcess(null);
+    setDeleteProcess(null);
     setModalOpen(false);
+    setOpenModal(null)
+
+
   };
 
   const handleSearch = useCallback(() => {
@@ -159,90 +174,51 @@ export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete, tok
       <div className={`${styles.tab_content}`}>
         <div className={`${styles.tab_pane}`}>
           <div className={`${styles.body}`}>
-            {tokenType === 1 ? (
+            {iconAdd && (
               <div className={`${styles.recruitment}`}>
-                <button
-                  className={`${styles.add}`}
-                  onClick={() => setOpenModal(1)}
-                >
-                  <img
-                    style={{ verticalAlign: "middle" }}
-                    src={`/add.png`}
-                    alt=""
-                  />
-                  Thêm ứng viên
-                </button>
-                <button
-                  className={`${styles.add}`}
-                  onClick={() => setOpenModal(2)}
-                >
-                  <img
-                    style={{ verticalAlign: "middle" }}
-                    src={`/add.png`}
-                    alt=""
-                  />
-                  Thêm giai đoạn
-                </button>
-              </div>
-            ): (
-              (!iconAdd) ? <></> : (
-                <div className={`${styles.recruitment}`}>
-                <button
-                  className={`${styles.add}`}
-                  onClick={() => setOpenModal(1)}
-                >
-                  <img
-                    style={{ verticalAlign: "middle" }}
-                    src={`/add.png`}
-                    alt=""
-                  />
-                  Thêm ứng viên
-                </button>
-                <button
-                  className={`${styles.add}`}
-                  onClick={() => setOpenModal(2)}
-                >
-                  <img
-                    style={{ verticalAlign: "middle" }}
-                    src={`/add.png`}
-                    alt=""
-                  />
-                  Thêm giai đoạn
-                </button>
-              </div>
-              )
+              <button
+                className={`${styles.add}`}
+                onClick={() => setOpenModal(1)}
+              >
+                <img
+                  style={{ verticalAlign: "middle" }}
+                  src={`/add.png`}
+                  alt=""
+                />
+                Thêm ứng viên
+              </button>
+              <button
+                className={`${styles.add}`}
+                onClick={() => setOpenModal(2)}
+              >
+                <img
+                  style={{ verticalAlign: "middle" }}
+                  src={`/add.png`}
+                  alt=""
+                />
+                Thêm giai đoạn
+              </button>
+            </div>
             )}
-            {openModal === 1 ? (
-              <CandidateAddModal
-                onCancel={handleCloseModal}
-              ></CandidateAddModal>
-            ) : (
-              ""
-            )}
-            {openModal === 2 ? (
-              <StageAddModal onCancel={handleCloseModal}></StageAddModal>
-            ) : (
-              ""
-            )}
-            {isUpdateProcess && (
-              <StageUpdateModal
-                onCancel={handleCloseModal}
-                infoList={isUpdateProcess}
-              />
-            )}
-            {isDeleteProcess !== 0 && (
-              <DeleteStage
-                onCancel={handleCloseModal}
-                process_id={isDeleteProcess}
-              />
-            )}
-            {isOpenModal &&
-              isDropCol?.id !== 0 &&
-              isDropCol?.id !== 2 &&
-              isDropCol?.id !== 3 &&
-              isDropCol?.id !== 4 && (
-                <StageGetJob data={isDragItem} onCancel={handleCloseModal} />
-              )}
+  
+
+            {openModal === 1 ? (<CandidateAddModal animation={animateModal} onCancel={handleCloseModal}></CandidateAddModal>) : ("")}
+            {openModal === 2 ? (<StageAddModal animation={animateModal} onCancel={handleCloseModal}></StageAddModal>) : ("")}
+            {isUpdateProcess && (<StageUpdateModal animation={animateModal} onCancel={handleCloseModal} infoList={isUpdateProcess} />)}
+            {isDeleteProcess !== null ? (<DeleteStage animation={animateModal} onCancel={handleCloseModal} process_id={isDeleteProcess} />) : ''}
+            {isOpenModal && isDropCol?.id !== 0 && isDropCol?.id !== 2 && isDropCol?.id !== 3 && isDropCol?.id !== 4
+              && <StageGetJob data={isDragItem} process_id_from={isProcess_id} process_id={isDropCol?.id} onCancel={handleCloseModal}
+              />}
+            {isOpenModal && isDropCol?.id === 2
+              && <StageFailJob data={isDragItem} process_id_from={isProcess_id} process_id={isDropCol?.id} onCancel={handleCloseModal}
+              />}
+            {isOpenModal && isDropCol?.id === 3
+              && <StageCancelJob data={isDragItem} process_id_from={isProcess_id} process_id={isDropCol?.id} onCancel={handleCloseModal}
+              />}
+            {isOpenModal && isDropCol?.id === 4
+              && <StageContactJob data={isDragItem} process_id_from={isProcess_id} process_id={isDropCol?.id} onCancel={handleCloseModal}
+              />}
+
             <div className={`${styles.bg_search}`}>
               <div className={`${styles.search_top}`}>
                 <div
@@ -367,17 +343,14 @@ export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete, tok
                       setProcess_id={setProcess_id}
                       iconEdit={iconEdit}
                       iconDelete={iconDelete}
-                      tokenType = {tokenType}
                     />
-                  );
+                  )
                 })}
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <BodyFrameFooter src="https://www.youtube.com/embed/9KiIK87wyfI"></BodyFrameFooter>
     </>
   );
 }

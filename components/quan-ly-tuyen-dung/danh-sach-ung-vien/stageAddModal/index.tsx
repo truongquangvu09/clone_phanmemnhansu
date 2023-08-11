@@ -3,14 +3,15 @@ import Select from 'react-select';
 import styles from '../candidateAddModal/candidateAddModal.module.css'
 import { ProcessList } from '@/pages/api/quan-ly-tuyen-dung/candidateList';
 import { ProcessAdd } from '@/pages/api/quan-ly-tuyen-dung/candidateList';
+import * as Yup from "yup";
 
 type SelectOptionType = { label: string, value: string }
 
-
-export default function StageAddModal({ onCancel }: any) {
+export default function StageAddModal({ onCancel, animation }: any) {
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
     const [isProcessList, setProcessList] = useState<any>(null)
     const [isProcess_id, setProcess_id] = useState<any>(null)
+    const [errors, setErrors] = useState<any>({});
 
     useEffect(() => {
         const fetchData = async () => {
@@ -18,7 +19,7 @@ export default function StageAddModal({ onCancel }: any) {
                 const formData = new FormData();
                 if (formData) {
                     const response = await ProcessList(formData)
-                    setProcessList(response.data)
+                    setProcessList(response?.data)
                 }
             } catch (error) {
                 throw error
@@ -27,11 +28,30 @@ export default function StageAddModal({ onCancel }: any) {
         fetchData()
     }, [])
 
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required("Tên giai đoạn không được để trống"),
+        process_befor: Yup.lazy((value) =>
+            value.isProcess_id === 0
+                ? Yup.number()
+                : Yup.string().required("Chọn giai đoạn đứng trước")
+        ),
+    });
+
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault()
         try {
+
             const formData = new FormData()
             const processName = (document.getElementById('names') as HTMLInputElement)?.value
+            const formDatas = {
+                name: processName || "",
+                process_befor: isProcess_id || "",
+            };
+
+            await validationSchema.validate(formDatas, {
+                abortEarly: false,
+            });
+
             formData.append('name', processName)
             formData.append('processBefore', isProcess_id)
             const response = await ProcessAdd(formData)
@@ -41,7 +61,15 @@ export default function StageAddModal({ onCancel }: any) {
                 }, 1500)
             }
         } catch (error) {
-
+            if (error instanceof Yup.ValidationError) {
+                const yupErrors = {};
+                error.inner.forEach((yupError: any) => {
+                    yupErrors[yupError.path] = yupError.message;
+                });
+                setErrors(yupErrors);
+            } else {
+                console.error("Lỗi validate form:", error);
+            }
         }
     }
 
@@ -68,11 +96,12 @@ export default function StageAddModal({ onCancel }: any) {
     return (
         <>
             <div className={`${styles.modal_open}`}>
-                <div className={`${styles.modal} ${styles.fade} ${styles.in}`}>
+                <div className={`${styles.modal} ${styles.modal_setting} ${animation ? styles.fade_in : styles.fade_out
+                    }`}>
                     <div className={` ${styles.modal_dialog} ${styles.content_process}`}>
                         <div className={`${styles.modal_content}`}>
                             <div className={`${styles.modal_header} ${styles.header_process}`}>
-                                <h5 className={`${styles.modal_tittle}`}>THÊM ỨNG VIÊN</h5>
+                                <h5 className={`${styles.modal_tittle}`}>THÊM GIAI ĐOẠN</h5>
                             </div>
                             <form action="">
                                 <div className={`${styles.modal_body} ${styles.body_process}`}>
@@ -80,6 +109,7 @@ export default function StageAddModal({ onCancel }: any) {
                                         <label htmlFor="">Tên giai đoạn <span style={{ color: 'red' }}> * </span></label>
                                         <div className={`${styles.input_right}`}>
                                             <input type="text" id="names" placeholder="Nhập tên giai đoạn tuyển dụng" className={`${styles.input_process}`} />
+                                            <span> {errors.name && <div className={`${styles.t_require} `}>{errors.name}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -124,6 +154,7 @@ export default function StageAddModal({ onCancel }: any) {
                                                         }),
                                                     }}
                                                 />
+                                                <span> {errors.process_befor && <div className={`${styles.t_require} `}>{errors.process_befor}</div>}</span>
                                             </div>
                                         </div>
                                     </div>

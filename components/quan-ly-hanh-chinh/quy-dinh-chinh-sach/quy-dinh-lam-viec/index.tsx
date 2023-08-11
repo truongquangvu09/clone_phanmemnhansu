@@ -13,7 +13,7 @@ import UpdateRegulationsGroupsModal from './updateRegulationModal';
 import DeleteRegulationGroup from './deleteRegulationModal';
 import DeleteRegulation from './deleteRegulationModal/deleteRegulation';
 
-export default function RegulationsWork( {iconAdd, iconEdit, iconDelete, tokenType}) {
+export default function RegulationsWork( {iconAdd, iconEdit, iconDelete}) {
     const [click, setClick] = useState(false)
     const [openModal, setOpenModal] = useState(0)
     const [openDetail, setOpentDetail] = useState(0)
@@ -116,22 +116,13 @@ export default function RegulationsWork( {iconAdd, iconEdit, iconDelete, tokenTy
                 <div className={`${styles.tab_pane} ${styles.fade} `}>
                     <div className={`${styles.recruitment2}`}>
                         <div className={`${styles.recruitment2_3}`}>
-                            {tokenType === 1 ? (
+                            {iconAdd && (
                                 <button className={`${styles.adds}`} onClick={handleClick}>
                                 <picture>
                                     <img style={{ verticalAlign: 'middle' }} src={`/add.png`} alt="" />
                                     Thêm mới
                                 </picture>
                             </button>
-                            ): (
-                                (!iconAdd)? <></> : (
-                                    <button className={`${styles.adds}`} onClick={handleClick}>
-                                <picture>
-                                    <img style={{ verticalAlign: 'middle' }} src={`/add.png`} alt="" />
-                                    Thêm mới
-                                </picture>
-                            </button>
-                                )
                             )}
                             {click === true && (<div className={`${styles.settings} ${styles.lefftset}`} >
                                 <li onClick={() => setOpenModal(1)}>Thêm nhóm quy định</li>
@@ -169,8 +160,8 @@ export default function RegulationsWork( {iconAdd, iconEdit, iconDelete, tokenTy
                                             <img className={`${styles.icondown}`} src="/down.png" />
                                         </div>
                                         <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpendetail(item.id)} >Chi tiết/</a>
-                                        {tokenType === 1 ? <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpenUpdate(item.id)}>Sửa/</a> : (!iconEdit)?<></> :<a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpenUpdate(item.id)}>Sửa/</a> }
-                                        {tokenType === 1 ? <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpenDelete(item.id)} >Xóa</a>  : (!iconEdit)?<></>: <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpenDelete(item.id)} >Xóa</a>}
+                                        {iconEdit && <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpenUpdate(item.id)}>Sửa/</a>  }
+                                        {iconDelete && <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpenDelete(item.id)} >Xóa</a> }
                                     </div>
                                     <div className={`${styles.table_none}`} style={{ display: selectedItems.includes(item?.id) ? 'block' : 'none' }}>
                                         <table className={`${styles.tablelist}  ${styles.tablelist1}`}>

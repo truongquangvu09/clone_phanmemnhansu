@@ -11,7 +11,7 @@ import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_f
 import MyPagination from "@/components/pagination/Pagination";
 import { format } from "date-fns";
 
-function PunishmentTable({ display, data, violators, model, keyWords, updateData ,  iconAdd, iconEdit, tokenType}: any) {
+function PunishmentTable({ display, data, violators, model, keyWords, updateData ,  iconAdd, iconEdit}: any) {
 
   const [visible, setVisible] = useState(true);
   const [typeModal, setTypeModal] = useState(model);
@@ -55,30 +55,17 @@ function PunishmentTable({ display, data, violators, model, keyWords, updateData
     <>
       <div className={`${styles.tuyendung2}`} style={{ display: "block" }}>
         <div className={`${styles.tuyendung2_3}`}>
-        {tokenType === 1 ? (
+        {iconAdd && (
             <button
-              onClick={() => setOpen(true)}
-              className={`${styles.adds}`}
-              style={{ display: display }}
-            >
-              <picture>
-                <img src={`/add.png`} alt="+"></img>
-              </picture>
-              Thêm mới
-            </button>
-          ) : !iconAdd ? (
-            <></>
-          ) : (
-            <button
-              onClick={() => setOpen(true)}
-              className={`${styles.adds}`}
-              style={{ display: display }}
-            >
-              <picture>
-                <img src={`/add.png`} alt="+"></img>
-              </picture>
-              Thêm mới
-            </button>
+            onClick={() => setOpen(true)}
+            className={`${styles.adds}`}
+            style={{ display: display }}
+          >
+            <picture>
+              <img src={`/add.png`} alt="+"></img>
+            </picture>
+            Thêm mới
+          </button>
           )}
         </div>
         {typeModal === "canhan" && open && (
@@ -156,13 +143,7 @@ function PunishmentTable({ display, data, violators, model, keyWords, updateData
                 <th>Người ký QĐ</th>
                 <th>Hình thức xử lý sai phạm </th>
                 <th>{violators}</th>
-                {tokenType === 1 ? (
-                  <th className={`${styles.lastth}`}></th>
-                ) : !iconEdit ? (
-                  <></>
-                ) : (
-                  <th className={`${styles.lastth}`}></th>
-                )}
+                {iconEdit && <th className={`${styles.lastth}`}></th>}
               </tr>
             </thead>
             <tbody className={`${styles.filter}`}>
@@ -195,61 +176,32 @@ function PunishmentTable({ display, data, violators, model, keyWords, updateData
                           ))
                         )}
                       </td>
-                      {tokenType === 1 ? (
-                        <td
-                          className={`${styles.r_t_top_right}`}
-                          style={{
-                            position: "relative",
-                            width: "110px",
-                            opacity: "1",
-                          }}
-                          onMouseEnter={() => setVisible(true)}
-                          onMouseLeave={() => setVisible(false)}
-                        >
-                          <img
-                            src={`/3cham.png`}
-                            alt="Tùy chỉnh"
-                            style={{ paddingTop: "6px" }}
-                          />
+                      {iconEdit &&  <td
+                        className={`${styles.r_t_top_right}`}
+                        style={{
+                          position: "relative",
+                          width: "110px",
+                          opacity: "1",
+                        }}
+                        onMouseEnter={() => setVisible(true)}
+                        onMouseLeave={() => setVisible(false)}
+                      >
+                        <img
+                          src={`/3cham.png`}
+                          alt="Tùy chỉnh"
+                          style={{ paddingTop: "6px" }}
+                        />
 
-                          {visible && (
-                            <div
-                              className={styles.settings}
-                              onClick={() => handleEdit(item)}
-                            >
-                              <li>Chỉnh sửa</li>
-                            </div>
-                          )}
-                        </td>
-                      ) : !iconEdit ? (
-                        <></>
-                      ) : (
-                        <td
-                          className={`${styles.r_t_top_right}`}
-                          style={{
-                            position: "relative",
-                            width: "110px",
-                            opacity: "1",
-                          }}
-                          onMouseEnter={() => setVisible(true)}
-                          onMouseLeave={() => setVisible(false)}
-                        >
-                          <img
-                            src={`/3cham.png`}
-                            alt="Tùy chỉnh"
-                            style={{ paddingTop: "6px" }}
-                          />
-
-                          {visible && (
-                            <div
-                              className={styles.settings}
-                              onClick={() => handleEdit(item)}
-                            >
-                              <li>Chỉnh sửa</li>
-                            </div>
-                          )}
-                        </td>
-                      )}
+                        {visible && (
+                          <div
+                            className={styles.settings}
+                            onClick={() => handleEdit(item)}
+                          >
+                            <li>Chỉnh sửa</li>
+                          </div>
+                        )}
+                      </td>}
+      
                     </tr>
                   );
                 })

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/deleteRecruitmentProcess/DeleteRecruitmentProcess.module.css"
 import { ProcessDelete } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 
-export default function DeleteStage({ onCancel, process_id }: any) {
+export default function DeleteStage({ onCancel, process_id, animation }: any) {
 
     console.log({ process_id });
 
@@ -24,7 +24,8 @@ export default function DeleteStage({ onCancel, process_id }: any) {
     return (
         <>
             <div className={`${styles.overlay}`}></div>
-            <div className={`${styles.modal} ${styles.modal_setting}  `}>
+            <div className={`${styles.modal} ${styles.modal_setting} ${animation ? styles.fade_in : styles.fade_out
+                }`}>
                 <div className={`${styles.contentquytrinh}`}>
                     <div className={`${styles.modal_content} ${styles.contentdel}`}>
                         <div className={`${styles.modal_header} ${styles.headquytrinh}`}>

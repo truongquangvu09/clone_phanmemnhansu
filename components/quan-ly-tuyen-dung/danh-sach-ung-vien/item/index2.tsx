@@ -10,13 +10,13 @@ export default function ItemCandidate2({ data, process_id, setModalOpen, setDrop
     setDragItem, currentCol, setProcess_id, iconDelete }: any) {
     const [isOpenOption, setOpenOption] = useState(false)
     const [isDelete, setDelete] = useState(0)
+    const [animateModal, setAnimateModal] = useState(true);
+
     const [{ isDragging }, drag] = useDrag({
         type: ItemTypes.INTERVIEW,
         item: { data, process_id, currentCol },
         end: (item, monitor) => {
             const dropResult = monitor.getDropResult()
-            console.log(dropResult);
-
             if (dropResult && item) {
                 setDragItem(item?.data)
                 setDropCol(dropResult)
@@ -29,11 +29,15 @@ export default function ItemCandidate2({ data, process_id, setModalOpen, setDrop
         }),
     });
 
-    console.log(process_id);
-
+    useEffect(() => {
+        if (isDelete === 0) {
+            setAnimateModal(true)
+        }
+    }, [isDelete])
 
     const handleClosemodal = () => {
         setDelete(0)
+        setAnimateModal(false)
     }
 
     const router = useRouter()

@@ -461,25 +461,25 @@ const StyledTreeExample = ({iconEdit}) => {
                             )
                         })}
                     </Tree>
-                    {openModalEdit && <EditRoomModal defaultValue={defaultValue}
+                    {openModalEdit !== 0 && <EditRoomModal defaultValue={defaultValue}
                         idRoom={openModalEdit}
                         options={options}
                         soluongnhanvien={soluongnhanvien}
                         mota={mota} onCancel={handleCloseModal}></EditRoomModal>}
-                    {openModalDetails && <DetailsRoomModal depId={openModalDetails} onCancel={handleCloseModal} />}
+                    {openModalDetails !== 0 && <DetailsRoomModal depId={openModalDetails} onCancel={handleCloseModal} />}
 
-                    {openModalEditNest && <EditNestModal
+                    {openModalEditNest !== 0 && <EditNestModal
                         gr_id={openModalEditNest}
                         defaultValue={defaultValue}
                         options={options} mota={mota} onCancel={handleCloseModalNest} />}
-                    {openModalDetailsNest && <DetailsNestModal teamId={openModalDetailsNest} onCancel={handleCloseModalNest} />}
+                    {openModalDetailsNest !== 0 && <DetailsNestModal teamId={openModalDetailsNest} onCancel={handleCloseModalNest} />}
 
 
-                    {openModalEditGroup && <EditGroupModal
+                    {openModalEditGroup !== 0 && <EditGroupModal
                         gr_id={openModalEditGroup}
                         defaultValue={defaultValue}
                         options={options} mota={mota} onCancel={handleCloseModalGroup} />}
-                    {openModalDetailsGroup && <DetailsGroupModal groupId={openModalDetailsGroup} onCancel={handleCloseModalGroup} />}
+                    {openModalDetailsGroup !== 0 && <DetailsGroupModal groupId={openModalDetailsGroup} onCancel={handleCloseModalGroup} />}
 
 
                 </div>

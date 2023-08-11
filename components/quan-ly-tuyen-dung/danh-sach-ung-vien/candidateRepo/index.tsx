@@ -1,96 +1,110 @@
-import React, { useState } from "react";
-import styles from "./candidateRepo.module.css";
-import Select from "react-select";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
+import styles from './candidateRepo.module.css'
+import Select from 'react-select';
 import { useRouter } from "next/router";
+import { CandidateList } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
+import { GetListNews } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
+import { parseISO, format } from "date-fns";
+import MyPagination from "@/components/pagination/Pagination";
 import Head from "next/head";
 
-type SelectOptionType = { label: string; value: string };
+type SelectOptionType = { label: string, value: any }
 
 export default function CandidateRepo({ children }: any) {
-  const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(
-    null
-  );
-  const router = useRouter();
-  const handleClickDetail = (
-    item: number,
-    event: React.MouseEvent<HTMLAnchorElement>
-  ) => {
+
+  const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
+  const [isCandidateList, setCandidateList] = useState<any>(null)
+  const [currentPage, setCurrentPage] = useState<any>(1);
+  const [isGender, setGender] = useState<any>("");
+  const [isRecruitmentNewsId, setRecruitmentNewsId] = useState<any>("");
+  const [isNewList, setNewsList] = useState<any>(null);
+  const [isSeach, setSearch] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const formData = new FormData();
+        const fromDate = (
+          document.getElementById("from_date") as HTMLInputElement
+        )?.value;
+        const todate = (document.getElementById("to_date") as HTMLInputElement)
+          ?.value;
+        const name = (document.getElementById("name") as HTMLInputElement)
+          ?.value;
+        formData.append("name", name);
+        formData.append("fromDate", fromDate);
+        formData.append("toDate", todate);
+        formData.append("gender", isGender);
+        formData.append("recruitmentNewsId", isRecruitmentNewsId);
+        formData.append("page", currentPage);
+        const response = await CandidateList(formData)
+        setCandidateList(response.data)
+      } catch (error) {
+        throw error
+      }
+    }
+    fetchData()
+  }, [isSeach, currentPage, isGender, isRecruitmentNewsId])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await GetListNews(1, 2000, "", "", "");
+        if (response) {
+          setNewsList(response.data);
+        }
+      } catch (error) {
+        throw error;
+      }
+    };
+    fetchData();
+  }, []);
+
+  const router = useRouter()
+  const handleClickDetail = (item: number, event: React.MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     if (typeof item === "number" && !isNaN(item)) {
       router.push(
-        `/quan-ly-tuyen-dung/danh-sach-ung-vien/chi-tiet-ung-vien/${item}`
+        `/quan-ly-tuyen-dung/danh-sach-ung-vien/chi-tiet-ung-vien/u${item}`
       );
     }
   };
 
-  const listCandidates = [
-    {
-      id: 1,
-      name: "nguyen van a",
-      email: "nguyenvana@gmail.com",
-      sdt: 1231242,
-      nguonnhanCv: "nguyen van b",
-      vitriungtuyen: "nhan vien chinh thuc",
-      matinungtuyen: "TD189",
-      maquytrinhtuyendungapdung: "QTTD0",
-      thoigianguihoso: "15:28 17/06/2023",
-      tailencvtuungvien: "chua tai len cv",
-    },
-    {
-      id: 2,
-      name: "nguyen van a",
-      email: "nguyenvana@gmail.com",
-      sdt: 1231242,
-      nguonnhanCv: "nguyen van b",
-      vitriungtuyen: "nhan vien chinh thuc",
-      matinungtuyen: "TD189",
-      maquytrinhtuyendungapdung: "QTTD0",
-      thoigianguihoso: "15:28 17/06/2023",
-      tailencvtuungvien: "chua tai len cv",
-    },
-    {
-      id: 3,
-      name: "nguyen van a",
-      email: "nguyenvana@gmail.com",
-      sdt: 1231242,
-      nguonnhanCv: "nguyen van b",
-      vitriungtuyen: "nhan vien chinh thuc",
-      matinungtuyen: "TD189",
-      maquytrinhtuyendungapdung: "QTTD0",
-      thoigianguihoso: "15:28 17/06/2023",
-      tailencvtuungvien: "cv_271922.jpg (Tải xuống)   ",
-    },
-    {
-      id: 4,
-      name: "nguyen van a",
-      email: "nguyenvana@gmail.com",
-      sdt: 1231242,
-      nguonnhanCv: "nguyen van b",
-      vitriungtuyen: "nhan vien chinh thuc",
-      matinungtuyen: "TD189",
-      maquytrinhtuyendungapdung: "QTTD0",
-      thoigianguihoso: "15:28 17/06/2023",
-      tailencvtuungvien: "chua tai len cv",
-    },
-  ];
-  const handleSelectionChange = (
-    option: SelectOptionType | null,
-    optionsArray: SelectOptionType[]
+  const handleSelectChange = (
+    selectedOption: SelectOptionType | null,
+    setState: any
   ) => {
-    if (option) {
-      setSelectedOption(option);
+    setSelectedOption(selectedOption);
+    if (selectedOption) {
+      setState(selectedOption.value);
     }
   };
 
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handleSearch = useCallback(() => {
+    setSearch({ isGender });
+  }, [isGender]);
+
+
+  const chonvitrituyendungOptions = useMemo(
+    () =>
+      isNewList &&
+      isNewList?.data?.data?.map((news: any) => ({
+        value: news.id,
+        label: news.title,
+      })),
+    [isNewList]
+  );
+
   const options = {
-    vitrituyendung: [
-      { value: "IT", label: "IT" },
-      { value: "Hành chính- tổng hợp", label: "Hành chính- tổng hợp" },
-    ],
+    vitrituyendung: chonvitrituyendungOptions,
     chongioitinh: [
-      { value: "Nam", label: "Nam" },
-      { value: "Nữ", label: "Nữ" },
-      { value: "Giới tính khác", label: "Giới tính khác" },
+      { value: 1, label: "Nam" },
+      { value: 2, label: "Nữ" },
+      { value: 3, label: "Giới tính khác" },
     ],
   };
 
@@ -103,37 +117,28 @@ export default function CandidateRepo({ children }: any) {
         <div className={`${styles.body}`}>
           <div className={`${styles.row_search_new_t}`}>
             <div className={`${styles.div_no_pad}`}>
-              <input
-                type="date"
-                className={`${styles.form_control} ${styles.search_date_from}`}
-                placeholder="dd/mm/yyyy"
-              />
+              <input type="date" id="from_date" className={`${styles.form_control} ${styles.search_date_from}`} placeholder="dd/mm/yyyy" />
             </div>
             <div className={`${styles.div_no_pad}`}>
-              <input
-                type="date"
-                className={`${styles.form_control} ${styles.search_date_to}`}
-                placeholder="dd/mm/yyyy"
-              />
+              <input type="date" id="to_date" className={`${styles.form_control} ${styles.search_date_to}`} placeholder="dd/mm/yyyy" />
             </div>
             <div className={`${styles.div_no_pad} `}>
               <Select
                 defaultValue={selectedOption}
-                onChange={(option) =>
-                  handleSelectionChange(option, options.chongioitinh)
-                }
+                onChange={(option) => handleSelectChange(option, setGender)}
                 options={options.chongioitinh}
                 placeholder="Chọn giới tính"
                 styles={{
+
                   control: (baseStyles, state) => ({
                     ...baseStyles,
                     borderRadius: 4,
                     borderColor: "#4747477a",
                     height: "auto",
                     fontSize: state.isFocused ? 14 : 14,
-                    width: "100%",
+                    width: '100%',
                     fontWeight: state.isFocused ? 600 : 600,
-                    minHeight: 20,
+                    minHeight: 20
                   }),
                   valueContainer: (baseStyles) => ({
                     ...baseStyles,
@@ -149,21 +154,20 @@ export default function CandidateRepo({ children }: any) {
             <div className={`${styles.div_no_pad} `}>
               <Select
                 defaultValue={selectedOption}
-                onChange={(option) =>
-                  handleSelectionChange(option, options.vitrituyendung)
-                }
+                onChange={(option) => handleSelectChange(option, setRecruitmentNewsId)}
                 options={options.vitrituyendung}
                 placeholder="Vị trí tuyển dụng"
                 styles={{
+
                   control: (baseStyles, state) => ({
                     ...baseStyles,
                     borderRadius: 4,
                     borderColor: "#4747477a",
                     height: "auto",
                     fontSize: state.isFocused ? 14 : 14,
-                    width: "100%",
+                    width: '100%',
                     fontWeight: state.isFocused ? 600 : 600,
-                    minHeight: 20,
+                    minHeight: 20
                   }),
                   valueContainer: (baseStyles) => ({
                     ...baseStyles,
@@ -177,14 +181,10 @@ export default function CandidateRepo({ children }: any) {
               />
             </div>
             <div className={`${styles.div_no_pad}`}>
-              <input
-                className={` ${styles.form_control}`}
-                type="text"
-                placeholder="Nhập tên ứng viên"
-              />
+              <input className={` ${styles.form_control}`} type="text" id="name" placeholder="Nhập tên ứng viên" />
             </div>
             <div className={`${styles.div_no_pad} `}>
-              <a href="" className={`${styles.icon_t_search_top}`}>
+              <a className={`${styles.icon_t_search_top}`} onClick={handleSearch}>
                 <img src={`/t-icon-search-n.svg`} alt="" />
               </a>
             </div>
@@ -215,41 +215,27 @@ export default function CandidateRepo({ children }: any) {
                   </tr>
                 </thead>
                 <tbody className={`${styles.filter_body}`}>
-                  {listCandidates.map((item, index) => (
+                  {isCandidateList?.data?.map((item: any, index: any) => (
                     <tr key={index}>
                       <td>{item.id}</td>
-                      <td>
-                        {" "}
-                        <a
-                          target="_blank"
-                          href={`/quan-ly-tuyen-dung/danh-sach-ung-vien/chi-tiet-ung-vien/${item.id}`}
-                          onClick={(event) => handleClickDetail(item.id, event)}
-                          rel="noreferrer"
-                        >
-                          {item.name} ( xem chi tiết ){" "}
-                        </a>
-                      </td>
+                      <td>   <a target="_blank" href={`/quan-ly-tuyen-dung/danh-sach-ung-vien/chi-tiet-ung-vien/u${item.id}`}
+                        onClick={(event) => handleClickDetail(item.id, event)} rel="noreferrer">{item.name} ( xem chi tiết ) </a></td>
                       <td>
                         <p>Email:{item.email}</p>
-                        <p>SDT: {item.sdt}</p>
+                        <p>SDT: {item.phone}</p>
                       </td>
-                      <td>{item.nguonnhanCv}</td>
-                      <td>{item.vitriungtuyen}</td>
+                      <td>{item.cvFrom}</td>
+                      <td>{item.Title}</td>
                       <td>{item.matinungtuyen}</td>
                       <td>{item.maquytrinhtuyendungapdung}</td>
-                      <td>{item.thoigianguihoso}</td>
-                      <td>
-                        <a href="">{item.tailencvtuungvien}</a>
-                      </td>
-                      <td
-                        className={`${styles.r_t_top_right}`}
-                        style={{ position: "relative" }}
-                      >
+                      <td>{format(
+                        parseISO(item.timeSendCv),
+                        "yyyy-MM-dd"
+                      )}</td>
+                      <td><a href="">{item.cv}</a></td>
+                      <td className={`${styles.r_t_top_right}`} style={{ position: 'relative' }}>
                         <img src={`/3cham.png`} alt=" " />
-                        <div
-                          className={`${styles.settings}`}
-                          style={{ width: "350%" }}
-                        >
+                        <div className={`${styles.settings}`} style={{ width: '350%' }}>
                           <li>Xóa hồ sơ</li>
                         </div>
                       </td>
@@ -260,7 +246,15 @@ export default function CandidateRepo({ children }: any) {
             </div>
           </div>
         </div>
+        <div className={`${styles.pagination}`} >
+          <MyPagination
+            current={currentPage}
+            total={isCandidateList?.totalCount}
+            pageSize={10}
+            onChange={handlePageChange}
+          />
+        </div>
       </div>
     </>
-  );
+  )
 }

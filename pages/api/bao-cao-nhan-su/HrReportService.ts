@@ -73,3 +73,36 @@ export const GetDataHrReport = async (page, pageSize) => {
       
     }
   };
+
+  
+export const DetailReport = async (formData:FormData)=>{
+  const url = process.env.NEXT_PUBLIC_BASE_URL;
+  const isToken = getToken(COOKIE_KEY)
+  try {
+      const response = await axios.post(`${url}api/hr/report/reportDetail
+      `,formData,{
+          headers: {
+              authorization: `Bearer ${isToken}`,
+          },
+      })
+      return response.data
+  } catch (error) {
+   throw new Error('Failed to get detail of report')   
+  }
+}
+
+export const ReportCharts = async (formData:FormData)=>{
+  const url = process.env.NEXT_PUBLIC_BASE_URL;
+  const isToken = getToken(COOKIE_KEY)
+  try {
+      const response = await axios.post(`${url}api/hr/report/reportChart`,formData,{
+          headers: {
+              authorization: `Bearer ${isToken}`,
+          },
+      })
+      return response.data
+  } catch (error) {
+   throw new Error('Failed to get chart of report')   
+  }
+}
+

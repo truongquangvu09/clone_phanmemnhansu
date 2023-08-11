@@ -8,6 +8,7 @@ import Selects from "@/components/select";
 import { parseISO, format } from "date-fns";
 import { GetJobDetails } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 import { AddInterview } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
+import * as Yup from "yup";
 
 type SelectOptionType = { label: string; value: any };
 
@@ -31,8 +32,7 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
     const [isEmpList, setEmpList] = useState<any>(null);
     const [isNewList, setNewsList] = useState<any>(null);
     const [isCandidate, setCandidate] = useState<any>(null);
-
-    console.log({ candidate });
+    const [errors, setErrors] = useState<any>({});
 
     useEffect(() => {
         const fetchData = async () => {
@@ -83,7 +83,25 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
         fetchData();
     }, []);
 
-
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required("Tên không được để trống"),
+        email: Yup.string().required("email không được để trống"),
+        phone: Yup.string().required("Số điện thoại không được để trống"),
+        gender: Yup.string().required("Chọn giới tính"),
+        birthday: Yup.string().required("Chọn ngày sinh"),
+        education: Yup.string().required("Chọn trình độ học vấn"),
+        exp: Yup.string().required("Chọn kinh nghiệm làm việc"),
+        meried: Yup.string().required("Chọn tình trạng hôn nhân"),
+        address: Yup.string().required("Địa chỉ không được để trống"),
+        cvFrom: Yup.string().required("Nhập nguồn ứng viên"),
+        userHiring: Yup.string().required("Chọn nhân viên tuyển dụng"),
+        recruitment: Yup.string().required("Chọn vị trí tuyển dụng"),
+        timeSendCv: Yup.string().required("Thời gian gửi không được để trống"),
+        starVote: Yup.string().required("Đánh giá không được để trống"),
+        resiredSalary: Yup.string().required("Nhập mức lương mong muốn"),
+        empInterview: Yup.string().required("Chọn nhân viên tham gia"),
+        timeInterView: Yup.string().required("Thời gian hẹn không được để trống"),
+    });
 
     const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -113,8 +131,40 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
             const resiredSalary = (
                 document.getElementById("resiredSalary") as HTMLInputElement
             )?.value;
+            const timeInterView = (
+                document.getElementById("timeInterView") as HTMLInputElement
+            )?.value;
+            const note = (
+                document.getElementById("note") as HTMLInputElement
+            )?.value;
+
+
+            const formDatas = {
+                name: name || "",
+                email: email || "",
+                phone: phone || "",
+                gender: isGender || "",
+                birthday: birthday || "",
+                education: isEducation || "",
+                exp: isExp || "",
+                meried: isMarried || "",
+                address: address || "",
+                cvFrom: cvFrom || "",
+                userHiring: isUserHiring || "",
+                recruitment: isRecruitmentNewsId || "",
+                timeSendCv: timeSendCv || "",
+                starVote: rating || "",
+                resiredSalary: resiredSalary || "",
+                empInterview: isEmpInterview || "",
+                timeInterView: timeInterView || "",
+            };
+
+            await validationSchema.validate(formDatas, {
+                abortEarly: false,
+            });
 
             const formData = new FormData();
+            const process_id: any = 348
             formData.append("name", name);
             formData.append("email", email);
             formData.append("phone", phone);
@@ -131,11 +181,15 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
             formData.append("recruitmentNewsId", isRecruitmentNewsId);
             formData.append("cvFrom", cvFrom);
             formData.append("timeSendCv", timeSendCv);
-            formData.append("firstStarVote", rating);
+            formData.append("starVote", rating);
             formData.append("canId", candidate?.id);
             formData.append("salary", salary);
             formData.append("resiredSalary", resiredSalary);
-            formData.append("empInterview", resiredSalary);
+            formData.append("empInterview", isEmpInterview);
+            formData.append("interviewTime", timeInterView);
+            formData.append("processInterviewId", process_id);
+            formData.append("note", note);
+            formData.append("contentsend", note);
 
             const response = await AddInterview(formData);
             if (response) {
@@ -144,7 +198,15 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
                 }, 1500);
             }
         } catch (error) {
-            throw error;
+            if (error instanceof Yup.ValidationError) {
+                const yupErrors = {};
+                error.inner.forEach((yupError: any) => {
+                    yupErrors[yupError.path] = yupError.message;
+                });
+                setErrors(yupErrors);
+            } else {
+                console.error("Lỗi validate form:", error);
+            }
         }
     };
 
@@ -277,6 +339,7 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
                                                 placeholder="Nhập tên ứng viên"
                                                 className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.name && <div className={`${styles.t_require} `}>{errors.name}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -291,6 +354,7 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
                                                 placeholder="Nhập Email ứng viên"
                                                 className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.email && <div className={`${styles.t_require} `}>{errors.email}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -305,6 +369,7 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
                                                 placeholder="Nhập SĐt ứng viên"
                                                 className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.phone && <div className={`${styles.t_require} `}>{errors.phone}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -324,6 +389,7 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
                                                     option={options.chongioitinh}
                                                     placeholder={"Chọn giới tính"}
                                                 />
+                                                <span> {errors.gender && <div className={`${styles.t_require} `}>{errors.gender}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -342,6 +408,7 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
                                                 placeholder="dd/mm/yyyy"
                                                 className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.birthday && <div className={`${styles.t_require} `}>{errors.birthday}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -373,6 +440,7 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
                                                     option={options.trinhdohocvan}
                                                     placeholder={"-- Vui lòng chọn --"}
                                                 />
+                                                <span> {errors.education && <div className={`${styles.t_require} `}>{errors.education}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -406,6 +474,7 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
                                                     option={options.kinhnghiemlamviec}
                                                     placeholder={"-- Vui lòng chọn --"}
                                                 />
+                                                <span> {errors.exp && <div className={`${styles.t_require} `}>{errors.exp}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -427,6 +496,7 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
                                                     option={options.tinhtranghonnhan}
                                                     placeholder={"-- Vui lòng chọn --"}
                                                 />
+                                                <span> {errors.meried && <div className={`${styles.t_require} `}>{errors.meried}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -442,6 +512,7 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
                                                 placeholder="Nhập địa chỉ ứng viên"
                                                 className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.address && <div className={`${styles.t_require} `}>{errors.address}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -456,6 +527,7 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
                                                 placeholder="Nhập nguồn ứng viên"
                                                 className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.cvFrom && <div className={`${styles.t_require} `}>{errors.cvFrom}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -476,6 +548,7 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
                                                     option={options.tennhanvientuyendung}
                                                     placeholder={"Chọn nhân viên"}
                                                 />
+                                                <span> {errors.userHiring && <div className={`${styles.t_require} `}>{errors.userHiring}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -553,6 +626,7 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
                                                 className={`${styles.star_rating}`}
                                                 onClick={handleRating}
                                             />
+                                            <span> {errors.starVote && <div className={`${styles.t_require} `}>{errors.starVote}</div>}</span>
                                             <div className={`${styles.skills_container}`}>
                                                 {addAnotherSkill}
                                             </div>
@@ -570,6 +644,7 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
                                                 defaultValue={candidate?.address}
                                                 className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.resiredSalary && <div className={`${styles.t_require} `}>{errors.resiredSalary}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -592,14 +667,15 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
                                         <div className={`${styles.input_right}`}>
                                             <input
                                                 type="date"
-                                                id="birthday"
+                                                id="timeInterView"
                                                 defaultValue={format(
-                                                    parseISO(candidate?.birthday),
+                                                    parseISO(candidate?.timeSendCv),
                                                     "yyyy-MM-dd"
                                                 )}
                                                 placeholder="dd/mm/yyyy"
                                                 className={`${styles.input_process}`}
                                             />
+                                            <span> {errors.timeInterView && <div className={`${styles.t_require} `}>{errors.timeInterView}</div>}</span>
                                         </div>
                                     </div>
                                     <div className={`${styles.form_groups}`}>
@@ -616,10 +692,11 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
                                                     width_control={100}
                                                     width_menu={97}
                                                     height={33.6}
-                                                    setState={setUserHiring}
+                                                    setState={setEmpInterview}
                                                     option={options.tennhanvientuyendung}
                                                     placeholder={"Chọn nhân viên"}
                                                 />
+                                                <span> {errors.empInterview && <div className={`${styles.t_require} `}>{errors.empInterview}</div>}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -630,7 +707,7 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
                                         <div className={`${styles.input_right} `}>
                                             <textarea
                                                 style={{ height: 60 }}
-                                                id="address"
+                                                id="note"
                                                 defaultValue={candidate?.address}
                                                 className={`${styles.input_process}`}
                                             />
