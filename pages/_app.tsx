@@ -16,7 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
   //   const checkLoginAndRedirect = async () => {
   //     const currentCookie = await CheckLogIn();
   //     if (currentCookie) {
-        
+  //       setLoading(true);
   //     } else {
   //       setLoading(false);
   //       router.push(

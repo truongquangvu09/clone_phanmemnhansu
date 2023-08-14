@@ -15,7 +15,7 @@ export default function HeaderForm({ children }: any) {
   const [isLoading, setIsLoading] = useState(true);
   const [active, setActive] = useState(1);
   const [tokenType, setTokenType] = useState<any>(null);
-  const COOKIE_KEY = "user_365";
+  const COOKIE_KEY = "token_base365";
 
   useEffect(() => {
 

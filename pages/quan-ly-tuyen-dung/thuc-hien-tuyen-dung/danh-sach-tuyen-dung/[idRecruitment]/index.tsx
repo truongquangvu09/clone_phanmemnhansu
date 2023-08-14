@@ -3,13 +3,20 @@ import React, { useEffect, useState } from "react";
 import styles from "./idRecruitment.module.css";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 import { DetailNews } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
-import { getToken2 } from "@/pages/api/token";
+
 import Head from "next/head";
+export async function getServerSideProps({query}) {
+  return {
+      props: {
+          query,
+      },
+  };
+}
 
-export interface IdRecruitment {}
-
-export default function IdRecruitment({dataDetail}) {
+export default function IdRecruitment({query}) {
+  const [dataDetail, setDataDetail] = useState<any>()
   const router = useRouter();
+  const  idRecruitment  = query.idRecruitment;
   const getFormattedDate = (timeString) => {
     const date = new Date(timeString);
     const year = date.getFullYear();
@@ -18,12 +25,25 @@ export default function IdRecruitment({dataDetail}) {
     return `${day}/${month}/${year}`;
   };
 
-  const dataRecruitment = dataDetail?.data.recruitmentNews;
-  const listCandidate = dataDetail?.data.listCandidate;
-  const listInterview = dataDetail?.data.listInterview;
-  const listInterviewFail = dataDetail?.data.listInterviewFail;
-  const listInterviewPass = dataDetail?.data.listInterviewPass;
-  const listOfferJob = dataDetail?.data.listOfferJob;
+  useEffect(() => {
+    try{
+     const fetchDataDetail = async() => {
+      const response = await DetailNews(idRecruitment)
+      setDataDetail(response?.data?.data)
+     }
+      fetchDataDetail()
+    }catch(error){
+
+    }
+   
+  },[idRecruitment])
+  console.log(dataDetail)
+  const dataRecruitment = dataDetail?.recruitmentNews;
+  const listCandidate = dataDetail?.listCandidate;
+  const listInterview = dataDetail?.listInterview;
+  const listInterviewFail = dataDetail?.listInterviewFail;
+  const listInterviewPass = dataDetail?.listInterviewPass;
+  const listOfferJob = dataDetail?.listOfferJob;
 
 
   const [active, setActive] = useState(2);
@@ -262,20 +282,3 @@ export default function IdRecruitment({dataDetail}) {
     </>
   );
 }
-
-export const getServerSideProps = async ({ params, req  }) => {
-  const { idRecruitment } = params;
-  const isToken = getToken2(req.headers.cookie || '');
-  try {
-    
-    const response = await DetailNews(idRecruitment, isToken);
-    const dataDetail = response?.data; 
-    return {
-      props: {
-        dataDetail, 
-      },
-    };
-  } catch (error) {
-    return { props: {} };
-  }
-};

@@ -13,7 +13,7 @@ export default function DeletedDataComPonent({iconEdit, iconDelete}) {
   const [data, setData] = useState<any>()
   const [ handleData, setHandleData] = useState<any>()
   const [listCheck, setListCheck] = useState([]);
-  const [newData, setNewData] = useState<any>()
+  const [newData, setNewData] = useState<any>();
   const [search, setSearch] = useState<any>('')
 
   const handleDataCheckChange = (newListCheck) => {
@@ -53,7 +53,7 @@ export default function DeletedDataComPonent({iconEdit, iconDelete}) {
     } catch (error: any) {
       
     }
-  }, [newData, search])
+  }, [search])
 
   return (
     <>

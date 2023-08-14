@@ -18,7 +18,6 @@ function Input_textarea({ onDescriptionChange }: InputTextareaProps) {
     useEffect(() => {
         setEditorLoaded(true);
     }, []);
-    console.log(data);
     return (
         <div>
             <MyEditorNew

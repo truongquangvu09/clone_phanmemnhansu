@@ -3,13 +3,13 @@ import React, { useEffect, useState } from "react";
 import styles from "../styles/styles.module.css";
 import { format, parseISO } from "date-fns";
 
-export default function DataTTD({ list_recuitment_new, dataCheckBox,localListCheck }) {
+export default function DataTTD({ list_recuitment_new, dataCheckBox,localListCheck,  }) {
   const [listCheck, setListCheck] = useState<any>([]);
   const data = list_recuitment_new?.data;
 
   const handleAdd = (id) => {
     const newListCheck = listCheck.includes(id)
-      ? listCheck.filter((item) => item !== id)
+      ? listCheck?.filter((item) => item !== id)
       : [...listCheck, id];
 
     setListCheck(newListCheck);
@@ -24,6 +24,8 @@ export default function DataTTD({ list_recuitment_new, dataCheckBox,localListChe
   useEffect(() => {
     setListCheck(localListCheck.list_recuitment || []);
   }, [localListCheck]);
+
+  console.log(listCheck)
   return (
     <table className={` ${styles.l_tr_show}`}>
       <tbody style={{ width: "100%" }}>

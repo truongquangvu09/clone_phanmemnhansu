@@ -7,7 +7,7 @@ import DeleteTrainingProcess from "../deleteTrainingProcess/DeleteTrainingProces
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 import MyPagination from "@/components/pagination/Pagination";
 import { getDataListProcessTrain } from "@/pages/api/dao-tao-phat-trien/TrainingProcess";
-import Link from "next/link";
+
 
 export default function ListTrainingProcess({ iconAdd,iconEdit, iconDelete }: any) {
   const [openModal, setOpenModal] = useState(0);
@@ -17,7 +17,7 @@ export default function ListTrainingProcess({ iconAdd,iconEdit, iconDelete }: an
   const [data, setData] = useState<any>();
   const [newData, setNewData] = useState<any>()
   const [id, setId] = useState<any>();
-
+  const router = useRouter();
   const handlePageChange = (page: any) => {
     setCurrentPage(page);
   };  
@@ -52,7 +52,11 @@ export default function ListTrainingProcess({ iconAdd,iconEdit, iconDelete }: an
     }
     getListProcessTrain()
   },[newData, currentPage, name])
-
+  
+  const handleLinkClick = (e,id) => {
+    e.preventDefault()
+    router.push(`/dao-tao-phat-trien/quy-trinh-dao-tao/${id}`);
+  };
   return (
     <>
       <div className={`${styles.tab_content}`}>
@@ -111,25 +115,20 @@ export default function ListTrainingProcess({ iconAdd,iconEdit, iconDelete }: an
                 </form>
               </div>
             </div>
-
             <div className={`${styles.all_quytrinh}`}>
               {data?.data.map((item) => (
                <div key={item.id}>
                   <div className={`${styles.quytrinh_item}`}>
                     <div className={`${styles.quytrinh_item1}`}>
-                    <Link
-                      passHref
-                      href={{
-                        pathname:
-                          `/dao-tao-phat-trien/quy-trinh-dao-tao/${item.id}`,
-                          query: {iconAdd: iconAdd?.toString(),iconEdit: iconEdit?.toString(), iconDelete: iconDelete?.toString() }
-                      }}
-                      as = {`/dao-tao-phat-trien/quy-trinh-dao-tao/${item.id}`}
+                    <a
+                       href= {`/dao-tao-phat-trien/quy-trinh-dao-tao/${item.id}`}
+                       className={`${styles.quytrinh_item11_link}`}
+                       onClick={(e) => handleLinkClick(e,item.id)}
                     >
                       <div className={`${styles.quytrinh_item11_link}`}>
                       (QTĐT{item.id}) {item.name}
                       </div>
-                    </Link>
+                    </a>
 
                       <div className={`${styles.quytrinh_item12}`}>
                         <li>{item.description}</li>

@@ -204,7 +204,6 @@ export default function EditPerformRecruitment({ animation, handleCloseModal,dat
     try{
       await schema.validate(formData, { abortEarly: false });
       const response = await EditNewsRecruitment(recruitmentNewsId, content, selectedOption)
-      console.log(response)
       if(response?.status === 403) {
         alert('Bạn chưa được phân quyền trên phần mềm quản trị nhân sự 365. Vui lòng liên hệ quản trị viên để biết thêm chi tiết!')
       }

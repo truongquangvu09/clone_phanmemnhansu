@@ -38,7 +38,6 @@ export default function DetailCandidate({ onCancel }: any) {
   const [isCandidateProcess, setCandidateProcess] = useState<any>(null)
   const [isProcessName, setProcessName] = useState<any>(null);
   const [displayIcon, setDisplayIcon] = useState<any>();
-  console.log(isCandidateProcess);
 
   useEffect(() => {
     try {
@@ -75,12 +74,7 @@ export default function DetailCandidate({ onCancel }: any) {
               setCandidate(item)
             }
             else {
-              console.log(data?.data);
-
               const item = data?.data?.find((item: any) => item.id = Number(id?.slice(1, id?.length)))
-              console.log(Number(id?.slice(1, id?.length)));
-              console.log(item);
-
               setCandidate(item)
             }
           }
@@ -127,7 +121,7 @@ export default function DetailCandidate({ onCancel }: any) {
           formData.append('canId', matches[0])
           const response = await ContactJobDetails(formData);
           if (response) {
-            setCandidateProcess(response.data);
+            setCandidateProcess(response?.data);
           }
         }
       } catch (error) {
@@ -146,7 +140,7 @@ export default function DetailCandidate({ onCancel }: any) {
           formData.append('canId', candidate_id)
           const response = await GetJobDetails(formData);
           if (response) {
-            setCandidateProcess(response.data);
+            setCandidateProcess(response?.data);
           }
         }
         if (id?.charAt(0) === 'f') {
@@ -155,7 +149,7 @@ export default function DetailCandidate({ onCancel }: any) {
           formData.append('canId', candidate_id)
           const response = await FailJobDetails(formData);
           if (response) {
-            setCandidateProcess(response.data);
+            setCandidateProcess(response?.data);
           }
         }
         if (id?.charAt(0) === 'c') {
@@ -164,7 +158,7 @@ export default function DetailCandidate({ onCancel }: any) {
           formData.append('canId', candidate_id)
           const response = await CancelJobDetails(formData);
           if (response) {
-            setCandidateProcess(response.data);
+            setCandidateProcess(response?.data);
           }
         }
         if (id?.charAt(0) === 's') {
@@ -173,13 +167,12 @@ export default function DetailCandidate({ onCancel }: any) {
           formData.append('canId', candidate_id)
           const response = await ContactJobDetails(formData);
           if (response) {
-            setCandidateProcess(response.data);
+            setCandidateProcess(response?.data);
           }
         }
 
       } catch (error) {
-        throw error;
-      }
+    }
     };
     fetchData();
   }, [id]);

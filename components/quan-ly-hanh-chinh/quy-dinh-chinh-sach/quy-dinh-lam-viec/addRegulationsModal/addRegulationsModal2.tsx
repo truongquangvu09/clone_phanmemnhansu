@@ -18,7 +18,6 @@ function Input_textarea({ onDescriptionChange }: InputTextareaProps) {
     useEffect(() => {
         setEditorLoaded(true);
     }, []);
-    console.log(data);
     return (
         <div>
             <MyEditorNew
@@ -46,9 +45,8 @@ export default function AddRegulationsModal2({ onCancel }: AddRegulationsModal2P
         const fetchData = async () => {
             try {
                 const response = await SpecifiedGroupList(50, 1, keyWords)
-                setListRegulationsGroup(response.data)
+                setListRegulationsGroup(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()

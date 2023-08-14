@@ -32,6 +32,7 @@ export default function TableData({ data, dataCheck, listCheck }) {
         {...prev,...dataObject}
       ));
       dataCheck(dataObject);
+
     } else if (name === "list_recuitment_new" && checked) {
       const allIds = list_recuitment_new.data.map((item) => item.id.toString());
       const idsAsString = allIds.join(', ');
@@ -43,6 +44,7 @@ export default function TableData({ data, dataCheck, listCheck }) {
         {...prev,...dataObject}
       ));
       dataCheck(dataObject);
+      
     } else if (name === "list_job_desc" && checked) {
       const allIds = list_job_desc.data.map((item) => item.id.toString());
       const idsAsString = allIds.join(', ');
@@ -174,6 +176,7 @@ export default function TableData({ data, dataCheck, listCheck }) {
         >
           <div className={`${styles.content}`}>
             <CustomCollapse
+            
               label={
                 <div
                   style={{ display: "flex", justifyContent: "space-between" }}

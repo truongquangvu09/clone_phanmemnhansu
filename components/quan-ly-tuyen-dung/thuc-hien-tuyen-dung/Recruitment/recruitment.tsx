@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./recruitment.module.css";
 import AddPerformRecruitment from "../AddPerformRecruitment/AddPerformRecruitment";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
-import ListRecruitmentPage from "@/pages/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/ListRecruitment";
+import ListRecruitment from "@/pages/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/ListRecruitment";
 import { GetListNews } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
 import MyPagination from "@/components/pagination/Pagination";
 import { getDataAuthentication } from "@/pages/api/Home/HomeService";
@@ -182,7 +182,7 @@ const EditDataRecruitment = (data) => {
         >
           {dataMapping?.data.length === 0 ? <p className={`${styles.data_empty}`}>Không có dữ liệu</p>  : dataMapping?.data.map((item: any) => (
             <div key={item.id}>
-              <ListRecruitmentPage data={item} onDelete = {handleDelete} editData = {EditDataRecruitment} iconEdit = {iconEdit} iconDelete = {iconDelete} tokenType = {tokenType}></ListRecruitmentPage>
+              <ListRecruitment data={item} onDelete = {handleDelete} editData = {EditDataRecruitment} iconEdit = {iconEdit} iconDelete = {iconDelete} tokenType = {tokenType}></ListRecruitment>
             </div>
           ))}
           {dataListNews?.data.totalCount > 4 && (

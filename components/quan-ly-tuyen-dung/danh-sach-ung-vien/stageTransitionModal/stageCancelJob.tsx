@@ -51,7 +51,7 @@ export default function StageCancelJob({ onCancel, process_id, data, process_id_
                 formData.append("com_id", comid);
                 const response = await EmployeeList(formData);
                 if (response) {
-                    setEmpList(response.data);
+                    setEmpList(response?.data);
                 }
             } catch (error) {
                 throw error;
@@ -65,7 +65,7 @@ export default function StageCancelJob({ onCancel, process_id, data, process_id_
             try {
                 const response = await GetListNews(1, 2000, "", "", "");
                 if (response) {
-                    setNewsList(response.data);
+                    setNewsList(response?.data);
                 }
             } catch (error) {
                 throw error;

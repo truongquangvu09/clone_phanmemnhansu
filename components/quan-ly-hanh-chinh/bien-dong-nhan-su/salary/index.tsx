@@ -30,10 +30,9 @@ export default function TabSalary({ children }: any) {
                 formData.append('to_date', toDate)
                 const response = await DetailReport(formData)
                 if (response) {
-                    setSalaryList(response.data)
+                    setSalaryList(response?.data)
                 }
             } catch (error) {
-                throw error
             }
         }
         fetchData()
@@ -46,9 +45,8 @@ export default function TabSalary({ children }: any) {
                 const formData = new FormData();
                 const comid: any = 1664
                 const response = await EmployeeList(formData)
-                setEmpData(response.data)
+                setEmpData(response?.data)
             } catch (error) {
-                console.log({ error });
             }
         }
         fetchData()

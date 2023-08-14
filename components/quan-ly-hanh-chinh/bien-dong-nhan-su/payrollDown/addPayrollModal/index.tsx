@@ -109,9 +109,8 @@ export default function AddPayrollModal({ onCancel }: any) {
                 const formData = new FormData();
                 formData.append('companyID', comid)
                 const response = await ShiftList(formData)
-                setShiftList(response.data)
+                setShiftList(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()

@@ -5,25 +5,29 @@ import { useRouter } from "next/router";
 import AddRecruitmentStage from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/chi-tiet-quy-trinh/addRecruitmentStage/them-giai-doan";
 import ListRecruitmentStage from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/chi-tiet-quy-trinh/listRecruitmentStage/listRecruitmentStage";
 import { DataRecruitmentStage } from "@/pages/api/quan-ly-tuyen-dung/RecruitmentManagerService";
-import { getToken } from "@/pages/api/token";
+import { getToken, getTokenFromCookie } from "@/pages/api/token";
 import { getDataAuthentication } from "@/pages/api/Home/HomeService";
 import jwt_decode from "jwt-decode";
+export async function getServerSideProps({query}) {
+  return {
+      props: {
+          query,
+      },
+  };
+}
 
-export interface listRecruitmentProcess {}
-
-export default function listRecruitmentProcess({dataDetail}) {
-  
+export default function listRecruitmentProcess( {query}) {
   const router = useRouter();
-  const { idRecruitmentStage } = router.query;
+  const  idRecruitmentStage  = query.idRecruitmentStage;
   const [openModalAdd, setOpenModalAdd] = useState(false);
   const [animateModal, setAnimateModal] = useState(false);
-  const [recruitmentStage, setRecruitmentStage] = useState<any>(dataDetail)
-  const [newData, setNewData] = useState<any>();
+  const [recruitmentStage, setRecruitmentStage] = useState<any>()
+
   const recruitment = recruitmentStage?.data.recruitment
   const [displayIcon, setDisplayIcon] = useState<any>();
   const [tokenType, setTokenType] = useState<any>(null);
-  
-  const COOKIE_KEY = "user_365";
+  const [isToken, setIsToken] = useState<any>()
+  const COOKIE_KEY = "token_base365";
 
   useEffect(() => {
     const currentCookie = getToken(COOKIE_KEY);
@@ -42,23 +46,30 @@ export default function listRecruitmentProcess({dataDetail}) {
     } catch (error) {}
   }, []);
 
+  useEffect(() => {
+    try{
+     const fetchDataDetail = async() => {
+      const response = await DataRecruitmentStage(idRecruitmentStage)
+      setRecruitmentStage(response?.data?.data)
+     }
+      fetchDataDetail()
+    }catch(error){
+
+    }
+   
+  },[idRecruitmentStage])
+
   const perIdArray = displayIcon?.map((item) => item.perId);
   const iconAdd = perIdArray?.includes(2);
   const iconEdit = perIdArray?.includes(3);
   const iconDelete = perIdArray?.includes(4);
 
-
-
   useEffect(() => {
-    const fetchDataRecruitmentStage = async (idRecruitmentStage: any) => {
-      try {
-        const response = await DataRecruitmentStage(idRecruitmentStage);
-        setRecruitmentStage(response?.data.data);
-      } catch (error) {
-      }
-    };
-    fetchDataRecruitmentStage(idRecruitmentStage);
-  }, [newData]);
+    const token = getToken(COOKIE_KEY)
+    setIsToken(token)
+  })
+
+
 
   const handleBack = () => {
     router.back();
@@ -115,7 +126,6 @@ export default function listRecruitmentProcess({dataDetail}) {
             recruitmentId={idRecruitmentStage}
             animation={animateModal}
             onCloseModal={handleCloseModalAdd}
-            setData= {setNewData}
           ></AddRecruitmentStage>
         )}
 
@@ -129,10 +139,8 @@ export default function listRecruitmentProcess({dataDetail}) {
             <div key={index}>
               <ListRecruitmentStage
                 item={item}
-                recruitment={dataDetail?.data.recruitment}
+                recruitment={recruitmentStage?.data.recruitment}
                 index={index}
-                onDelete = {setNewData}
-                onEdit = {setNewData}
                 iconEdit = {iconEdit}
                 iconDelete = {iconDelete}
                 tokenType = {tokenType}
@@ -145,20 +153,5 @@ export default function listRecruitmentProcess({dataDetail}) {
     </>
   );
 }
-
-export const getServerSideProps = async ({ params }) => {
-  const { idRecruitmentStage } = params;
-  try {
-    const response = await DataRecruitmentStage(idRecruitmentStage)
-    const dataDetail = response?.data.data; 
-    return {
-      props: {
-        dataDetail, 
-      },
-    };
-  } catch (error) {
-    return { props: {} };
-  }
-};
 
 

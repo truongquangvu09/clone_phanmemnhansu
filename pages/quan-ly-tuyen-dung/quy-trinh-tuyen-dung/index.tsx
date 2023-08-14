@@ -23,7 +23,7 @@ export default function RecruitmentProcess() {
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const [displayIcon, setDisplayIcon] = useState<any>();
   const [tokenType, setTokenType] = useState<any>(null);
-  const COOKIE_KEY = "user_365";
+  const COOKIE_KEY = "token_base365";
 
   useEffect(() => {
     const currentCookie = getToken(COOKIE_KEY);

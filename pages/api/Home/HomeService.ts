@@ -1,12 +1,13 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import axios from "axios";
 import { hasCookie, setCookie } from "cookies-next";
+import jwt from 'jsonwebtoken'
 import { getToken } from "../token";
-import jwt from "jsonwebtoken";
-const COOKIE_KEY = "user_365";
+const COOKIE_KEY = "token_base365";
 
 export const getHomeData = async () => {
   const isToken = getToken(COOKIE_KEY);
+  console.log(isToken)
   const url = process.env.NEXT_PUBLIC_BASE_URL;
   try {
     const response = await axios.post(
@@ -38,7 +39,7 @@ export const SignIn = async () => {
       const res = await axios.post(`${currentUrl}api/qlc/employee/login`, body);
       if (res?.status === 200) {
         const userInfo = res?.data?.data?.data;
-        setCookie(COOKIE_KEY, userInfo);
+        setCookie(COOKIE_KEY, userInfo?.access_token);
       }
 
     } catch (error) {}

@@ -18,7 +18,6 @@ export default function ItemCandidate3({ process_id, setProcess_id, type, data, 
         item: { data, process_id, currentCol },
         end: (item, monitor) => {
             const dropResult = monitor.getDropResult()
-            console.log(dropResult);
 
             if (dropResult && item) {
                 setDragItem(item?.data)

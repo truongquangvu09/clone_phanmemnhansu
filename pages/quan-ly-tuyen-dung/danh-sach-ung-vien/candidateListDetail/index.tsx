@@ -70,9 +70,8 @@ export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete }: a
         const formData = new FormData();
         const comid: any = 1664;
         const response = await EmployeeList(formData);
-        setEmpData(response.data);
+        setEmpData(response?.data);
       } catch (error) {
-        console.log({ error });
       }
     };
     fetchData();
@@ -84,7 +83,7 @@ export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete }: a
       try {
         const response = await GetListNews(1, 2000, "", "", "");
         if (response) {
-          setNewsList(response.data);
+          setNewsList(response?.data);
         }
       } catch (error) {
         throw error;

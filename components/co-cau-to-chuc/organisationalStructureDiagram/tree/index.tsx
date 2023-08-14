@@ -281,7 +281,7 @@ const StyledTreeExample = ({iconEdit}) => {
         const fetchData = async () => {
             try {
                 const response = await OrganizationalStructureData()
-                setData(response.data)
+                setData(response?.data)
             } catch (error) {
 
             }

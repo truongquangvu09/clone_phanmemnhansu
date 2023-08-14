@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getToken } from "../token";
-const COOKIE_KEY = "user_365";
+const COOKIE_KEY = "token_base365";
 export const GetDataInfringes = async (
   page: any,
   pageSize: any,
@@ -23,7 +23,6 @@ export const GetDataInfringes = async (
 };
 
 export const AddInfringes = async (mergedObject) => {
-  console.log(mergedObject, 1);
   const {
     created_by,
     infringe_at,
@@ -62,7 +61,6 @@ export const AddInfringes = async (mergedObject) => {
     );
     return response;
   } catch (err) {
-    console.log("Error: ", err);
   }
 };
 

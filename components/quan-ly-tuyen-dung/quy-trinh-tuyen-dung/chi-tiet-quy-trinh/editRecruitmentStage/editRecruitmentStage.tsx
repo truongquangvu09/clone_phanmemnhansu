@@ -11,7 +11,7 @@ export default function EditRecruitmentStage({
   data,
   animation,
   onCloseModal,
-  newDataEdit,
+
 }: any) {
   const stageRecruitmentId = data.id;
   const nameStage = data.name;
@@ -32,7 +32,6 @@ export default function EditRecruitmentStage({
   });
 
   const handleSubmit = async (e: any, stageRecruitmentId: number, formData) => {
-    e.preventDefault();
     try {
       await schema.validate(formData, { abortEarly: false });
       const response = await EditDataRecruitmentStage(
@@ -46,7 +45,6 @@ export default function EditRecruitmentStage({
         alert("Chỉnh sửa giai đoạn không thành công");
       } else {
         onCloseModal();
-        newDataEdit(response.data);
       }
     } catch (error: any) {
       const validationErrors = {};

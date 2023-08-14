@@ -7,7 +7,7 @@ const UseComId = () => {
     const [comId, setComId] = useState<any>("");
 
     useEffect(() => {
-        const COOKIE_KEY = "user_365";
+        const COOKIE_KEY = "token_base365";
         const currentCookie = getToken(COOKIE_KEY);
         const decodedToken: any = jwt_decode(currentCookie);
         setComId(decodedToken?.data?.com_id);

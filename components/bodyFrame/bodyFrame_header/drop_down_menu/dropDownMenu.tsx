@@ -36,7 +36,7 @@ export default function DropDownMenu({dataHeader}) {
         {
             img: '	/dangxuat.svg',
             text: 'Đăng xuất',
-            href: 'https://phanmemnhansu.timviec365.vn/',
+            href: 'https://phanmemnhansu.timviec365.vn',
             icon: '	/iconmenu.svg'
         },
 
@@ -44,7 +44,7 @@ export default function DropDownMenu({dataHeader}) {
 
     const handleClearCookies = () => {
         if( logoutClicked ) {
-            deleteCookie('user_365');
+            deleteCookie('token_base365');
         }
     }
     return (

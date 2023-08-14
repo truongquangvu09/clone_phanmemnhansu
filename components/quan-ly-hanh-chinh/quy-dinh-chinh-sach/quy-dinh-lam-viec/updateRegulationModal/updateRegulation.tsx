@@ -23,7 +23,6 @@ function Input_textarea({ onDescriptionChange, content }: InputTextareaProps) {
     useEffect(() => {
         setEditorLoaded(true);
     }, []);
-    console.log(data);
     return (
         <div>
             <MyEditorNew
@@ -51,24 +50,19 @@ export default function UpdateRegulationsModal({ onCancel, idGroup }: UpdateRegu
         const fetchData = async () => {
             try {
                 const response = await SpecifiedGroupList(10000, 1, keyWords)
-                setListRegulationsGroup(response.data)
+                setListRegulationsGroup(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()
     }, [])
 
-
-
-
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await RegulationsDetails(idGroup)
-                setDetailData(response.data)
+                setDetailData(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()

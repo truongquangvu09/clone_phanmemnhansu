@@ -6,20 +6,39 @@ import AddDetailTrainingProcess from "@/components/dao-tao-phat-trien/quy-trinh-
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 import { DataDetailProcess, GetDataDetailProcess } from "@/pages/api/dao-tao-phat-trien/TrainingProcess";
 import Head from "next/head";
-import { getToken2 } from "@/pages/api/token";
 
-export default function DetailTrainingProcess({ dataDetail }: any) {
 
+export async function getServerSideProps({query}) {
+  return {
+      props: {
+          query,
+      },
+  };
+}
+
+export default function DetailTrainingProcess({ query }: any) {
+  const router = useRouter();
+  const  idTrainingProcess  = query.idTrainingProcess;
   const [active, setActive] = useState(1);
   const [openModal, setOpenModal] = useState(0);
   const [animateModal, setAnimateModal] = useState(false);
   const [newData, setNewData] = useState<any>();
-  const router = useRouter();
+  const [dataDetail, setDataDetail] = useState<any>()
 
+  useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const response = await GetDataDetailProcess(idTrainingProcess);
+        setDataDetail(response?.data?.data)
+
+      }
+      fetchData()
+    } catch (error) {
+      
+    }
+  }, [])
   const trainingProcessName = dataDetail?.processTrain.name;
-  const trainingProcessId = dataDetail?.processTrain.id;
   const [trainingProcess, setTrainingProcess] = useState<any>();
-
   const iconAddQueryParam = router.query.iconAdd;
   const iconEditQueryParam = router.query.iconEdit;
   const iconDeleteQueryParam = router.query.iconDelete;
@@ -58,8 +77,7 @@ export default function DetailTrainingProcess({ dataDetail }: any) {
   useEffect(() => {
     const fetchDataDetailProcess = async () => {
       try {
-        
-        const response = await DataDetailProcess(trainingProcessId);
+        const response = await DataDetailProcess(idTrainingProcess);
         setTrainingProcess(response?.data.data.listStage?.filter((stage) => stage.isDelete === 0));
       } catch (error) {
 
@@ -119,7 +137,7 @@ export default function DetailTrainingProcess({ dataDetail }: any) {
             <AddDetailTrainingProcess
               animation={animateModal}
               closeModal={handleCloseModal}
-              id={trainingProcessId}
+              id={idTrainingProcess}
               setData={setNewData}
             ></AddDetailTrainingProcess>
           )}
@@ -127,7 +145,7 @@ export default function DetailTrainingProcess({ dataDetail }: any) {
           <div className={`${styles.giaidoans}`}>
             <div className={`${styles.title_giaidoans}`}>
               <h4>
-                QTDT{`${trainingProcessId}`} {trainingProcessName}
+                QTDT {`${idTrainingProcess}`} {trainingProcessName}
               </h4>
             </div>
 
@@ -150,18 +168,18 @@ export default function DetailTrainingProcess({ dataDetail }: any) {
   );
 }
 
-export const getServerSideProps = async ({ params, req }) => {
-  const { idTrainingProcess } = params;
-  const isToken = getToken2(req.headers.cookie || '');
-  try {
-    const response = await GetDataDetailProcess(idTrainingProcess, isToken);
-    const dataDetail = response?.data.data;
-    return {
-      props: {
-        dataDetail,
-      },
-    };
-  } catch (error) {
-    return { props: {} };
-  }
-};
+// export const getServerSideProps = async ({ params, req }) => {
+//   const { idTrainingProcess } = params;
+//   const token = getTokenFromCookie(req.headers.cookie || ''); 
+//   try {
+//     const response = await GetDataDetailProcess(idTrainingProcess, token);
+//     const dataDetail = response?.data.data;
+//     return {
+//       props: {
+//         dataDetail,
+//       },
+//     };
+//   } catch (error) {
+//     return { props: {} };
+//   }
+// };

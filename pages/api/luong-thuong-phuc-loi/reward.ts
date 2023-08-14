@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getToken } from "../token";
-const COOKIE_KEY = "user_365";
+const COOKIE_KEY = "token_base365";
 export const GetDataAchievement = async (page: any, pageSize: any, type:any, keyWords: any) => {
   
   const url = process.env.NEXT_PUBLIC_BASE_URL;
@@ -61,7 +61,6 @@ export const AddAchievement = async (mergedObject) => {
     );
     return response;
   } catch (err) {
-    console.log("Error: ", err);
   }
 };
 
@@ -106,7 +105,6 @@ export const AddAchievementGroup = async (mergedObject) => {
       );
       return response;
     } catch (err) {
-      console.log("Error: ", err);
     }
   };
 
@@ -152,7 +150,6 @@ export const UpdateAchievement = async (id, mergedObject)  => {
       );
       return response;
     } catch (err) {
-      console.log("Error: ", err);
     }
 }
 export const GetDepartmentList = async(com_id:any) => {

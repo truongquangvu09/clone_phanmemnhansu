@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getToken } from "./token";
-const COOKIE_KEY = "user_365";
+const COOKIE_KEY = "token_base365";
 const url = process.env.NEXT_PUBLIC_BASE_URL;
 const url1 = process.env.NEXT_PUBLIC_BASE_URL2;
 
@@ -18,7 +18,7 @@ export const SalaryVolatilityList = async (formData:FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -34,7 +34,7 @@ export const PlanningAppointmentList = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -50,7 +50,7 @@ export const WorkingRotaionList = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -66,7 +66,7 @@ export const PayrollDownList = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -79,7 +79,7 @@ export const ShiftList = async (formData: FormData) => {
       },
       params: formData,
     });
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -95,7 +95,7 @@ export const OutJobList = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -113,7 +113,7 @@ export const AddPlanningAppointment = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -129,7 +129,7 @@ export const AddWorkingRotation = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -145,7 +145,7 @@ export const AddPayrollDown = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -161,7 +161,7 @@ export const AddOutJob = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -179,7 +179,7 @@ export const DeletePlanningAppointment = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -195,7 +195,7 @@ export const DeleteWorkingRotation = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -211,7 +211,7 @@ export const DeletePayrollDown = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -227,6 +227,6 @@ export const DeleteOutJob = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };

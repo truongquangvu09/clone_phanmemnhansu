@@ -4,8 +4,6 @@ import { ProcessDelete } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 
 export default function DeleteStage({ onCancel, process_id, animation }: any) {
 
-    console.log({ process_id });
-
     const handleSubmit = async () => {
         try {
             const formData = new FormData()

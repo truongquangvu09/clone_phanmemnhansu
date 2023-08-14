@@ -68,7 +68,6 @@ interface WeatherData {
     getWeatherData();
   }, [latitude, longitude]);
 
-  // console.log(weatherData)
   return (
     <div>
       {weatherData && latitude && longitude && (
@@ -84,7 +83,6 @@ interface WeatherData {
               />
             </div>
             <div className={`${styles.weather_flex}`}>
-              {/* <div className={`${styles.temperature}`}>{Math.round(weatherData.main.temp)}</div> */}
               <div className={`${styles.temperature}`}>{kelvinToCelsius(weatherData?.main.temp)}</div>
               <div className={`${styles.weather_sign}`}>
                 <img src={`	/doC.svg`} alt="thoitiet" />

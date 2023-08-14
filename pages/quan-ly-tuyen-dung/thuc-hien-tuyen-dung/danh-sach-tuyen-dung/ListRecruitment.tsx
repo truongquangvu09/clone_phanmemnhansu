@@ -5,6 +5,7 @@ import DeleteRecruitment from "@/components/quan-ly-tuyen-dung/thuc-hien-tuyen-d
 import Link from "next/link";
 import { setAsTemplate } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment";
 import Head from "next/head";
+import { useRouter } from "next/router";
 export interface ListRecruitment {}
 
 export default function ListRecruitment({ data, onDelete, editData, iconEdit, iconDelete,tokenType }: any) {
@@ -13,7 +14,7 @@ export default function ListRecruitment({ data, onDelete, editData, iconEdit, ic
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const [visible, setVisible] = useState(false);
   const [animateModal, setAnimateModal] = useState(false);
-
+  const router = useRouter();
   const handleCloseModal = () => {
     setAnimateModal(false);
     setTimeout(() => {
@@ -96,7 +97,10 @@ export default function ListRecruitment({ data, onDelete, editData, iconEdit, ic
       alert('Thiết lập tin mẫu không thành công')
     }
   }
-
+  const handleLinkClick = (e,id) => {
+    e.preventDefault()
+    router.push(`/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/${id}`);
+  };
   return (
     <>
       
@@ -116,19 +120,15 @@ export default function ListRecruitment({ data, onDelete, editData, iconEdit, ic
                     style={{ cursor: "default" }}
                     className={`${styles.new_r_t_left_link}`}
                   >
-                    <Link
-                      passHref
-                      href={{
-                        pathname:
-                          `/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/${data?.id}`,
-                       
-                      }}
-                      as={`/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/${data?.id}`}
+                    <a
+                      href= {`/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/${data?.id}`}
+                      className={`${styles.quytrinh_item11_link}`}
+                      onClick={(e) => handleLinkClick(e,data.id)}
                     >
                       <span>
                         (TD{data?.id}) {data?.title}
                       </span>
-                    </Link>
+                    </a>
                   </p>
                 </button>
               </h3>
@@ -164,18 +164,16 @@ export default function ListRecruitment({ data, onDelete, editData, iconEdit, ic
                       <li
                         style={{ paddingRight: "102px" }}
                         className={`${styles.detail_new}`}
+                        onClick={(e) => handleLinkClick(e,data.id)}
                       >
                         
-                        <Link 
-                          passHref
-                          href={{
-                            pathname:
-                            `/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/${data?.id}`,
-                          }}
-                         as={ `/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/${data?.id}`}
+                        <a 
+                           href= {`/quan-ly-tuyen-dung/thuc-hien-tuyen-dung/danh-sach-tuyen-dung/${data?.id}`}
+                           className={`${styles.quytrinh_item11_link}`}
+                          
                         >
                           Chi tiết
-                        </Link>
+                        </a>
                       </li>
                     </button>
 

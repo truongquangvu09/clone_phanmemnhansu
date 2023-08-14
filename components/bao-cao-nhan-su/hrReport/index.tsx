@@ -6,7 +6,7 @@ import EmployeeInformation from './bodySection1';
 import InformationSection2 from './bodySection2';
 import InfomationSection3 from './bodySection3';
 import { addDays, format } from 'date-fns';
-import { GetDataHrReport, ReportCharts } from '@/pages/api/bao-cao-nhan-su/HrReportService'
+import { GetDataHrReports, ReportCharts } from '@/pages/api/bao-cao-nhan-su/HrReportService'
 import { DepartmentList } from "@/pages/api/listPhongBan";
 import GetComId from '@/components/getComID';
 
@@ -37,9 +37,9 @@ export default function TabHRReport({ dateRangeDatas }: any) {
                 formData.append('depId', isDep_id)
                 formData.append('from_date', startDate)
                 formData.append('to_date', endDate)
-                const response = await GetDataHrReport(formData)
+                const response = await GetDataHrReports(formData)
                 if (response) {
-                    setHrReportList(response.data)
+                    setHrReportList(response?.data)
                 }
             } catch (error) {
 
@@ -76,7 +76,7 @@ export default function TabHRReport({ dateRangeDatas }: any) {
                 }
                 const response = await ReportCharts(formData)
                 if (response) {
-                    setReportChart(response.data)
+                    setReportChart(response?.data)
                 }
             } catch (error) {
 
@@ -96,7 +96,6 @@ export default function TabHRReport({ dateRangeDatas }: any) {
                 const response = await DepartmentList(formData)
                 setDepartmentList(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()
@@ -133,8 +132,6 @@ export default function TabHRReport({ dateRangeDatas }: any) {
 
         // Xóa hết dữ liệu trong mảng
         datesInRange.length = 0;
-
-        console.log(start, end);
 
 
         if (isSelect === "date") {

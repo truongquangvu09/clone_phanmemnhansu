@@ -36,10 +36,9 @@ export default function EditCandidateCancelJob({ onCancel, candidate }: any) {
                 formData.append("com_id", comid);
                 const response = await EmployeeList(formData);
                 if (response) {
-                    setEmpList(response.data);
+                    setEmpList(response?.data);
                 }
             } catch (error) {
-                throw error;
             }
         };
         fetchData();
@@ -52,10 +51,9 @@ export default function EditCandidateCancelJob({ onCancel, candidate }: any) {
                 formData.append('canId', candidate?.id)
                 const response = await CancelJobDetails(formData);
                 if (response) {
-                    setCandidate(response.data);
+                    setCandidate(response?.data);
                 }
             } catch (error) {
-                throw error;
             }
         };
         fetchData();
@@ -66,10 +64,9 @@ export default function EditCandidateCancelJob({ onCancel, candidate }: any) {
             try {
                 const response = await GetListNews(1, 2000, "", "", "");
                 if (response) {
-                    setNewsList(response.data);
+                    setNewsList(response?.data);
                 }
             } catch (error) {
-                throw error;
             }
         };
         fetchData();

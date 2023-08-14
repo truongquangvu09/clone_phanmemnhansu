@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { AddDataRecruitmentStage } from "@/pages/api/quan-ly-tuyen-dung/RecruitmentManagerService";
 export interface AddRecruitmentStage {}
 
-export default function AddRecruitmentStage({recruitmentId, animation, onCloseModal, setData }: any) {
+export default function AddRecruitmentStage({recruitmentId, animation, onCloseModal }: any) {
 
   const [formData, setFormData] = useState({
     nameStage: '',
@@ -31,7 +31,6 @@ export default function AddRecruitmentStage({recruitmentId, animation, onCloseMo
 
   const handleSubmit = async (e: any, recruitId: number, formData: any) => {
     try {
-      e.preventDefault();
       await schema.validate(formData, { abortEarly: false });
       const response = await AddDataRecruitmentStage(recruitId, formData)
       if(response?.status === 403) {
@@ -42,7 +41,6 @@ export default function AddRecruitmentStage({recruitmentId, animation, onCloseMo
       }
       else {
         onCloseModal()
-        setData(response?.data)
       }
     }
     catch (error: any) {

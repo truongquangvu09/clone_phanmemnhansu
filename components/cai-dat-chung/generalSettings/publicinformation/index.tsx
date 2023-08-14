@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styles from "./PublicInformation.module.css";
 
 export default function PublicInformation({dataDisplay}) {
-  console.log(dataDisplay)
 
   return (
     <>

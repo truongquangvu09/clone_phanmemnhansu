@@ -12,15 +12,13 @@ export default function StageUpdateModal({ onCancel, infoList, animation }: any)
     const [isProcessList, setProcessList] = useState<any>(null)
     const [isProcess_id, setProcess_id] = useState<any>(infoList?.processBefore)
 
-    console.log(infoList);
-
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const formData = new FormData();
                 if (formData) {
                     const response = await ProcessList(formData)
-                    setProcessList(response.data)
+                    setProcessList(response?.data)
                 }
             } catch (error) {
                 throw error

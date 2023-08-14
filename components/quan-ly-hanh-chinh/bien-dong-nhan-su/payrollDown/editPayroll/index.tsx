@@ -45,7 +45,6 @@ function Input_textarea({ onDescriptionChange, reason }: InputTextareaProps) {
 }
 export default function EditPayroll({ onCancel, infoList }: any) {
 
-    console.log(infoList);
 
     const [selectedOption, setSelectedOption] = useState<SelectOptionType | null>(null);
     const [isDepList, setDepList] = useState<any>(null)
@@ -63,9 +62,6 @@ export default function EditPayroll({ onCancel, infoList }: any) {
     const [isSpecified_id, setSpecified_id] = useState<any>("")
     const [isPosition_id, setPosition_id] = useState<any>("")
     const [isDep_name, setDep_name] = useState<any>("")
-
-    console.log(infoList.time);
-
 
     useEffect(() => {
         fetchData();
@@ -109,9 +105,8 @@ export default function EditPayroll({ onCancel, infoList }: any) {
                 const formData = new FormData();
                 formData.append('companyID', comid)
                 const response = await ShiftList(formData)
-                setShiftList(response.data)
+                setShiftList(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()

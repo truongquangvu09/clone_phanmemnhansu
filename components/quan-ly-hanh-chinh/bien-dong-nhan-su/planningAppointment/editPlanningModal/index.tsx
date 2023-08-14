@@ -56,8 +56,6 @@ export default function EditPlanningModal({ onCancel, infoList }: any) {
     const [isSpecified_idnew, setSpecified_idnew] = useState<any>(infoList?.decision_id)
     const [isSpecified_name, setSpecified_name] = useState<any>(null)
 
-    console.log(isSpecified_name);
-
     useEffect(() => {
         fetchData();
     }, []);

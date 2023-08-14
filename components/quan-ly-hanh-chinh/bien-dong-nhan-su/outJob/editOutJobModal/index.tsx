@@ -10,7 +10,6 @@ function Input_textarea() {
     useEffect(() => {
         setEditorLoaded(true);
     }, []);
-    console.log(data);
     return (
         <div>
             <MyEditorNew

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { getToken } from "./token";
-const COOKIE_KEY = "user_365";
+const COOKIE_KEY = "token_base365";
 const url = process.env.NEXT_PUBLIC_BASE_URL;
 
 /* -------------------------------------- LIST ----------------------------------------------*/
@@ -18,7 +18,7 @@ export const OrganizationalStructureData = async () => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -34,7 +34,7 @@ export const PostionCharData = async () => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -50,7 +50,7 @@ export const SealAndSignatureData = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -66,7 +66,7 @@ export const SignatureList = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -82,7 +82,7 @@ export const LeaderBiographyList = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -100,7 +100,7 @@ export const OrganizationalStructureDetail = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -116,7 +116,7 @@ export const PostionCharDetail = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -132,7 +132,7 @@ export const LeaderBiographyDetail = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -150,7 +150,7 @@ export const OrganizationalStructureUpdate = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -166,7 +166,7 @@ export const PostionCharUpdate = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -182,7 +182,7 @@ export const LeaderBiograpphyUpdate = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -200,7 +200,7 @@ export const SealAndSignatureDelete = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -216,7 +216,7 @@ export const DeleteSignature = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 /* -------------------------------------- UPLOAD ----------------------------------------------*/
@@ -233,7 +233,7 @@ export const UploadSignature = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -251,6 +251,6 @@ export const AddUserSignature = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };

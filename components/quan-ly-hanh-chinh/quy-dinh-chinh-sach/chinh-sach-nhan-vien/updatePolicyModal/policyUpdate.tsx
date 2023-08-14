@@ -23,7 +23,6 @@ function Input_textarea({ onDescriptionChange, content }: InputTextareaProps) {
     useEffect(() => {
         setEditorLoaded(true);
     }, []);
-    console.log(data);
     return (
         <div>
             <MyEditorNew
@@ -51,9 +50,8 @@ export default function UpdatePolicyModal({ onCancel, idGroup }: UpdatePolicyMod
         const fetchData = async () => {
             try {
                 const response = await SpecifiedGroupList(10000, 1, keyWords)
-                setListRegulationsGroup(response.data)
+                setListRegulationsGroup(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()
@@ -66,9 +64,8 @@ export default function UpdatePolicyModal({ onCancel, idGroup }: UpdatePolicyMod
         const fetchData = async () => {
             try {
                 const response = await PolicyDetails(idGroup)
-                setDetailData(response.data)
+                setDetailData(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()

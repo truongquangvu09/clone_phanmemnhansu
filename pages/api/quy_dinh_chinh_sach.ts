@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { getToken } from "./token";
-const COOKIE_KEY = "user_365";
+const COOKIE_KEY = "token_base365";
 const url = process.env.NEXT_PUBLIC_BASE_URL
 
 /* -------------------------------------- LIST ----------------------------------------------*/
@@ -13,7 +13,7 @@ export const SpecifiedGroupList = async (pageSize:number,page:number,keyWords:an
                 authorization: `Bearer ${isToken}`,
             },
         })
-        return response.data
+        return response?.data
     } catch (error) {
     }
 }
@@ -26,7 +26,7 @@ export const RulesByGroupList = async(id:number) =>{
                 authorization: `Bearer ${isToken}`,
             },
         })
-        return response.data
+        return response?.data
     } catch (error) {
     }
 
@@ -40,7 +40,7 @@ export const PolicyList = async (page:number,pageSize:number,keyWords:any)=>{
                 authorization: `Bearer ${isToken}`,
             },
         })
-        return response.data
+        return response?.data
     } catch (error) {
     }
 }
@@ -53,7 +53,7 @@ export const PolicyByGroupList = async (id:number)=>{
                 authorization: `Bearer ${isToken}`,
             },
         })
-        return response.data
+        return response?.data
     } catch (error) {
     }
 }
@@ -68,7 +68,7 @@ export const AddSpecifiedGroup = async (formData:FormData)=>{
                 authorization: `Bearer ${isToken}`,
             },
         })
-        return response.data
+        return response?.data
     } catch (error) {
     }
 
@@ -82,7 +82,7 @@ export const AddRulesByGroupList = async (formData:FormData)=>{
                 authorization: `Bearer ${isToken}`,
             }
         })
-        return response.data
+        return response?.data
     } catch (error) {
     }
 
@@ -96,7 +96,7 @@ export const AddPolicy = async (formData: FormData)=>{
                 authorization: `Bearer ${isToken}`,
             }
         })
-        return response.data
+        return response?.data
     } catch (error) {
     }
 } 
@@ -109,7 +109,7 @@ export const AddPolicyByGroup = async (formData:FormData)=>{
                 authorization: `Bearer ${isToken}`
             }
         })
-        return response.data
+        return response?.data
     } catch (error) {
     }
 }
@@ -126,7 +126,7 @@ export const GroupDetails = async (id:number) =>{
                 authorization: `Bearer ${isToken}`
             }
         })
-        return response.data
+        return response?.data
     } catch (error) {
     }
 }
@@ -139,7 +139,7 @@ export const RegulationsDetails = async (id:number) =>{
                 authorization: `Bearer ${isToken}`
             }
         })
-        return response.data
+        return response?.data
     } catch (error) {
     }
 }
@@ -152,7 +152,7 @@ export const RegulationsDetails = async (id:number) =>{
                     authorization: `Bearer ${isToken}`
                 }
             })
-            return response.data
+            return response?.data
         } catch (error) {
         }
     }
@@ -165,7 +165,7 @@ export const RegulationsDetails = async (id:number) =>{
                     authorization: `Bearer ${isToken}`
                 }
             })
-            return response.data
+            return response?.data
         } catch (error) {
         }
     }
@@ -181,7 +181,7 @@ export const GroupUpdate = async (fomrData: FormData) => {
                 authorization: `Bearer ${isToken}`
             }
         })
-        return response.data
+        return response?.data
     } catch (error) {
     }
 }
@@ -194,7 +194,7 @@ export const UpdateRegulation = async (fomrData: FormData) => {
                 authorization: `Bearer ${isToken}`
             }
         })
-        return response.data
+        return response?.data
     } catch (error) {
     }
 }
@@ -207,7 +207,7 @@ export const GroupPolicyUpdate = async (fomrData: FormData) => {
                 authorization: `Bearer ${isToken}`
             }
         })
-        return response.data
+        return response?.data
     } catch (error) {
         throw new Error('Failed to update group  ')
     }
@@ -221,7 +221,7 @@ export const UpdatePolicy = async (fomrData: FormData) => {
                 authorization: `Bearer ${isToken}`
             }
         })
-        return response.data
+        return response?.data
     } catch (error) {
     }
 }
@@ -237,7 +237,7 @@ export const GroupDelete = async (formData:FormData) =>{
             },
             data: formData,
         })
-        return response.data
+        return response?.data
     } catch (error) {
     }
 }
@@ -251,7 +251,7 @@ export const DeleteRegulations = async (formData:FormData) =>{
             },
             data: formData, 
         })
-        return response.data
+        return response?.data
     } catch (error) {
     }
 }
@@ -265,7 +265,7 @@ export const GroupPolicyDelete = async (formData:FormData) =>{
             },
             data: formData,
         })
-        return response.data
+        return response?.data
     } catch (error) {
     }
 }
@@ -279,7 +279,7 @@ export const DeletePolicy = async (formData:FormData) =>{
             },
             data: formData, 
         })
-        return response.data
+        return response?.data
     } catch (error) {
     }
 }

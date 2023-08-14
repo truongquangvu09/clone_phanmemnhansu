@@ -14,9 +14,8 @@ export default function DetailsNestModal({ teamId, onCancel }: any) {
                 formData.append('teamId', teamId)
 
                 const response = await OrganizationalStructureDetail(formData)
-                setIsTitle(response.data)
+                setIsTitle(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()

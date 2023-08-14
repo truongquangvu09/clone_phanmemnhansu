@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getToken } from "../token";
-const COOKIE_KEY = "user_365";
+const COOKIE_KEY = "token_base365";
 const url = process.env.NEXT_PUBLIC_BASE_URL;
 const url1 = process.env.NEXT_PUBLIC_BASE_URL2;
 
@@ -18,7 +18,7 @@ export const CandidateList = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -34,7 +34,7 @@ export const ProcessList = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -52,7 +52,7 @@ export const ProcessAdd = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -68,7 +68,7 @@ export const CandidateAdd = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -84,7 +84,7 @@ export const AddGetJob = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -100,7 +100,7 @@ export const AddFailJob = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -116,7 +116,7 @@ export const AddCancelJob = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -132,7 +132,7 @@ export const AddContactJob = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -148,7 +148,7 @@ export const AddInterview = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -166,7 +166,7 @@ export const CandidateDelete = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -182,7 +182,7 @@ export const ProcessDelete = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 /* -------------------------------------- UPDATE ----------------------------------------------*/
@@ -199,7 +199,7 @@ export const ProcessUpdate = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -215,7 +215,7 @@ export const CandidateUpdate = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -233,7 +233,7 @@ export const GetJobDetails = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -249,7 +249,7 @@ export const FailJobDetails = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -265,7 +265,7 @@ export const CancelJobDetails = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };
 
@@ -281,6 +281,6 @@ export const ContactJobDetails = async (formData: FormData) => {
         },
       }
     );
-    return response.data;
+    return response?.data;
   } catch (error) {}
 };

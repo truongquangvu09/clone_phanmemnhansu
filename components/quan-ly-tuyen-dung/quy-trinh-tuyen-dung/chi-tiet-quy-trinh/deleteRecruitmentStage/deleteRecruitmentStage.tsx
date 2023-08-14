@@ -4,7 +4,7 @@ import styles from "./deleteRecruitmentStage.module.css";
 import { DeleteDataRecruitmentStage } from "@/pages/api/quan-ly-tuyen-dung/RecruitmentManagerService";
 export interface DeleteRecruitmentStage {}
 
-export default function DeleteRecruitmentStage({ data, recruitment,animation, onCloseModal, newDataDelete}: any) {
+export default function DeleteRecruitmentStage({ data, recruitment,animation, onCloseModal}: any) {
   const id = data.id
 
   const handleDelete = async (id: number) => {
@@ -17,10 +17,8 @@ export default function DeleteRecruitmentStage({ data, recruitment,animation, on
           alert('Xóa giai đoạn thất bại')
         }else {
           onCloseModal()
-          newDataDelete(response?.data)
         }
       } catch (error) {
-        console.log(error)
       }
   }
   const handleCancel = () => {

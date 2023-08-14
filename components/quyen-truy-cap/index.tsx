@@ -61,7 +61,6 @@ export default function PageAuthenticator() {
           });
         }
       } catch (error) {
-        console.log(error);
       }
     };
     getWeatherData();

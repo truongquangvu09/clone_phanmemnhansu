@@ -28,8 +28,6 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
     const [isCandidate, setCandidate] = useState<any>(null);
     const [errors, setErrors] = useState<any>({});
 
-    console.log(candidate);
-
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -38,7 +36,7 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
                 formData.append("com_id", comid);
                 const response = await EmployeeList(formData);
                 if (response) {
-                    setEmpList(response.data);
+                    setEmpList(response?.data);
                 }
             } catch (error) {
                 throw error;
@@ -54,7 +52,7 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
                 formData.append('canId', candidate?.id)
                 const response = await GetJobDetails(formData);
                 if (response) {
-                    setCandidate(response.data);
+                    setCandidate(response?.data);
                 }
             } catch (error) {
                 throw error;
@@ -68,7 +66,7 @@ export default function EditCandidateGetJob({ onCancel, candidate }: any) {
             try {
                 const response = await GetListNews(1, 2000, "", "", "");
                 if (response) {
-                    setNewsList(response.data);
+                    setNewsList(response?.data);
                 }
             } catch (error) {
                 throw error;

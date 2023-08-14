@@ -16,17 +16,13 @@ export default function PolicyDetailModal({ onCancel, idGroup }: PolicyDetailMod
     const [dataGroup, setDataGroup] = useState<any | null>(null)
     const [openUpdate, setOpenUpdate] = useState(0)
     const [keyWords, setKeyWords] = useState('')
-    console.log({ DetailData });
-
-
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await PolicyDetails(idGroup)
-                setDetailData(response.data)
+                setDetailData(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()

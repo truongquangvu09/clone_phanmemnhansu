@@ -25,7 +25,7 @@ export default function AddSealModal({ onCancel }: any) {
                 const formData = new FormData()
                 formData.append('com_id', comid)
                 const response = await DepartmentList(formData)
-                setDepartmentList(response.data)
+                setDepartmentList(response?.data)
             } catch (error) {
                 throw error
             }
@@ -41,7 +41,7 @@ export default function AddSealModal({ onCancel }: any) {
                 const formData = new FormData()
                 formData.append('com_id', comid)
                 const response = await EmployeeList(formData)
-                setEmployeeList(response.data)
+                setEmployeeList(response?.data)
             } catch (error) {
                 throw error
             }
@@ -53,11 +53,9 @@ export default function AddSealModal({ onCancel }: any) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                console.log(1);
                 const response = await PostionCharData()
-                setPosttionCharData(response.data)
+                setPosttionCharData(response?.data)
             } catch (error) {
-                console.log({ error });
             }
         }
         fetchData()
@@ -130,9 +128,6 @@ export default function AddSealModal({ onCancel }: any) {
             ),
         [EmployeeLists?.data, isDep_id, isPosition_id]
     );
-
-    console.log({ filteredEmployees });
-
 
     const chonnhanvienOptions = useMemo(
         () =>

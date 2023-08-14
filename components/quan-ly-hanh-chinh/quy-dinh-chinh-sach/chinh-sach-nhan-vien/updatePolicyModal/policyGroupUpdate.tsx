@@ -49,9 +49,8 @@ export default function UpdatePolicyGroupsModal({ onCancel, idGroup }: UpdatePol
         const fetchData = async () => {
             try {
                 const response = await PolicyGroupDetail(idGroup)
-                setDetailData(response.data)
+                setDetailData(response?.data)
             } catch (error) {
-                throw error
             }
         }
         fetchData()

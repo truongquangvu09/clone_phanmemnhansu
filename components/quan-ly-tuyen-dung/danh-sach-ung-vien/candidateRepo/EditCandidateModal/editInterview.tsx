@@ -42,7 +42,7 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
                 formData.append("com_id", comid);
                 const response = await EmployeeList(formData);
                 if (response) {
-                    setEmpList(response.data);
+                    setEmpList(response?.data);
                 }
             } catch (error) {
                 throw error;
@@ -55,12 +55,10 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
         const fetchData = async () => {
             try {
                 const formData = new FormData();
-                console.log(candidate);
-
                 formData.append('canId', candidate?.id)
                 const response = await GetJobDetails(formData);
                 if (response) {
-                    setCandidate(response.data);
+                    setCandidate(response?.data);
                 }
             } catch (error) {
                 throw error;
@@ -74,7 +72,7 @@ export default function EditCandidateIntrview({ onCancel, candidate, processName
             try {
                 const response = await GetListNews(1, 2000, "", "", "");
                 if (response) {
-                    setNewsList(response.data);
+                    setNewsList(response?.data);
                 }
             } catch (error) {
                 throw error;

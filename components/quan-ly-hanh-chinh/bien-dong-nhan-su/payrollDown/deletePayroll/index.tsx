@@ -4,8 +4,6 @@ import { DeletePayrollDown } from "@/pages/api/bien_dong_nhan_su";
 
 export default function DeletePayrollDowns({ onCancel, ep_id }: any) {
 
-    console.log(ep_id);
-
 
     const handleSubmit = async () => {
         try {

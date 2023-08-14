@@ -38,9 +38,8 @@ export default function CandidateRepo({ children }: any) {
         formData.append("recruitmentNewsId", isRecruitmentNewsId);
         formData.append("page", currentPage);
         const response = await CandidateList(formData)
-        setCandidateList(response.data)
+        setCandidateList(response?.data)
       } catch (error) {
-        throw error
       }
     }
     fetchData()
@@ -51,10 +50,9 @@ export default function CandidateRepo({ children }: any) {
       try {
         const response = await GetListNews(1, 2000, "", "", "");
         if (response) {
-          setNewsList(response.data);
+          setNewsList(response?.data);
         }
       } catch (error) {
-        throw error;
       }
     };
     fetchData();

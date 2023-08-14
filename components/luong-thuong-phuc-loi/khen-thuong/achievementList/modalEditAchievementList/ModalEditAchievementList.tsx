@@ -51,7 +51,7 @@ function ModalEditAchievementList({ animation, onClose, dataOld }: any) {
   });
   
   const [tokenComId, setComId] = useState<any>(null);
-  const COOKIE_KEY = "user_365";
+  const COOKIE_KEY = "token_base365";
 
   useEffect(() => {
     const currentCookie = getToken(COOKIE_KEY);

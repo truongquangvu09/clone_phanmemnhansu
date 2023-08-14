@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getToken } from "../token";
-const COOKIE_KEY = "user_365";
+const COOKIE_KEY = "token_base365";
 export const GetDataListNewActive = async (page: number, pageSize: number) => {
   const url = process.env.NEXT_PUBLIC_BASE_URL;
     const isToken = getToken(COOKIE_KEY)
@@ -109,9 +109,9 @@ export const SoftDeleteNews = async (newsId: number) => {
   }
 };
 
-export const DetailNews = async (recruitmentNewsId: any, isToken) => {
+export const DetailNews = async (recruitmentNewsId) => {
   const url = process.env.NEXT_PUBLIC_BASE_URL;
-    // const isToken = getToken(COOKIE_KEY)
+    const isToken = getToken(COOKIE_KEY)
   try {
     const response = await axios.post(
       `${url}api/hr/recruitment/detailNews`,

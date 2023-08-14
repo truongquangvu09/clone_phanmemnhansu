@@ -71,7 +71,6 @@ const PostionCharTree = ({ iconEdit }) => {
     const [openModalEdit, setOpenModalEdit] = useState<any>(null)
     const [isMission, setIsMission] = useState<any>(null)
     const [openModalDetails, setOpenModalDetails] = useState('')
-    console.log({ openModalDetails });
 
 
     const handleUpdatePosition = ({ idPosition, mission }: any) => {
@@ -85,17 +84,14 @@ const PostionCharTree = ({ iconEdit }) => {
     };
 
     const [PostionCharDatas, setPosttionCharData] = useState<any>(null)
-    console.log({ PostionCharDatas });
 
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                console.log(1);
                 const response = await PostionCharData()
-                setPosttionCharData(response.data)
+                setPosttionCharData(response?.data)
             } catch (error) {
-                console.log({ error });
             }
         }
         fetchData()

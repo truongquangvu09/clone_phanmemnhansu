@@ -63,7 +63,6 @@ export default function AddJobPosition({
       setErrors(validationErrors);
     }
   };
-  console.log(errors);
 
   const handleCloseModalAdd = () => {
     closeModal();

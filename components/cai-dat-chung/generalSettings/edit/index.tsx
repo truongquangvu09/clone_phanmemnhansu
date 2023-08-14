@@ -3,7 +3,6 @@ import styles from "./edit.module.css";
 import { updateInfoCompany } from "@/pages/api/cai-dat/generalSettings";
 
 export default function Edit({ dataDisplay, onClickButton }) {
-  console.log(dataDisplay);
   const defaultValueInputName = dataDisplay?.userName;
   const defaultValueInputPhone = dataDisplay?.phone;
   const defaultValueInputDep = dataDisplay?.description;

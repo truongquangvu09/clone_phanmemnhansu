@@ -4,8 +4,6 @@ import { CandidateDelete } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 
 export default function DeleteCandidate({ onCancel, idCandidate, animation }: any) {
 
-    console.log({ idCandidate });
-
     const handleSubmit = async () => {
         try {
             const formData = new FormData()

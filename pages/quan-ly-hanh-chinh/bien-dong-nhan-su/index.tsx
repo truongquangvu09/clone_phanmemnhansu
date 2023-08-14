@@ -8,7 +8,7 @@ import TabPayrollDown from "@/components/quan-ly-hanh-chinh/bien-dong-nhan-su/pa
 import TabOutJob from "@/components/quan-ly-hanh-chinh/bien-dong-nhan-su/outJob";
 import TabChart from "@/components/quan-ly-hanh-chinh/bien-dong-nhan-su/chart";
 import Head from "next/head";
-import { getDataAuthentication } from "@/pages/api/Home/HomeService";
+// import { getDataAuthentication } from "@/pages/api/Home/HomeService";
 import LoadingSpinner from "@/components/loading";
 import PageAuthenticator from "@/components/quyen-truy-cap";
 
@@ -17,20 +17,31 @@ export default function PersonnalChange({ children }: any) {
   const [displayIcon, setDisplayIcon] = useState<any>();
   const [isLoading, setIsLoading] = useState(true);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
-  const [iconTGL, setIconTGL] = useState<any>(false)
+  const [iconTGL, setIconTGL] = useState<any>([])
 
-  useEffect(() => {
-    try {
-      const fetchData = async () => {
-        const response = await getDataAuthentication();
-        setDisplayIcon(response?.data?.data?.infoRoleTTNS);
-        setIconTGL(response?.data?.data?.infoRoleTGL)
-        setIsDataLoaded(true); 
-        setIsLoading(false); 
-      };
-      fetchData();
-    } catch (error) {}
-  }, []);
+  // useEffect(() => {
+  //   try {
+  //     const fetchData = async () => {
+  //       const response = await getDataAuthentication();
+  //       setDisplayIcon(response?.data?.data?.infoRoleTTNS);
+  //       setIsDataLoaded(true); 
+  //       setIsLoading(false); 
+  //     };
+  //     fetchData();
+  //   } catch (error) {}
+  // }, []);
+  //   useEffect(() => {
+  //   try {
+  //     const fetchData = async () => {
+  //       const response = await getDataAuthentication();
+  //       setIconTGL(response?.data?.data?.infoRoleTGL)
+  //       setIsDataLoaded(true); 
+  //       setIsLoading(false); 
+  //     };
+  //     fetchData();
+  //   } catch (error) {}
+  // }, []);
+
 
   const perIdArray = displayIcon?.map((item) => item.perId);
   const authen = perIdArray?.includes(1);

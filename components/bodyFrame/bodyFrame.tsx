@@ -5,18 +5,20 @@ import {
   EmployeeInfo,
   getDataCompany,
 } from "@/pages/api/cai-dat/generalSettings";
-import jwt_decode from "jwt-decode";
 import { getToken } from "@/pages/api/token";
+import jwt_decode from "jwt-decode";
+
 export interface BodyFrame {}
 
 export default function Bodyframe({ children }: any) {
   const [dataHeader, setDataHeader] = useState<any>();
   const [tokenType, setTokenType] = useState<any>(null);
-  const COOKIE_KEY = "user_365";
+  const COOKIE_KEY = "token_base365";
 
   useEffect(() => {
     const fetchDataType = async () => {
       const currentCookie = getToken(COOKIE_KEY);
+      console.log(currentCookie)
       if (currentCookie) {
         const decodedToken: any = jwt_decode(currentCookie);
         setTokenType(decodedToken?.data?.type);
@@ -57,7 +59,7 @@ useEffect(() => {
     };
     fetchInfo();
   }, [tokenType]);
-  
+
   return (
     <>
       <div className={`${styles.wrapper}`}>

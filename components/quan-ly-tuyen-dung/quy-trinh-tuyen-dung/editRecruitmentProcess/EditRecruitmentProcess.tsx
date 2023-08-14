@@ -37,7 +37,6 @@ export default function EditRecruitmentProcess({
       e.preventDefault();
       await schema.validate(formData, { abortEarly: false });
       const response = await UpdateDataRecruitment(recruitId, formData);
-      console.log(response)
       if(response?.status === 403) {
         alert('Bạn chưa được phân quyền trên phần mềm quản trị nhân sự 365. Vui lòng liên hệ quản trị viên để biết thêm chi tiết!')
       }
@@ -45,7 +44,7 @@ export default function EditRecruitmentProcess({
         alert("Cập nhật quy trình thất bại");
       } else {
         onClose();
-        setData(response.data);
+        setData(response?.data);
       }
     } catch (error: any) {
       const validationErrors = {};

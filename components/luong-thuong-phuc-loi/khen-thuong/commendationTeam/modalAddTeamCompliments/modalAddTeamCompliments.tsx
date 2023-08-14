@@ -28,7 +28,7 @@ function ModalAddTeamCompliments({ animation,onClose, updateData }: any) {
   });
   
   const [tokenComId, setComId] = useState<any>(null);
-  const COOKIE_KEY = "user_365";
+  const COOKIE_KEY = "token_base365";
 
   useEffect(() => {
     const currentCookie = getToken(COOKIE_KEY);
@@ -43,7 +43,6 @@ function ModalAddTeamCompliments({ animation,onClose, updateData }: any) {
         const response = await GetDepartmentList(tokenComId.toString())
         setDep(response?.data.data.data.map(item => ({name:"depId", value: item.dep_id, label : `${item.dep_name}`})))
       }catch(err) {
-        console.log(err)
       }
     }
     getData()

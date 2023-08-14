@@ -6,11 +6,11 @@ import GeneralSettings from "@/components/cai-dat-chung/generalSettings";
 import ActivityLog from "@/components/cai-dat-chung/activityLog";
 import { getDataCompany } from "../api/cai-dat/generalSettings";
 import Head from "next/head";
-import { getCookieValue, getToken } from "../api/token";
+import { getToken } from "../api/token";
 import jwt_decode from 'jwt-decode'; 
 import PersonalInformation from "@/components/cai-dat-chung/personalInformation";
 export default function Setting({ children }: any) {
-  const COOKIE_KEY = "user_365";
+  const COOKIE_KEY = "token_base365";
 
   const [active, setActive] = useState(1);
   const [dataCompany, setDataCompany] = useState<any>();

@@ -9,8 +9,6 @@ export default function ListRecruitmentStage({
   item,
   recruitment,
   index,
-  onDelete,
-  onEdit,
   iconEdit,
   iconDelete,
   tokenType
@@ -66,7 +64,7 @@ export default function ListRecruitmentStage({
           data={item}
           animation={animateModal}
           onCloseModal={handleCloseModal}
-          newDataEdit = {onEdit}
+
         />
       </>
     );
@@ -80,7 +78,6 @@ export default function ListRecruitmentStage({
           recruitment={recruitment}
           animation={animateModal}
           onCloseModal={handleCloseModal}
-          newDataDelete = {onDelete}
         />
       </>
     );

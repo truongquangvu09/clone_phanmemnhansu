@@ -8,6 +8,7 @@ import DeleteRecruitmentProcess from "@/components/quan-ly-tuyen-dung/quy-trinh-
 import MyPagination from "@/components/pagination/Pagination";
 import Link from "next/link";
 import Head from "next/head";
+import { useRouter } from "next/router";
 export interface listRecruitmentProcess {}
 
 export default function ListRecruitmentProcess({
@@ -24,6 +25,7 @@ export default function ListRecruitmentProcess({
   const [openModal, setOpenModal] = useState(0);
   const [animateModal, setAnimateModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const router = useRouter();
 
   const handlePageChange = (page: any) => {
     handlePage(page);
@@ -42,6 +44,10 @@ export default function ListRecruitmentProcess({
     }, 300);
   };
 
+  const handleLinkClick = (e,id) => {
+    e.preventDefault()
+    router.push(`/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/danh-sach-quy-trinh/${id}`);
+  };
   return (
     <>
       <Head>
@@ -55,22 +61,13 @@ export default function ListRecruitmentProcess({
               <div className={`${styles.quytrinh_item}`}>
                 <div className={`${styles.quytrinh_item1}`}>
                   <div className={`${styles.quytrinh_item11}`}>
-                    <Link
-                      passHref
-                      href={{
-                        pathname: `/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/danh-sach-quy-trinh/${item.id}`,
-                        query: {
-                          iconAdd: iconAdd?.toString(),
-                          iconEdit: iconEdit?.toString(),
-                          iconDelete: iconDelete?.toString(),
-                        },
-                      }}
-                      as={`/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/danh-sach-quy-trinh/${item.id}`}
+                    <a
+                      href= {`/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/danh-sach-quy-trinh/${item.id}`}
+                      className={`${styles.quytrinh_item11_link}`}
+                      onClick={(e) => handleLinkClick(e,item.id)}
                     >
-                      <div className={`${styles.quytrinh_item11_link}`}>
-                        (QTTD{item.id}) {item.name}
-                      </div>
-                    </Link>
+                      (QTTD{item.id}) {item.name}
+                    </a>
                   </div>
                   <div className={`${styles.quytrinh_item12}`}>
                     <span className={`${styles.qtrspan1}`}>
@@ -82,18 +79,10 @@ export default function ListRecruitmentProcess({
                 </div>
                 {/* chi tiết */}
                 <div className={`${styles.quytrinh_item2}`}>
-                  <Link
-                    passHref
-                    href={{
-                      pathname: `/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/danh-sach-quy-trinh/${item.id}`,
-                      query: {
-                        iconAdd: iconAdd?.toString(),
-                        iconEdit: iconEdit?.toString(),
-                        iconDelete: iconDelete?.toString(),
-                        tokenType: tokenType?.toString()
-                      }
-                    }}
-                    as={`/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/danh-sach-quy-trinh/${item.id}`}
+                  <a
+                    href= {`/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/danh-sach-quy-trinh/${item.id}`}
+                    className={`${styles.quytrinh_item11_link}`}
+                    onClick={(e) => handleLinkClick(e,item.id)}
                   >
                     <picture>
                       <img src={`${"/detail-quytrinh.svg"}`} alt=""></img>
@@ -104,7 +93,7 @@ export default function ListRecruitmentProcess({
                     >
                       Chi tiết
                     </span>
-                  </Link>
+                  </a>
                   {/* edit */}
                   {tokenType === 1 ? (
                     <button
@@ -116,9 +105,10 @@ export default function ListRecruitmentProcess({
                       </picture>
                       <span className={`${styles.span_a}`}>Sửa</span>
                     </button>
+                  ) : !iconEdit ? (
+                    <></>
                   ) : (
-                    (!iconEdit) ? <></>: (
-                      <button
+                    <button
                       className={`${styles.button_option}`}
                       onClick={() => handleOpenModal(1, item)}
                     >
@@ -127,7 +117,6 @@ export default function ListRecruitmentProcess({
                       </picture>
                       <span className={`${styles.span_a}`}>Sửa</span>
                     </button>
-                    )
                   )}
                   {/* xóa */}
                   {tokenType === 1 ? (
@@ -143,9 +132,10 @@ export default function ListRecruitmentProcess({
                       </picture>
                       <span className={`${styles.span_a}`}>Xóa</span>
                     </button>
+                  ) : !iconDelete ? (
+                    <></>
                   ) : (
-                    (!iconDelete) ? <></> : (
-                      <button
+                    <button
                       className={`${styles.button_option}`}
                       onClick={() => handleOpenModal(2, item)}
                     >
@@ -157,7 +147,6 @@ export default function ListRecruitmentProcess({
                       </picture>
                       <span className={`${styles.span_a}`}>Xóa</span>
                     </button>
-                    )
                   )}
                 </div>
               </div>

@@ -6,6 +6,7 @@ import { format, parseISO } from "date-fns";
 export default function DataQTTD({ list_recuitment, dataCheckBox, localListCheck }) {
 
   const [listCheck, setListCheck] = useState<any>([]);
+  
   const handleAdd = (id) => {
     const newListCheck = listCheck.includes(id)
       ? listCheck.filter((item) => item !== id)

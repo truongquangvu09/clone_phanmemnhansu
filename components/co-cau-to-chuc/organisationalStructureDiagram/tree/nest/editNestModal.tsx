@@ -14,8 +14,6 @@ type EditNestModalProps = {
 
 export default function EditNestModal({ gr_id, defaultValue, options, mota, onCancel }: EditNestModalProps) {
 
-    console.log({ gr_id });
-
     const handleSubmit = async () => {
 
         try {

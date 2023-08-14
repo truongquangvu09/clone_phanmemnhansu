@@ -7,7 +7,7 @@ import { getDataAuthentication } from "@/pages/api/Home/HomeService";
 import LoadingSpinner from "@/components/loading";
 import PageAuthenticator from "@/components/quyen-truy-cap";
 
-export interface CandidateList { }
+export interface CandidateList {}
 
 export default function CandidateList({ children }: any) {
   const [active, setActive] = useState(1);
@@ -15,7 +15,6 @@ export default function CandidateList({ children }: any) {
   const [isLoading, setIsLoading] = useState(true);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
  
-
   useEffect(() => {
     try {
       const fetchData = async () => {

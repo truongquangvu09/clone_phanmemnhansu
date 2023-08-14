@@ -321,11 +321,6 @@ export default function AddWorkingModal({ onCancel }: any) {
         [isSpecifiedList]
     );
 
-    console.log(chonnhanvientheophongOptions);
-    console.log(chonnhanvienOptions);
-
-
-
     const options = {
         chonchinhanh: chonchinhanhOptions,
         chonphongban: chonphongbanOptions,

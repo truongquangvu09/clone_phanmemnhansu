@@ -164,7 +164,6 @@ export default function TabEmployeeManagement({ iconAdd, iconEdit }: any) {
     const handleSignaturePageChange = (page: number) => {
         setCurrentPage(page);
     };
-console.log(iconAdd)
     return (
         <>
             <div className={`${styles.tab_content} `} >
