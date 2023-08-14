@@ -15,7 +15,7 @@ export default function Home() {
   useEffect(() => {
     const fetchHomeData = async () => {
       try {
-        const token = getCookie("user_365"); 
+        const token = getCookie("user_365");
         if (token) {
           const response = await getHomeData();
           setDataHome(response?.data.data);
@@ -23,28 +23,27 @@ export default function Home() {
           const interval = setInterval(() => {
             const updatedToken = getCookie("user_365");
             if (updatedToken) {
-              clearInterval(interval); 
-              fetchHomeData(); 
+              clearInterval(interval);
+              fetchHomeData();
             }
-          }, 1000); 
+          }, 1000);
         }
       } catch (error) {
         console.error("Error fetching home data:", error);
       }
     };
-  
+
     fetchHomeData();
   }, []);
 
-
   return (
     <>
-    <Head>
-      <title>Quản lý chung - Quản lý nhân sự - Timviec365.vn</title>
-    </Head>
+      <Head>
+        <title>Quản lý chung - Quản lý nhân sự - Timviec365.vn</title>
+      </Head>
       <div className={`${styles.wrapper}`}>
         <BodyFrameSection1></BodyFrameSection1>
-        <BodyFrameSection2 dataHome = {dataHome}></BodyFrameSection2>
+        <BodyFrameSection2 dataHome={dataHome}></BodyFrameSection2>
         <BodyFrameSection3></BodyFrameSection3>
         <BodyFrameFooter src="https://www.youtube.com/embed/2wS-x1li7QQ"></BodyFrameFooter>
       </div>

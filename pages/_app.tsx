@@ -12,28 +12,28 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [loading, setLoading] = useState<any>(false);
 
-  // useEffect(() => {
-  //   const checkLoginAndRedirect = async () => {
-  //     const currentCookie = await CheckLogIn();
-  //     if (currentCookie) {
-        
-  //     } else {
-  //       setLoading(false);
-  //       router.push(
-  //         "https://quanlychung.timviec365.vn/lua-chon-dang-nhap.html"
-  //       );
-  //     }
-  //   };
-  //   checkLoginAndRedirect();
-  // }, []);
-
   useEffect(() => {
-    SignIn()
-  }, [])
+    const checkLoginAndRedirect = async () => {
+      const currentCookie = await CheckLogIn();
+      if (currentCookie) {
+        setLoading(true)
+      } else {
+        setLoading(false);
+        router.push(
+          "https://hungha365.com/lua-chon-dang-nhap.html"
+        );
+      }
+    };
+    checkLoginAndRedirect();
+  }, []);
+
+  // useEffect(() => {
+  //   SignIn()
+  // }, [])
   return (
     <>
       {loading ? (
-       <LoadingSpinner/>
+        <LoadingSpinner />
       ) : (
         <Layout>
           <DndProvider backend={HTML5Backend}>

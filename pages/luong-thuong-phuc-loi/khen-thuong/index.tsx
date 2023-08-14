@@ -3,12 +3,12 @@ import styles from "./styles.module.css";
 import PersonalReward from "@/components/luong-thuong-phuc-loi/khen-thuong/personalReward/PersonalReward";
 import CommendationTeam from "@/components/luong-thuong-phuc-loi/khen-thuong/commendationTeam/CommendationTeam";
 import AchievementList from "@/components/luong-thuong-phuc-loi/khen-thuong/achievementList/AchievementList";
-import { GetDataAchievement } from "@/pages/api/luong-thuong-phuc-loi/reward";
 import Head from "next/head";
 import { getDataAuthentication } from "@/pages/api/Home/HomeService";
 import LoadingSpinner from "@/components/loading";
 import PageAuthenticator from "@/components/quyen-truy-cap";
 
+ 
 export default function NavBar({ children }: any) {
   const [active, setActive] = useState(1);
   const [displayIcon, setDisplayIcon] = useState<any>();
@@ -19,13 +19,16 @@ export default function NavBar({ children }: any) {
     try {
       const fetchData = async () => {
         const response = await getDataAuthentication();
-        setDisplayIcon(response?.data?.data?.infoRoleTTVP);
-        setIsDataLoaded(true); // Move this line here
-        setIsLoading(false); // Move this line here
+        setDisplayIcon(response?.data.data.infoRoleTTVP);
+        
       };
       fetchData();
     } catch (error) {}
-   
+    finally {
+      setIsDataLoaded(true);
+      setIsLoading(false);
+    }
+    
   }, []);
 
   const perIdArray = displayIcon?.map((item) => item.perId);
@@ -37,17 +40,24 @@ export default function NavBar({ children }: any) {
     {
       key: 1,
       header: "CÁ NHÂN",
-      component: <PersonalReward iconAdd = {iconAdd} iconEdit = {iconEdit}></PersonalReward>,
+      component: (
+        <PersonalReward iconAdd={iconAdd} iconEdit={iconEdit} ></PersonalReward>
+      ),
     },
     {
       key: 2,
       header: "TẬP THỂ",
-      component: <CommendationTeam iconAdd = {iconAdd} iconEdit = {iconEdit}></CommendationTeam>,
+      component: (
+        <CommendationTeam
+          iconAdd={iconAdd}
+          iconEdit={iconEdit}
+        ></CommendationTeam>
+      ),
     },
     {
       key: 3,
       header: "DANH SÁCH THÀNH TÍCH",
-      component: <AchievementList iconEdit = {iconEdit}></AchievementList>,
+      component: <AchievementList iconEdit={iconEdit} ></AchievementList>,
     },
   ];
 
@@ -56,7 +66,6 @@ export default function NavBar({ children }: any) {
       <Head>
         <title>Khen thưởng - Quản lý nhân sự - Timviec365.vn</title>
       </Head>
-
       {!isDataLoaded ? (
         <LoadingSpinner />
       ) : authen ? (
@@ -84,4 +93,5 @@ export default function NavBar({ children }: any) {
       )}
     </>
   );
+  
 }

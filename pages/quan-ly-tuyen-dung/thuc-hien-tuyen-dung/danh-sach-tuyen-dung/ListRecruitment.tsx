@@ -7,7 +7,7 @@ import { setAsTemplate } from "@/pages/api/quan-ly-tuyen-dung/PerformRecruitment
 import Head from "next/head";
 export interface ListRecruitment {}
 
-export default function ListRecruitment({ data, onDelete, editData, iconEdit, iconDelete }: any) {
+export default function ListRecruitment({ data, onDelete, editData, iconEdit, iconDelete,tokenType }: any) {
   const idRecruitment = data?.id;
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
@@ -142,7 +142,6 @@ export default function ListRecruitment({ data, onDelete, editData, iconEdit, ic
               {dateBelieveTime(data?.timeEnd)}
             </div>
 
-            {iconEdit && iconDelete && (
               <div
               className={`${styles.new_r_top_right}`}
               onMouseEnter={() => setVisible(true)}
@@ -180,7 +179,7 @@ export default function ListRecruitment({ data, onDelete, editData, iconEdit, ic
                       </li>
                     </button>
 
-                    {iconEdit && (
+                    {tokenType === 1 ?(
                       <button
                       style={{ paddingRight: "55px" }}
                       className={`${styles.edit_new}`}
@@ -188,21 +187,41 @@ export default function ListRecruitment({ data, onDelete, editData, iconEdit, ic
                     >
                       Chỉnh sửa tin
                     </button>
+                    ): (
+                      (!iconEdit) ? <></> : (
+                        <button
+                        style={{ paddingRight: "55px" }}
+                        className={`${styles.edit_new}`}
+                        onClick={handleOpenModalEdit}
+                      >
+                        Chỉnh sửa tin
+                      </button>
+                      )
                     )}
                     <hr style={{ marginTop: "0", marginBottom: "0" }}></hr>
-                    {iconDelete && (
+                    {tokenType === 1 ? (
                       <li onClick={handleOpenModalDelete}>Gỡ tin tuyển dụng</li>
+                    ): (
+                      (!iconDelete) ? <></>: (
+                        <li onClick={handleOpenModalDelete}>Gỡ tin tuyển dụng</li>
+                      )
                     )}
-                    {iconEdit && (
+                    {tokenType === 1 ? (
                       <li
                       onClick = {(e) => handleSetTemplate(e, idRecruitment)}
                      >Thiết lập làm tin mẫu</li>
+                    ): (
+                      (!iconEdit) ? <></> :(
+                        <li
+                      onClick = {(e) => handleSetTemplate(e, idRecruitment)}
+                     >Thiết lập làm tin mẫu</li>
+                      )
                     )}
                   </div>
                 )}
               </div>
             </div>
-            )}
+
 
           </div>
           {openModalEdit && (

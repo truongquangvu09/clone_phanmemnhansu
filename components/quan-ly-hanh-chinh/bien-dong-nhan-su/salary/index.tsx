@@ -18,7 +18,11 @@ export default function TabSalary({ children }: any) {
     const [EmpData, setEmpData] = useState<any>(null)
     const [isEmp_id, setEmp_id] = useState<any>("")
     const [isSeach, setSearch] = useState<any>(null);
+    const [isPageSize, setPageSize] = useState<any>(10)
     const comid: any = GetComId()
+
+    console.log(isSalaryList);
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,6 +34,7 @@ export default function TabSalary({ children }: any) {
                 formData.append('ep_id', isEmp_id)
                 formData.append('from_date', fromDate)
                 formData.append('to_date', toDate)
+                formData.append('pageSize', isPageSize)
                 const response = await DetailReport(formData)
                 if (response) {
                     setSalaryList(response?.data)
@@ -39,7 +44,7 @@ export default function TabSalary({ children }: any) {
             }
         }
         fetchData()
-    }, [isSeach])
+    }, [isSeach, isPageSize])
 
     // -- lấy dữ liệu nhân viên --
     useEffect(() => {
@@ -55,6 +60,11 @@ export default function TabSalary({ children }: any) {
         fetchData()
     }, [])
 
+    const handleChoose = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = parseInt(event.target.value);
+        setPageSize(value)
+        window.scrollTo(0, 0);
+    }
 
     const handleSearch = useCallback(() => {
         setSearch({ isEmp_id });
@@ -186,8 +196,8 @@ export default function TabSalary({ children }: any) {
                                                 <td>{item.userName}</td>
                                                 <td>{item.chucvu}</td>
                                                 <td>{item.dep}</td>
-                                                {item.tangLuong || item.giamluong ? <td>{item.luongmoi - item.tangLuong}</td> : <td>{item.luongmoi}</td>}
-                                                <td>{item.tangLuong}</td>
+                                                <td>{item.luonghientai}</td>
+                                                {item.luonghientai > item.luongmoi ? <td>0</td> : <td>{item.luongmoi - item.luonghientai}</td>}
                                                 <td>{item.giamLuong}</td>
                                                 {item?.sb_time_up &&
                                                     <td>{format(
@@ -201,6 +211,13 @@ export default function TabSalary({ children }: any) {
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                        <div id="choose_limit" className={`${styles.pull_left}`}>
+                            <select name="" id="choose_limit_page" className={`${styles.form_control}`} onChange={(event) => handleChoose(event)}>
+                                <option value="10"  >10</option>
+                                <option value="20" >20</option>
+                                <option value="30">30</option>
+                            </select>
                         </div>
                     </div>
                     <BodyFrameFooter src="https://www.youtube.com/embed/sOGBYQHRlDA"></BodyFrameFooter>

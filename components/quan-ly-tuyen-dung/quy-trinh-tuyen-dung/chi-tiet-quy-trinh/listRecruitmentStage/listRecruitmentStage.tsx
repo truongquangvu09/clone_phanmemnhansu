@@ -12,7 +12,8 @@ export default function ListRecruitmentStage({
   onDelete,
   onEdit,
   iconEdit,
-  iconDelete
+  iconDelete,
+  tokenType
 }) {
   const [animateModal, setAnimateModal] = useState(false);
   const [openModalEdit, setOpenModalEdit] = useState(false);
@@ -97,7 +98,7 @@ export default function ListRecruitmentStage({
                 <div className={`${styles.row_top_right}`}>
                   <p>{item.name}</p>
                 </div>
-               {iconEdit || iconDelete ? (
+               
                  <div
                  className={`${styles.setting}`}
                  onMouseEnter={() => setVisible(true)}
@@ -110,25 +111,37 @@ export default function ListRecruitmentStage({
                    <>
                      {!hidden && (
                        <div className={`${styles.settings_hover}`}>
-                         {iconEdit && (
+                         {tokenType === 1 ? (
                            <li onClick={() => handleItemClickEdit(item)}>
                            Chỉnh sửa
                          </li>
-                         )}
+                         ): (
+                          ( !iconEdit) ? <></> : (
+                            <li onClick={() => handleItemClickEdit(item)}>
+                            Chỉnh sửa
+                          </li>
+                          )
+                        )}
                          <hr
                            style={{ marginTop: "0", marginBottom: "0" }}
                          ></hr>
-                         {iconDelete && (
+                         {tokenType ===1 ? (
                            <li onClick={() => handleItemClickDelete(item)}>
                            Xóa
                          </li>
-                         )}
+                         ): (
+                          (!iconDelete) ? <></> : (
+                            <li onClick={() => handleItemClickDelete(item)}>
+                           Xóa
+                         </li>
+                          )
+                        )}
                        </div>
                      )}
                    </>
                  )}
                </div>
-               ): null}
+               
               </div>
               <ul>
                 <li>

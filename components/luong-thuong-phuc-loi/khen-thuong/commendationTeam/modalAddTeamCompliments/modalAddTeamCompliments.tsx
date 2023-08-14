@@ -4,6 +4,8 @@ import styles from "./modalAddTeamCompliments.module.css";
 import Select from "react-select";
 import * as Yup from "yup";
 import { AddAchievementGroup, GetDepartmentList } from "@/pages/api/luong-thuong-phuc-loi/reward";
+import { getToken } from "@/pages/api/token";
+import jwt_decode from "jwt-decode";
 
 function ModalAddTeamCompliments({ animation, onClose, updateData }: any) {
   const [dep, setDep] = useState<any>()
@@ -25,12 +27,23 @@ function ModalAddTeamCompliments({ animation, onClose, updateData }: any) {
     achievement_level: Yup.string().required("Cấp khen không được để trống"),
   });
 
+  const [tokenComId, setComId] = useState<any>(null);
+  const COOKIE_KEY = "user_365";
+
+  useEffect(() => {
+    const currentCookie = getToken(COOKIE_KEY);
+    if (currentCookie) {
+      const decodedToken: any = jwt_decode(currentCookie);
+      setComId(decodedToken?.data?.com_id);
+    }
+  }, []);
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await GetDepartmentList("1664")
+        const response = await GetDepartmentList(tokenComId.toString())
         setDep(response?.data.data.data.map(item => ({ name: "depId", value: item.dep_id, label: `${item.dep_name}` })))
       } catch (err) {
+        console.log(err)
       }
     }
     getData()

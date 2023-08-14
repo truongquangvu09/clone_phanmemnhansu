@@ -10,11 +10,21 @@ import Link from "next/link";
 import Head from "next/head";
 export interface listRecruitmentProcess {}
 
-export default function ListRecruitmentProcess({ dataRecruitment , handlePage, currentPage, handleDelete, setData,iconAdd, iconEdit, iconDelete}: any) {
+export default function ListRecruitmentProcess({
+  dataRecruitment,
+  handlePage,
+  currentPage,
+  handleDelete,
+  setData,
+  iconAdd,
+  iconEdit,
+  iconDelete,
+  tokenType,
+}: any) {
   const [openModal, setOpenModal] = useState(0);
   const [animateModal, setAnimateModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  
+
   const handlePageChange = (page: any) => {
     handlePage(page);
   };
@@ -32,12 +42,11 @@ export default function ListRecruitmentProcess({ dataRecruitment , handlePage, c
     }, 300);
   };
 
-
   return (
     <>
-    <Head>
-      <title>Giai đoạn tuyển dụng - Quản lý nhân sự - Timviec365.vn</title>
-    </Head>
+      <Head>
+        <title>Giai đoạn tuyển dụng - Quản lý nhân sự - Timviec365.vn</title>
+      </Head>
       <div className={`${styles.all_quytrinh}`} style={{ marginTop: "20px" }}>
         {dataRecruitment?.data?.map((item: any) => {
           const formattedDate = format(new Date(item.createdAt), "dd/MM/yyyy");
@@ -50,9 +59,13 @@ export default function ListRecruitmentProcess({ dataRecruitment , handlePage, c
                       passHref
                       href={{
                         pathname: `/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/danh-sach-quy-trinh/${item.id}`,
-                        query: {iconAdd: iconAdd?.toString(), iconEdit: iconEdit?.toString(), iconDelete: iconDelete?.toString() }
+                        query: {
+                          iconAdd: iconAdd?.toString(),
+                          iconEdit: iconEdit?.toString(),
+                          iconDelete: iconDelete?.toString(),
+                        },
                       }}
-                      as = {`/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/danh-sach-quy-trinh/${item.id}`}
+                      as={`/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/danh-sach-quy-trinh/${item.id}`}
                     >
                       <div className={`${styles.quytrinh_item11_link}`}>
                         (QTTD{item.id}) {item.name}
@@ -73,9 +86,14 @@ export default function ListRecruitmentProcess({ dataRecruitment , handlePage, c
                     passHref
                     href={{
                       pathname: `/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/danh-sach-quy-trinh/${item.id}`,
-                      query: {iconAdd: iconAdd?.toString(), iconEdit: iconEdit?.toString(), iconDelete: iconDelete?.toString() }
+                      query: {
+                        iconAdd: iconAdd?.toString(),
+                        iconEdit: iconEdit?.toString(),
+                        iconDelete: iconDelete?.toString(),
+                        tokenType: tokenType?.toString()
+                      }
                     }}
-                    as = {`/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/danh-sach-quy-trinh/${item.id}`}
+                    as={`/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/danh-sach-quy-trinh/${item.id}`}
                   >
                     <picture>
                       <img src={`${"/detail-quytrinh.svg"}`} alt=""></img>
@@ -88,29 +106,59 @@ export default function ListRecruitmentProcess({ dataRecruitment , handlePage, c
                     </span>
                   </Link>
                   {/* edit */}
-                  {iconEdit && (
+                  {tokenType === 1 ? (
                     <button
-                    className={`${styles.button_option}`}
-                    onClick={() => handleOpenModal(1, item)}
-                  >
-                    <picture>
-                      <img src={`${"/icon-edit-quytrinh.svg"}`} alt=""></img>
-                    </picture>
-                    <span className={`${styles.span_a}`}>Sửa</span>
-                  </button>
+                      className={`${styles.button_option}`}
+                      onClick={() => handleOpenModal(1, item)}
+                    >
+                      <picture>
+                        <img src={`${"/icon-edit-quytrinh.svg"}`} alt=""></img>
+                      </picture>
+                      <span className={`${styles.span_a}`}>Sửa</span>
+                    </button>
+                  ) : (
+                    (!iconEdit) ? <></>: (
+                      <button
+                      className={`${styles.button_option}`}
+                      onClick={() => handleOpenModal(1, item)}
+                    >
+                      <picture>
+                        <img src={`${"/icon-edit-quytrinh.svg"}`} alt=""></img>
+                      </picture>
+                      <span className={`${styles.span_a}`}>Sửa</span>
+                    </button>
+                    )
                   )}
                   {/* xóa */}
-                 {iconDelete && (
-                   <button
-                   className={`${styles.button_option}`}
-                   onClick={() => handleOpenModal(2, item)}
-                 >
-                   <picture>
-                     <img src={`${"/icon-remove-quytrinh.svg"}`} alt=""></img>
-                   </picture>
-                   <span className={`${styles.span_a}`}>Xóa</span>
-                 </button>
-                 )}
+                  {tokenType === 1 ? (
+                    <button
+                      className={`${styles.button_option}`}
+                      onClick={() => handleOpenModal(2, item)}
+                    >
+                      <picture>
+                        <img
+                          src={`${"/icon-remove-quytrinh.svg"}`}
+                          alt=""
+                        ></img>
+                      </picture>
+                      <span className={`${styles.span_a}`}>Xóa</span>
+                    </button>
+                  ) : (
+                    (!iconDelete) ? <></> : (
+                      <button
+                      className={`${styles.button_option}`}
+                      onClick={() => handleOpenModal(2, item)}
+                    >
+                      <picture>
+                        <img
+                          src={`${"/icon-remove-quytrinh.svg"}`}
+                          alt=""
+                        ></img>
+                      </picture>
+                      <span className={`${styles.span_a}`}>Xóa</span>
+                    </button>
+                    )
+                  )}
                 </div>
               </div>
               <hr className={`${styles.shr}`}></hr>

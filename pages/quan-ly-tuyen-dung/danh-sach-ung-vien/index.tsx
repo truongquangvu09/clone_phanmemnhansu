@@ -14,6 +14,7 @@ export default function CandidateList({ children }: any) {
   const [displayIcon, setDisplayIcon] = useState<any>();
   const [isLoading, setIsLoading] = useState(true);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+ 
 
   useEffect(() => {
     try {
@@ -34,9 +35,9 @@ export default function CandidateList({ children }: any) {
   const iconAdd = perIdArray?.includes(2);
   const iconEdit = perIdArray?.includes(3);
   const iconDelete = perIdArray?.includes(4);
+
   return (
     <>
-
       {!isDataLoaded ? (
         <LoadingSpinner />
       ) : authen === false ? (
@@ -65,5 +66,5 @@ export default function CandidateList({ children }: any) {
         </div>
       )}
     </>
-  );
+  )
 }

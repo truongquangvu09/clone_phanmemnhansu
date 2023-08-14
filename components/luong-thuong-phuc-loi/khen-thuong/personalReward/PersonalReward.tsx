@@ -6,7 +6,6 @@ import { GetDataAchievement } from "@/pages/api/luong-thuong-phuc-loi/reward";
 import MyPagination from "@/components/pagination/Pagination";
 import BodyFrameFooter from "@/components/bodyFrame/bodyFrame_footer/bodyFrame_footer";
 
-
 export interface PersonalReward { }
 export default function PersonalReward({ iconAdd, iconEdit }: any) {
   const [data, setData] = useState<any>();

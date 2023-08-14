@@ -16,6 +16,7 @@ import { GetJobDetails } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 import { FailJobDetails } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 import { CancelJobDetails } from "@/pages/api/quan-ly-tuyen-dung/candidateList";
 import Head from "next/head";
+import { getDataAuthentication } from "@/pages/api/Home/HomeService";
 interface Option {
   value: number;
   label: string;
@@ -36,6 +37,23 @@ export default function DetailCandidate({ onCancel }: any) {
   const [isCandidate, setCandidate] = useState<any>(null)
   const [isCandidateProcess, setCandidateProcess] = useState<any>(null)
   const [isProcessName, setProcessName] = useState<any>(null);
+  const [displayIcon, setDisplayIcon] = useState<any>();
+  console.log(isCandidateProcess);
+
+  useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const response = await getDataAuthentication();
+        setDisplayIcon(response?.data?.data?.infoRoleTD);
+      };
+      fetchData();
+    } catch (error) {
+    }
+  }, []);
+
+  const perIdArray = displayIcon?.map((item) => item.perId);
+
+  const iconEdit = perIdArray?.includes(3);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -259,9 +277,11 @@ export default function DetailCandidate({ onCancel }: any) {
                 <p>Chi tiết hồ sơ ứng viên {isCandidate?.name}</p>
               </div>
               <div className={`${styles.text_right}`}>
-                <a onClick={handleOpenModal} href="" className={`${styles.edit_hs_uv}`}>
-                  <img src="/icon-edit-white.svg" />
-                </a>
+                {iconEdit && (
+                  <a onClick={handleOpenModal} href="" className={`${styles.edit_hs_uv}`}>
+                    <img src="/icon-edit-white.svg" />
+                  </a>
+                )}
               </div>
               {openModalDetail && id?.charAt(0) === 'u' && !id?.includes("p") ? <EditCandidateModal candidate={isCandidate} onCancel={handleCloseModal} /> : ''}
               {openModalDetail && id?.includes("p") ? <EditCandidateIntrview candidate={isCandidate} onCancel={handleCloseModal} processName={isProcessName} /> : ''}

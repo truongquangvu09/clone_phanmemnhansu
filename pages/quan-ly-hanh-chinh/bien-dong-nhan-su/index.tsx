@@ -17,17 +17,19 @@ export default function PersonnalChange({ children }: any) {
   const [displayIcon, setDisplayIcon] = useState<any>();
   const [isLoading, setIsLoading] = useState(true);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+  const [iconTGL, setIconTGL] = useState<any>([])
 
   useEffect(() => {
     try {
       const fetchData = async () => {
         const response = await getDataAuthentication();
         setDisplayIcon(response?.data?.data?.infoRoleTTNS);
-        setIsDataLoaded(true); // Move this line here
-        setIsLoading(false); // Move this line here
+        setIconTGL(response?.data?.data?.infoRoleTGL)
+        setIsDataLoaded(true);
+        setIsLoading(false);
       };
       fetchData();
-    } catch (error) {}
+    } catch (error) { }
   }, []);
 
   const perIdArray = displayIcon?.map((item) => item.perId);
@@ -35,6 +37,9 @@ export default function PersonnalChange({ children }: any) {
   const iconAdd = perIdArray?.includes(2);
   const iconEdit = perIdArray?.includes(3);
   const iconDelete = perIdArray?.includes(4);
+
+  const perIdArray2 = iconTGL?.map((item) => item.perId)
+  const authenTGL = perIdArray2?.includes(1)
 
   return (
     <>
@@ -88,11 +93,11 @@ export default function PersonnalChange({ children }: any) {
               <Link href="">Biểu đồ</Link>
             </li>
           </ul>
-          {active === 1 && <TabSalary></TabSalary>}
-          {active === 2 && <TabPlaningAppointment iconAdd = {iconAdd} iconEdit = {iconEdit} iconDelete = {iconDelete}></TabPlaningAppointment>}
-          {active === 3 && <TabWorkingRotation iconAdd = {iconAdd} iconEdit = {iconEdit} iconDelete = {iconDelete}></TabWorkingRotation>}
-          {active === 4 && <TabPayrollDown iconAdd = {iconAdd} iconEdit = {iconEdit} iconDelete = {iconDelete}></TabPayrollDown>}
-          {active === 5 && <TabOutJob iconAdd = {iconAdd} iconEdit = {iconEdit} iconDelete = {iconDelete}></TabOutJob>}
+          {authenTGL && active === 1 && <TabSalary></TabSalary>}
+          {active === 2 && <TabPlaningAppointment iconAdd={iconAdd} iconEdit={iconEdit} iconDelete={iconDelete}></TabPlaningAppointment>}
+          {active === 3 && <TabWorkingRotation iconAdd={iconAdd} iconEdit={iconEdit} iconDelete={iconDelete}></TabWorkingRotation>}
+          {active === 4 && <TabPayrollDown iconAdd={iconAdd} iconEdit={iconEdit} iconDelete={iconDelete}></TabPayrollDown>}
+          {active === 5 && <TabOutJob iconAdd={iconAdd} iconEdit={iconEdit} iconDelete={iconDelete}></TabOutJob>}
           {active === 6 && <TabChart></TabChart>}
         </div>
       ) : (

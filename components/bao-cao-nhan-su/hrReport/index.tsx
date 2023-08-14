@@ -6,7 +6,7 @@ import EmployeeInformation from './bodySection1';
 import InformationSection2 from './bodySection2';
 import InfomationSection3 from './bodySection3';
 import { addDays, format } from 'date-fns';
-import { GetDataHrReport, ReportCharts } from '@/pages/api/bao-cao-nhan-su/HrReportService'
+import { GetDataHrReports, ReportCharts } from '@/pages/api/bao-cao-nhan-su/HrReportService'
 import { DepartmentList } from "@/pages/api/listPhongBan";
 import GetComId from '@/components/getComID';
 type SelectOptionType = { label: string, value: any }
@@ -39,7 +39,7 @@ export default function TabHRReport({ dateRangeDatas }: any) {
                 formData.append('depId', isDep_id)
                 formData.append('from_date', startDate)
                 formData.append('to_date', endDate)
-                const response = await GetDataHrReport(formData)
+                const response = await GetDataHrReports(formData)
                 if (response) {
                     setHrReportList(response.data)
                 }

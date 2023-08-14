@@ -7,7 +7,6 @@ import {
 } from "@/pages/api/cai-dat/generalSettings";
 import jwt_decode from "jwt-decode";
 import { getToken } from "@/pages/api/token";
-import { getCookie } from "cookies-next";
 export interface BodyFrame {}
 
 export default function Bodyframe({ children }: any) {
@@ -16,17 +15,27 @@ export default function Bodyframe({ children }: any) {
   const COOKIE_KEY = "user_365";
 
   useEffect(() => {
-    const currentCookie = getToken(COOKIE_KEY);
-    if (currentCookie) {
-      const decodedToken: any = jwt_decode(currentCookie);
-      setTokenType(decodedToken?.data?.type);
+    const fetchDataType = async () => {
+      const currentCookie = getToken(COOKIE_KEY);
+      if (currentCookie) {
+        const decodedToken: any = jwt_decode(currentCookie);
+        setTokenType(decodedToken?.data?.type);
+      }
+      else {
+        const interval = setInterval(async () => {
+          clearInterval(interval)
+          fetchDataType()
+        }, 500)
+      }
     }
-  }, []);
+    fetchDataType()
+  }, [])
+
 useEffect(() => {
     const fetchInfo = async () => {
       try {
         if (tokenType) {
-          if (tokenType === 1) {
+          if (tokenType === 1 || tokenType === '1') {
             const response = await getDataCompany();
             setDataHeader(response?.data);
           } else {
@@ -36,14 +45,9 @@ useEffect(() => {
         } else {
           const interval = setInterval(async () => {
             const updatedToken = tokenType;
-            if (updatedToken === 1) {
-              clearInterval(interval);
-              const response = await getDataCompany();
-              setDataHeader(response?.data);
-            } else if (updatedToken === 2) {
-              clearInterval(interval);
-              const response = await EmployeeInfo();
-              setDataHeader(response?.data);
+            if (updatedToken === 1 || updatedToken === "1") {
+              clearInterval(interval); 
+              fetchInfo()
             }
           }, 1000);
         }

@@ -6,11 +6,13 @@ import EmployeePolicy from "@/components/quan-ly-hanh-chinh/quy-dinh-chinh-sach/
 import Head from "next/head";
 import { getDataAuthentication } from "@/pages/api/Home/HomeService";
 
+
 export default function RegulationsPolicy() {
     const [active, setActive] = useState(1)
     const [displayIcon, setDisplayIcon] = useState<any>();
     const [isLoading, setIsLoading] = useState(true);
     const [isDataLoaded, setIsDataLoaded] = useState(false);
+  
   
     useEffect(() => {
       try {
@@ -45,7 +47,7 @@ export default function RegulationsPolicy() {
                         <Link href=''>Chính sách nhân viên</Link>
                     </li>
                 </ul>
-                {active === 1 ? <RegulationsWork iconAdd = {iconAdd} iconEdit = {iconEdit} iconDelete = {iconDelete}></RegulationsWork> : <EmployeePolicy iconAdd = {iconAdd} iconEdit = {iconEdit} iconDelete = {iconDelete}></EmployeePolicy>}
+                {active === 1 ? <RegulationsWork iconAdd = {iconAdd} iconEdit = {iconEdit} iconDelete = {iconDelete} ></RegulationsWork> : <EmployeePolicy iconAdd = {iconAdd} iconEdit = {iconEdit} iconDelete = {iconDelete}></EmployeePolicy>}
             </div>
 
 

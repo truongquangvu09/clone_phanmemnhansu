@@ -5,6 +5,8 @@ import Head from "next/head";
 import { getDataAuthentication } from "@/pages/api/Home/HomeService";
 import LoadingSpinner from "@/components/loading";
 import PageAuthenticator from "@/components/quyen-truy-cap";
+import { getToken } from "@/pages/api/token";
+import jwt_decode from "jwt-decode";
 
 export default function JobPosition({ children }: any) {
   const [active, setActive] = useState(1);

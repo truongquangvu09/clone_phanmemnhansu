@@ -8,7 +8,15 @@ import ModalEditCommendationTeam from "../commendationTeam/modalEditCommendation
 import ModalEditAchievementList from "../achievementList/modalEditAchievementList/ModalEditAchievementList";
 import ModalAddTeamCompliments from "../commendationTeam/modalAddTeamCompliments/modalAddTeamCompliments";
 
-function RewardTable({ display, data, model, keyWords, updateData , iconAdd, iconEdit}: any) {
+function RewardTable({
+  display,
+  data,
+  model,
+  keyWords,
+  updateData,
+  iconAdd,
+  iconEdit,
+}: any) {
   const [visible, setVisible] = useState(true);
   const [typeModal, setTypeModal] = useState(model);
   const [open, setOpen] = useState(false);
@@ -60,7 +68,7 @@ function RewardTable({ display, data, model, keyWords, updateData , iconAdd, ico
     <>
       <div className={`${styles.tuyendung2}`} style={{ display: "block" }}>
         <div className={`${styles.tuyendung2_3}`}>
-          {iconAdd && (
+        {iconAdd && (
             <button
             onClick={() => setOpen(true)}
             className={`${styles.adds}`}
@@ -180,7 +188,7 @@ function RewardTable({ display, data, model, keyWords, updateData , iconAdd, ico
                       <td>{achievementType}</td>
                       <td>{item.appellation}</td>
                       <td>{item.achievementLevel}</td>
-                     {iconEdit &&  <td
+                      {iconEdit &&  <td
                         className={`${styles.r_t_top_right}`}
                         style={{
                           position: "relative",

@@ -160,8 +160,8 @@ export default function RegulationsWork( {iconAdd, iconEdit, iconDelete}) {
                                             <img className={`${styles.icondown}`} src="/down.png" />
                                         </div>
                                         <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpendetail(item.id)} >Chi tiết/</a>
-                                        {iconEdit && <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpenUpdate(item.id)}>Sửa/</a>}
-                                        {iconDelete && <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpenDelete(item.id)} >Xóa</a>}
+                                        {iconEdit && <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpenUpdate(item.id)}>Sửa/</a>  }
+                                        {iconDelete && <a style={{ color: '#337ab7', fontWeight: 600, cursor: "pointer" }} onClick={() => handleOpenDelete(item.id)} >Xóa</a> }
                                     </div>
                                     <div className={`${styles.table_none}`} style={{ display: selectedItems.includes(item?.id) ? 'block' : 'none' }}>
                                         <table className={`${styles.tablelist}  ${styles.tablelist1}`}>

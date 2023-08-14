@@ -30,18 +30,22 @@ export default function DropableColumn({
                                             `}>
                     {(item?.id !== 0 && item?.id !== 1 && item?.id !== 2 && item?.id !== 3 && item?.id !== 4) ? <p>
                         {item.name} (
-                        <a onClick={() =>
-                            handleUpdateProcess({
-                                name: item.name,
-                                processBefore: item.processBefore,
-                                processInterviewId: item.id,
-                            })}
-                            style={{ cursor: "pointer" }}>Sửa
-                        </a>
+                            {iconEdit && (
+                                <a onClick={() =>
+                                    handleUpdateProcess({
+                                        name: item.name,
+                                        processBefore: item.processBefore,
+                                        processInterviewId: item.id,
+                                    })}
+                                    style={{ cursor: "pointer" }}>Sửa
+                                </a>
+                            )}
                         /
-                        <a onClick={() => setDeleteProcess(item.id)}
-                            style={{ cursor: "pointer" }}>Xóa
-                        </a>
+                            {iconDelete && (
+                                 <a onClick={() => setDeleteProcess(item.id)}
+                                 style={{ cursor: "pointer" }}>Xóa
+                             </a>
+                            )}
                         )
                     </p> : <>{item.name}</>}
                     <p>

@@ -42,12 +42,12 @@ export default function NavBar({ children }: any) {
     {
       key: 2,
       header: "TẬP THỂ",
-      component: <CollectiveDiscipline iconAdd = {iconAdd} iconEdit = {iconEdit}></CollectiveDiscipline>,
+      component: <CollectiveDiscipline iconAdd = {iconAdd} iconEdit = {iconEdit} ></CollectiveDiscipline>,
     },
     {
       key: 3,
       header: "DANH SÁCH VI PHẠM",
-      component: <DisciplineList iconEdit = {iconEdit}></DisciplineList>,
+      component: <DisciplineList iconEdit = {iconEdit} ></DisciplineList>,
     },
   ];
 

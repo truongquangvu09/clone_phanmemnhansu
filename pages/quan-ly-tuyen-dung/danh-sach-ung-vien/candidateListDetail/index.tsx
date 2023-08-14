@@ -202,6 +202,7 @@ export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete }: a
               </div>
             )}
 
+
             {openModal === 1 ? (<CandidateAddModal animation={animateModal} onCancel={handleCloseModal}></CandidateAddModal>) : ("")}
             {openModal === 2 ? (<StageAddModal animation={animateModal} onCancel={handleCloseModal}></StageAddModal>) : ("")}
             {isUpdateProcess && (<StageUpdateModal animation={animateModal} onCancel={handleCloseModal} infoList={isUpdateProcess} />)}
@@ -320,7 +321,7 @@ export default function CandidateListDetail({ iconAdd, iconEdit, iconDelete }: a
             </div>
             <div
               className={`${styles.export_excel}`}
-              style={{ paddingRight: 20, right: 0, position: "relative" }}
+              style={{ paddingRight: 20, right: 0, float: "right" }}
             >
               <a href="" className={`${styles.t_excel}`}>
                 <img src={`/t-icon-excel.svg`} alt="" />

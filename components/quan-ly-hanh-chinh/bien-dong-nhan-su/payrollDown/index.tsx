@@ -25,6 +25,7 @@ export default function TabPayrollDown({ iconAdd, iconEdit, iconDelete }: any) {
     const [isEmp_id, setEmp_id] = useState<any>("")
     const [isSeach, setSearch] = useState<any>(null)
     const [infoList, setInfoList] = useState<any>(null)
+    const [isPageSize, setPageSize] = useState<any>(10)
     const comid: any = GetComId()
 
 
@@ -74,6 +75,12 @@ export default function TabPayrollDown({ iconAdd, iconEdit, iconDelete }: any) {
         }
         fetchData()
     }, [])
+
+    const handleChoose = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = parseInt(event.target.value);
+        setPageSize(value)
+        window.scrollTo(0, 0);
+    }
 
     const handleSelectChange = (selectedOption: SelectOptionType | null, setState: any) => {
         setSelectedOption(selectedOption);
@@ -286,6 +293,13 @@ export default function TabPayrollDown({ iconAdd, iconEdit, iconDelete }: any) {
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                        <div id="choose_limit" className={`${styles.pull_left}`}>
+                            <select name="" id="choose_limit_page" className={`${styles.form_control}`} onChange={(event) => handleChoose(event)}>
+                                <option value="10"  >10</option>
+                                <option value="20" >20</option>
+                                <option value="30">30</option>
+                            </select>
                         </div>
                     </div>
                     <BodyFrameFooter src="https://www.youtube.com/embed/2uVrd-EFEXs"></BodyFrameFooter>

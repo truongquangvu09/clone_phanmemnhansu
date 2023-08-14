@@ -201,6 +201,7 @@ function PunishmentTable({ display, data, violators, model, keyWords, updateData
                           </div>
                         )}
                       </td>}
+      
                     </tr>
                   );
                 })

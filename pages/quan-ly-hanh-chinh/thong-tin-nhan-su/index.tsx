@@ -38,9 +38,9 @@ export default function EmployeeManagement({ children }: any) {
       <Head>
         <title>Quản lý nhân viên - Quản lý nhân sự - Timviec365.vn</title>
       </Head>
-      {/* {!isDataLoaded ? (
+      {!isDataLoaded ? (
         <LoadingSpinner />
-      ) : authen ? ( */}
+      ) : authen ? (
       <div className={`${styles.wrapper}`}>
         <ul className={`${styles.nav_tab} ${styles.nav}`}>
           <li
@@ -63,9 +63,9 @@ export default function EmployeeManagement({ children }: any) {
         </ul>
         {active === 1 && <TabEmployeeManagement iconAdd={iconAdd} iconEdit={iconEdit}></TabEmployeeManagement>}
       </div>
-      {/* ) : (
+       ) : (
         <PageAuthenticator />
-      )} */}
+      )} 
     </>
   );
 }

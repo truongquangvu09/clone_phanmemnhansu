@@ -5,6 +5,10 @@ import { useRouter } from "next/router";
 import AddRecruitmentStage from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/chi-tiet-quy-trinh/addRecruitmentStage/them-giai-doan";
 import ListRecruitmentStage from "@/components/quan-ly-tuyen-dung/quy-trinh-tuyen-dung/chi-tiet-quy-trinh/listRecruitmentStage/listRecruitmentStage";
 import { DataRecruitmentStage } from "@/pages/api/quan-ly-tuyen-dung/RecruitmentManagerService";
+import { getToken } from "@/pages/api/token";
+import { getDataAuthentication } from "@/pages/api/Home/HomeService";
+import jwt_decode from "jwt-decode";
+
 export interface listRecruitmentProcess {}
 
 export default function listRecruitmentProcess({dataDetail}) {
@@ -16,14 +20,34 @@ export default function listRecruitmentProcess({dataDetail}) {
   const [recruitmentStage, setRecruitmentStage] = useState<any>(dataDetail)
   const [newData, setNewData] = useState<any>();
   const recruitment = recruitmentStage?.data.recruitment
+  const [displayIcon, setDisplayIcon] = useState<any>();
+  const [tokenType, setTokenType] = useState<any>(null);
+  
+  const COOKIE_KEY = "user_365";
 
-  const iconAddQueryParam = router.query.iconAdd;
-  const iconEditQueryParam = router.query.iconEdit;
-  const iconDeleteQueryParam = router.query.iconDelete;
+  useEffect(() => {
+    const currentCookie = getToken(COOKIE_KEY);
+    if (currentCookie) {
+      const decodedToken: any = jwt_decode(currentCookie);
+      setTokenType(decodedToken?.data?.type);
+    }
+  }, []);
+  useEffect(() => {
+    try {
+      const fetchData = async () => {
+        const response = await getDataAuthentication();
+        setDisplayIcon(response?.data?.data?.infoRoleTD);
+      };
+      fetchData();
+    } catch (error) {}
+  }, []);
 
-  const iconAdd = iconAddQueryParam === "true";
-  const iconEdit = iconEditQueryParam === "true";
-  const iconDelete = iconDeleteQueryParam === "true";
+  const perIdArray = displayIcon?.map((item) => item.perId);
+  const iconAdd = perIdArray?.includes(2);
+  const iconEdit = perIdArray?.includes(3);
+  const iconDelete = perIdArray?.includes(4);
+
+
 
   useEffect(() => {
     const fetchDataRecruitmentStage = async (idRecruitmentStage: any) => {
@@ -64,7 +88,7 @@ export default function listRecruitmentProcess({dataDetail}) {
               Danh sách quy trình tuyển dụng
             </span>
           </div>
-          {iconAdd && (
+          {tokenType === 1 ? (
             <div className={`${styles.add_quytrinh1}`}>
             <button className={`${styles.adds}`} onClick={handleOpenModalAdd}>
               <picture>
@@ -73,6 +97,17 @@ export default function listRecruitmentProcess({dataDetail}) {
               Thêm giai đoạn tuyển dụng
             </button>
           </div>
+          ):(
+            ( !iconAdd) ? <></> : (
+              <div className={`${styles.add_quytrinh1}`}>
+            <button className={`${styles.adds}`} onClick={handleOpenModalAdd}>
+              <picture>
+                <img src={`${"/add.png"}`} alt=""></img>
+              </picture>
+              Thêm giai đoạn tuyển dụng
+            </button>
+          </div>
+            )
           )}
         </div>
         {openModalAdd && (
@@ -100,6 +135,7 @@ export default function listRecruitmentProcess({dataDetail}) {
                 onEdit = {setNewData}
                 iconEdit = {iconEdit}
                 iconDelete = {iconDelete}
+                tokenType = {tokenType}
               ></ListRecruitmentStage>
             </div>
           ))}
@@ -124,3 +160,5 @@ export const getServerSideProps = async ({ params }) => {
     return { props: {} };
   }
 };
+
+
