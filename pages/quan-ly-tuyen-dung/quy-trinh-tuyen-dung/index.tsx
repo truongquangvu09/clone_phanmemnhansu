@@ -39,7 +39,7 @@ export default function RecruitmentProcess() {
         setDisplayIcon(response?.data?.data?.infoRoleTD);
       };
       fetchData();
-    } catch (error) {}
+    } catch (error) { }
   }, []);
 
   const perIdArray = displayIcon?.map((item) => item.perId);
@@ -140,26 +140,26 @@ export default function RecruitmentProcess() {
                 ) : (
                   (!iconAdd) ? <></> : (
                     <button
-                    type="submit"
-                    className="adds"
-                    style={{ outline: "none", border: "none", padding: "0" }}
-                  >
-                    <div
-                      className={styles.add_quytrinh2}
-                      onClick={handleOpenModalAdd}
+                      type="submit"
+                      className="adds"
+                      style={{ outline: "none", border: "none", padding: "0" }}
                     >
-                      <picture>
-                        <img
-                          src={"/add.png"}
-                          alt=""
-                          style={{ marginRight: "10px", marginTop: "-3px" }}
-                        ></img>
-                      </picture>
-                      <div className={styles.add_quytrinh2_title}>
-                        Thêm quy trình tuyển dụng
+                      <div
+                        className={styles.add_quytrinh2}
+                        onClick={handleOpenModalAdd}
+                      >
+                        <picture>
+                          <img
+                            src={"/add.png"}
+                            alt=""
+                            style={{ marginRight: "10px", marginTop: "-3px" }}
+                          ></img>
+                        </picture>
+                        <div className={styles.add_quytrinh2_title}>
+                          Thêm quy trình tuyển dụng
+                        </div>
                       </div>
-                    </div>
-                  </button>
+                    </button>
                   )
                 )}
               </div>
@@ -193,7 +193,6 @@ export default function RecruitmentProcess() {
                 </form>
               </div>
             </div>
-
             <ListRecruitmentProcess
               dataRecruitment={dataRecruitment}
               handlePage={handlePageChange}
@@ -203,9 +202,8 @@ export default function RecruitmentProcess() {
               iconAdd={iconAdd}
               iconEdit={iconEdit}
               iconDelete={iconDelete}
-              tokenType = {tokenType}
+              tokenType={tokenType}
             ></ListRecruitmentProcess>
-
             <BodyFrameFooter src="https://www.youtube.com/embed/J7JEoQkqarA"></BodyFrameFooter>
           </>
         )}
